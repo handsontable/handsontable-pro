@@ -234,20 +234,37 @@ class NestedHeaders extends BasePlugin {
       objectEach(levelValue, (val, col, levelValue) => {
         checkIfExists(this.colspanArray, level);
 
+        let isRowSpanHidden = false;
+        this.colspanArray.forEach((levelArray, currLevel) => {
+          if (
+            levelArray.length &&
+            levelArray[col] &&
+            levelArray[col].rowspan > 1 &&
+            currLevel + levelArray[col].rowspan > level
+          ) {
+            isRowSpanHidden = true;
+          }
+        });
+
         if (levelValue[col].colspan === void 0) {
           this.colspanArray[level].push({
             label: levelValue[col] || '',
             colspan: 1,
-            hidden: false
+            rowspan: 1,
+            hidden: false,
+            hiddenRow: isRowSpanHidden,
           });
 
         } else {
           let colspan = levelValue[col].colspan || 1;
+          let rowspan = levelValue[col].rowspan;
 
           this.colspanArray[level].push({
             label: levelValue[col].label || '',
             colspan: colspan,
-            hidden: false
+            rowspan: levelValue[col].rowspan,
+            hidden: false,
+            hiddenRow: isRowSpanHidden,
           });
 
           this.fillColspanArrayWithDummies(colspan, level);
@@ -281,9 +298,11 @@ class NestedHeaders extends BasePlugin {
   headerRendererFactory(headerRow) {
     let _this = this;
 
-    return function(index, TH) {
+    return function (index, TH) {
       TH.removeAttribute('colspan');
+      TH.removeAttribute('rowspan');
       removeClass(TH, 'hiddenHeader');
+      removeClass(TH, 'hiddenRowsHeader');
 
       // header row is the index of header row counting from the top (=> positive values)
       if (_this.colspanArray[headerRow][index] && _this.colspanArray[headerRow][index].colspan) {
@@ -303,6 +322,18 @@ class NestedHeaders extends BasePlugin {
         }
       }
 
+      if (_this.colspanArray[headerRow][index] && _this.colspanArray[headerRow][index].hidden) {
+        addClass(TH, 'hiddenHeader');
+      }
+
+      if (_this.colspanArray[headerRow][index] && _this.colspanArray[headerRow][index].rowspan > 1) {
+        let rowspan = _this.colspanArray[headerRow][index].rowspan;
+        TH.setAttribute('rowspan', rowspan);
+      }
+
+      if (_this.colspanArray[headerRow][index] && _this.colspanArray[headerRow][index].hiddenRow) {
+        addClass(TH, 'hiddenRowsHeader');
+      }
       if (_this.colspanArray[headerRow][index] && _this.colspanArray[headerRow][index].hidden) {
         addClass(TH, 'hiddenHeader');
       }

@@ -1,3 +1,4 @@
-.handsontable thead th.hiddenHeader:not(:first-of-type) {
+.handsontable thead th.hiddenHeader:not(:first-of-type),
+.handsontable thead th.hiddenRowsHeader {
   display: none;
 }
