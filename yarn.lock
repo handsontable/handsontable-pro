@@ -2467,17 +2467,17 @@ handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^2.6"
 
-handsontable@0.34.1:
-  version "0.34.1"
-  resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-0.34.1.tgz#3b2ceaa6dff736598d57d783eaea97881e3247ac"
+handsontable@0.34.5:
+  version "0.34.5"
+  resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-0.34.5.tgz#9cb1a85f6b497902a094c5715595b2de51ede00c"
   dependencies:
     moment "2.18.1"
     numbro "1.11.0"
     pikaday "1.5.1"
 
-handsontable@handsontable/handsontable#feature/issue-4495:
-  version "0.34.1"
-  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/d20547903367a8349a6a4d339953aaad27d65c2e"
+"handsontable@https://github.com/agreene-coursera/handsontable.git":
+  version "0.34.5"
+  resolved "https://github.com/agreene-coursera/handsontable.git#751b765468a434d24c5a69d9818e690dc7239b8f"
   dependencies:
     moment "2.18.1"
     numbro "1.11.0"

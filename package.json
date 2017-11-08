@@ -1,7 +1,7 @@
 {
   "name": "handsontable-pro",
-  "description": "Spreadsheet-like data grid editor that provides copy/paste functionality compatible with Excel/Google Docs",
-  "homepage": "http://handsontable.com/",
+  "description": "Handsontable is a JavaScript Spreadsheet Component available for React, Angular and Vue.",
+  "homepage": "https://handsontable.com/",
   "repository": {
     "type": "git",
     "url": "https://github.com/handsontable/handsontable-pro.git"
@@ -53,7 +53,7 @@
     "data-spreadsheet"
   ],
   "dependencies": {
-    "handsontable": "0.34.5",
+    "handsontable": "https://github.com/agreene-coursera/handsontable.git",
     "hot-formula-parser": "^2.2.0",
     "moment": "2.18.1",
     "numbro": "1.11.0",
