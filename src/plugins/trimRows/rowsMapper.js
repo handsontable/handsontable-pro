@@ -28,8 +28,13 @@ class RowsMapper {
 
     this._arrayMap.length = 0;
 
+    let trimmedRows = new Set();
+    rangeEach(this.trimRows.trimmedRows.length - 1, (itemIndex) => {
+      trimmedRows.add(this.trimRows.trimmedRows[itemIndex]);
+    });
+
     rangeEach(originLength - 1, (itemIndex) => {
-      if (this.trimRows.isTrimmed(itemIndex)) {
+      if (trimmedRows.has(itemIndex)) {
         rowOffset++;
       } else {
         this._arrayMap[itemIndex - rowOffset] = itemIndex;

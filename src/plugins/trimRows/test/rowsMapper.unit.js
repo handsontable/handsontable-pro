@@ -22,30 +22,12 @@ describe('TrimRows -> RowsMapper', function() {
     expect(mapper._arrayMap).toBe(null);
   });
 
-  it('should call isTrimmed method "length" times', function() {
-    var trimRowsMock = {
-      isTrimmed: function(index) {
-        return false;
-      }
-    };
-    var mapper = new RowsMapper(trimRowsMock);
-
-    spyOn(trimRowsMock, 'isTrimmed').and.callThrough();
-    mapper.createMap(5);
-
-    expect(trimRowsMock.isTrimmed.calls.count()).toBe(5);
-    expect(trimRowsMock.isTrimmed.calls.argsFor(0)).toEqual([0]);
-    expect(trimRowsMock.isTrimmed.calls.argsFor(1)).toEqual([1]);
-    expect(trimRowsMock.isTrimmed.calls.argsFor(2)).toEqual([2]);
-    expect(trimRowsMock.isTrimmed.calls.argsFor(3)).toEqual([3]);
-    expect(trimRowsMock.isTrimmed.calls.argsFor(4)).toEqual([4]);
-  });
-
   it('should create map with pairs index->value', function() {
     var trimRowsMock = {
       isTrimmed: function(index) {
         return false;
-      }
+      },
+      trimmedRows: [],
     };
     var mapper = new RowsMapper(trimRowsMock);
 
@@ -64,7 +46,8 @@ describe('TrimRows -> RowsMapper', function() {
     var trimRowsMock = {
       isTrimmed: function(index) {
         return index === 2 || index === 5;
-      }
+      },
+      trimmedRows: [2, 5],
     };
     var mapper = new RowsMapper(trimRowsMock);
 
