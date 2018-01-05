@@ -5,20 +5,24 @@
  *  - unit.entry.js
  *  - helpers.entry.js
  */
-const configFactory = require('./base');
-const JasmineHtml = require('./plugin/jasmine-html');
-const path = require('path');
-const webpack = require('webpack');
+var configFactory = require('./base');
+var JasmineHtml = require('./plugin/jasmine-html');
+var path = require('path');
+var webpack = require('webpack');
+
+var env = process.env.NODE_ENV;
+var PACKAGE_NAME = configFactory.PACKAGE_NAME;
+
+module.exports.PACKAGE_NAME = PACKAGE_NAME;
 
 module.exports.create = function create(envArgs) {
-  const config = configFactory.create(envArgs);
+  var config = configFactory.create(envArgs);
 
   config.forEach(function(c) {
     c.devtool = 'cheap-module-source-map';
     c.target = 'web';
     c.output = {
       libraryTarget: 'var',
-      libraryExport: 'default',
       filename: '[name].entry.js',
       path: path.resolve(__dirname, '../test/dist'),
     };

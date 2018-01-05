@@ -5,19 +5,22 @@
  *  - handsontable.js
  *  - handsontable.css
  */
-const configFactory = require('./base');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
+var configFactory = require('./base');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path');
+var webpack = require('webpack');
 
-const PACKAGE_FILENAME = process.env.HOT_FILENAME;
+var env = process.env.NODE_ENV;
+var PACKAGE_NAME = configFactory.PACKAGE_NAME;
+
+module.exports.PACKAGE_NAME = PACKAGE_NAME;
 
 module.exports.create = function create(envArgs) {
-  const config = configFactory.create(envArgs);
+  var config = configFactory.create(envArgs);
 
   config.forEach(function(c) {
     c.devtool = '#cheap-module-eval-source-map';
-    c.output.filename = PACKAGE_FILENAME + '.js';
+    c.output.filename = PACKAGE_NAME + '.js';
     // Exclude all external dependencies from 'base' bundle (handsontable.js and handsontable.css)
     c.externals = {
       numbro: {
@@ -38,6 +41,12 @@ module.exports.create = function create(envArgs) {
         commonjs: 'pikaday',
         amd: 'pikaday',
       },
+      zeroclipboard: {
+        root: 'ZeroClipboard',
+        commonjs2: 'zeroclipboard',
+        commonjs: 'zeroclipboard',
+        amd: 'zeroclipboard',
+      },
       'hot-formula-parser': {
         root: 'formulaParser',
         commonjs2: 'hot-formula-parser',
@@ -53,7 +62,7 @@ module.exports.create = function create(envArgs) {
       loader: path.resolve(__dirname, 'loader/empty-loader.js'),
     });
     c.plugins.push(
-      new ExtractTextPlugin(PACKAGE_FILENAME + '.css')
+      new ExtractTextPlugin(PACKAGE_NAME + '.css')
     );
   });
 

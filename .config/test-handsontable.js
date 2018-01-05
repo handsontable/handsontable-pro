@@ -5,10 +5,15 @@
  *  - e2e.entry.js
  *  - helpers.entry.js
  */
-const path = require('path');
-const webpack = require('webpack');
-const JasmineHtml = require('./plugin/jasmine-html');
-const configFactory = require('./base');
+var path = require('path');
+var webpack = require('webpack');
+var JasmineHtml = require('./plugin/jasmine-html');
+var configFactory = require('./base');
+
+var env = process.env.NODE_ENV;
+var PACKAGE_NAME = configFactory.PACKAGE_NAME;
+
+module.exports.PACKAGE_NAME = PACKAGE_NAME;
 
 module.exports.create = function create(envArgs) {
   var config = configFactory.create(envArgs);
@@ -18,7 +23,6 @@ module.exports.create = function create(envArgs) {
     c.target = 'web';
     c.output = {
       libraryTarget: 'var',
-      libraryExport: 'default',
       filename: '[name].entry.js',
       path: path.resolve(__dirname, '../test/dist'),
     };
@@ -56,6 +60,7 @@ module.exports.create = function create(envArgs) {
           '../dist/numbro/languages.js',
           '../dist/moment/moment.js',
           '../dist/pikaday/pikaday.js',
+          '../dist/zeroclipboard/ZeroClipboard.js',
           '../dist/hot-formula-parser/formula-parser.js',
           '../dist/handsontable.js',
         ],

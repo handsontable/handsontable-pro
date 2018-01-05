@@ -1,0 +1,4 @@
+[submodule "handsontable-free"]
+	path = handsontable-free
+	url = git@github.com:mrdivyansh/handsontable.git
+	branch = master

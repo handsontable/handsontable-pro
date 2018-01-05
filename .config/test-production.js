@@ -5,14 +5,19 @@
  *  - e2e.entry.js
  *  - helpers.entry.js
  */
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
-const configFactory = require('./test-e2e');
-const JasmineHtml = require('./plugin/jasmine-html');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
+var webpack = require('webpack');
+var configFactory = require('./test-e2e');
+var JasmineHtml = require('./plugin/jasmine-html');
+
+var env = process.env.NODE_ENV;
+var PACKAGE_NAME = configFactory.PACKAGE_NAME;
+
+module.exports.PACKAGE_NAME = PACKAGE_NAME;
 
 module.exports.create = function create(envArgs) {
-  const config = configFactory.create(envArgs);
+  var config = configFactory.create(envArgs);
 
   config.forEach(function(c) {
     // Remove all 'HtmlWebpackPlugin' instances

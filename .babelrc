@@ -58,18 +58,23 @@
   ],
   "plugins": [
     ["transform-object-rest-spread", {"useBuiltIns": true}],
-    ["transform-inline-environment-variables"]
+    ["transform-regenerator"],
+    ["transform-async-generator-functions"]
   ],
   "env": {
     "commonjs": {
       "plugins": [
-        ["transform-es2015-modules-commonjs", {"loose": true}]
+        ["transform-es2015-modules-commonjs", {"loose": true}],
+        ["transform-regenerator"],
+        ["transform-async-generator-functions"]
       ]
     },
     "commonjs_dist": {
       "plugins": [
         ["transform-es2015-modules-commonjs", {"loose": true}],
-        ["babel-plugin-transform-require-ignore", {"extensions": [".css"]}]
+        ["babel-plugin-transform-require-ignore", {"extensions": [".css"]}],
+        ["transform-regenerator"],
+        ["transform-async-generator-functions"]
       ]
     },
     "commonjs_e2e": {
@@ -131,6 +136,8 @@
       ],
       "plugins": [
         ["transform-es2015-modules-commonjs", {"loose": true}],
+        ["transform-regenerator"],
+        ["transform-async-generator-functions"],
         ["babel-plugin-forbidden-imports", {
           "allowedModules": [
             "window",
@@ -146,7 +153,9 @@
     },
     "es": {
       "plugins": [
-        ["babel-plugin-transform-require-ignore", {"extensions": [".css"]}]
+        ["babel-plugin-transform-require-ignore", {"extensions": [".css"]}],
+        ["transform-regenerator"],
+        ["transform-async-generator-functions"]
       ]
     }
   },

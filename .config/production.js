@@ -7,20 +7,23 @@
  *  - handsontable.full.min.js
  *  - handsontable.full.min.css
  */
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const configFactory = require('./development');
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var configFactory = require('./development');
 
-const PACKAGE_FILENAME = process.env.HOT_FILENAME;
+var env = process.env.NODE_ENV;
+var PACKAGE_NAME = configFactory.PACKAGE_NAME;
+
+module.exports.PACKAGE_NAME = PACKAGE_NAME;
 
 module.exports.create = function create(envArgs) {
-  const config = configFactory.create(envArgs);
+  var config = configFactory.create(envArgs);
 
   // Add uglifyJs plugin for each configuration
   config.forEach(function(c) {
-    const isFullBuild = /\.full\.js$/.test(c.output.filename);
+    var isFullBuild = /\.full\.js$/.test(c.output.filename);
 
     c.devtool = false;
     c.output.filename = c.output.filename.replace(/\.js$/, '.min.js');
@@ -45,7 +48,7 @@ module.exports.create = function create(envArgs) {
           screw_ie8: true,
         },
       }),
-      new ExtractTextPlugin(PACKAGE_FILENAME + (isFullBuild ? '.full' : '') + '.min.css'),
+      new ExtractTextPlugin(PACKAGE_NAME + (isFullBuild ? '.full' : '') + '.min.css'),
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: isFullBuild ? /\.full\.min\.css$/ : /\.min\.css$/,
       })
@@ -80,6 +83,12 @@ module.exports.create = function create(envArgs) {
           },
           {
             from: {glob: 'node_modules/pikaday/css/pikaday.css'}, to: 'pikaday', flatten: true
+          },
+          { // zeroclipboard
+            from: {glob: 'node_modules/zeroclipboard/dist/ZeroClipboard.@(js|swf)'}, to: 'zeroclipboard', flatten: true
+          },
+          {
+            from: {glob: 'node_modules/zeroclipboard/LICENSE'}, to: 'zeroclipboard', flatten: true
           },
         ])
       );
