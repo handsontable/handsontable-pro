@@ -125,7 +125,7 @@
 .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
   width: 159px;
   padding: 4px;
-  margin-left: -4px;
+  margin-left: -18px;
 }
 
 .htUIMultipleSelect .ht_master .wtHolder {
@@ -148,6 +148,7 @@
 }
 .handsontable .htUISelectionControls {
   text-align: right;
+  margin-right: 14px;
 }
 
 .handsontable .htCheckboxRendererInput {
