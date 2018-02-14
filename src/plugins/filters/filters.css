@@ -123,9 +123,9 @@
   padding: 0;
 }
 .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
-  width: 159px;
+  width: 175px;
   padding: 4px;
-  margin-left: -18px;
+  margin-left: -2px;
 }
 
 .htUIMultipleSelect .ht_master .wtHolder {
@@ -140,7 +140,7 @@
 
 .handsontable .htUIClearAll, .handsontable .htUISelectAll {
   display: inline-block;
-  margin: 0 5px;
+  margin: 0 4px;
 }
 .handsontable .htUIClearAll a, .handsontable .htUISelectAll a {
   color: #3283D8;
@@ -148,7 +148,6 @@
 }
 .handsontable .htUISelectionControls {
   text-align: right;
-  margin-right: 14px;
 }
 
 .handsontable .htCheckboxRendererInput {
@@ -212,7 +211,6 @@
   margin-bottom: 7px;
   padding: 0 2px 0 0;
   position: relative;
-  width: 169px;
 }
 .handsontable .htUISelectCaption {
   background-color: #e8e8e8;
@@ -254,7 +252,6 @@
   border-radius: 2px;
   border: 1px solid #d2d1d1;
   padding: 3px;
-  width: 161px;
 }
 
 .handsontable .htUIRadio {
