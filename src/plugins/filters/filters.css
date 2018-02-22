@@ -110,9 +110,9 @@
   padding: 0 0 5px 0;
 }
 .handsontable .htFiltersMenuCondition .htUIInput input {
-  width: 159px;
+  width: 175px;
   padding: 4px;
-  margin-left: -4px;
+  margin-left: -2px;
 }
 
 /* Component filter by value */
