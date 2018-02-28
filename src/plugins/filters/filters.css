@@ -110,9 +110,8 @@
   padding: 0 0 5px 0;
 }
 .handsontable .htFiltersMenuCondition .htUIInput input {
-  width: 175px;
+  width: 177px;
   padding: 4px;
-  margin-left: -2px;
 }
 
 /* Component filter by value */
@@ -123,9 +122,8 @@
   padding: 0;
 }
 .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
-  width: 175px;
+  width: 177px;
   padding: 4px;
-  margin-left: -2px;
 }
 
 .htUIMultipleSelect .ht_master .wtHolder {
@@ -140,7 +138,7 @@
 
 .handsontable .htUIClearAll, .handsontable .htUISelectAll {
   display: inline-block;
-  margin: 0 4px;
+  margin: 0 1px 0 9px;
 }
 .handsontable .htUIClearAll a, .handsontable .htUISelectAll a {
   color: #3283D8;
@@ -209,7 +207,6 @@
 .handsontable .htUISelect {
   cursor: pointer;
   margin-bottom: 7px;
-  padding: 0 2px 0 0;
   position: relative;
 }
 .handsontable .htUISelectCaption {
