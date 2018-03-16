@@ -229,6 +229,8 @@ class Filters extends BasePlugin {
    *
    * \* when `n` is collection size; it's used i.e. for one operation introduced from UI (when choosing from filter's drop-down menu two conditions with OR operator between them, mixed with choosing values from the multiple choice select)
    *
+   * **Note**: Mind that you cannot mix different types of operations (for instance, if you use `conjunction`, use it consequently for a particular column).
+   *
    * @example
    * ```js
    * // Add filter "Greater than" 95 to column at index 1
