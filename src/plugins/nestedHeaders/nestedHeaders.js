@@ -448,10 +448,11 @@ class NestedHeaders extends BasePlugin {
     if (selection === void 0) {
       return;
     }
-    const classHighlight = 'ht__highlight';
+    const highlightHeaderClassName = 'ht__highlight';
+    const activeHeaderClassName = 'ht__active_highlight';
 
     let wtOverlays = this.hot.view.wt.wtOverlays;
-    let selectionByHeader = this.hot.selection.selectedHeader.cols;
+    let selectionByHeader = this.hot.selection.isSelectedByColumnHeader();
     let from = Math.min(selection[1], selection[3]);
     let to = Math.max(selection[1], selection[3]);
     let levelLimit = selectionByHeader ? -1 : this.columnHeaderLevelCount - 1;
@@ -471,12 +472,20 @@ class NestedHeaders extends BasePlugin {
           }
 
           if ((!selectionByHeader && level < levelLimit) || (selectionByHeader && !isInSelection)) {
-            if (hasClass(TH, classHighlight)) {
-              removeClass(TH, classHighlight);
+            if (hasClass(TH, highlightHeaderClassName)) {
+              removeClass(TH, highlightHeaderClassName);
+            }
+            if (selectionByHeader && hasClass(TH, activeHeaderClassName)) {
+              removeClass(TH, activeHeaderClassName);
             }
 
-          } else if (!hasClass(TH, classHighlight)) {
-            addClass(TH, classHighlight);
+          } else {
+            if (!hasClass(TH, highlightHeaderClassName)) {
+              addClass(TH, highlightHeaderClassName);
+            }
+            if (!hasClass(TH, activeHeaderClassName)) {
+              addClass(TH, activeHeaderClassName);
+            }
           }
         });
       }
@@ -516,11 +525,12 @@ class NestedHeaders extends BasePlugin {
    */
   onAfterOnCellMouseDown(event, coords, TD) {
     if (coords.row < 0) {
-      let colspan = this.getColspan(coords.row, coords.col);
-      let lastColIndex = coords.col + colspan - 1;
+      const colspan = this.getColspan(coords.row, coords.col);
+      const lastColIndex = coords.col + colspan - 1;
 
       if (colspan > 1) {
-        let lastRowIndex = this.hot.countRows() - 1;
+        const lastRowIndex = this.hot.countRows() - 1;
+
         this.hot.selection.setRangeEnd(new CellCoords(lastRowIndex, lastColIndex));
       }
     }
@@ -535,54 +545,54 @@ class NestedHeaders extends BasePlugin {
    * @param {HTMLElement} TD
    */
   onBeforeOnCellMouseOver(event, coords, TD, blockCalculations) {
-    if (coords.row < 0 && coords.col >= 0 && this.hot.view.isMouseDown()) {
-      let {from, to} = this.hot.getSelectedRangeLast();
-      let colspan = this.getColspan(coords.row, coords.col);
-      let lastColIndex = coords.col + colspan - 1;
-      let changeDirection = false;
+    if (coords.row >= 0 || coords.col < 0 || !this.hot.view.isMouseDown()) {
+      return;
+    }
 
-      if (from.col <= to.col) {
-        if ((coords.col < from.col && lastColIndex === to.col) ||
-            (coords.col < from.col && lastColIndex < from.col) ||
-            (coords.col < from.col && lastColIndex >= from.col && lastColIndex < to.col)) {
-          changeDirection = true;
-        }
-      } else if ((coords.col < to.col && lastColIndex > from.col) ||
-                 (coords.col > from.col) ||
-                 (coords.col <= to.col && lastColIndex > from.col) ||
-                 (coords.col > to.col && lastColIndex > from.col)) {
+    let {from, to} = this.hot.getSelectedRangeLast();
+    let colspan = this.getColspan(coords.row, coords.col);
+    let lastColIndex = coords.col + colspan - 1;
+    let changeDirection = false;
+
+    if (from.col <= to.col) {
+      if ((coords.col < from.col && lastColIndex === to.col) ||
+          (coords.col < from.col && lastColIndex < from.col) ||
+          (coords.col < from.col && lastColIndex >= from.col && lastColIndex < to.col)) {
         changeDirection = true;
       }
+    } else if ((coords.col < to.col && lastColIndex > from.col) ||
+               (coords.col > from.col) ||
+               (coords.col <= to.col && lastColIndex > from.col) ||
+               (coords.col > to.col && lastColIndex > from.col)) {
+      changeDirection = true;
+    }
 
-      if (changeDirection) {
-        [from.col, to.col] = [to.col, from.col];
-      }
+    if (changeDirection) {
+      [from.col, to.col] = [to.col, from.col];
+    }
 
-      if (colspan > 1) {
-        blockCalculations.column = true;
-        blockCalculations.cell = true;
+    if (colspan > 1) {
+      blockCalculations.column = true;
+      blockCalculations.cell = true;
 
-        this.hot.selection.setSelectedHeaders(false, true);
+      const columnRange = [];
 
-        if (from.col === to.col) {
-          if (lastColIndex <= from.col && coords.col < from.col) {
-            this.hot.selection.setRangeStartOnly(new CellCoords(from.row, to.col));
-            this.hot.selection.setRangeEnd(new CellCoords(to.row, coords.col));
-          } else {
-            this.hot.selection.setRangeStartOnly(new CellCoords(from.row, coords.col < from.col ? coords.col : from.col));
-            this.hot.selection.setRangeEnd(new CellCoords(to.row, lastColIndex > to.col ? lastColIndex : to.col));
-          }
-        }
-        if (from.col < to.col) {
-          this.hot.selection.setRangeStartOnly(new CellCoords(from.row, coords.col < from.col ? coords.col : from.col));
-          this.hot.selection.setRangeEnd(new CellCoords(to.row, lastColIndex));
-
-        }
-        if (from.col > to.col) {
-          this.hot.selection.setRangeStartOnly(new CellCoords(from.row, from.col));
-          this.hot.selection.setRangeEnd(new CellCoords(to.row, coords.col));
+      if (from.col === to.col) {
+        if (lastColIndex <= from.col && coords.col < from.col) {
+          columnRange.push(to.col, coords.col);
+        } else {
+          columnRange.push(coords.col < from.col ? coords.col : from.col, lastColIndex > to.col ? lastColIndex : to.col);
         }
       }
+      if (from.col < to.col) {
+        columnRange.push(coords.col < from.col ? coords.col : from.col, lastColIndex);
+
+      }
+      if (from.col > to.col) {
+        columnRange.push(from.col, coords.col);
+      }
+
+      this.hot.selectColumns(...columnRange);
     }
   }
 

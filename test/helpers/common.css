@@ -1,3 +1,8 @@
 .red-background {
   background-color: #ff0000 !important;
 }
+
+#testContainer {
+  /* Temporary fix caused by #4961 bug */
+  padding-bottom: 5px;
+}
