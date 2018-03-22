@@ -3025,4 +3025,167 @@ describe('Filters UI', function() {
       expect($(conditionRadioInput(0).element).parent().is(':visible')).toBe(false);
     });
   });
+
+  describe('Dimensions of filter\'s elements inside drop-down menu', () => {
+    it('should scale text input showed after condition selection (pixel perfect)', () => {
+      handsontable({
+        data: getDataForFilters(),
+        columns: getColumnsForFilters(),
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {}
+          }
+        },
+        filters: true
+      });
+
+      dropdownMenu(1);
+
+      $(dropdownMenuRootElement().querySelector('.htUISelect')).simulate('click');
+      $(conditionMenuRootElements().first).find('tbody td:contains("Begins with")').simulate('mousedown');
+
+      const widthOfMenu = $(dropdownMenuRootElement()).find('table.htCore').width();
+      const widthOfInput = $(dropdownMenuRootElement()).find('input').width();
+      const bothInputBorders = 2;
+      const bothInputPaddings = 8;
+      const bothWrapperMargins = 16;
+      const bothCustomRendererPaddings = 12;
+      const parentsPaddings = bothInputBorders + bothInputPaddings + bothWrapperMargins + bothCustomRendererPaddings;
+
+      expect(widthOfInput).toEqual(widthOfMenu - parentsPaddings);
+    });
+
+    it('should scale a condition select (pixel perfect)', () => {
+      handsontable({
+        data: getDataForFilters(),
+        columns: getColumnsForFilters(),
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {}
+          }
+        },
+        filters: true
+      });
+
+      dropdownMenu(1);
+
+      const widthOfMenu = $(dropdownMenuRootElement()).find('table.htCore').width();
+      const widthOfSelect = $(conditionSelectRootElements().first).width();
+      const bothWrapperMargins = 16;
+      const bothCustomRendererPaddings = 12;
+      const parentsPaddings = bothWrapperMargins + bothCustomRendererPaddings;
+
+      expect(widthOfSelect).toEqual(widthOfMenu - parentsPaddings);
+    });
+
+    it('should scale search input of the value box (pixel perfect)', () => {
+      handsontable({
+        data: getDataForFilters(),
+        columns: getColumnsForFilters(),
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {}
+          }
+        },
+        filters: true
+      });
+
+      dropdownMenu(1);
+
+      const widthOfMenu = $(dropdownMenuRootElement()).find('table.htCore').width();
+      const widthOfInput = $(dropdownMenuRootElement()).find('.htUIMultipleSelectSearch input').width();
+      const bothInputBorders = 2;
+      const bothInputPaddings = 8;
+      const bothWrapperMargins = 16;
+      const bothCustomRendererPaddings = 12;
+      const parentsPaddings = bothInputBorders + bothInputPaddings + bothWrapperMargins + bothCustomRendererPaddings;
+
+      expect(widthOfInput).toEqual(widthOfMenu - parentsPaddings);
+    });
+
+    it('should scale the value box element (pixel perfect)', () => {
+      handsontable({
+        data: getDataForFilters(),
+        columns: getColumnsForFilters(),
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {}
+          }
+        },
+        filters: true
+      });
+
+      dropdownMenu(1);
+
+      $(dropdownMenuRootElement().querySelector('.htUISelect')).simulate('click');
+      $(conditionMenuRootElements().first).find('tbody td:contains("Begins with")').simulate('mousedown');
+
+      const widthOfMenu = $(dropdownMenuRootElement()).find('table.htCore').width();
+      const widthOfValueBox = $(byValueBoxRootElement()).width();
+      const bothWrapperMargins = 16;
+      const bothCustomRendererPaddings = 12;
+
+      const parentsPaddings = bothWrapperMargins + bothCustomRendererPaddings;
+
+      expect(widthOfValueBox).toEqual(widthOfMenu - parentsPaddings);
+    });
+
+    it('should fit the single value to the value box element (pixel perfect)', async () => {
+      handsontable({
+        data: getDataForFilters(),
+        columns: getColumnsForFilters(),
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {}
+          }
+        },
+        filters: true
+      });
+
+      dropdownMenu(1);
+
+      $(dropdownMenuRootElement().querySelector('.htUISelect')).simulate('click');
+      $(conditionMenuRootElements().first).find('tbody td:contains("Begins with")').simulate('mousedown');
+
+      const widthOfValueBoxWithoutScroll = $(byValueBoxRootElement()).find('.wtHolder')[0].scrollWidth;
+      const widthOfSingleValue = $(byValueBoxRootElement()).find('table.htCore tr:eq(0)').width();
+
+      expect(widthOfSingleValue).toEqual(widthOfValueBoxWithoutScroll);
+    });
+  });
 });
