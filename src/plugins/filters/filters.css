@@ -3,7 +3,7 @@
  */
 
 /* Conditions menu */
-.htFiltersConditionsMenu {
+:not(.htGhostTable) .htFiltersConditionsMenu {
   display: none;
   position: absolute;
   z-index: 1070;
@@ -109,10 +109,6 @@
 .handsontable .htFiltersMenuCondition .htUIInput {
   padding: 0 0 5px 0;
 }
-.handsontable .htFiltersMenuCondition .htUIInput input {
-  width: 177px;
-  padding: 4px;
-}
 
 /* Component filter by value */
 .handsontable .htFiltersMenuValue {
@@ -121,9 +117,11 @@
 .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch {
   padding: 0;
 }
+.handsontable .htFiltersMenuCondition .htUIInput input,
 .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
-  width: 177px;
   padding: 4px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .htUIMultipleSelect .ht_master .wtHolder {
