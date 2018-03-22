@@ -646,67 +646,67 @@ describe('DropdownMenu', function () {
     hot.getPlugin('dropdownMenu').executeCommand('alignment:bottom');
 
     var cellMeta = hot.getCellMeta(0, 0);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(0, 7);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(5, 1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(5, 7);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(7, 1);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(7, 5);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(7, 7);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
 
     hot.undo();
     cellMeta = hot.getCellMeta(0, 7);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toEqual(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
 
     cellMeta = hot.getCellMeta(5, 7);
-    expect(cellMeta.className.indexOf('htBottom')).toEqual(-1);
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
 
     cellMeta = hot.getCellMeta(7, 7);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toEqual(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
 
     hot.undo();
 
     cellMeta = hot.getCellMeta(0, 0);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toEqual(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
 
     cellMeta = hot.getCellMeta(5, 1);
-    expect(cellMeta.className.indexOf('htMiddle')).toEqual(-1);
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
 
     cellMeta = hot.getCellMeta(7, 1);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toEqual(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
 
     hot.undo();
 
     cellMeta = hot.getCellMeta(7, 1);
-    expect(cellMeta.className.indexOf('htRight')).toEqual(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toEqual(-1);
+    expect(cellMeta.className.includes('htRight')).toBeFalsy();
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
 
     cellMeta = hot.getCellMeta(7, 5);
-    expect(cellMeta.className.indexOf('htRight')).toEqual(-1);
+    expect(cellMeta.className.includes('htRight')).toBeFalsy();
 
     cellMeta = hot.getCellMeta(7, 7);
-    expect(cellMeta.className.indexOf('htRight')).toEqual(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toEqual(-1);
+    expect(cellMeta.className.includes('htRight')).toBeFalsy();
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
   });
 
   it('should be possible redo the alignment process by calling the \'Redo\' action without contextMenu', () => {
@@ -736,29 +736,29 @@ describe('DropdownMenu', function () {
     hot.getPlugin('dropdownMenu').executeCommand('alignment:bottom');
 
     var cellMeta = hot.getCellMeta(0, 0);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(0, 7);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(5, 1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(5, 7);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(7, 1);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(7, 5);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
 
     cellMeta = hot.getCellMeta(7, 7);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
 
     hot.undo();
     hot.undo();
@@ -767,38 +767,38 @@ describe('DropdownMenu', function () {
 
     hot.redo();
     cellMeta = hot.getCellMeta(0, 0);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
     cellMeta = hot.getCellMeta(1, 5);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
     cellMeta = hot.getCellMeta(2, 8);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
 
     hot.redo();
     cellMeta = hot.getCellMeta(6, 0);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
     cellMeta = hot.getCellMeta(7, 5);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
     cellMeta = hot.getCellMeta(8, 8);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
 
     hot.redo();
     cellMeta = hot.getCellMeta(0, 0);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
     cellMeta = hot.getCellMeta(5, 1);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
     cellMeta = hot.getCellMeta(8, 2);
-    expect(cellMeta.className.indexOf('htMiddle')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
 
     hot.redo();
     cellMeta = hot.getCellMeta(0, 6);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htCenter')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
     cellMeta = hot.getCellMeta(5, 7);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
     cellMeta = hot.getCellMeta(8, 8);
-    expect(cellMeta.className.indexOf('htBottom')).toBeGreaterThan(-1);
-    expect(cellMeta.className.indexOf('htRight')).toBeGreaterThan(-1);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
   });
 });
