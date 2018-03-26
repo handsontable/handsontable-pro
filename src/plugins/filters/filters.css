@@ -68,7 +68,7 @@
 
 .htFiltersConditionsMenu table tbody tr td .htItemWrapper {
   margin-left: 10px;
-  margin-right: 6px;
+  margin-right: 10px;
 }
 
 .htFiltersConditionsMenu table tbody tr td div span.selected {
@@ -194,7 +194,6 @@
 
 .handsontable .htUIInput.htUIButtonOK {
   margin-right: 10px;
-  margin-left: -4px; /* margins of .htItemWrapper */
 }
 
 .handsontable .htUIInput.htUIButtonOK input {
