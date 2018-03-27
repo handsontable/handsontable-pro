@@ -451,20 +451,25 @@ class NestedHeaders extends BasePlugin {
     const highlightHeaderClassName = 'ht__highlight';
     const activeHeaderClassName = 'ht__active_highlight';
 
-    let wtOverlays = this.hot.view.wt.wtOverlays;
-    let selectionByHeader = this.hot.selection.isSelectedByColumnHeader();
-    let from = Math.min(selection[1], selection[3]);
-    let to = Math.max(selection[1], selection[3]);
-    let levelLimit = selectionByHeader ? -1 : this.columnHeaderLevelCount - 1;
+    const wtOverlays = this.hot.view.wt.wtOverlays;
+    const selectionByHeader = this.hot.selection.isSelectedByColumnHeader();
+    const from = Math.min(selection[1], selection[3]);
+    const to = Math.max(selection[1], selection[3]);
+    const levelLimit = selectionByHeader ? -1 : this.columnHeaderLevelCount - 1;
+
+    const changes = [];
+    const classNameModifier = (className) => (TH, modifier) => () => modifier(TH, className);
+    const highlightHeader = classNameModifier('ht__highlight');
+    const activeHeader = classNameModifier('ht__active_highlight');
 
     rangeEach(from, to, (column) => {
       for (let level = this.columnHeaderLevelCount - 1; level > -1; level--) {
-        let visibleColumnIndex = this.getNestedParent(level, column);
-        let topTH = wtOverlays.topOverlay ? wtOverlays.topOverlay.clone.wtTable.getColumnHeader(visibleColumnIndex, level) : void 0;
-        let topLeftTH = wtOverlays.topLeftCornerOverlay ? wtOverlays.topLeftCornerOverlay.clone.wtTable.getColumnHeader(visibleColumnIndex, level) : void 0;
-        let listTH = [topTH, topLeftTH];
-        let colspanLen = this.getColspan(level - this.columnHeaderLevelCount, visibleColumnIndex);
-        let isInSelection = visibleColumnIndex >= from && (visibleColumnIndex + colspanLen - 1) <= to;
+        const visibleColumnIndex = this.getNestedParent(level, column);
+        const topTH = wtOverlays.topOverlay ? wtOverlays.topOverlay.clone.wtTable.getColumnHeader(visibleColumnIndex, level) : void 0;
+        const topLeftTH = wtOverlays.topLeftCornerOverlay ? wtOverlays.topLeftCornerOverlay.clone.wtTable.getColumnHeader(visibleColumnIndex, level) : void 0;
+        const listTH = [topTH, topLeftTH];
+        const colspanLen = this.getColspan(level - this.columnHeaderLevelCount, visibleColumnIndex);
+        const isInSelection = visibleColumnIndex >= from && (visibleColumnIndex + colspanLen - 1) <= to;
 
         arrayEach(listTH, (TH, index, array) => {
           if (TH === void 0) {
@@ -472,24 +477,25 @@ class NestedHeaders extends BasePlugin {
           }
 
           if ((!selectionByHeader && level < levelLimit) || (selectionByHeader && !isInSelection)) {
-            if (hasClass(TH, highlightHeaderClassName)) {
-              removeClass(TH, highlightHeaderClassName);
-            }
-            if (selectionByHeader && hasClass(TH, activeHeaderClassName)) {
-              removeClass(TH, activeHeaderClassName);
+            changes.push(highlightHeader(TH, removeClass));
+
+            if (selectionByHeader) {
+              changes.push(activeHeader(TH, removeClass));
             }
 
           } else {
-            if (!hasClass(TH, highlightHeaderClassName)) {
-              addClass(TH, highlightHeaderClassName);
-            }
-            if (!hasClass(TH, activeHeaderClassName)) {
-              addClass(TH, activeHeaderClassName);
+            changes.push(highlightHeader(TH, addClass));
+
+            if (selectionByHeader) {
+              changes.push(activeHeader(TH, addClass));
             }
           }
         });
       }
     });
+
+    arrayEach(changes, (fn) => void fn());
+    changes.length = 0;
   }
 
   /**
