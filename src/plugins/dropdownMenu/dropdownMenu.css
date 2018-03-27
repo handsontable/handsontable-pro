@@ -35,8 +35,14 @@
   display: none;
 }
 
-.htDropdownMenu.htGhostTable table.htCore {
-  border: none; /* AutoColumnSize should count size without borders declared in the below class selector */
+/*
+  AutoColumnSize will NOT count size of filter's value box. This element should always fit to another elements elbowing the table.
+  Workaround for quick fix of two main problems:
+  - borders declared in the below class selector are also counted by `offsetWidth` (that could be fixed by not displaying them for GhostTable)
+  - MultipleSelectUI basing on Handsontable is built only once, so it's `wtHolder` width is counted only once.
+*/
+.htGhostTable .htUIMultipleSelectHot {
+  display: none;
 }
 
 .htDropdownMenu table.htCore {

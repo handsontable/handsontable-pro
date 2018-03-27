@@ -99,6 +99,69 @@ describe('DropdownMenu', function () {
 
       expect($contextSubMenu.find('.wtHider').width()).toEqual(215);
     });
+
+    it('should display proper width after second render', async function() {
+      handsontable({
+        colHeaders: true,
+        dropdownMenu: true,
+        filters: true
+      });
+
+      const $menu = $('.htDropdownMenu');
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const firstWidth = $menu.find('.wtHider').width();
+
+      mouseDown(this.$container);
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const nextWidth = $menu.find('.wtHider').width();
+
+      expect(nextWidth).toEqual(firstWidth);
+    });
+
+    it('should display proper wigit statdth of value box after change of another elements width', async () => {
+      const hot = handsontable({
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {},
+            filter_action_bar: {}
+          }
+        },
+        filters: true
+      });
+
+      const $menu = $('.htDropdownMenu');
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const firstWidth = $menu.find('.wtHider').width();
+
+      hot.updateSettings({dropdownMenu: true});
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const nextWidth = $menu.find('.wtHider').width();
+
+      expect(nextWidth).toBeLessThan(firstWidth);
+    });
   });
 
   describe('menu opening', function () {
