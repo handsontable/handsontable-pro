@@ -3234,8 +3234,6 @@ describe('Filters UI', function() {
         filters: true
       });
 
-      console.log(handsontable);
-
       const $menu = $('.htDropdownMenu');
 
       dropdownMenu(0);
