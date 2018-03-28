@@ -68,7 +68,7 @@
 
 .htFiltersConditionsMenu table tbody tr td .htItemWrapper {
   margin-left: 10px;
-  margin-right: 6px;
+  margin-right: 10px;
 }
 
 .htFiltersConditionsMenu table tbody tr td div span.selected {
@@ -175,8 +175,6 @@
 .handsontable .htUIInput.htUIButton {
   cursor: pointer;
   display: inline-block;
-  padding: 3px 4px 7px 4px;
-  width: 60px;
 }
 .handsontable .htUIInput.htUIButton input {
   background-color: #eee;
@@ -186,10 +184,14 @@
   font-size: 11px;
   font-weight: bold;
   height: 19px;
-  width: 42px;
+  min-width: 42px;
 }
 .handsontable .htUIInput.htUIButton input:hover {
   border-color: #b9b9b9;
+}
+
+.handsontable .htUIInput.htUIButtonOK {
+  margin-right: 10px;
 }
 
 .handsontable .htUIInput.htUIButtonOK input {

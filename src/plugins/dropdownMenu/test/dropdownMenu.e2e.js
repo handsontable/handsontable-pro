@@ -1,5 +1,5 @@
 describe('DropdownMenu', function () {
-  var id = 'testContainer';
+  const id = 'testContainer';
 
   beforeEach(function () {
     this.$container = $('<div id="' + id + '"></div>').appendTo('body');
@@ -14,7 +14,7 @@ describe('DropdownMenu', function () {
 
   describe('enable/disable plugin', function () {
     it('should disable plugin after call disablePlugin method', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -29,7 +29,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should enable plugin after call enablePlugin method', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: false,
         colHeaders: true,
         height: 100
@@ -166,7 +166,7 @@ describe('DropdownMenu', function () {
 
   describe('menu opening', function () {
     it('should open menu after click on table header button', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -181,7 +181,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should open menu after click on table header button when only header cells are visible', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         data: [],
         colHeaders: ['Year', 'Kia'],
         columns: [{data: 0}, {data: 1}],
@@ -199,7 +199,7 @@ describe('DropdownMenu', function () {
 
   describe('menu closing', function () {
     it('should close menu after click', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -217,7 +217,7 @@ describe('DropdownMenu', function () {
 
   describe('menu disabled', function () {
     it('should not open menu after table header button click', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -235,7 +235,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should not create dropdowm menu if it\'s disabled in constructor options', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: false,
         colHeaders: true,
         height: 100
@@ -246,7 +246,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should reenable menu', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -268,7 +268,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should reenable menu with updateSettings when it was disabled in constructor', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: false,
         colHeaders: true,
         height: 100
@@ -290,7 +290,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should disable menu with updateSettings when it was enabled in constructor', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -308,7 +308,7 @@ describe('DropdownMenu', function () {
 
   describe('menu destroy', function () {
     it('should close context menu when HOT is being destroyed', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -326,7 +326,7 @@ describe('DropdownMenu', function () {
 
   describe('default context menu actions', function () {
     it('should display the default set of actions', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         comments: true,
@@ -335,9 +335,9 @@ describe('DropdownMenu', function () {
 
       dropdownMenu();
 
-      var items = $('.htDropdownMenu tbody td');
-      var actions = items.not('.htSeparator');
-      var separators = items.filter('.htSeparator');
+      const items = $('.htDropdownMenu tbody td');
+      const actions = items.not('.htSeparator');
+      const separators = items.filter('.htSeparator');
 
       expect(actions.length).toEqual(6);
       expect(separators.length).toEqual(4);
@@ -353,7 +353,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should insert column on the left of selection', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: true,
         colHeaders: true,
@@ -361,7 +361,7 @@ describe('DropdownMenu', function () {
         height: 400
       });
 
-      var afterCreateColCallback = jasmine.createSpy('afterCreateColCallback');
+      const afterCreateColCallback = jasmine.createSpy('afterCreateColCallback');
       hot.addHook('afterCreateCol', afterCreateColCallback);
 
       expect(countCols()).toEqual(4);
@@ -376,14 +376,14 @@ describe('DropdownMenu', function () {
     });
 
     it('should Insert column right of selection', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: true,
         colHeaders: true,
         height: 100
       });
 
-      var afterCreateColCallback = jasmine.createSpy('afterCreateColCallback');
+      const afterCreateColCallback = jasmine.createSpy('afterCreateColCallback');
       hot.addHook('afterCreateCol', afterCreateColCallback);
 
       expect(countCols()).toEqual(4);
@@ -398,7 +398,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should remove column', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: true,
         colHeaders: true,
@@ -416,7 +416,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should clear column data', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: true,
         colHeaders: true,
@@ -438,7 +438,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should display only the specified actions', function () {
-      var hot = handsontable({
+      const hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: ['clear_column'],
         colHeaders: true,
@@ -454,10 +454,10 @@ describe('DropdownMenu', function () {
   describe('custom options', function () {
     it('should have custom items list', function () {
 
-      var callback1 = jasmine.createSpy('callback1');
-      var callback2 = jasmine.createSpy('callback2');
+      const callback1 = jasmine.createSpy('callback1');
+      const callback2 = jasmine.createSpy('callback2');
 
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: {
           items: {
             cust1: {
@@ -492,8 +492,8 @@ describe('DropdownMenu', function () {
     });
 
     it('should have custom items list (defined as a function)', function () {
-      var enabled = false;
-      var hot = handsontable({
+      let enabled = false;
+      const hot = handsontable({
         dropdownMenu: {
           items: {
             cust1: {
@@ -529,9 +529,9 @@ describe('DropdownMenu', function () {
     });
 
     it('should enable to define item options globally', function () {
-      var callback = jasmine.createSpy('callback');
+      const callback = jasmine.createSpy('callback');
 
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: {
           callback: callback,
           items: {
@@ -560,9 +560,9 @@ describe('DropdownMenu', function () {
     });
 
     it('should override default items options', function () {
-      var callback = jasmine.createSpy('callback');
+      const callback = jasmine.createSpy('callback');
 
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: {
           items: {
             remove_col: {
@@ -588,14 +588,14 @@ describe('DropdownMenu', function () {
     });
 
     it('should fire item callback after item has been clicked', function () {
-      var customItem = {
+      const customItem = {
         name: 'Custom item',
         callback: function() {}
       };
 
       spyOn(customItem, 'callback');
 
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: {
           items: {
             customItemKey: customItem
@@ -627,11 +627,11 @@ describe('DropdownMenu', function () {
     });
 
     it('should apply enabling/disabling contextMenu using updateSetting only to particular instance of HOT', function () {
-      var hot1 = handsontable({
+      const hot1 = handsontable({
         dropdownMenu: false,
         height: 100
       });
-      var hot2 = this.$container2.handsontable({
+      let hot2 = this.$container2.handsontable({
         dropdownMenu: true,
         height: 100
       });
@@ -655,9 +655,9 @@ describe('DropdownMenu', function () {
 
   describe('afterDropdownMenuDefaultOptions hook', function() {
     it('should call with dropdown menu options as the first param', function () {
-      var options;
+      let options;
 
-      var afterDropdownMenuDefaultOptions = function(options_) {
+      const afterDropdownMenuDefaultOptions = function(options_) {
         options = options_;
         options.items.cust1 = {
           name: 'My custom item',
@@ -668,7 +668,7 @@ describe('DropdownMenu', function () {
 
       Handsontable.hooks.add('afterDropdownMenuDefaultOptions', afterDropdownMenuDefaultOptions);
 
-      var hot = handsontable({
+      const hot = handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -676,7 +676,7 @@ describe('DropdownMenu', function () {
 
       dropdownMenu();
 
-      var $menu = $('.htDropdownMenu .ht_master .htCore');
+      const $menu = $('.htDropdownMenu .ht_master .htCore');
 
       expect(options).toBeDefined();
       expect(options.items).toBeDefined();
@@ -699,7 +699,7 @@ describe('DropdownMenu', function () {
         }
       });
 
-      var hot = handsontable({
+      const hot = handsontable({
         colHeaders: true,
         dropdownMenu: ['make_read_only'],
         height: 100
@@ -707,8 +707,8 @@ describe('DropdownMenu', function () {
 
       dropdownMenu();
 
-      var items = $('.htDropdownMenu tbody td');
-      var actions = items.not('.htSeparator');
+      const items = $('.htDropdownMenu tbody td');
+      const actions = items.not('.htSeparator');
 
       expect(actions.text()).toEqual([
         'Read only',
@@ -717,7 +717,7 @@ describe('DropdownMenu', function () {
     });
 
     it('should be called only with items selected in plugin settings', function () {
-      var keys = [];
+      let keys = [];
 
       Handsontable.hooks.add('beforeDropdownMenuSetItems', function(items) {
         if (this === hot || !hot) {
@@ -727,7 +727,7 @@ describe('DropdownMenu', function () {
         }
       });
 
-      var hot = handsontable({
+      const hot = handsontable({
         colHeaders: true,
         dropdownMenu: ['make_read_only', 'col_left'],
         height: 100
@@ -737,5 +737,188 @@ describe('DropdownMenu', function () {
 
       expect(keys).toEqual(['make_read_only', 'col_left']);
     });
+  });
+
+  it('should be possible undo the alignment process by calling the \'Undo\' action without contextMenu', () => {
+    const hot = handsontable({
+      data: Handsontable.helper.createSpreadsheetData(9, 9),
+      dropdownMenu: true
+    });
+
+    // top 3 rows center
+    selectCell(0, 0, 2, 8);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:center');
+
+    // middle 3 rows unchanged - left
+
+    // bottom 3 rows right
+    selectCell(6, 0, 8, 8);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:right');
+
+    // left 3 columns - middle
+    selectCell(0, 0, 8, 2);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:middle');
+
+    // middle 3 columns unchanged - top
+
+    // right 3 columns - bottom
+    selectCell(0, 6, 8, 8);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:bottom');
+
+    var cellMeta = hot.getCellMeta(0, 0);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(0, 7);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(5, 1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(5, 7);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(7, 1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(7, 5);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(7, 7);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+
+    hot.undo();
+    cellMeta = hot.getCellMeta(0, 7);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
+
+    cellMeta = hot.getCellMeta(5, 7);
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
+
+    cellMeta = hot.getCellMeta(7, 7);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
+
+    hot.undo();
+
+    cellMeta = hot.getCellMeta(0, 0);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
+
+    cellMeta = hot.getCellMeta(5, 1);
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
+
+    cellMeta = hot.getCellMeta(7, 1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
+
+    hot.undo();
+
+    cellMeta = hot.getCellMeta(7, 1);
+    expect(cellMeta.className.includes('htRight')).toBeFalsy();
+    expect(cellMeta.className.includes('htMiddle')).toBeFalsy();
+
+    cellMeta = hot.getCellMeta(7, 5);
+    expect(cellMeta.className.includes('htRight')).toBeFalsy();
+
+    cellMeta = hot.getCellMeta(7, 7);
+    expect(cellMeta.className.includes('htRight')).toBeFalsy();
+    expect(cellMeta.className.includes('htBottom')).toBeFalsy();
+  });
+
+  it('should be possible redo the alignment process by calling the \'Redo\' action without contextMenu', () => {
+    const hot = handsontable({
+      data: Handsontable.helper.createSpreadsheetData(9, 9),
+      dropdownMenu: true
+    });
+
+    // top 3 rows center
+    selectCell(0, 0, 2, 8);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:center');
+
+    // middle 3 rows unchanged - left
+
+    // bottom 3 rows right
+    selectCell(6, 0, 8, 8);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:right');
+
+    // left 3 columns - middle
+    selectCell(0, 0, 8, 2);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:middle');
+
+    // middle 3 columns unchanged - top
+
+    // right 3 columns - bottom
+    selectCell(0, 6, 8, 8);
+    hot.getPlugin('dropdownMenu').executeCommand('alignment:bottom');
+
+    var cellMeta = hot.getCellMeta(0, 0);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(0, 7);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(5, 1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(5, 7);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(7, 1);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(7, 5);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+
+    cellMeta = hot.getCellMeta(7, 7);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+
+    hot.undo();
+    hot.undo();
+    hot.undo();
+    hot.undo();
+
+    hot.redo();
+    cellMeta = hot.getCellMeta(0, 0);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    cellMeta = hot.getCellMeta(1, 5);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    cellMeta = hot.getCellMeta(2, 8);
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+
+    hot.redo();
+    cellMeta = hot.getCellMeta(6, 0);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    cellMeta = hot.getCellMeta(7, 5);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+    cellMeta = hot.getCellMeta(8, 8);
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+
+    hot.redo();
+    cellMeta = hot.getCellMeta(0, 0);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    cellMeta = hot.getCellMeta(5, 1);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+    cellMeta = hot.getCellMeta(8, 2);
+    expect(cellMeta.className.includes('htMiddle')).toBeTruthy();
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
+
+    hot.redo();
+    cellMeta = hot.getCellMeta(0, 6);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+    expect(cellMeta.className.includes('htCenter')).toBeTruthy();
+    cellMeta = hot.getCellMeta(5, 7);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+    cellMeta = hot.getCellMeta(8, 8);
+    expect(cellMeta.className.includes('htBottom')).toBeTruthy();
+    expect(cellMeta.className.includes('htRight')).toBeTruthy();
   });
 });
