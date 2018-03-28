@@ -3055,7 +3055,7 @@ describe('Filters UI', function() {
       const widthOfInput = $(dropdownMenuRootElement()).find('input').width();
       const bothInputBorders = 2;
       const bothInputPaddings = 8;
-      const bothWrapperMargins = 16;
+      const bothWrapperMargins = 20;
       const bothCustomRendererPaddings = 12;
       const parentsPaddings = bothInputBorders + bothInputPaddings + bothWrapperMargins + bothCustomRendererPaddings;
 
@@ -3085,7 +3085,7 @@ describe('Filters UI', function() {
 
       const widthOfMenu = $(dropdownMenuRootElement()).find('table.htCore').width();
       const widthOfSelect = $(conditionSelectRootElements().first).width();
-      const bothWrapperMargins = 16;
+      const bothWrapperMargins = 20;
       const bothCustomRendererPaddings = 12;
       const parentsPaddings = bothWrapperMargins + bothCustomRendererPaddings;
 
@@ -3117,7 +3117,7 @@ describe('Filters UI', function() {
       const widthOfInput = $(dropdownMenuRootElement()).find('.htUIMultipleSelectSearch input').width();
       const bothInputBorders = 2;
       const bothInputPaddings = 8;
-      const bothWrapperMargins = 16;
+      const bothWrapperMargins = 20;
       const bothCustomRendererPaddings = 12;
       const parentsPaddings = bothInputBorders + bothInputPaddings + bothWrapperMargins + bothCustomRendererPaddings;
 
@@ -3150,7 +3150,7 @@ describe('Filters UI', function() {
 
       const widthOfMenu = $(dropdownMenuRootElement()).find('table.htCore').width();
       const widthOfValueBox = $(byValueBoxRootElement()).width();
-      const bothWrapperMargins = 16;
+      const bothWrapperMargins = 20;
       const bothCustomRendererPaddings = 12;
 
       const parentsPaddings = bothWrapperMargins + bothCustomRendererPaddings;
@@ -3186,6 +3186,73 @@ describe('Filters UI', function() {
       const widthOfSingleValue = $(byValueBoxRootElement()).find('table.htCore tr:eq(0)').width();
 
       expect(widthOfSingleValue).toEqual(widthOfValueBoxWithoutScroll);
+    });
+
+    it('should display proper width of value box after change of another elements width to lower ' +
+      '(bug: once rendered `MultipleSelectUI` has elbowed the table for AutoColumnSize plugin)', async () => {
+      const hot = handsontable({
+        colHeaders: true,
+        dropdownMenu: {
+          items: {
+            custom: {
+              name: 'This is very long text which should expand the drop-down menu...'
+            },
+            filter_by_condition: {},
+            filter_operators: {},
+            filter_by_condition2: {},
+            filter_by_value: {},
+            filter_action_bar: {}
+          }
+        },
+        filters: true
+      });
+
+      const $menu = $('.htDropdownMenu');
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const firstWidth = $menu.find('.wtHider').width();
+
+      hot.updateSettings({dropdownMenu: true});
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const nextWidth = $menu.find('.wtHider').width();
+
+      expect(nextWidth).toBeLessThan(firstWidth);
+    });
+
+    it('should display proper width of the menu after second render(bug: effect of resizing menu by the 3px) - ' +
+      'AutoColumnSize counter also border added to drop-down menu', async function() {
+      handsontable({
+        colHeaders: true,
+        dropdownMenu: true,
+        filters: true
+      });
+
+      console.log(handsontable);
+
+      const $menu = $('.htDropdownMenu');
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const firstWidth = $menu.find('.wtHider').width();
+
+      mouseDown(this.$container);
+
+      dropdownMenu(0);
+
+      await sleep(300);
+
+      const nextWidth = $menu.find('.wtHider').width();
+
+      expect(nextWidth).toEqual(firstWidth);
     });
   });
 });
