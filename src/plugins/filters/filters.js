@@ -155,6 +155,7 @@ class Filters extends BasePlugin {
     this.registerEvents();
     this.addHook('beforeDropdownMenuSetItems', (items) => this.onBeforeDropdownMenuSetItems(items));
     this.addHook('afterDropdownMenuDefaultOptions', (defaultOptions) => this.onAfterDropdownMenuDefaultOptions(defaultOptions));
+    this.addHook('beforeDropdownMenuShow', () => this.onBeforeDropdownMenuShow());
     this.addHook('afterDropdownMenuShow', () => this.onAfterDropdownMenuShow());
     this.addHook('afterDropdownMenuHide', () => this.onAfterDropdownMenuHide());
     this.addHook('afterChange', (changes, source) => this.onAfterChange(changes));
@@ -409,19 +410,46 @@ class Filters extends BasePlugin {
   }
 
   /**
+   * Restore components to their cached state.
+   *
+   * @param {Array} components List of components.
+   */
+  restoreComponents(components) {
+    const selectedColumn = this.getSelectedColumn();
+    const physicalIndex = selectedColumn && selectedColumn.physicalIndex;
+
+    components.forEach((component) => {
+      if (component.isHidden() === false) {
+        component.restoreState(physicalIndex);
+      }
+    });
+  }
+
+  /**
+   * Before dropdown menu show listener.
+   *
+   * @private
+   */
+  onBeforeDropdownMenuShow() {
+    this.restoreComponents([
+      this.components.get('filter_by_condition'),
+      this.components.get('filter_operators'),
+      this.components.get('filter_by_condition2'),
+    ]);
+  }
+
+  /**
    * After dropdown menu show listener.
    *
    * @private
    */
   onAfterDropdownMenuShow() {
-    const selectedColumn = this.getSelectedColumn();
-    const physicalIndex = selectedColumn && selectedColumn.physicalIndex;
-
-    this.components.forEach((component) => {
-      if (!component.isHidden() && component.setState) {
-        component.restoreState(physicalIndex);
-      }
-    });
+    // Component `filter_by_value` has `MultipleSelectUI` element which is basing on the Handsontable. This Handsontable instance,
+    // inside another Handsontable instance (the drop-down menu) will render with values of the multi select a bit later.
+    // Handling a restoring of component inside this listener to eliminate a flickering effect.
+    this.restoreComponents([
+      this.components.get('filter_by_value'),
+    ]);
   }
 
   /**
@@ -559,6 +587,9 @@ class Filters extends BasePlugin {
     if (component.constructor === ConditionComponent && !command.inputsCount) {
       this.setListeningDropdownMenu();
     }
+
+    // Conditions may have texts of different sizes. After change of it's size value box component should be also redrawn.
+    this.components.get('filter_by_value').getMultipleSelectElement().refresh();
   }
 
   /**
@@ -713,41 +744,6 @@ class Filters extends BasePlugin {
       }
     });
   }
-
-  /**
-   * Hide component for particular column.
-   *
-   * @private
-   * @param {BaseComponent} component `BaseComponent` element or it derivatives.
-   * @param {Number} column Physical column index.
-   */
-  hideComponentForParticularColumn(component, column) {
-    if (!this.hiddenRowsCache.has(column)) {
-      this.hiddenRowsCache.set(column, this.getIndexesOfComponents(component));
-
-    } else {
-      const indexes = this.getIndexesOfComponents(component);
-      this.addIndexesToHiddenRowsCache(column, indexes);
-    }
-  }
-
-  /**
-   * Add specific rows to `hiddenRows` cache for particular column.
-   *
-   * @private
-   * @param column Physical column index.
-   * @param indexes Physical indexes of rows which will be added to `hiddenRows` cache
-   */
-  addIndexesToHiddenRowsCache(column, indexes) {
-    const hiddenRowsForColumn = this.hiddenRowsCache.get(column);
-
-    arrayEach(indexes, (index) => {
-      if (hiddenRowsForColumn.indexOf(index) === -1) {
-        hiddenRowsForColumn.push(index);
-      }
-    });
-  }
-
 
   /**
    * Get indexes of passed components inside list of `dropdownMenu` items.
