@@ -295,13 +295,6 @@ class MultipleSelectUI extends BaseUI {
     });
     this.itemsBox.render();
   }
-
-  /**
-   * Refresh the element by next render.
-   */
-  refresh() {
-    this.itemsBox.render();
-  }
 }
 
 export default MultipleSelectUI;

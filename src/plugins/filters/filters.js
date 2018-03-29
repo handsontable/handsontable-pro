@@ -155,7 +155,6 @@ class Filters extends BasePlugin {
     this.registerEvents();
     this.addHook('beforeDropdownMenuSetItems', (items) => this.onBeforeDropdownMenuSetItems(items));
     this.addHook('afterDropdownMenuDefaultOptions', (defaultOptions) => this.onAfterDropdownMenuDefaultOptions(defaultOptions));
-    this.addHook('beforeDropdownMenuShow', () => this.onBeforeDropdownMenuShow());
     this.addHook('afterDropdownMenuShow', () => this.onAfterDropdownMenuShow());
     this.addHook('afterDropdownMenuHide', () => this.onAfterDropdownMenuHide());
     this.addHook('afterChange', (changes, source) => this.onAfterChange(changes));
@@ -426,28 +425,15 @@ class Filters extends BasePlugin {
   }
 
   /**
-   * Before dropdown menu show listener.
-   *
-   * @private
-   */
-  onBeforeDropdownMenuShow() {
-    this.restoreComponents([
-      this.components.get('filter_by_condition'),
-      this.components.get('filter_operators'),
-      this.components.get('filter_by_condition2'),
-    ]);
-  }
-
-  /**
    * After dropdown menu show listener.
    *
    * @private
    */
   onAfterDropdownMenuShow() {
-    // Component `filter_by_value` has `MultipleSelectUI` element which is basing on the Handsontable. This Handsontable instance,
-    // inside another Handsontable instance (the drop-down menu) will render with values of the multi select a bit later.
-    // Handling a restoring of component inside this listener to eliminate a flickering effect.
     this.restoreComponents([
+      this.components.get('filter_by_condition'),
+      this.components.get('filter_operators'),
+      this.components.get('filter_by_condition2'),
       this.components.get('filter_by_value'),
     ]);
   }
@@ -587,9 +573,6 @@ class Filters extends BasePlugin {
     if (component.constructor === ConditionComponent && !command.inputsCount) {
       this.setListeningDropdownMenu();
     }
-
-    // Conditions may have texts of different sizes. After change of it's size value box component should be also redrawn.
-    this.components.get('filter_by_value').getMultipleSelectElement().refresh();
   }
 
   /**

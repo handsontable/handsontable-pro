@@ -15,7 +15,7 @@
   - borders declared in the below class selector are also counted by `offsetWidth` (that could be fixed by not displaying them for GhostTable)
   - MultipleSelectUI basing on Handsontable is built only once, so it's `wtHolder` width is counted only once.
 */
-.htGhostTable .htUIMultipleSelectHot {
+.htGhostTable .htUIMultipleSelectHot, .htGhostTable .htUISelect {
   display: none;
 }
 
@@ -227,6 +227,9 @@
   font-size: 11px;
   font-weight: bold;
   padding: 3px 20px 3px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .handsontable .htUISelectCaption:hover {
   background-color: #e8e8e8;
