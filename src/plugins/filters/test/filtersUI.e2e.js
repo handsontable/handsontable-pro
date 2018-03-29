@@ -1,6 +1,16 @@
 describe('Filters UI', function() {
   const id = 'testContainer';
 
+  beforeAll(() => {
+    // Note: please keep in mind that this language will be registered for all e2e tests!
+    // It's stored globally for already loaded Handsontable library.
+
+    Handsontable.languages.registerLanguageDictionary({
+      languageCode: 'longerForTests',
+      'Filters:conditions.isEmpty': 'This is very long text for conditional menu item'
+    });
+  });
+
   beforeEach(function() {
     this.$container = $('<div id="' + id + '"></div>').appendTo('body');
   });
@@ -3189,7 +3199,7 @@ describe('Filters UI', function() {
     });
 
     it('should display proper width of value box after change of another elements width to lower ' +
-      '(bug: once rendered `MultipleSelectUI` has elbowed the table for AutoColumnSize plugin)', async () => {
+      '(bug: once rendered `MultipleSelectUI` has elbowed the table created by AutoColumnSize plugin)', async () => {
       const hot = handsontable({
         colHeaders: true,
         dropdownMenu: {
@@ -3226,8 +3236,8 @@ describe('Filters UI', function() {
       expect(nextWidth).toBeLessThan(firstWidth);
     });
 
-    it('should display proper width of the menu after second render(bug: effect of resizing menu by the 3px) - ' +
-      'AutoColumnSize counter also border added to drop-down menu', async function() {
+    it('should display proper width of the menu after second render (bug: effect of resizing menu by the 3px) - ' +
+      'AutoColumnSize counts also border added to drop-down menu', async function() {
       handsontable({
         colHeaders: true,
         dropdownMenu: true,
@@ -3251,6 +3261,64 @@ describe('Filters UI', function() {
       const nextWidth = $menu.find('.wtHider').width();
 
       expect(nextWidth).toEqual(firstWidth);
+    });
+
+    it('should display proper width of conditional select', async () => {
+      const hot = handsontable({
+        colHeaders: true,
+        dropdownMenu: true,
+        filters: true,
+        language: 'longerForTests'
+      });
+
+      dropdownMenu(0);
+
+      $(dropdownMenuRootElement().querySelector('.htUISelect')).simulate('click');
+
+      await sleep(300);
+
+      const $conditionalMenu = $('.htFiltersConditionsMenu');
+      const firstWidth = $conditionalMenu.find('.wtHider').width();
+
+      hot.updateSettings({language: 'en-US'});
+
+      dropdownMenu(0);
+
+      $(dropdownMenuRootElement().querySelector('.htUISelect')).simulate('click');
+
+      await sleep(300);
+
+      const nextWidth = $conditionalMenu.find('.wtHider').width();
+
+      expect(nextWidth).toBeLessThan(firstWidth);
+    });
+
+    it('should not expand the drop-down menu after selecting longer value inside the conditional select', async () => {
+      handsontable({
+        colHeaders: true,
+        dropdownMenu: true,
+        filters: true,
+        language: 'longerForTests'
+      });
+
+      const $menu = $('.htDropdownMenu');
+
+      dropdownMenu(0);
+
+      const firstWidth = $menu.find('.wtHider').width();
+
+      $(dropdownMenuRootElement().querySelector('.htUISelect')).simulate('click');
+
+      await sleep(300);
+
+      const $conditionalMenu = $('.htFiltersConditionsMenu');
+      const $conditionalMenuItems = $conditionalMenu.find('tbody td:not(.htSeparator)');
+
+      $conditionalMenuItems.eq(1).simulate('mousedown');
+
+      const nextWidth = $menu.find('.wtHider').width();
+
+      expect(nextWidth).toBe(firstWidth);
     });
   });
 });
