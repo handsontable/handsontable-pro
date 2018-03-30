@@ -176,6 +176,8 @@ class DropdownMenu extends BasePlugin {
    * Open menu and re-position it based on the DOM event object.
    *
    * @param {Event|Object} event Event object.
+   * @fires Hooks#beforeDropdownMenuShow
+   * @fires Hooks#afterDropdownMenuShow
    */
   open(event) {
     if (!this.menu) {
