@@ -16,7 +16,7 @@ if (!path) {
 
 const cleanupFactory = (browser, server) => async (exitCode) => {
   await browser.close();
-  await new Promise((resolve) => server.close(() => resolve()));
+  await new Promise((resolve) => server.close(resolve));
   process.exit(exitCode);
 };
 
@@ -77,5 +77,11 @@ const cleanupFactory = (browser, server) => async (exitCode) => {
     await cleanup(1);
   });
 
-  await page.goto(`http://0.0.0.0:${PORT}/${path}`);
+  try {
+    await page.goto(`http://0.0.0.0:${PORT}/${path}`);
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.log(error);
+    cleanup(1);
+  }
 })();
