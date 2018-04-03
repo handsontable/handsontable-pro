@@ -1,17 +1,14 @@
 import {
   addClass,
   removeClass,
-  hasClass,
   fastInnerHTML,
   empty,
 } from 'handsontable/helpers/dom/element';
 import {rangeEach} from 'handsontable/helpers/number';
 import {arrayEach} from 'handsontable/helpers/array';
 import {objectEach} from 'handsontable/helpers/object';
-import {
-  registerPlugin,
-  getPlugin
-} from 'handsontable/plugins';
+import {warn} from 'handsontable/helpers/console';
+import {registerPlugin} from 'handsontable/plugins';
 import BasePlugin from 'handsontable/plugins/_base';
 import {CellCoords} from 'handsontable/3rdparty/walkontable/src';
 import GhostTable from './utils/ghostTable';
@@ -184,7 +181,7 @@ class NestedHeaders extends BasePlugin {
 
     arrayEach(this.colspanArray, (value, i) => {
       if (this.getNestedParent(i, fixedColumnsLeft) !== fixedColumnsLeft) {
-        console.warn('You have declared a Nested Header overlapping the Fixed Columns section - it may lead to visual glitches. ' +
+        warn('You have declared a Nested Header overlapping the Fixed Columns section - it may lead to visual glitches. ' +
           'To prevent that kind of problems, split the nested headers between the fixed and non-fixed columns.');
       }
     });
@@ -208,7 +205,7 @@ class NestedHeaders extends BasePlugin {
             });
 
             if (childColspanSum > header.colspan) {
-              console.warn('Your Nested Headers plugin setup contains overlapping headers. This kind of configuration is ' +
+              warn('Your Nested Headers plugin setup contains overlapping headers. This kind of configuration is ' +
                 'currently not supported and might result in glitches.');
             }
 
