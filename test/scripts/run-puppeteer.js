@@ -4,6 +4,7 @@ const ecstatic = require('ecstatic');
 const JasmineReporter = require('jasmine-terminal-reporter');
 
 const PORT = 8080;
+const DEFAULT_INACTIVITY_TIMEOUT = 10000;
 
 const [,, path] = process.argv;
 
@@ -22,9 +23,11 @@ const cleanupFactory = (browser, server) => async (exitCode) => {
 
 (async () => {
   const browser = await puppeteer.launch({
-    timeout: 10000,
-    // devtools: true,
+    timeout: DEFAULT_INACTIVITY_TIMEOUT,
+    // devtools: true, // Turn it on to debug the tests.
     headless: false,
+    // Puppeteer by default hide the scrollbars in headless mode (https://github.com/GoogleChrome/puppeteer/blob/master/lib/Launcher.js#L86).
+    // To prevent this the custom arguments are provided.
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless', '--disable-gpu', '--mute-audio'],
   });
 
