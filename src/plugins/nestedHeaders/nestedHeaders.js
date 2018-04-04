@@ -7,6 +7,7 @@ import {
 import {rangeEach} from 'handsontable/helpers/number';
 import {arrayEach} from 'handsontable/helpers/array';
 import {objectEach} from 'handsontable/helpers/object';
+import {toSingleLine} from 'handsontable/helpers/templateLiteralTag';
 import {warn} from 'handsontable/helpers/console';
 import {registerPlugin} from 'handsontable/plugins';
 import BasePlugin from 'handsontable/plugins/_base';
@@ -181,8 +182,8 @@ class NestedHeaders extends BasePlugin {
 
     arrayEach(this.colspanArray, (value, i) => {
       if (this.getNestedParent(i, fixedColumnsLeft) !== fixedColumnsLeft) {
-        warn('You have declared a Nested Header overlapping the Fixed Columns section - it may lead to visual glitches. ' +
-          'To prevent that kind of problems, split the nested headers between the fixed and non-fixed columns.');
+        warn(toSingleLine`You have declared a Nested Header overlapping the Fixed Columns section - it may lead to visual 
+          glitches. To prevent that kind of problems, split the nested headers between the fixed and non-fixed columns.`);
       }
     });
   }
@@ -205,8 +206,8 @@ class NestedHeaders extends BasePlugin {
             });
 
             if (childColspanSum > header.colspan) {
-              warn('Your Nested Headers plugin setup contains overlapping headers. This kind of configuration is ' +
-                'currently not supported and might result in glitches.');
+              warn(toSingleLine`Your Nested Headers plugin setup contains overlapping headers. This kind of configuration 
+                is currently not supported and might result in glitches.`);
             }
 
             return false;
