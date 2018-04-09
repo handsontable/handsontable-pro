@@ -2701,9 +2701,9 @@ handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^2.6"
 
-handsontable@handsontable/handsontable#feature/issue-4925:
+handsontable@handsontable/handsontable#develop:
   version "0.38.1"
-  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/2fabb8e10b8cd8569cd78a3c728ef2fefb71a830"
+  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/5a2f45878370c92e4d9999f1dd645d25206b4eaf"
   dependencies:
     moment "2.20.1"
     numbro "1.11.0"
