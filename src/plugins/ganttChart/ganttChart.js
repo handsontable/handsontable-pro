@@ -24,12 +24,12 @@ import './ganttChart.css';
  * ```js
  * ganttChart: {
  *     dataSource: data,
- *     firstWeekDay: 'monday', // sets the first day of the week to either 'monday' or 'sunday'
- *     startYear: 2015 // sets the displayed year to the provided value
+ *     firstWeekDay: 'monday', // Sets the first day of the week to either 'monday' or 'sunday'.
+ *     startYear: 2015 // Sets the displayed year to the provided value.
  *     weekHeaderGenerator: function(start, end) { return start + ' - ' + end; } // sets the label on the week column headers (optional). The `start` and `end` arguments are numbers representing the beginning and end day of the week.
- *     allowSplitWeeks: true, // If set to `true` (default), will allow splitting week columns between months. If not, plugin will generate "mixed" months, like "Jan/Feb"
- *     hideDaysBeforeFullWeeks: false,
- *     hideDaysAfterFullWeeks: false,
+ *     allowSplitWeeks: true, // If set to `true` (default), will allow splitting week columns between months. If not, plugin will generate "mixed" months, like "Jan/Feb".
+ *     hideDaysBeforeFullWeeks: false, // If set to `true`, the plugin won't render the incomplete weeks before the "full" weeks inside months.
+ *     hideDaysAfterFullWeeks: false, // If set to `true`, the plugin won't render the incomplete weeks after the "full" weeks inside months.
  *   }
  *
  * // Where data can be either an data object or an object containing information about another Handsontable instance, which
