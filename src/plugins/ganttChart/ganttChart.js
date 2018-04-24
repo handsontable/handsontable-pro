@@ -435,7 +435,7 @@ class GanttChart extends BasePlugin {
    * @param {Boolean} options.areDaysBeforeFullWeeksVisible `true` if the days before full weeks are to be visible.
    * @param {Boolean} options.areDaysAfterFullWeeksVisible `true` if the days after full weeks are to be visible.
    * @param {Number} options.headerCount Number of headers to be generated for the provided month.
-   * @param {Boolean} [options.mixedMonth] `true` if the header is the single header of a mixed month.
+   * @param {Boolean} [options.mixedMonth = false] `true` if the header is the single header of a mixed month.
    * @returns {Array}
    */
   getWeekColumnRange({

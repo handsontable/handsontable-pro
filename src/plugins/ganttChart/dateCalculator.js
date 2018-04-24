@@ -9,7 +9,7 @@ import {getMixedMonthObject, getMixedMonthName} from './utils';
  * @plugin GanttChart
  */
 class DateCalculator {
-  constructor({year, allowSplitWeeks, hideDaysBeforeFullWeeks, hideDaysAfterFullWeeks}) {
+  constructor({year, allowSplitWeeks = true, hideDaysBeforeFullWeeks = false, hideDaysAfterFullWeeks = false}) {
     /**
      * Year to base calculations on.
      *
@@ -25,15 +25,15 @@ class DateCalculator {
     /**
      * The current `allowSplitWeeks` option state.
      */
-    this.allowSplitWeeks = allowSplitWeeks === void 0 ? true : allowSplitWeeks;
+    this.allowSplitWeeks = allowSplitWeeks;
     /**
      * The current `hideDaysBeforeFullWeeks` option state.
      */
-    this.hideDaysBeforeFullWeeks = hideDaysBeforeFullWeeks === void 0 ? false : hideDaysBeforeFullWeeks;
+    this.hideDaysBeforeFullWeeks = hideDaysBeforeFullWeeks;
     /**
      * The current `hideDaysAfterFullWeeks` option state.
      */
-    this.hideDaysAfterFullWeeks = hideDaysAfterFullWeeks === void 0 ? false : hideDaysAfterFullWeeks;
+    this.hideDaysAfterFullWeeks = hideDaysAfterFullWeeks;
     /**
      * Number of week sections (full weeks + incomplete week blocks in months).
      *
