@@ -45,28 +45,6 @@ describe('DateCalculator', () => {
     });
   });
 
-  describe('the `parseDate` method', () => {
-    it('should return a Date object if the provided date string is valid and null if it\'s invalid', () => {
-      const plugin = new DateCalculator({
-        year: 2017
-      });
-
-      expect(plugin.parseDate('01/01/2017') instanceof Date).toBe(true);
-      expect(plugin.parseDate('01/31/2017') instanceof Date).toBe(true);
-      expect(plugin.parseDate('31/01/2017') instanceof Date).toBe(false);
-      expect(plugin.parseDate('31/01/2017')).toEqual(null);
-    });
-
-    it('should return a Date object if the provided date object is valid and null if it\'s invalid', () => {
-      const plugin = new DateCalculator({
-        year: 2017
-      });
-
-      expect(plugin.parseDate(new Date()) instanceof Date).toBe(true);
-      expect(plugin.parseDate({}) instanceof Date).toBe(false);
-      expect(plugin.parseDate({})).toEqual(null);
-    });
-  });
 
   describe('the `dateToColumn` method', () => {
     it('should return a column for a provided date (in string or Date format), when `allowSplitWeeks` is set to true (default)', () => {
@@ -241,7 +219,7 @@ describe('DateCalculator', () => {
   });
 
   describe('the `calculateWeekStructure` method', () => {
-    it('should modify the `monthList` property of the plugin with the month/week structure', () => {
+    it('should modify the `monthListCache` property of the plugin with the month/week structure categorized by year', () => {
       const plugin = new DateCalculator({
         year: 2017
       });
@@ -251,20 +229,20 @@ describe('DateCalculator', () => {
 
       plugin.calculateWeekStructure();
 
-      let monthList = plugin.monthList;
-      expect(monthList[0].name).toEqual('January');
-      expect(monthList[0].days).toEqual(31);
-      expect(monthList[0].daysBeforeFullWeeks).toEqual(1);
-      expect(monthList[0].daysAfterFullWeeks).toEqual(2);
-      expect(monthList[0].fullWeeks).toEqual(4);
-      expect(monthList[11].name).toEqual('December');
-      expect(monthList[11].days).toEqual(31);
-      expect(monthList[11].daysBeforeFullWeeks).toEqual(3);
-      expect(monthList[11].daysAfterFullWeeks).toEqual(0);
-      expect(monthList[11].fullWeeks).toEqual(4);
+      let monthList = plugin.monthListCache;
+      expect(monthList[2017][0].name).toEqual('January');
+      expect(monthList[2017][0].days).toEqual(31);
+      expect(monthList[2017][0].daysBeforeFullWeeks).toEqual(1);
+      expect(monthList[2017][0].daysAfterFullWeeks).toEqual(2);
+      expect(monthList[2017][0].fullWeeks).toEqual(4);
+      expect(monthList[2017][11].name).toEqual('December');
+      expect(monthList[2017][11].days).toEqual(31);
+      expect(monthList[2017][11].daysBeforeFullWeeks).toEqual(3);
+      expect(monthList[2017][11].daysAfterFullWeeks).toEqual(0);
+      expect(monthList[2017][11].fullWeeks).toEqual(4);
     });
 
-    it('should modify the `monthList` property of the plugin with the month/week structure, with `allowSplitWeeks` disabled', () => {
+    it('should modify the `monthListCache` property of the plugin with the month/week structure, with `allowSplitWeeks` disabled', () => {
       const plugin = new DateCalculator({
         year: 2017,
         allowSplitWeeks: false
@@ -275,22 +253,22 @@ describe('DateCalculator', () => {
 
       plugin.calculateWeekStructure();
 
-      let monthList = plugin.monthList;
-      expect(monthList[0].name).toEqual('Dec/Jan');
-      expect(monthList[0].days).toEqual(7);
-      expect(monthList[0].daysBeforeFullWeeks).toEqual(0);
-      expect(monthList[0].daysAfterFullWeeks).toEqual(0);
-      expect(monthList[0].fullWeeks).toEqual(1);
-      expect(monthList[1].name).toEqual('January');
-      expect(monthList[1].days).toEqual(31);
-      expect(monthList[1].daysBeforeFullWeeks).toEqual(1);
-      expect(monthList[1].daysAfterFullWeeks).toEqual(2);
-      expect(monthList[1].fullWeeks).toEqual(4);
-      expect(monthList[11].name).toEqual('Jun/Jul');
-      expect(monthList[11].days).toEqual(7);
-      expect(monthList[11].daysBeforeFullWeeks).toEqual(0);
-      expect(monthList[11].daysAfterFullWeeks).toEqual(0);
-      expect(monthList[11].fullWeeks).toEqual(1);
+      let monthList = plugin.monthListCache;
+      expect(monthList[2017][0].name).toEqual('Dec/Jan');
+      expect(monthList[2017][0].days).toEqual(7);
+      expect(monthList[2017][0].daysBeforeFullWeeks).toEqual(0);
+      expect(monthList[2017][0].daysAfterFullWeeks).toEqual(0);
+      expect(monthList[2017][0].fullWeeks).toEqual(1);
+      expect(monthList[2017][1].name).toEqual('January');
+      expect(monthList[2017][1].days).toEqual(31);
+      expect(monthList[2017][1].daysBeforeFullWeeks).toEqual(1);
+      expect(monthList[2017][1].daysAfterFullWeeks).toEqual(2);
+      expect(monthList[2017][1].fullWeeks).toEqual(4);
+      expect(monthList[2017][11].name).toEqual('Jun/Jul');
+      expect(monthList[2017][11].days).toEqual(7);
+      expect(monthList[2017][11].daysBeforeFullWeeks).toEqual(0);
+      expect(monthList[2017][11].daysAfterFullWeeks).toEqual(0);
+      expect(monthList[2017][11].fullWeeks).toEqual(1);
     });
   });
 });
