@@ -1083,8 +1083,6 @@ describe('Formulas general', function() {
       expect(hot.getDataAtRow(3)).toEqual([2012, 8042, 10056, 502.75, 12, '\'=SUM(E5)']);
       expect(hot.getDataAtRow(4)).toEqual([5, 'Maserati', 'Mazda', 'Mercedes', 'Mini', 2011]);
 
-      // debugger;
-
       hot.updateSettings({columnSorting: {column: 5, sortOrder: 'desc'}});
 
       // source data is not involved in the translation process
