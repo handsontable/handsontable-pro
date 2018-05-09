@@ -60,6 +60,19 @@ describe('DateCalculator', () => {
       expect(plugin.dateToColumn(new Date('06/16/2017'))).toEqual(28);
     });
 
+    it('should return a column for a provided date (in string or Date format) for different year than the one currently being displayed', () => {
+      const plugin = new DateCalculator({
+        year: 2018
+      });
+
+      // mock the day cache creation from the actual plugin:
+      plugin.daysInColumns[2017] = stdCache;
+
+      expect(plugin.dateToColumn('03/16/2017')).toEqual(13);
+      expect(plugin.dateToColumn('06/16/2017')).toEqual(28);
+      expect(plugin.dateToColumn(new Date('06/16/2017'))).toEqual(28);
+    });
+
     it('should return a column for a provided date (in string or Date format), when `allowSplitWeeks` is set to false', () => {
       const plugin = new DateCalculator({
         year: 2017,
@@ -89,6 +102,19 @@ describe('DateCalculator', () => {
       expect(plugin.getWeekColumn(15, 5)).toEqual(28);
     });
 
+    it('should return a week column index for the provided day, month and year', () => {
+      const plugin = new DateCalculator({
+        year: 2018
+      });
+
+
+      // mock the day cache creation from the actual plugin:
+      plugin.daysInColumns[2017] = stdCache;
+
+      expect(plugin.getWeekColumn(15, 2, 2017)).toEqual(13);
+      expect(plugin.getWeekColumn(15, 5, 2017)).toEqual(28);
+    });
+
     it('should return a week column index for the provided day and month, when `allowSplitWeeks` is set to false', () => {
       const plugin = new DateCalculator({
         year: 2017,
@@ -113,6 +139,18 @@ describe('DateCalculator', () => {
       plugin.daysInColumns[2017] = stdCache;
 
       expect(plugin.getMonthCacheArray(2)).toEqual(JSON.parse('[{"11":[1,2,3,4,5],"12":[6,7,8,9,10,11,12],"13":' +
+        '[13,14,15,16,17,18,19],"14":[20,21,22,23,24,25,26],"15":[27,28,29,30,31]}]'));
+    });
+
+    it('should get the cached information for the provided month and year', () => {
+      const plugin = new DateCalculator({
+        year: 2018
+      });
+
+      // mock the day cache creation from the actual plugin:
+      plugin.daysInColumns[2017] = stdCache;
+
+      expect(plugin.getMonthCacheArray(2, 2017)).toEqual(JSON.parse('[{"11":[1,2,3,4,5],"12":[6,7,8,9,10,11,12],"13":' +
         '[13,14,15,16,17,18,19],"14":[20,21,22,23,24,25,26],"15":[27,28,29,30,31]}]'));
     });
   });
@@ -142,6 +180,27 @@ describe('DateCalculator', () => {
       plugin.daysInColumns[2017] = stdCache;
 
       const date = plugin.columnToDate(1);
+      const properDateStart = new Date('01/02/2017');
+      const properDateEnd = new Date('01/08/2017');
+
+      expect(date.start.getUTCMonth()).toEqual(properDateStart.getUTCMonth());
+      expect(date.start.getUTCDate()).toEqual(properDateStart.getUTCDate());
+      expect(date.start.getUTCFullYear()).toEqual(properDateStart.getUTCFullYear());
+
+      expect(date.end.getUTCMonth()).toEqual(properDateEnd.getUTCMonth());
+      expect(date.end.getUTCDate()).toEqual(properDateEnd.getUTCDate());
+      expect(date.end.getUTCFullYear()).toEqual(properDateEnd.getUTCFullYear());
+    });
+
+    it('should return an object with `start` and `end` properties representing a range of dates, when providing a different year than the one' +
+      'currently being displayed', () => {
+      const plugin = new DateCalculator({
+        year: 2018
+      });
+
+      plugin.daysInColumns[2017] = stdCache;
+
+      const date = plugin.columnToDate(1, 2017);
       const properDateStart = new Date('01/02/2017');
       const properDateEnd = new Date('01/08/2017');
 
@@ -194,6 +253,30 @@ describe('DateCalculator', () => {
 
       expect(JSON.stringify(plugin.daysInColumns[2017])).toEqual(JSON.stringify(expectedCache));
     });
+
+    it('should update the plugin cache with the provided information for different year than the one currently being displayed', () => {
+      const plugin = new DateCalculator({
+        year: 2018
+      });
+
+      plugin.addDaysToCache(0, 0, 1, 5, 2017);
+      plugin.addDaysToCache(0, 3, 10, 15, 2017);
+      plugin.addDaysToCache(3, 1, 2, 7, 2017);
+      plugin.addDaysToCache(3, 3, 20, 25, 2017);
+
+      const expectedCache = {
+        0: {
+          0: [1, 2, 3, 4, 5],
+          3: [10, 11, 12, 13, 14, 15],
+        },
+        3: {
+          1: [2, 3, 4, 5, 6, 7],
+          3: [20, 21, 22, 23, 24, 25]
+        }
+      };
+
+      expect(JSON.stringify(plugin.daysInColumns[2017])).toEqual(JSON.stringify(expectedCache));
+    });
   });
 
   describe('the `isValidRangeBarData` method', () => {
@@ -230,6 +313,28 @@ describe('DateCalculator', () => {
 
       expect(JSON.stringify(plugin.calculateMonthData())).toEqual(JSON.stringify(expectedResult));
     });
+
+    it('should return the object containing information about all the months for the provided year', () => {
+      const plugin = new DateCalculator({
+        year: 2020
+      });
+      const expectedResult = [
+        {name: 'January', days: 31},
+        {name: 'February', days: 28},
+        {name: 'March', days: 31},
+        {name: 'April', days: 30},
+        {name: 'May', days: 31},
+        {name: 'June', days: 30},
+        {name: 'July', days: 31},
+        {name: 'August', days: 31},
+        {name: 'September', days: 30},
+        {name: 'October', days: 31},
+        {name: 'November', days: 30},
+        {name: 'December', days: 31}
+      ];
+
+      expect(JSON.stringify(plugin.calculateMonthData(2017))).toEqual(JSON.stringify(expectedResult));
+    });
   });
 
   describe('the `calculateWeekStructure` method', () => {
@@ -242,6 +347,30 @@ describe('DateCalculator', () => {
       plugin.daysInColumns[2017] = stdCache;
 
       plugin.calculateWeekStructure();
+
+      let monthList = plugin.monthListCache;
+      expect(monthList[2017][0].name).toEqual('January');
+      expect(monthList[2017][0].days).toEqual(31);
+      expect(monthList[2017][0].daysBeforeFullWeeks).toEqual(1);
+      expect(monthList[2017][0].daysAfterFullWeeks).toEqual(2);
+      expect(monthList[2017][0].fullWeeks).toEqual(4);
+      expect(monthList[2017][11].name).toEqual('December');
+      expect(monthList[2017][11].days).toEqual(31);
+      expect(monthList[2017][11].daysBeforeFullWeeks).toEqual(3);
+      expect(monthList[2017][11].daysAfterFullWeeks).toEqual(0);
+      expect(monthList[2017][11].fullWeeks).toEqual(4);
+    });
+
+    it('should modify the `monthListCache` property of the plugin with the month/week structure categorized by year, when the year provided' +
+      'is different than the one being displayed', () => {
+      const plugin = new DateCalculator({
+        year: 2020
+      });
+
+      // mock the day cache creation from the actual plugin:
+      plugin.daysInColumns[2017] = stdCache;
+
+      plugin.calculateWeekStructure(2017);
 
       let monthList = plugin.monthListCache;
       expect(monthList[2017][0].name).toEqual('January');

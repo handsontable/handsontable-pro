@@ -144,6 +144,7 @@ class DateCalculator {
    */
   dateToColumn(date) {
     date = parseDate(date);
+
     if (!date) {
       return false;
     }

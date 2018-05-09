@@ -156,7 +156,7 @@ export function parseDate(date) {
  * Get the year of the provided date.
  *
  * @param {Date|String} date Date to get the year from.
- * @returns {Number} The year from the provided date.
+ * @returns {Number|null} The year from the provided date.
  */
 export function getDateYear(date) {
   date = parseDate(date);
