@@ -77,7 +77,7 @@ export function getShorthand(monthName) {
  * @returns {Date} The start date.
  */
 export function getStartDate(rangeBar) {
-  return Array.isArray(rangeBar) ? rangeBar[1] : rangeBar.startDate;
+  return parseDate(Array.isArray(rangeBar) ? rangeBar[1] : rangeBar.startDate);
 }
 
 /**
@@ -87,7 +87,7 @@ export function getStartDate(rangeBar) {
  * @returns {Date} The end date.
  */
 export function getEndDate(rangeBar) {
-  return Array.isArray(rangeBar) ? rangeBar[2] : rangeBar.endDate;
+  return parseDate(Array.isArray(rangeBar) ? rangeBar[2] : rangeBar.endDate);
 }
 
 /**
@@ -137,6 +137,10 @@ export function setEndDate(rangeBar, value) {
  * @returns {Date|null} Parsed Date object or null, if not a valid date string.
  */
 export function parseDate(date) {
+  if (date === null) {
+    return null;
+  }
+
   if (!(date instanceof Date)) {
     date = new Date(date);
 

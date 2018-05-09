@@ -53,7 +53,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = stdCache;
+      plugin.daysInColumns[2017] = stdCache;
 
       expect(plugin.dateToColumn('03/16/2017')).toEqual(13);
       expect(plugin.dateToColumn('06/16/2017')).toEqual(28);
@@ -67,7 +67,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = disallowSplitWeeksCache;
+      plugin.daysInColumns[2017] = disallowSplitWeeksCache;
 
       expect(plugin.dateToColumn('03/16/2017')).toEqual(11);
       expect(plugin.dateToColumn('06/16/2017')).toEqual(24);
@@ -83,7 +83,7 @@ describe('DateCalculator', () => {
 
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = stdCache;
+      plugin.daysInColumns[2017] = stdCache;
 
       expect(plugin.getWeekColumn(15, 2)).toEqual(13);
       expect(plugin.getWeekColumn(15, 5)).toEqual(28);
@@ -96,7 +96,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = disallowSplitWeeksCache;
+      plugin.daysInColumns[2017] = disallowSplitWeeksCache;
 
       expect(plugin.getWeekColumn(15, 2)).toEqual(11);
       expect(plugin.getWeekColumn(15, 5)).toEqual(24);
@@ -110,7 +110,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = stdCache;
+      plugin.daysInColumns[2017] = stdCache;
 
       expect(plugin.getMonthCacheArray(2)).toEqual(JSON.parse('[{"11":[1,2,3,4,5],"12":[6,7,8,9,10,11,12],"13":' +
         '[13,14,15,16,17,18,19],"14":[20,21,22,23,24,25,26],"15":[27,28,29,30,31]}]'));
@@ -118,26 +118,40 @@ describe('DateCalculator', () => {
   });
 
   describe('the `columnToDate` method', () => {
-    it('should return a Date object for the provided column index, if the column represents a single date', () => {
+    it('should return a object with `start` and `end` properties for the provided column index, if the column represents a single date', () => {
       const plugin = new DateCalculator({
         year: 2017
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = stdCache;
+      plugin.daysInColumns[2017] = stdCache;
 
       const date = plugin.columnToDate(0);
       const properDate = new Date('01/01/2017');
-      expect(date.getUTCMonth()).toEqual(properDate.getUTCMonth());
-      expect(date.getUTCDate()).toEqual(properDate.getUTCDate());
-      expect(date.getUTCFullYear()).toEqual(properDate.getUTCFullYear());
+
+      expect(date.start.getUTCMonth()).toEqual(properDate.getUTCMonth());
+      expect(date.start.getUTCDate()).toEqual(properDate.getUTCDate());
+      expect(date.start.getUTCFullYear()).toEqual(properDate.getUTCFullYear());
     });
 
-    // TODO: change the API to work like in the description below
-    xit('should return an object with `start` and `end` properties representing a range of dates', () => {
+    it('should return an object with `start` and `end` properties representing a range of dates', () => {
       const plugin = new DateCalculator({
         year: 2017
       });
+
+      plugin.daysInColumns[2017] = stdCache;
+
+      const date = plugin.columnToDate(1);
+      const properDateStart = new Date('01/02/2017');
+      const properDateEnd = new Date('01/08/2017');
+
+      expect(date.start.getUTCMonth()).toEqual(properDateStart.getUTCMonth());
+      expect(date.start.getUTCDate()).toEqual(properDateStart.getUTCDate());
+      expect(date.start.getUTCFullYear()).toEqual(properDateStart.getUTCFullYear());
+
+      expect(date.end.getUTCMonth()).toEqual(properDateEnd.getUTCMonth());
+      expect(date.end.getUTCDate()).toEqual(properDateEnd.getUTCDate());
+      expect(date.end.getUTCFullYear()).toEqual(properDateEnd.getUTCFullYear());
     });
   });
 
@@ -148,7 +162,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = stdCache;
+      plugin.daysInColumns[2017] = stdCache;
 
       expect(JSON.stringify(plugin.isOnTheEdgeOfWeek('01/02/2017'))).toEqual('[1,0]');
       expect(JSON.stringify(plugin.isOnTheEdgeOfWeek('10/22/2017'))).toEqual('[0,1]');
@@ -178,7 +192,7 @@ describe('DateCalculator', () => {
         }
       };
 
-      expect(JSON.stringify(plugin.daysInColumns)).toEqual(JSON.stringify(expectedCache));
+      expect(JSON.stringify(plugin.daysInColumns[2017])).toEqual(JSON.stringify(expectedCache));
     });
   });
 
@@ -225,7 +239,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = stdCache;
+      plugin.daysInColumns[2017] = stdCache;
 
       plugin.calculateWeekStructure();
 
@@ -249,7 +263,7 @@ describe('DateCalculator', () => {
       });
 
       // mock the day cache creation from the actual plugin:
-      plugin.daysInColumns = disallowSplitWeeksCache;
+      plugin.daysInColumns[2017] = disallowSplitWeeksCache;
 
       plugin.calculateWeekStructure();
 

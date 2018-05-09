@@ -4,7 +4,7 @@ import {objectEach, clone, deepClone, extend} from 'handsontable/helpers/object'
 import {warn} from 'handsontable/helpers/console';
 import {createEmptySpreadsheetData} from 'handsontable/helpers/data';
 import {registerPlugin} from 'handsontable/plugins';
-import {getDateYear, parseDate} from './utils';
+import {getDateYear, getEndDate, getStartDate, parseDate} from './utils';
 import DateCalculator from './dateCalculator';
 import GanttChartDataFeed from './ganttChartDataFeed';
 
@@ -488,6 +488,10 @@ class GanttChart extends BasePlugin {
    * @returns {Array|Boolean} Array of the bar's row and column.
    */
   addRangeBar(row, startDate, endDate, additionalData) {
+    if (startDate !== null && endDate !== null) {
+      this.prepareDaysInColumnsInfo(parseDate(startDate), parseDate(endDate));
+    }
+
     let startDateColumn = this.dateCalculator.dateToColumn(startDate);
     let endDateColumn = this.dateCalculator.dateToColumn(endDate);
     let year = getDateYear(startDate); // every range bar should not exceed the limits of one year
@@ -545,6 +549,22 @@ class GanttChart extends BasePlugin {
     }
 
     return [row, startDateColumn];
+  }
+
+  /**
+   * Generate the information about which date is represented in which column.
+   *
+   * @private
+   * @param {Date} startDate Start date.
+   * @param {Date} endDate End Date.
+   */
+  prepareDaysInColumnsInfo(startDate, endDate) {
+    for (let i = startDate.getFullYear(); i <= endDate.getFullYear(); i++) {
+      if (this.dateCalculator.daysInColumns[i] === void 0) {
+        this.dateCalculator.calculateWeekStructure(i);
+        this.dateCalculator.generateHeaderSet('weeks', null, i);
+      }
+    }
   }
 
   /**
