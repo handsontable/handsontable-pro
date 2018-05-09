@@ -235,8 +235,8 @@ describe('DateCalculator', () => {
       // mock the day cache creation from the actual plugin:
       plugin.daysInColumns[2017] = stdCache;
 
-      expect(plugin.isOnTheEdgeOfWeek('01/02/2017')).toEqual([1,0]);
-      expect(plugin.isOnTheEdgeOfWeek('10/22/2017')).toEqual([0,1]);
+      expect(plugin.isOnTheEdgeOfWeek('01/02/2017')).toEqual([1, 0]);
+      expect(plugin.isOnTheEdgeOfWeek('10/22/2017')).toEqual([0, 1]);
       expect(plugin.isOnTheEdgeOfWeek('10/20/2017')).toEqual(false);
     });
   });
