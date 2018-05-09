@@ -138,8 +138,14 @@ describe('DateCalculator', () => {
       // mock the day cache creation from the actual plugin:
       plugin.daysInColumns[2017] = stdCache;
 
-      expect(plugin.getMonthCacheArray(2)).toEqual(JSON.parse('[{"11":[1,2,3,4,5],"12":[6,7,8,9,10,11,12],"13":' +
-        '[13,14,15,16,17,18,19],"14":[20,21,22,23,24,25,26],"15":[27,28,29,30,31]}]'));
+      expect(plugin.getMonthCacheArray(2)).toEqual([
+        {
+          11: [1, 2, 3, 4, 5],
+          12: [6, 7, 8, 9, 10, 11, 12],
+          13: [13, 14, 15, 16, 17, 18, 19],
+          14: [20, 21, 22, 23, 24, 25, 26],
+          15: [27, 28, 29, 30, 31]
+        }]);
     });
 
     it('should get the cached information for the provided month and year', () => {
@@ -150,8 +156,14 @@ describe('DateCalculator', () => {
       // mock the day cache creation from the actual plugin:
       plugin.daysInColumns[2017] = stdCache;
 
-      expect(plugin.getMonthCacheArray(2, 2017)).toEqual(JSON.parse('[{"11":[1,2,3,4,5],"12":[6,7,8,9,10,11,12],"13":' +
-        '[13,14,15,16,17,18,19],"14":[20,21,22,23,24,25,26],"15":[27,28,29,30,31]}]'));
+      expect(plugin.getMonthCacheArray(2, 2017)).toEqual([
+        {
+          11: [1, 2, 3, 4, 5],
+          12: [6, 7, 8, 9, 10, 11, 12],
+          13: [13, 14, 15, 16, 17, 18, 19],
+          14: [20, 21, 22, 23, 24, 25, 26],
+          15: [27, 28, 29, 30, 31]
+        }]);
     });
   });
 
@@ -223,9 +235,9 @@ describe('DateCalculator', () => {
       // mock the day cache creation from the actual plugin:
       plugin.daysInColumns[2017] = stdCache;
 
-      expect(JSON.stringify(plugin.isOnTheEdgeOfWeek('01/02/2017'))).toEqual('[1,0]');
-      expect(JSON.stringify(plugin.isOnTheEdgeOfWeek('10/22/2017'))).toEqual('[0,1]');
-      expect(JSON.stringify(plugin.isOnTheEdgeOfWeek('10/20/2017'))).toEqual('false');
+      expect(plugin.isOnTheEdgeOfWeek('01/02/2017')).toEqual([1,0]);
+      expect(plugin.isOnTheEdgeOfWeek('10/22/2017')).toEqual([0,1]);
+      expect(plugin.isOnTheEdgeOfWeek('10/20/2017')).toEqual(false);
     });
   });
 
@@ -251,7 +263,7 @@ describe('DateCalculator', () => {
         }
       };
 
-      expect(JSON.stringify(plugin.daysInColumns[2017])).toEqual(JSON.stringify(expectedCache));
+      expect(plugin.daysInColumns[2017]).toEqual(expectedCache);
     });
 
     it('should update the plugin cache with the provided information for different year than the one currently being displayed', () => {
@@ -275,7 +287,7 @@ describe('DateCalculator', () => {
         }
       };
 
-      expect(JSON.stringify(plugin.daysInColumns[2017])).toEqual(JSON.stringify(expectedCache));
+      expect(plugin.daysInColumns[2017]).toEqual(expectedCache);
     });
   });
 
@@ -311,7 +323,7 @@ describe('DateCalculator', () => {
         {name: 'December', days: 31}
       ];
 
-      expect(JSON.stringify(plugin.calculateMonthData())).toEqual(JSON.stringify(expectedResult));
+      expect(plugin.calculateMonthData()).toEqual(expectedResult);
     });
 
     it('should return the object containing information about all the months for the provided year', () => {
@@ -333,7 +345,7 @@ describe('DateCalculator', () => {
         {name: 'December', days: 31}
       ];
 
-      expect(JSON.stringify(plugin.calculateMonthData(2017))).toEqual(JSON.stringify(expectedResult));
+      expect(plugin.calculateMonthData(2017)).toEqual(expectedResult);
     });
   });
 
