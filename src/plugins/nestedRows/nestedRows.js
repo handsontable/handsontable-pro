@@ -150,12 +150,8 @@ class NestedRows extends BasePlugin {
 
     let translatedTargetIndex = this.dataManager.translateTrimmedRow(target);
     let allowMove = true;
-    let i;
-    let fromParent = null;
-    let toParent = null;
-    let sameParent = null;
 
-    for (i = 0; i < rowsLen; i++) {
+    for (let i = 0; i < rowsLen; i += 1) {
       translatedStartIndexes.push(this.dataManager.translateTrimmedRow(rows[i]));
 
       if (this.dataManager.isParent(translatedStartIndexes[i])) {
@@ -163,18 +159,18 @@ class NestedRows extends BasePlugin {
       }
     }
 
-    if (translatedStartIndexes.indexOf(translatedTargetIndex) > -1 || !allowMove) {
+    if (translatedStartIndexes.includes(translatedTargetIndex) || !allowMove) {
       return false;
     }
 
-    fromParent = this.dataManager.getRowParent(translatedStartIndexes[0]);
-    toParent = this.dataManager.getRowParent(translatedTargetIndex);
+    const fromParent = this.dataManager.getRowParent(translatedStartIndexes[0]);
+    let toParent = this.dataManager.getRowParent(translatedTargetIndex);
 
-    if (toParent == null) {
+    if (toParent === null) {
       toParent = this.dataManager.getRowParent(translatedTargetIndex - 1);
     }
 
-    if (toParent == null) {
+    if (toParent === null) {
       toParent = this.dataManager.getDataObject(translatedTargetIndex - 1);
       priv.movedToFirstChild = true;
     }
@@ -183,7 +179,8 @@ class NestedRows extends BasePlugin {
       return false;
     }
 
-    sameParent = fromParent === toParent;
+    const sameParent = fromParent === toParent;
+
     priv.movedToCollapsed = this.collapsingUI.areChildrenCollapsed(toParent);
     this.collapsingUI.collapsedRowsStash.stash();
 
@@ -203,22 +200,22 @@ class NestedRows extends BasePlugin {
       translatedStartIndexes.reverse();
 
       if (priv.movedToFirstChild !== true) {
-        translatedTargetIndex--;
+        translatedTargetIndex -= 1;
       }
     }
 
-    for (i = 0; i < rowsLen; i++) {
+    for (let i = 0; i < rowsLen; i += 1) {
       this.dataManager.moveRow(translatedStartIndexes[i], translatedTargetIndex);
     }
 
     const movingDown = translatedStartIndexes[translatedStartIndexes.length - 1] < translatedTargetIndex;
 
     if (movingDown) {
-      for (i = rowsLen - 1; i >= 0; i--) {
+      for (let i = rowsLen - 1; i >= 0; i -= 1) {
         this.dataManager.moveCellMeta(translatedStartIndexes[i], translatedTargetIndex);
       }
     } else {
-      for (i = 0; i < rowsLen; i++) {
+      for (let i = 0; i < rowsLen; i += 1) {
         this.dataManager.moveCellMeta(translatedStartIndexes[i], translatedTargetIndex);
       }
     }
@@ -249,13 +246,10 @@ class NestedRows extends BasePlugin {
     const rowsLen = rows.length;
     let startRow = 0;
     let endRow = 0;
-    let translatedTargetIndex = null;
-    let selection = null;
-    let lastColIndex = null;
 
     this.collapsingUI.collapsedRowsStash.applyStash();
 
-    translatedTargetIndex = this.dataManager.translateTrimmedRow(target);
+    const translatedTargetIndex = this.dataManager.translateTrimmedRow(target);
 
     if (priv.movedToFirstChild) {
       priv.movedToFirstChild = false;
@@ -270,12 +264,12 @@ class NestedRows extends BasePlugin {
 
     } else if (priv.movedToCollapsed) {
       let parentObject = this.dataManager.getRowParent(translatedTargetIndex - 1);
-      if (parentObject == null) {
+
+      if (parentObject === null) {
         parentObject = this.dataManager.getDataObject(translatedTargetIndex - 1);
       }
-      let parentIndex = this.dataManager.getRowIndex(parentObject);
 
-      startRow = parentIndex;
+      startRow = this.dataManager.getRowIndex(parentObject);
       endRow = startRow;
 
     } else if (rows[rowsLen - 1] < target) {
@@ -287,8 +281,8 @@ class NestedRows extends BasePlugin {
       endRow = startRow + rowsLen - 1;
     }
 
-    selection = this.hot.selection;
-    lastColIndex = this.hot.countCols() - 1;
+    const selection = this.hot.selection;
+    const lastColIndex = this.hot.countCols() - 1;
 
     selection.setRangeStart(new CellCoords(startRow, 0));
     selection.setRangeEnd(new CellCoords(endRow, lastColIndex), true);
@@ -445,7 +439,7 @@ class NestedRows extends BasePlugin {
         lastParents.push(currentDataObj);
 
         arrayEach(lastParents, (elem) => {
-          if (elem.__children.indexOf(currentDataObj) > -1) {
+          if (elem.__children.includes(currentDataObj)) {
             isChild = true;
             return false;
           }
@@ -458,14 +452,14 @@ class NestedRows extends BasePlugin {
 
       isChild = false;
       arrayEach(lastParents, (elem) => {
-        if (elem.__children.indexOf(currentDataObj) > -1) {
+        if (elem.__children.includes(currentDataObj)) {
           isChild = true;
           return false;
         }
       });
 
       if (isChild) {
-        childrenCount--;
+        childrenCount -= 1;
       }
     });
 
