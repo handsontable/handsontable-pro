@@ -19,6 +19,7 @@ class BaseType {
       fileExtension: 'txt',
       filename: 'Handsontable [YYYY]-[MM]-[DD]',
       encoding: 'utf-8',
+      bom: '',
       columnHeaders: false,
       rowHeaders: false,
       exportHiddenColumns: false,

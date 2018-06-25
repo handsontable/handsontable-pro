@@ -19,6 +19,7 @@ describe('exportFile', function() {
       var csv = hot.getPlugin('exportFile')._createTypeFormatter('csv');
 
       expect(csv.options.filename).toMatch(/Handsontable \d+-\d+-\d+/);
+      expect(csv.options.bom).toBe('\ufeff');
       expect(csv.options.encoding).toBe('utf-8');
       expect(csv.options.columnHeaders).toBe(false);
       expect(csv.options.rowHeaders).toBe(false);
