@@ -1,12 +1,12 @@
 describe('exportFile CSV type', () => {
-  var id = 'testContainer';
+  const id = 'testContainer';
 
   function data(x, y) {
     return Handsontable.helper.createSpreadsheetData(x, y);
   };
 
   function countLines(str) {
-    var lines = str.split('\r\n');
+    const lines = str.split('\r\n');
 
     return lines.length;
   }
@@ -72,7 +72,7 @@ describe('exportFile CSV type', () => {
 
       expect(csv.options.mimeType).toBe('text/csv');
       expect(csv.options.fileExtension).toBe('csv');
-      expect(csv.options.bom).toBe('\ufeff');
+      expect(csv.options.bom).toBe(true);
       expect(csv.options.columnDelimiter).toBe(',');
       expect(csv.options.rowDelimiter).toBe('\r\n');
     });
@@ -114,7 +114,7 @@ describe('exportFile CSV type', () => {
         rowHeaders: true
       });
 
-      const csv = getPlugin('exportFile')._createTypeFormatter('csv', {bom: ''}).export();
+      const csv = getPlugin('exportFile')._createTypeFormatter('csv', {bom: false}).export();
 
       expect('A1,B1\r\nA2,B2').toBe(csv);
     });
