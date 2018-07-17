@@ -24,7 +24,6 @@ export function isValidColumnState(columnState) {
 /**
  * Get next sorting order for particular column. The order sequence looks as follows: 'asc' -> 'desc' -> undefined -> 'asc'
  *
- * @private
  * @param {String|undefined} sortingOrder Sorting order (`asc` for ascending, `desc` for descending and undefined for not sorted).
  * @returns {String|undefined} Next sorting order (`asc` for ascending, `desc` for descending and undefined for not sorted).
  */
@@ -50,7 +49,6 @@ export class ColumnStatesManager {
     /**
      * Queue of sorting states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
      *
-     * @private
      * @type {Array}
      */
     this.sortedColumnsStates = [];
