@@ -1,0 +1,68 @@
+/* Arrow position */
+.handsontable .colHeader.columnSorting::before {
+  position: absolute;
+  /* Centering start */
+  top: 50%;
+  margin-top: -0.5em;
+  /* Centering end */
+
+  right: -13px;
+  content: '';
+  height: 1em;
+  width: 1em;
+  background-size: 1em 1em;
+  background-position: center;
+}
+
+.handsontable .colHeader.columnSorting.ascending::before {
+  /* arrow up; 48 x 48 px */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAdhwAAHYcBj+XxZQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACNSURBVGiB7c8xCoAwFATRVfC+XkD4pXe2iE3EQkQtkk1kHgRSJTsSAPzZkk+XQlLKZ/VO+S50ju8uInQd301E6H588xGh5/HNRoTej28uYtb38ceZDXtfmXQdO5X4aCjxaJZq/DWWeLQmAtwIcCPAjQA3AtwIcCPAjQA3AtwIcCPAjQC3kgHbzR0AfmQHhfVHBE/tmv4AAAAASUVORK5CYII=");
+}
+
+.handsontable .colHeader.columnSorting.descending::before {
+  /* arrow down; 48 x 48 px */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAdhwAAHYcBj+XxZQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACPSURBVGiB7dixDkAwFIXhS+J9mUzivS0M3DA0TTtcp+T/ki6G9vwrMwD4q83M9utsUY90URfbOTz8rT7i0jcRoEaAGgFqBKgRoEaAGgFqBKgRoEaAGgFqBKhFBQyF35ow2f0PtPaMgr1Js9WPXyVLM2oimhvvSiKaHe9yEc2Pd6mIz4x3z4jPjXfLdQDgpw51pESZ0lhxGwAAAABJRU5ErkJggg==");
+}
+
+/* Column's number position */
+.handsontable .colHeader.columnSorting::after {
+  position: absolute;
+  top: 0.25em;
+
+  font-size: 0.5em;
+  right: -20px;
+  text-decoration: underline; /* Workaround for IE9 - IE11 */
+}
+
+/* Workaround for IE9 - IE11, https://stackoverflow.com/a/21902566, https://stackoverflow.com/a/32120247 */
+.handsontable .colHeader.columnSorting::after {
+  text-decoration: none;
+}
+
+.handsontable .colHeader.columnSorting.first::after {
+  content: '1';
+}
+
+.handsontable .colHeader.columnSorting.second::after {
+  content: '2';
+}
+
+.handsontable .colHeader.columnSorting.third::after {
+  content: '3';
+}
+
+.handsontable .colHeader.columnSorting.fourth::after {
+  content: '4';
+}
+
+.handsontable .colHeader.columnSorting.fifth::after {
+  content: '5';
+}
+
+.handsontable .colHeader.columnSorting.sixth::after {
+  content: '6';
+}
+
+.handsontable .colHeader.columnSorting.seventh::after {
+  content: '7';
+}

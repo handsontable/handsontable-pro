@@ -13,8 +13,8 @@ export const FIRST_AFTER_SECOND = 1;
  * @returns {Function}
  */
 export function getCompareFunctionFactory(columnMeta) {
-  if (columnMeta.sortFunction) {
-    return columnMeta.sortFunction;
+  if (columnMeta.multiColumnSorting.compareFunctionFactory) {
+    return columnMeta.multiColumnSorting.compareFunctionFactory;
 
   } else if (columnMeta.type === 'date') {
     return dateSort;

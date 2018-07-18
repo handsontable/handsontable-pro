@@ -15,6 +15,8 @@ import {getNextSortingOrder, isValidColumnState, ColumnStatesManager} from './co
 import {DomHelper, HEADER_CLASS, HEADER_SORTING_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
+import './multiColumnSorting.css';
+
 Hooks.getSingleton().register('beforeColumnSort');
 Hooks.getSingleton().register('afterColumnSort');
 
@@ -254,7 +256,6 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   *
    * Get next sorting state for particular column.
    *
    * @private
@@ -370,9 +371,10 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     const indexesWithData = [];
-    const visualColumn = this.hot.toVisualColumn(this.columnStatesManager.getFirstSortedColumn());
-    const columnMeta = this.hot.getCellMeta(0, visualColumn);
-    const sortFunctionForFirstColumn = this.getSortingState(visualColumn).compareFunctionFactory || getCompareFunctionFactory(columnMeta);
+    const firstSortedColumn = this.hot.toVisualColumn(this.columnStatesManager.getFirstSortedColumn());
+    const firstColumnCellMeta = this.hot.getCellMeta(0, firstSortedColumn);
+    const sortFunctionForFirstColumn = getCompareFunctionFactory(firstColumnCellMeta);
+
     const sortedColumnList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
@@ -441,7 +443,7 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Number} column Visual column index.
    * @returns {Boolean}
    */
-  getColumnSortIndicator(column) {
+  getColumnSortingIndicator(column) {
     const columnState = this.getSortingState(column);
 
     if (isDefined(columnState)) {
@@ -485,7 +487,7 @@ class MultiColumnSorting extends BasePlugin {
     const physicalColumn = this.hot.toPhysicalColumn(column);
 
     removeClass(headerLink, this.domHelper.getRemovedClasses());
-    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, this.getColumnSortIndicator(column)));
+    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, this.getColumnSortingIndicator(column)));
   }
 
   /**
