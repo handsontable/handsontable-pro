@@ -7,7 +7,7 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
       const domHelper = new DomHelper(columnStatesManager);
 
-      columnStatesManager.setSortingState([{column: 0, sortOrder: DESC_SORT_STATE}]);
+      columnStatesManager.setSortState([{column: 0, sortOrder: DESC_SORT_STATE}]);
 
       expect(domHelper.getAddedClasses(0)).toEqual(['columnSorting']);
 
@@ -23,7 +23,7 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
       const domHelper = new DomHelper(columnStatesManager);
 
-      columnStatesManager.setSortingState([
+      columnStatesManager.setSortState([
         {column: 1, sortOrder: DESC_SORT_STATE},
         {column: 0, sortOrder: ASC_SORT_STATE},
       ]);

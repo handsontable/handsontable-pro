@@ -5,7 +5,7 @@ import {ASC_SORT_STATE, DESC_SORT_STATE} from './columnStatesManager';
 const HEADER_CLASS_ASC_SORT = 'ascending';
 const HEADER_CLASS_DESC_SORT = 'descending';
 export const HEADER_CLASS = 'colHeader';
-export const HEADER_SORTING_CLASS = 'columnSorting';
+export const HEADER_SORT_CLASS = 'columnSorting';
 
 const orderToCssClass = new Map([
   [ASC_SORT_STATE, HEADER_CLASS_ASC_SORT],
@@ -41,15 +41,15 @@ export class DomHelper {
    * @returns {Array} Array of CSS classes.
    */
   getAddedClasses(column, showSortIndicator) {
-    const cssClasses = [HEADER_SORTING_CLASS];
+    const cssClasses = [HEADER_SORT_CLASS];
 
     if (this.columnStatesManager.isColumnSorted(column) && showSortIndicator) {
-      const columnOrder = this.columnStatesManager.getSortingOrderOfColumn(column);
+      const columnOrder = this.columnStatesManager.getSortOrderOfColumn(column);
 
       cssClasses.push(orderToCssClass.get(columnOrder));
 
       if (this.columnStatesManager.getNumberOfSortedColumns() > 1) {
-        cssClasses.push(sequenceToCssClass.get(this.columnStatesManager.getIndexOfColumnInSortingQueue(column)));
+        cssClasses.push(sequenceToCssClass.get(this.columnStatesManager.getIndexOfColumnInSortQueue(column)));
       }
     }
 

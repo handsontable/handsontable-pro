@@ -22,16 +22,16 @@ export function isValidColumnState(columnState) {
 }
 
 /**
- * Get next sorting order for particular column. The order sequence looks as follows: 'asc' -> 'desc' -> undefined -> 'asc'
+ * Get next sort order for particular column. The order sequence looks as follows: 'asc' -> 'desc' -> undefined -> 'asc'
  *
- * @param {String|undefined} sortingOrder Sorting order (`asc` for ascending, `desc` for descending and undefined for not sorted).
- * @returns {String|undefined} Next sorting order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+ * @param {String|undefined} sortOrder sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+ * @returns {String|undefined} Next sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
  */
-export function getNextSortingOrder(sortingOrder) {
-  if (sortingOrder === DESC_SORT_STATE) {
+export function getNextSortOrder(sortOrder) {
+  if (sortOrder === DESC_SORT_STATE) {
     return void 0;
 
-  } else if (sortingOrder === ASC_SORT_STATE) {
+  } else if (sortOrder === ASC_SORT_STATE) {
     return DESC_SORT_STATE;
   }
 
@@ -47,7 +47,7 @@ export function getNextSortingOrder(sortingOrder) {
 export class ColumnStatesManager {
   constructor() {
     /**
-     * Queue of sorting states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
+     * Queue of sort states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
      *
      * @type {Array}
      */
@@ -65,7 +65,7 @@ export class ColumnStatesManager {
      */
     this.indicator = SHOW_SORT_INDICATOR_DEFAULT;
     /**
-     * Determine compare function factory. Method get as parameters `sortingState` and `columnMetas` and return compare function.
+     * Determine compare function factory. Method get as parameters `sortState` and `columnMetas` and return compare function.
      */
     this.compareFunctionFactory = void 0;
   }
@@ -73,18 +73,18 @@ export class ColumnStatesManager {
   /**
    * Update column properties which affect the sorting result.
    *
-   * **Note**: It can be overwritten by [columns](https://docs.handsontable.com/pro/Options.html#columns) option.
+   * **Note**: All column properties can be overwritten by [columns](https://docs.handsontable.com/pro/Options.html#columns) option.
    *
-   * @param {Object} configuration Column sorting plugin's configuration object.
+   * @param {Object} allSortSettings Column sorting plugin's configuration object.
    */
-  updateAllColumnsProperties(configuration) {
-    if (!isObject(configuration)) {
+  updateAllColumnsProperties(allSortSettings) {
+    if (!isObject(allSortSettings)) {
       return;
     }
 
-    objectEach(configuration, (newValue, property) => {
-      if (inheritedColumnProperties.includes(property)) {
-        this[property] = newValue;
+    objectEach(allSortSettings, (newValue, propertyName) => {
+      if (inheritedColumnProperties.includes(propertyName)) {
+        this[propertyName] = newValue;
       }
     });
   }
@@ -118,20 +118,20 @@ export class ColumnStatesManager {
   }
 
   /**
-   * Get sorting order of column.
+   * Get sort order of column.
    *
    * @param {Number} searchedColumn Physical column index.
-   * @returns {String|undefined} Sorting order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+   * @returns {String|undefined} sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
    */
-  getSortingOrderOfColumn(searchedColumn) {
+  getSortOrderOfColumn(searchedColumn) {
     const searchedState = this.sortedColumnsStates.find(({column}) => searchedColumn === column);
-    let sortingOrder;
+    let sortOrder;
 
     if (isObject(searchedState)) {
-      sortingOrder = searchedState.sortOrder;
+      sortOrder = searchedState.sortOrder;
     }
 
-    return sortingOrder;
+    return sortOrder;
   }
 
   /**
@@ -149,7 +149,7 @@ export class ColumnStatesManager {
    * @param {Number} column Physical column index.
    * @returns {Number}
    */
-  getIndexOfColumnInSortingQueue(column) {
+  getIndexOfColumnInSortQueue(column) {
     return this.getSortedColumns().indexOf(column);
   }
 
@@ -182,41 +182,36 @@ export class ColumnStatesManager {
   }
 
   /**
-   * Get full sorting state.
+   * Get states for all sorted columns.
    *
    * @returns {Array}
    */
-  getSortingState() {
+  getSortStates() {
     return this.sortedColumnsStates;
   }
 
   /**
-   * Get sorting state for particular column. Object contains `column` and `sortOrder` properties.
+   * Get sort state for particular column. Object contains `column` and `sortOrder` properties.
+   *
+   * **Note**: Please keep in mind that returned objects expose **physical** column index under the `column` key.
    *
    * @param {Number} column Physical column index.
    * @returns {Object|undefined}
    */
-  getColumnSortingState(column) {
+  getColumnSortState(column) {
     if (this.isColumnSorted(column)) {
-      return this.sortedColumnsStates[this.getIndexOfColumnInSortingQueue(column)];
+      return this.sortedColumnsStates[this.getIndexOfColumnInSortQueue(column)];
     }
 
     return void 0;
   }
 
   /**
-   * Set full sorting state.
+   * Set full sort state.
    *
-   * @param {Array} sortingState
+   * @param {Array} sortState
    */
-  setSortingState(sortingState) {
-    this.sortedColumnsStates = sortingState;
-  }
-
-  /**
-   * Clear the sorted columns queue.
-   */
-  clearSortingState() {
-    this.sortedColumnsStates.length = 0;
+  setSortState(sortState) {
+    this.sortedColumnsStates = sortState;
   }
 }

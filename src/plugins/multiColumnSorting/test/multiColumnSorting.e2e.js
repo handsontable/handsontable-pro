@@ -1119,7 +1119,7 @@ describe('MultiColumnSorting', () => {
     expect(this.$container.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('A');
   });
 
-  it('should allow to change sorting order with updateSettings', function() {
+  it('should allow to change sort order with updateSettings', function() {
     handsontable({
       data: [
         [1, 'B'],
