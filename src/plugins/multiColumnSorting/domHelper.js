@@ -66,4 +66,11 @@ export class DomHelper {
 
     return cssClasses;
   }
+
+  /**
+   * Destroy the helper.
+   */
+  destroy() {
+    this.columnStatesManager = null;
+  }
 }

@@ -214,4 +214,12 @@ export class ColumnStatesManager {
   setSortState(sortState) {
     this.sortedColumnsStates = sortState;
   }
+
+  /**
+   * Destroy the state manager.
+   */
+  destroy() {
+    this.sortedColumnsStates.length = 0;
+    this.sortedColumnsStates = null;
+  }
 }

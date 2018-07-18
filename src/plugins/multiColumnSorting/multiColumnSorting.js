@@ -20,8 +20,8 @@ import './multiColumnSorting.css';
 Hooks.getSingleton().register('beforeColumnSort');
 Hooks.getSingleton().register('afterColumnSort');
 
-const APPEND_COLUMN_STATE_STRATEGY = 'append';
-const REPLACE_COLUMN_STATE_STRATEGY = 'replace';
+const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
+const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
 
 /**
  * @plugin MultiColumnSorting
@@ -148,7 +148,7 @@ class MultiColumnSorting extends BasePlugin {
     const currentSortConfig = this.getSortConfig();
     let destinationSortConfig;
 
-    // Always exposed config as an array in hooks.
+    // We always transfer config defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
     if (isUndefined(sortConfig)) {
       destinationSortConfig = [];
 
@@ -312,7 +312,7 @@ class MultiColumnSorting extends BasePlugin {
    *
    * @returns {Array}
    */
-  getNextSortConfig(columnToChange, strategyId = APPEND_COLUMN_STATE_STRATEGY) {
+  getNextSortConfig(columnToChange, strategyId = APPEND_COLUMN_CONFIG_STRATEGY) {
     const physicalColumn = this.hot.toPhysicalColumn(columnToChange);
     const indexOfColumnToChange = this.columnStatesManager.getIndexOfColumnInSortQueue(physicalColumn);
     const isColumnSorted = this.columnStatesManager.isColumnSorted(physicalColumn);
@@ -324,10 +324,10 @@ class MultiColumnSorting extends BasePlugin {
         return [...currentSortConfig.slice(0, indexOfColumnToChange), ...currentSortConfig.slice(indexOfColumnToChange + 1)];
       }
 
-      if (strategyId === APPEND_COLUMN_STATE_STRATEGY) {
+      if (strategyId === APPEND_COLUMN_CONFIG_STRATEGY) {
         return [...currentSortConfig.slice(0, indexOfColumnToChange), ...currentSortConfig.slice(indexOfColumnToChange + 1), nextColumnConfig];
 
-      } else if (strategyId === REPLACE_COLUMN_STATE_STRATEGY) {
+      } else if (strategyId === REPLACE_COLUMN_CONFIG_STRATEGY) {
         return [...currentSortConfig.slice(0, indexOfColumnToChange), nextColumnConfig, ...currentSortConfig.slice(indexOfColumnToChange + 1)];
       }
     }
@@ -599,6 +599,8 @@ class MultiColumnSorting extends BasePlugin {
    */
   destroy() {
     this.rowsMapper.destroy();
+    this.domHelper.destroy();
+    this.columnStatesManager.destroy();
 
     super.destroy();
   }
