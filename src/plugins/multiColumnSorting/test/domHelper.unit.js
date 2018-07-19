@@ -33,13 +33,13 @@ describe('MultiColumnSorting', () => {
       expect(domHelper.getAddedClasses(0, true).length).toEqual(3);
       expect(domHelper.getAddedClasses(0, true).includes('columnSorting')).toBeTruthy();
       expect(domHelper.getAddedClasses(0, true).includes('ascending')).toBeTruthy();
-      expect(domHelper.getAddedClasses(0, true).includes('second')).toBeTruthy();
+      expect(domHelper.getAddedClasses(0, true).includes('sort-2')).toBeTruthy();
 
       expect(domHelper.getAddedClasses(1)).toEqual(['columnSorting']);
 
       expect(domHelper.getAddedClasses(1, true).includes('columnSorting')).toBeTruthy();
       expect(domHelper.getAddedClasses(1, true).includes('descending')).toBeTruthy();
-      expect(domHelper.getAddedClasses(1, true).includes('first')).toBeTruthy();
+      expect(domHelper.getAddedClasses(1, true).includes('sort-1')).toBeTruthy();
     });
   });
 });

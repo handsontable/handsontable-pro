@@ -3,14 +3,14 @@
   position: absolute;
   /* Centering start */
   top: 50%;
-  margin-top: -0.5em;
+  margin-top: -6px;
   /* Centering end */
 
   right: -13px;
   content: '';
-  height: 1em;
-  width: 1em;
-  background-size: 1em 1em;
+  height: 12px;
+  width: 12px;
+  background-size: cover;
   background-position: center;
 }
 

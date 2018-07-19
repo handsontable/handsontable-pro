@@ -600,7 +600,7 @@ class MultiColumnSorting extends BasePlugin {
 
     // Click on the header
     if (hasClass(event.realTarget, HEADER_SORT_CLASS)) {
-      this.sort(this.getNextSortConfig(coords.col));
+      this.sort(this.getColumnNextConfig(coords.col));
     }
   }
 
