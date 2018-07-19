@@ -250,7 +250,7 @@ class MultiColumnSorting extends BasePlugin {
     const translateColumnToVisual = ({column: physicalColumn, ...restOfProperties}) =>
       ({ column: this.hot.toVisualColumn(physicalColumn), ...restOfProperties });
 
-    if (Array.isArray(allSortSettings.columns)) {
+    if (isDefined(allSortSettings) && Array.isArray(allSortSettings.columns)) {
       allSortSettings.columns = arrayMap(allSortSettings.columns, translateColumnToVisual);
     }
 

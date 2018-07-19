@@ -1,7 +1,5 @@
 describe('MultiColumnSorting', () => {
   const id = 'testContainer';
-  const blackDownPointingTriangle = String.fromCharCode(9660); // ▼
-  const blackUpPointingTriangle = String.fromCharCode(9650); // ▲
 
   beforeEach(function() {
     this.$container = $(`<div id="${id}" style="overflow: auto; width: 300px; height: 200px;"></div>`).appendTo('body');
