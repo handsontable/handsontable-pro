@@ -170,7 +170,7 @@ class MultiColumnSorting extends BasePlugin {
 
     const destinationSortState = arrayMap(destinationSortConfig, (columnSortConfig) => translateColumnToPhysical(columnSortConfig));
 
-    this.columnStatesManager.setSortState(destinationSortState);
+    this.columnStatesManager.setSortStates(destinationSortState);
     this.sortByPresetSortState();
 
     this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig());
@@ -237,15 +237,24 @@ class MultiColumnSorting extends BasePlugin {
    * Get all saved sorting settings. To use this method the {@link Options#persistentState} option has to be enabled.
    *
    * @private
-   * @returns {*} Previously saved sort settings.
+   * @returns {Object} Previously saved sort settings.
    *
    * @fires Hooks#persistentStateLoad
    */
   getAllSavedSortSettings() {
-    let storedAllSortSettings = {};
+    const storedAllSortSettings = {};
+
     this.hot.runHooks('persistentStateLoad', 'multiColumnSorting', storedAllSortSettings);
 
-    return storedAllSortSettings.value;
+    const allSortSettings = storedAllSortSettings.value;
+    const translateColumnToVisual = ({column: physicalColumn, ...restOfProperties}) =>
+      ({ column: this.hot.toVisualColumn(physicalColumn), ...restOfProperties });
+
+    if (Array.isArray(allSortSettings.columns)) {
+      allSortSettings.columns = arrayMap(allSortSettings.columns, translateColumnToVisual);
+    }
+
+    return allSortSettings;
   }
 
   /**
@@ -387,8 +396,7 @@ class MultiColumnSorting extends BasePlugin {
     const firstSortedColumn = this.hot.toVisualColumn(this.columnStatesManager.getFirstSortedColumn());
     const firstColumnCellMeta = this.hot.getCellMeta(0, firstSortedColumn);
     const sortFunctionForFirstColumn = getCompareFunctionFactory(firstColumnCellMeta);
-
-    const sortedColumnList = this.columnStatesManager.getSortedColumns();
+    const sortedColumnsList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
     // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` listener - we check the `blockPluginTranslation` flag
@@ -396,7 +404,7 @@ class MultiColumnSorting extends BasePlugin {
     this.blockPluginTranslation = true;
 
     const getDataForSortedColumns = (visualRowIndex) =>
-      sortedColumnList.map((physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
+      sortedColumnsList.map((physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
 
     for (let visualRowIndex = 0; visualRowIndex < this.getNumberOfRowsToSort(numberOfRows); visualRowIndex += 1) {
       indexesWithData.push([visualRowIndex].concat(getDataForSortedColumns(visualRowIndex)));
@@ -404,7 +412,7 @@ class MultiColumnSorting extends BasePlugin {
 
     mergeSort(indexesWithData, sortFunctionForFirstColumn(
       arrayMap(this.getSortConfig(), (columnSortConfig) => this.getColumnConfigWithColumnProperties(columnSortConfig)),
-      sortedColumnList.map((column) => this.hot.getCellMeta(0, this.hot.toVisualColumn(column)))));
+      sortedColumnsList.map((column) => this.hot.getCellMeta(0, this.hot.toVisualColumn(column)))));
 
     // Append spareRows
     for (let visualRowIndex = indexesWithData.length; visualRowIndex < numberOfRows; visualRowIndex += 1) {

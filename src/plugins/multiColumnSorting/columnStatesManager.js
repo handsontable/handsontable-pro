@@ -207,12 +207,12 @@ export class ColumnStatesManager {
   }
 
   /**
-   * Set full sort state.
+   * Set all sorted columns states.
    *
-   * @param {Array} sortState
+   * @param {Array} sortStates
    */
-  setSortState(sortState) {
-    this.sortedColumnsStates = sortState;
+  setSortStates(sortStates) {
+    this.sortedColumnsStates = sortStates;
   }
 
   /**
