@@ -283,7 +283,9 @@ class MultiColumnSorting extends BasePlugin {
    * @returns {undefined|Object}
    */
   getColumnNextConfig(column) {
-    if (this.columnStatesManager.isColumnSorted(column)) {
+    const physicalColumn = this.hot.toPhysicalColumn(column);
+
+    if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
       const columnSortConfig = this.getSortConfig(column);
       const sortOrder = getNextSortOrder(columnSortConfig.sortOrder);
 
