@@ -39,30 +39,35 @@
   text-decoration: none;
 }
 
-.handsontable .colHeader.columnSorting.first::after {
+/* We support up to 7 numeric indicators, describing order of column in sorted columns queue */
+.handsontable .colHeader.columnSorting[class^="sort-"]::after, .handsontable .colHeader.columnSorting[class*=" sort-"]::after {
+  content: "+"
+}
+
+.handsontable .colHeader.columnSorting.sort-1::after {
   content: '1';
 }
 
-.handsontable .colHeader.columnSorting.second::after {
+.handsontable .colHeader.columnSorting.sort-2::after {
   content: '2';
 }
 
-.handsontable .colHeader.columnSorting.third::after {
+.handsontable .colHeader.columnSorting.sort-3::after {
   content: '3';
 }
 
-.handsontable .colHeader.columnSorting.fourth::after {
+.handsontable .colHeader.columnSorting.sort-4::after {
   content: '4';
 }
 
-.handsontable .colHeader.columnSorting.fifth::after {
+.handsontable .colHeader.columnSorting.sort-5::after {
   content: '5';
 }
 
-.handsontable .colHeader.columnSorting.sixth::after {
+.handsontable .colHeader.columnSorting.sort-6::after {
   content: '6';
 }
 
-.handsontable .colHeader.columnSorting.seventh::after {
+.handsontable .colHeader.columnSorting.sort-7::after {
   content: '7';
 }

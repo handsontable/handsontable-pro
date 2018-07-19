@@ -509,7 +509,7 @@ class MultiColumnSorting extends BasePlugin {
 
     const physicalColumn = this.hot.toPhysicalColumn(column);
 
-    removeClass(headerLink, this.domHelper.getRemovedClasses());
+    removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
     addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, this.getColumnSortIndicator(column)));
   }
 
@@ -600,7 +600,7 @@ class MultiColumnSorting extends BasePlugin {
 
     // Click on the header
     if (hasClass(event.realTarget, HEADER_SORT_CLASS)) {
-      this.sort(this.getColumnNextConfig(coords.col));
+      this.sort(this.getNextSortConfig(coords.col));
     }
   }
 

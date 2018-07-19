@@ -4,22 +4,14 @@ import {ASC_SORT_STATE, DESC_SORT_STATE} from './columnStatesManager';
 
 const HEADER_CLASS_ASC_SORT = 'ascending';
 const HEADER_CLASS_DESC_SORT = 'descending';
+const COLUMN_ORDER_PREFIX = 'sort';
+
 export const HEADER_CLASS = 'colHeader';
 export const HEADER_SORT_CLASS = 'columnSorting';
 
 const orderToCssClass = new Map([
   [ASC_SORT_STATE, HEADER_CLASS_ASC_SORT],
   [DESC_SORT_STATE, HEADER_CLASS_DESC_SORT]
-]);
-
-const sequenceToCssClass = new Map([
-  [0, 'first'],
-  [1, 'second'],
-  [2, 'third'],
-  [3, 'fourth'],
-  [4, 'fifth'],
-  [5, 'sixth'],
-  [6, 'seventh']
 ]);
 
 /**
@@ -49,7 +41,7 @@ export class DomHelper {
       cssClasses.push(orderToCssClass.get(columnOrder));
 
       if (this.columnStatesManager.getNumberOfSortedColumns() > 1) {
-        cssClasses.push(sequenceToCssClass.get(this.columnStatesManager.getIndexOfColumnInSortQueue(column)));
+        cssClasses.push(`${COLUMN_ORDER_PREFIX}-${this.columnStatesManager.getIndexOfColumnInSortQueue(column) + 1}`);
       }
     }
 
@@ -59,12 +51,15 @@ export class DomHelper {
   /**
    * Get CSS classes which should be removed from column header.
    *
+   * @param {HTMLElement} htmlElement
    * @returns {Array} Array of CSS classes.
    */
-  getRemovedClasses() {
-    const cssClasses = Array.from(orderToCssClass.values()).concat(Array.from((sequenceToCssClass.values())));
+  getRemovedClasses(htmlElement) {
+    const cssClasses = htmlElement.className.split(' ');
+    const sortSequenceRegExp = new RegExp(`^${COLUMN_ORDER_PREFIX}-[0-9]{1,2}$`);
+    const someCssClassesToRemove = cssClasses.filter((cssClass) => sortSequenceRegExp.test(cssClass));
 
-    return cssClasses;
+    return Array.from(orderToCssClass.values()).concat(someCssClassesToRemove);
   }
 
   /**
