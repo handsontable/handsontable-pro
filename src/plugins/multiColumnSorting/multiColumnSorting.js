@@ -62,8 +62,9 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *     indicator: false, // set off indicator for the first column,
  *     sortEmptyCells: true,
  *     compareFunctionFactory: function(sortStates, columnMetas) {
- *       return function(rowIndexWithValues, nextRowIndexWithValues, sortedColumnIndex) {
+ *       return function(rowIndexWithValues, nextRowIndexWithValues, sortedColumnIndex = 0) {
  *         // Custom compare function for the first column
+ *         return 0; // don't sort
  *       }
  *     }
  *   }
@@ -578,6 +579,7 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * Sort the table by provided configuration.
    *
+   * @private
    * @param {Object} allSortSettings
    */
   sortBySettings(allSortSettings) {
