@@ -9,8 +9,9 @@ import {getNextColumnSortResult, DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_S
  * @returns {Function} The compare function.
  */
 export default function defaultSort(sortStates, columnMetas) {
+  // TODO: First function argument will be redundant when we will have proper cell meta's inheritance support.
   // We are soring array of arrays. Single array is in form [rowIndex, ...values]. We compare just values, stored at second index of array.
-  return function ([rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex = 0) {
+  return function([rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex = 0) {
 
     let value = values[sortedColumnIndex];
     let nextValue = nextValues[sortedColumnIndex];

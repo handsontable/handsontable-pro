@@ -1,12 +1,18 @@
+/* Workaround, Handsontable CE will have changed style */
+.handsontable .columnSorting.ascending::after, .handsontable .columnSorting.descending::after {
+  content: none;
+  color: inherit;
+}
+
 /* Arrow position */
-.handsontable .colHeader.columnSorting::before {
+.handsontable span.colHeader.columnSorting::before {
   position: absolute;
   /* Centering start */
   top: 50%;
   margin-top: -6px;
   /* Centering end */
 
-  right: -13px;
+  right: -12px;
   content: '';
   height: 12px;
   width: 12px;
@@ -14,60 +20,60 @@
   background-position: center;
 }
 
-.handsontable .colHeader.columnSorting.ascending::before {
+.handsontable span.colHeader.columnSorting.ascending::before {
   /* arrow up; 48 x 48 px */
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAdhwAAHYcBj+XxZQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACNSURBVGiB7c8xCoAwFATRVfC+XkD4pXe2iE3EQkQtkk1kHgRSJTsSAPzZkk+XQlLKZ/VO+S50ju8uInQd301E6H588xGh5/HNRoTej28uYtb38ceZDXtfmXQdO5X4aCjxaJZq/DWWeLQmAtwIcCPAjQA3AtwIcCPAjQA3AtwIcCPAjQC3kgHbzR0AfmQHhfVHBE/tmv4AAAAASUVORK5CYII=");
 }
 
-.handsontable .colHeader.columnSorting.descending::before {
+.handsontable span.colHeader.columnSorting.descending::before {
   /* arrow down; 48 x 48 px */
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAdhwAAHYcBj+XxZQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACPSURBVGiB7dixDkAwFIXhS+J9mUzivS0M3DA0TTtcp+T/ki6G9vwrMwD4q83M9utsUY90URfbOTz8rT7i0jcRoEaAGgFqBKgRoEaAGgFqBKgRoEaAGgFqBKhFBQyF35ow2f0PtPaMgr1Js9WPXyVLM2oimhvvSiKaHe9yEc2Pd6mIz4x3z4jPjXfLdQDgpw51pESZ0lhxGwAAAABJRU5ErkJggg==");
 }
 
 /* Column's number position */
-.handsontable .colHeader.columnSorting::after {
+.handsontable span.colHeader.columnSorting::after {
   position: absolute;
-  top: 0.25em;
+  top: 3px;
 
-  font-size: 0.5em;
-  right: -20px;
+  font-size: 8px;
+  right: -15px;
   text-decoration: underline; /* Workaround for IE9 - IE11 */
 }
 
 /* Workaround for IE9 - IE11, https://stackoverflow.com/a/21902566, https://stackoverflow.com/a/32120247 */
-.handsontable .colHeader.columnSorting::after {
+.handsontable span.colHeader.columnSorting::after {
   text-decoration: none;
 }
 
 /* We support up to 7 numeric indicators, describing order of column in sorted columns queue */
-.handsontable .colHeader.columnSorting[class^="sort-"]::after, .handsontable .colHeader.columnSorting[class*=" sort-"]::after {
+.handsontable span.colHeader.columnSorting[class^="sort-"]::after, .handsontable .colHeader.columnSorting[class*=" sort-"]::after {
   content: "+"
 }
 
-.handsontable .colHeader.columnSorting.sort-1::after {
+.handsontable span.colHeader.columnSorting.sort-1::after {
   content: '1';
 }
 
-.handsontable .colHeader.columnSorting.sort-2::after {
+.handsontable span.colHeader.columnSorting.sort-2::after {
   content: '2';
 }
 
-.handsontable .colHeader.columnSorting.sort-3::after {
+.handsontable span.colHeader.columnSorting.sort-3::after {
   content: '3';
 }
 
-.handsontable .colHeader.columnSorting.sort-4::after {
+.handsontable span.colHeader.columnSorting.sort-4::after {
   content: '4';
 }
 
-.handsontable .colHeader.columnSorting.sort-5::after {
+.handsontable span.colHeader.columnSorting.sort-5::after {
   content: '5';
 }
 
-.handsontable .colHeader.columnSorting.sort-6::after {
+.handsontable span.colHeader.columnSorting.sort-6::after {
   content: '6';
 }
 
-.handsontable .colHeader.columnSorting.sort-7::after {
+.handsontable span.colHeader.columnSorting.sort-7::after {
   content: '7';
 }

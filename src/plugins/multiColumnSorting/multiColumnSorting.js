@@ -25,6 +25,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
 
 /**
  * @plugin MultiColumnSorting
+ * @pro
  *
  * @description
  * This plugin sorts the view by a column (but does not sort the data source!). To enable the plugin, set the
@@ -35,15 +36,39 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  * // as boolean
  * multiColumnSorting: true
  *
- * // as a object with initial order (sort ascending column at index 2)
+ * // as an object with initial order (sort ascending column at index 2)
  * multiColumnSorting: {
- *  sortEmptyCells: true // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table
- *  columns: [{
- *    column: 2,
- *    sortOrder: 'asc', // 'asc' = ascending, 'desc' = descending
- *  }]
+ *   columns: [{
+ *     column: 2,
+ *     sortOrder: 'asc', // 'asc' = ascending, 'desc' = descending
+ *   }]
  * }
- * ```
+ *
+ * // as an object which define specific sorting options for all columns
+ * multiColumnSorting: {
+ *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table
+ *   indicator: true, // true = shows indicator for all columns, false = don't show indicator for columns
+ *   compareFunctionFactory: function(sortStates, columnMetas) {
+ *     return function(rowIndexWithValues, nextRowIndexWithValues, sortedColumnIndex) {
+ *       // Some value comparisons which will return -1, 0 or 1...
+ *     }
+ *   }
+ * }
+ *
+ * // as an object passed to the `column` property, allows specifying a custom options for the desired column.
+ * // please take a look at documentation of `column` property: https://docs.handsontable.com/pro/Options.html#columns
+ * columns: [{
+ *   multiColumnSorting: {
+ *     indicator: false, // set off indicator for the first column,
+ *     sortEmptyCells: true,
+ *     compareFunctionFactory: function(sortStates, columnMetas) {
+ *       return function(rowIndexWithValues, nextRowIndexWithValues, sortedColumnIndex) {
+ *         // Custom compare function for the first column
+ *       }
+ *     }
+ *   }
+ * }]```
+ *
  * @dependencies ObserveChanges moment
  */
 class MultiColumnSorting extends BasePlugin {
@@ -148,7 +173,7 @@ class MultiColumnSorting extends BasePlugin {
     const currentSortConfig = this.getSortConfig();
     let destinationSortConfig;
 
-    // We always transfer config defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
+    // We always transfer configs defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
     if (isUndefined(sortConfig)) {
       destinationSortConfig = [];
 
@@ -219,7 +244,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Saves all sorting settings. To use this method the {@link Options#persistentState} option has to be enabled.
+   * Saves all sorting settings. Saving works only when {@link Options#persistentState} option is enabled.
    *
    * @private
    * @fires Hooks#persistentStateSave
@@ -234,7 +259,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get all saved sorting settings. To use this method the {@link Options#persistentState} option has to be enabled.
+   * Get all saved sorting settings. Loading works only when {@link Options#persistentState} option is enabled.
    *
    * @private
    * @returns {Object} Previously saved sort settings.
@@ -351,7 +376,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get config with all column properties (like `indicator`, `sortEmptyCells`)
+   * Get config with all column properties (like `indicator`, `sortEmptyCells`, `compareFunctionFactory`)
    *
    * @private
    * @param {Object} columnSortConfig Sort config for particular column.
@@ -397,7 +422,8 @@ class MultiColumnSorting extends BasePlugin {
     const indexesWithData = [];
     const firstSortedColumn = this.hot.toVisualColumn(this.columnStatesManager.getFirstSortedColumn());
     const firstColumnCellMeta = this.hot.getCellMeta(0, firstSortedColumn);
-    const sortFunctionForFirstColumn = getCompareFunctionFactory(firstColumnCellMeta);
+    const sortFunctionForFirstColumn = getCompareFunctionFactory(this.getColumnConfigWithColumnProperties(this.getSortConfig(firstSortedColumn)),
+      firstColumnCellMeta);
     const sortedColumnsList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
@@ -460,7 +486,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get if sort indicator is enabled for particular column.
+   * Get if sort indicator is enabled and should be visible for particular column.
    *
    * @private
    * @param {Number} column Visual column index.
