@@ -1,6 +1,5 @@
 import {
   addClass,
-  hasClass,
   removeClass,
 } from 'handsontable/helpers/dom/element';
 import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
@@ -12,7 +11,7 @@ import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
 import {getCompareFunctionFactory} from './utils';
 import {getNextSortOrder, isValidColumnState, ColumnStatesManager} from './columnStatesManager';
-import {DomHelper, HEADER_CLASS, HEADER_SORT_CLASS} from './domHelper';
+import {DomHelper, HEADER_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -133,7 +132,6 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
-    this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
@@ -550,7 +548,7 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * afterUpdateSettings callback.
    *
-   * @private
+   * @param {Object} settings New settings object.
    */
   onAfterUpdateSettings(settings) {
     if (isDefined(settings.multiColumnSorting)) {
@@ -577,7 +575,8 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Sort the table by provided configuration.
+   * Sort the table by provided configuration. Get all sort config settings. Object contains `columns`, `indicator`,
+   * `sortEmptyCells` and `compareFunctionFactory` properties.
    *
    * @private
    * @param {Object} allSortSettings
@@ -619,24 +618,6 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
-  }
-
-  /**
-   * `onAfterOnCellMouseDown` hook callback.
-   *
-   * @private
-   * @param {Event} event Event which are provided by hook.
-   * @param {CellCoords} coords Visual coords of the selected cell.
-   */
-  onAfterOnCellMouseDown(event, coords) {
-    if (coords.row >= 0) {
-      return;
-    }
-
-    // Click on the header
-    if (hasClass(event.realTarget, HEADER_SORT_CLASS)) {
-      this.sort(this.getColumnNextConfig(coords.col));
-    }
   }
 
   /**
