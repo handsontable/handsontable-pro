@@ -207,6 +207,13 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
+   * Clear the sort performed on the table.
+   */
+  clearSort() {
+    this.sort();
+  }
+
+  /**
    * Checks if the table is sorted (any column have to be sorted).
    *
    * @returns {Boolean}
