@@ -184,6 +184,7 @@ class Filters extends BasePlugin {
     this.addHook('afterDropdownMenuShow', () => this.onAfterDropdownMenuShow());
     this.addHook('afterDropdownMenuHide', () => this.onAfterDropdownMenuHide());
     this.addHook('afterChange', (changes, source) => this.onAfterChange(changes));
+    this.addHook('afterLoadData', () => this.onAfterLoadData());
 
     // force to enable dependent plugins
     this.hot.getSettings().trimRows = true;
@@ -416,6 +417,20 @@ class Filters extends BasePlugin {
     });
 
     return data;
+  }
+
+  /**
+   * `afterLoadData` listener.
+   *
+   * @private
+   */
+  onAfterLoadData() {
+    const selectedColumn = this.getSelectedColumn();
+    const physicalIndex = selectedColumn && selectedColumn.physicalIndex;
+
+    if (this.conditionCollection.hasConditions(physicalIndex)) {
+      this.updateValueComponentCondition(physicalIndex);
+    }
   }
 
   /**

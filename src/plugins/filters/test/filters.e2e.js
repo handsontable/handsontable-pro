@@ -222,6 +222,57 @@ describe('Filters', function() {
     expect(console.warn).not.toHaveBeenCalled();
   });
 
+  it('should reset filter state and value via `hot.loadData`', function() {
+    const hot = handsontable({
+      data: [
+        {
+          id: 1,
+          address: 'AAA City'
+        },
+        {
+          id: 2,
+          address: 'BBB City'
+        },
+        {
+          id: 3,
+          address: 'CCC City'
+        },
+        {
+          id: 4,
+          address: 'DDD City'
+        }
+      ],
+      colHeaders: true,
+      dropdownMenu: true,
+      filters: true,
+      width: 500,
+      height: 300
+    });
+
+    dropdownMenu(1);
+    $(document.querySelectorAll('.htCheckboxRendererLabel input')[1]).simulate('click');
+    $(document.querySelector('.htUIButton.htUIButtonOK input')).simulate('click');
+
+    dropdownMenu(1);
+
+    let elements = $(document.querySelectorAll('label.htCheckboxRendererLabel'));
+    let text = Array.from(elements).map((element) => element.children[0].checked && element.textContent);
+
+    expect(text.filter(Boolean)).toEqual(['AAA City', 'CCC City', 'DDD City']);
+
+    hot.loadData([{
+      id: 5,
+      address: 'ZZZ City'
+    }]);
+
+    dropdownMenu(1);
+
+    elements = $(document.querySelectorAll('label.htCheckboxRendererLabel'));
+    text = Array.from(elements).map((element) => element.children[0].checked && element.textContent);
+
+    expect(text.filter(Boolean)).toEqual(['ZZZ City']);
+  });
+
   describe('Simple filtering (one column)', function() {
     it('should filter numeric value (greater than)', function() {
       const hot = handsontable({
