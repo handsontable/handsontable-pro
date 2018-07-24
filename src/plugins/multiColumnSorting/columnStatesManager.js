@@ -1,4 +1,4 @@
-import {isObject, objectEach} from 'handsontable/helpers/object';
+import {isObject, objectEach, deepClone} from 'handsontable/helpers/object';
 import {arrayMap} from 'handsontable/helpers/array';
 
 const inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'compareFunctionFactory'];
@@ -187,7 +187,7 @@ export class ColumnStatesManager {
    * @returns {Array}
    */
   getSortStates() {
-    return this.sortedColumnsStates;
+    return deepClone(this.sortedColumnsStates);
   }
 
   /**
@@ -200,7 +200,7 @@ export class ColumnStatesManager {
    */
   getColumnSortState(column) {
     if (this.isColumnSorted(column)) {
-      return this.sortedColumnsStates[this.getIndexOfColumnInSortQueue(column)];
+      return deepClone(this.sortedColumnsStates[this.getIndexOfColumnInSortQueue(column)]);
     }
 
     return void 0;

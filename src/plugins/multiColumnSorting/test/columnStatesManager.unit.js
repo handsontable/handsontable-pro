@@ -1,7 +1,62 @@
-import {ColumnStatesManager, ASC_SORT_STATE, DESC_SORT_STATE} from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
+import {ColumnStatesManager, ASC_SORT_STATE, DESC_SORT_STATE, isValidColumnState} from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
 import {deepClone} from 'handsontable/helpers/object';
 
 describe('MultiColumnSorting', () => {
+  it('isValidColumnState', () => {
+    expect(isValidColumnState({})).toBeFalsy();
+    expect(isValidColumnState({column: 1})).toBeFalsy();
+    expect(isValidColumnState({sortOrder: ASC_SORT_STATE})).toBeFalsy();
+    expect(isValidColumnState({sortOrder: DESC_SORT_STATE})).toBeFalsy();
+    expect(isValidColumnState({column: 1, sortOrder: DESC_SORT_STATE})).toBeTruthy();
+    expect(isValidColumnState({column: 1, sortOrder: ASC_SORT_STATE})).toBeTruthy();
+  });
+
+  describe('ColumnStatesManager.updateAllColumnsProperties', () => {
+    it('should update internal properties', () => {
+      const columnStatesManager = new ColumnStatesManager();
+      const compareFunctionFactory = function() {};
+
+      columnStatesManager.updateAllColumnsProperties({
+        sortEmptyCells: true,
+        indicator: true,
+        compareFunctionFactory
+      });
+
+      expect(columnStatesManager.sortEmptyCells).toBeTruthy();
+      expect(columnStatesManager.indicator).toBeTruthy();
+      expect(columnStatesManager.compareFunctionFactory).toEqual(compareFunctionFactory);
+    });
+  });
+
+  describe('ColumnStatesManager.getAllColumnsProperties', () => {
+    it('should return default columns properties', () => {
+      const columnStatesManager = new ColumnStatesManager();
+
+      expect(columnStatesManager.getAllColumnsProperties()).toEqual({
+        compareFunctionFactory: void 0,
+        sortEmptyCells: false,
+        indicator: false,
+      });
+    });
+
+    it('should return set columns properties', () => {
+      const columnStatesManager = new ColumnStatesManager();
+      const compareFunctionFactory = function() {};
+
+      columnStatesManager.updateAllColumnsProperties({
+        sortEmptyCells: true,
+        indicator: true,
+        compareFunctionFactory
+      });
+
+      expect(columnStatesManager.getAllColumnsProperties()).toEqual({
+        sortEmptyCells: true,
+        indicator: true,
+        compareFunctionFactory
+      });
+    });
+  });
+
   describe('ColumnStatesManager.setSortStates', () => {
     it('should change state queue', () => {
       const columnStatesManager = new ColumnStatesManager();
@@ -12,6 +67,38 @@ describe('MultiColumnSorting', () => {
       const stateAfterFunctionCall = deepClone(columnStatesManager.sortedColumnsStates);
 
       expect(stateAfterFunctionCall).not.toEqual(initialState);
+    });
+  });
+
+  describe('ColumnStatesManager.getSortStates', () => {
+    it('should return copy of states', () => {
+      const columnStatesManager = new ColumnStatesManager();
+      const newStatesQueue = [
+        {column: 0, sortOrder: DESC_SORT_STATE},
+        {column: 2, sortOrder: ASC_SORT_STATE},
+        {column: 1, sortOrder: ASC_SORT_STATE},
+      ];
+
+      columnStatesManager.setSortStates(newStatesQueue);
+
+      expect(columnStatesManager.getSortStates()).toEqual(newStatesQueue);
+      expect(columnStatesManager.getSortStates()).not.toBe(newStatesQueue);
+    });
+  });
+
+  describe('ColumnStatesManager.getColumnSortState', () => {
+    it('should return copy of state', () => {
+      const columnStatesManager = new ColumnStatesManager();
+      const newStatesQueue = [
+        {column: 0, sortOrder: DESC_SORT_STATE},
+        {column: 2, sortOrder: ASC_SORT_STATE},
+        {column: 1, sortOrder: ASC_SORT_STATE},
+      ];
+
+      columnStatesManager.setSortStates(newStatesQueue);
+
+      expect(columnStatesManager.getColumnSortState(0)).toEqual(newStatesQueue[0]);
+      expect(columnStatesManager.getColumnSortState(0)).not.toBe(newStatesQueue[0]);
     });
   });
 
@@ -52,6 +139,12 @@ describe('MultiColumnSorting', () => {
 
       expect(columnStatesManager.getSortedColumns()).toEqual([0, 2, 1]);
     });
+
+    it('should return empty array when no column has been sorted', () => {
+      const columnStatesManager = new ColumnStatesManager();
+
+      expect(columnStatesManager.getSortedColumns()).toEqual([]);
+    });
   });
 
   describe('ColumnStatesManager.getIndexOfColumnInSortQueue', () => {
@@ -67,7 +160,12 @@ describe('MultiColumnSorting', () => {
       expect(columnStatesManager.getIndexOfColumnInSortQueue(0)).toEqual(0);
       expect(columnStatesManager.getIndexOfColumnInSortQueue(2)).toEqual(1);
       expect(columnStatesManager.getIndexOfColumnInSortQueue(1)).toEqual(2);
-      expect(columnStatesManager.getIndexOfColumnInSortQueue(3)).toEqual(-1);
+    });
+
+    it('should return -1 when particular column does not exist in the states queue', () => {
+      const columnStatesManager = new ColumnStatesManager();
+
+      expect(columnStatesManager.getIndexOfColumnInSortQueue(0)).toEqual(-1);
     });
   });
 
@@ -108,6 +206,12 @@ describe('MultiColumnSorting', () => {
 
       expect(columnStatesManager.getFirstSortedColumn()).toEqual(0);
     });
+
+    it('should return `undefined` when no column has been sorted', () => {
+      const columnStatesManager = new ColumnStatesManager();
+
+      expect(columnStatesManager.getFirstSortedColumn()).toBeUndefined();
+    });
   });
 
   describe('ColumnStatesManager.isColumnSorted', () => {
@@ -130,10 +234,13 @@ describe('MultiColumnSorting', () => {
 
     it('should return proper order when column is sorted', () => {
       const columnStatesManager = new ColumnStatesManager();
+      columnStatesManager.setSortStates([
+        {column: 0, sortOrder: DESC_SORT_STATE},
+        {column: 1, sortOrder: ASC_SORT_STATE}
+      ]);
 
-      columnStatesManager.setSortStates([{column: 2, sortOrder: ASC_SORT_STATE}]);
-
-      expect(columnStatesManager.getSortOrderOfColumn(2)).toEqual(ASC_SORT_STATE);
+      expect(columnStatesManager.getSortOrderOfColumn(0)).toEqual(DESC_SORT_STATE);
+      expect(columnStatesManager.getSortOrderOfColumn(1)).toEqual(ASC_SORT_STATE);
     });
   });
 });

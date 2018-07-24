@@ -548,6 +548,7 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * afterUpdateSettings callback.
    *
+   * @private
    * @param {Object} settings New settings object.
    */
   onAfterUpdateSettings(settings) {

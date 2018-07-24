@@ -18,6 +18,8 @@ export default function dateSort(sortStates, columnMetas) {
     const columnMeta = columnMetas[sortedColumnIndex];
     const {sortOrder, sortEmptyCells} = sortStates[sortedColumnIndex];
 
+    console.log(value, nextValue);
+
     if (value === nextValue) {
       // Two equal values, we check if sorting should be performed for next columns.
       return getNextColumnSortResult(sortStates, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
