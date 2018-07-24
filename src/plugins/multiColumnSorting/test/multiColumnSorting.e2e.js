@@ -2265,7 +2265,7 @@ describe('MultiColumnSorting', () => {
     expect(getDataAtCell(2, 0)).toEqual('2 feet');
     expect(getDataAtCell(3, 0)).toEqual('0.2 miles');
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc',});
+    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
 
     expect(getDataAtCell(0, 0)).toEqual('1 inch');
     expect(getDataAtCell(1, 0)).toEqual('2 feet');
@@ -2643,54 +2643,81 @@ describe('MultiColumnSorting', () => {
     });
   });
 
-  it('Numbers presenting sorting sequence should be properly presented on the UI', () => {
-    handsontable({
-      data: createSpreadsheetData(10, 10),
-      colHeaders: true,
-      multiColumnSorting: {
-        indicator: true,
-        columns: [{
-          column: 1,
-          sortOrder: 'asc'
-        }, {
-          column: 0,
-          sortOrder: 'asc'
-        }, {
-          column: 2,
-          sortOrder: 'asc'
-        }, {
-          column: 3,
-          sortOrder: 'asc'
-        }, {
-          column: 4,
-          sortOrder: 'asc'
-        }, {
-          column: 5,
-          sortOrder: 'asc'
-        }, {
-          column: 6,
-          sortOrder: 'asc'
-        }, {
-          column: 7,
-          sortOrder: 'asc'
-        }, {
-          column: 8,
-          sortOrder: 'asc'
-        }, {
-          column: 9,
-          sortOrder: 'asc'
-        }]
-      }
+  describe('Numbers presenting sorting sequence', () => {
+    it('should be properly presented on the UI when more than 7 columns are sorted', () => {
+      handsontable({
+        data: createSpreadsheetData(10, 10),
+        colHeaders: true,
+        multiColumnSorting: {
+          indicator: true,
+          columns: [{
+            column: 1,
+            sortOrder: 'asc'
+          }, {
+            column: 0,
+            sortOrder: 'asc'
+          }, {
+            column: 2,
+            sortOrder: 'asc'
+          }, {
+            column: 3,
+            sortOrder: 'asc'
+          }, {
+            column: 4,
+            sortOrder: 'asc'
+          }, {
+            column: 5,
+            sortOrder: 'asc'
+          }, {
+            column: 6,
+            sortOrder: 'asc'
+          }, {
+            column: 7,
+            sortOrder: 'asc'
+          }, {
+            column: 8,
+            sortOrder: 'asc'
+          }, {
+            column: 9,
+            sortOrder: 'asc'
+          }]
+        }
+      });
+
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[0], ':after').getPropertyValue('content')).toEqual('"2"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('"1"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[2], ':after').getPropertyValue('content')).toEqual('"3"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[3], ':after').getPropertyValue('content')).toEqual('"4"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[4], ':after').getPropertyValue('content')).toEqual('"5"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[5], ':after').getPropertyValue('content')).toEqual('"6"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[6], ':after').getPropertyValue('content')).toEqual('"7"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[7], ':after').getPropertyValue('content')).toEqual('"+"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[8], ':after').getPropertyValue('content')).toEqual('"+"');
     });
 
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[0], ':after').getPropertyValue('content')).toEqual('"2"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('"1"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[2], ':after').getPropertyValue('content')).toEqual('"3"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[3], ':after').getPropertyValue('content')).toEqual('"4"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[4], ':after').getPropertyValue('content')).toEqual('"5"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[5], ':after').getPropertyValue('content')).toEqual('"6"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[6], ':after').getPropertyValue('content')).toEqual('"7"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[7], ':after').getPropertyValue('content')).toEqual('"+"');
-    expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[8], ':after').getPropertyValue('content')).toEqual('"+"');
+    it('should be properly hided when just one column is sorted', () => {
+      handsontable({
+        data: createSpreadsheetData(10, 10),
+        colHeaders: true,
+        multiColumnSorting: {
+          indicator: true,
+          columns: [{
+            column: 1,
+            sortOrder: 'asc'
+          }, {
+            column: 0,
+            sortOrder: 'asc'
+          }]
+        }
+      });
+
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[0], ':after').getPropertyValue('content')).toEqual('"2"');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('"1"');
+
+      getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[0], ':after').getPropertyValue('content')).toEqual('none');
+      expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('none');
+    });
   });
 });
