@@ -95,16 +95,16 @@ export class ColumnStatesManager {
    * @returns {Object}
    */
   getAllColumnsProperties() {
-    const returnedColumnProperties = {
+    const columnProperties = {
       sortEmptyCells: this.sortEmptyCells,
       indicator: this.indicator
     };
 
-    if (this.compareFunctionFactory) {
-      returnedColumnProperties.compareFunctionFactory = this.compareFunctionFactory;
+    if (typeof this.compareFunctionFactory !== 'undefined') {
+      columnProperties.compareFunctionFactory = this.compareFunctionFactory;
     }
 
-    return returnedColumnProperties;
+    return columnProperties;
   }
 
   /**
