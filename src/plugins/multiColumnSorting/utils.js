@@ -9,14 +9,14 @@ export const FIRST_AFTER_SECOND = 1;
 /**
  * Gets sort function for the particular column basing on its column meta.
  *
- * @param {Array} columnState Sort state containing `compareFunctionFactory` property.
  * @param {Array} columnMeta Column meta object.
  * @returns {Function}
  */
-export function getCompareFunctionFactory(columnState, columnMeta) {
-  // TODO: First function argument will be redundant when we will have proper cell meta's inheritance support.
-  if (columnState.compareFunctionFactory) {
-    return columnState.compareFunctionFactory;
+export function getCompareFunctionFactory(columnMeta) {
+  const columnSettings = columnMeta.multiColumnSorting;
+
+  if (columnSettings.compareFunctionFactory) {
+    return columnSettings.compareFunctionFactory;
 
   } else if (columnMeta.type === 'date') {
     return dateSort;
@@ -31,20 +31,19 @@ export function getCompareFunctionFactory(columnState, columnMeta) {
 /**
  * Get result of next column sorting.
  *
- * @param {Array} sortStates Queue of sort states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
+ * @param {Array} sortOrders Queue of sort orders.
  * @param {Array} columnMetas Column meta objects.
  * @param {Array} rowIndexWithValues Array is in form [rowIndex, ...values]. We compare just values, stored at second index of array.
  * @param {Array} nextRowIndexWithValues Array is in form [rowIndex, ...values]. We compare just values, stored at second index of array.
  * @param {Number} lastSortedColumn Index of last already sorted column.
  * @returns {Number} Comparision result; working as compare function in native `Array.prototype.sort` function specification.
  */
-export function getNextColumnSortResult(sortStates, columnMetas, rowIndexWithValues, nextRowIndexWithValues, lastSortedColumn) {
-  // TODO: First function argument will be redundant when we will have proper cell meta's inheritance support.
+export function getNextColumnSortResult(sortOrders, columnMetas, rowIndexWithValues, nextRowIndexWithValues, lastSortedColumn) {
   const nextColumn = lastSortedColumn + 1;
 
-  if (sortStates[nextColumn]) {
-    const compareFunctionFactory = getCompareFunctionFactory(sortStates[nextColumn], columnMetas[nextColumn]);
-    const compareFunction = compareFunctionFactory(sortStates, columnMetas);
+  if (columnMetas[nextColumn]) {
+    const compareFunctionFactory = getCompareFunctionFactory(columnMetas[nextColumn]);
+    const compareFunction = compareFunctionFactory(sortOrders, columnMetas);
 
     return compareFunction(rowIndexWithValues, nextRowIndexWithValues, nextColumn);
   }

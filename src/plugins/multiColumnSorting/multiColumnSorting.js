@@ -1,17 +1,18 @@
 import {
+  hasClass,
   addClass,
   removeClass,
 } from 'handsontable/helpers/dom/element';
 import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
-import {isObject, extend} from 'handsontable/helpers/object';
-import {arrayMap} from 'handsontable/helpers/array';
+import {isObject} from 'handsontable/helpers/object';
+import {arrayMap, arrayEach} from 'handsontable/helpers/array';
 import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
 import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
 import {getCompareFunctionFactory} from './utils';
 import {getNextSortOrder, isValidColumnState, ColumnStatesManager} from './columnStatesManager';
-import {DomHelper, HEADER_CLASS} from './domHelper';
+import {DomHelper, HEADER_CLASS, HEADER_SORT_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -132,6 +133,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
+    this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
@@ -160,7 +162,7 @@ class MultiColumnSorting extends BasePlugin {
    * Sorts the table by chosen columns and orders.
    *
    * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
-   * The configuration object contains `column` and `order` properties. First of them contains visual column index, the second one contains
+   * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
    * sort order (`asc` for ascending, `desc` for descending).
    *
    * **Note**: Please keep in mind that every call of `sort` function set an entirely new sort order. Previous sort configs aren't preserved.
@@ -382,17 +384,22 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get config with all column properties (like `indicator`, `sortEmptyCells`, `compareFunctionFactory`)
+   * This function is workaround for not working inheriting for non-primitive cell meta values. It change column setting object
+   * to properly created object by cascade settings.
    *
    * @private
-   * @param {Object} columnSortConfig Sort config for particular column.
+   * @param column Visual column index.
    * @returns {Object}
    */
-  getColumnConfigWithColumnProperties(columnSortConfig) {
-    const columnProperties = extend(this.columnStatesManager.getAllColumnsProperties(),
-      this.hot.getCellMeta(0, columnSortConfig.column).multiColumnSorting);
+  overwriteFirstCellSettings(column) {
+    const pluginMainSettings = this.hot.getSettings().multiColumnSorting;
+    const storedColumnProperties = this.columnStatesManager.getAllColumnsProperties();
+    const cellMeta = this.hot.getCellMeta(0, column);
+    const columnMeta = Object.getPrototypeOf(cellMeta);
+    const columnMetaHasPluginSettings = Object.hasOwnProperty.call(columnMeta, 'multiColumnSorting');
+    const pluginColumnConfig = columnMetaHasPluginSettings ? columnMeta.multiColumnSorting : {};
 
-    return extend(columnSortConfig, columnProperties);
+    cellMeta.multiColumnSorting = Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig);
   }
 
   /**
@@ -427,26 +434,27 @@ class MultiColumnSorting extends BasePlugin {
 
     const indexesWithData = [];
     const firstSortedColumn = this.hot.toVisualColumn(this.columnStatesManager.getFirstSortedColumn());
-    const firstColumnCellMeta = this.hot.getCellMeta(0, firstSortedColumn);
-    const sortFunctionForFirstColumn = getCompareFunctionFactory(this.getColumnConfigWithColumnProperties(this.getSortConfig(firstSortedColumn)),
-      firstColumnCellMeta);
     const sortedColumnsList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
-    // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` listener - we check the `blockPluginTranslation` flag
-    // (we just want to get data not already modified by `multiColumnSorting` plugin translation).
+    // Functions `getDataAtCell` and `getCellMeta` won't call the indices translation inside `onModifyRow` listener - we
+    // check the `blockPluginTranslation` flag (we just want to get data not already modified by `multiColumnSorting` plugin translation).
     this.blockPluginTranslation = true;
 
+    arrayEach(sortedColumnsList, (physicalColumn) => this.overwriteFirstCellSettings(this.hot.toVisualColumn(physicalColumn)));
+
+    const sortFunctionForFirstColumn = getCompareFunctionFactory(this.hot.getCellMeta(0, firstSortedColumn));
     const getDataForSortedColumns = (visualRowIndex) =>
-      sortedColumnsList.map((physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
+      arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
 
     for (let visualRowIndex = 0; visualRowIndex < this.getNumberOfRowsToSort(numberOfRows); visualRowIndex += 1) {
       indexesWithData.push([visualRowIndex].concat(getDataForSortedColumns(visualRowIndex)));
     }
 
     mergeSort(indexesWithData, sortFunctionForFirstColumn(
-      arrayMap(this.getSortConfig(), (columnSortConfig) => this.getColumnConfigWithColumnProperties(columnSortConfig)),
-      sortedColumnsList.map((column) => this.hot.getCellMeta(0, this.hot.toVisualColumn(column)))));
+      arrayMap(sortedColumnsList, (column) => this.columnStatesManager.getSortOrderOfColumn(column)),
+      arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getCellMeta(0, this.hot.toVisualColumn(physicalColumn))))
+    );
 
     // Append spareRows
     for (let visualRowIndex = indexesWithData.length; visualRowIndex < numberOfRows; visualRowIndex += 1) {
@@ -457,7 +465,7 @@ class MultiColumnSorting extends BasePlugin {
     this.blockPluginTranslation = false;
 
     // Save all indexes to arrayMapper, a completely new sequence is set by the plugin
-    this.rowsMapper._arrayMap = indexesWithData.map((indexWithData) => indexWithData[0]);
+    this.rowsMapper._arrayMap = arrayMap(indexesWithData, (indexWithData) => indexWithData[0]);
   }
 
   /**
@@ -502,9 +510,9 @@ class MultiColumnSorting extends BasePlugin {
     const columnSortConfig = this.getSortConfig(column);
 
     if (isDefined(columnSortConfig)) {
-      const columnStateWithColumnProperties = this.getColumnConfigWithColumnProperties(columnSortConfig);
+      const columnMeta = this.hot.getCellMeta(0, column);
 
-      return columnStateWithColumnProperties.indicator;
+      return columnMeta.multiColumnSorting.indicator;
     }
 
     return false;
@@ -619,6 +627,24 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
+  }
+
+  /**
+   * `onAfterOnCellMouseDown` hook callback.
+   *
+   * @private
+   * @param {Event} event Event which are provided by hook.
+   * @param {CellCoords} coords Visual coords of the selected cell.
+   */
+  onAfterOnCellMouseDown(event, coords) {
+    if (coords.row >= 0) {
+      return;
+    }
+
+    // Click on the header
+    if (hasClass(event.realTarget, HEADER_SORT_CLASS)) {
+      this.sort(this.getNextSortConfig(coords.col));
+    }
   }
 
   /**

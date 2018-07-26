@@ -2208,9 +2208,9 @@ describe('MultiColumnSorting', () => {
 
   it('should allow specifiyng a custom sorting function', () => {
     const data = [['1 inch'], ['1 yard'], ['2 feet'], ['0.2 miles']];
-    const compareFunctionFactory = function (sortStates) {
+    const compareFunctionFactory = function (sortOrders) {
       return function ([, ...values], [, ...nextValues]) {
-        const sortOrder = sortStates[0].sortOrder;
+        const sortOrder = sortOrders[0];
 
         const unitsRatios = {
           inch: 1,

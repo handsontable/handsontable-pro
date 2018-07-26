@@ -2,20 +2,19 @@ import {isEmpty} from 'handsontable/helpers/mixed';
 import {getNextColumnSortResult, DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../utils';
 
 /**
- * Default sorting compare function factory. Method get as parameters `sortStates` and `columnMetas` and return compare function.
+ * Default sorting compare function factory. Method get as parameters `sortOrders` and `columnMetas` and return compare function.
  *
- * @param {Array} sortStates Queue of sort states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
+ * @param {Array} sortOrders Queue of sort orders.
  * @param {Array} columnMetas Column meta objects.
  * @returns {Function} The compare function.
  */
-export default function defaultSort(sortStates, columnMetas) {
-  // TODO: First function argument will be redundant when we will have proper cell meta's inheritance support.
+export default function defaultSort(sortOrders, columnMetas) {
   // We are soring array of arrays. Single array is in form [rowIndex, ...values]. We compare just values, stored at second index of array.
   return function([rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex = 0) {
-
     let value = values[sortedColumnIndex];
     let nextValue = nextValues[sortedColumnIndex];
-    const {sortOrder, sortEmptyCells} = sortStates[sortedColumnIndex];
+    const sortOrder = sortOrders[sortedColumnIndex];
+    const {sortEmptyCells} = columnMetas[sortedColumnIndex].multiColumnSorting;
 
     if (typeof value === 'string') {
       value = value.toLowerCase();
@@ -27,13 +26,13 @@ export default function defaultSort(sortStates, columnMetas) {
 
     if (value === nextValue) {
       // Two equal values, we check if sorting should be performed for next columns.
-      return getNextColumnSortResult(sortStates, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
+      return getNextColumnSortResult(sortOrders, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
     }
 
     if (isEmpty(value)) {
       if (isEmpty(nextValue)) {
         // Two equal values, we check if sorting should be performed for next columns.
-        return getNextColumnSortResult(sortStates, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
+        return getNextColumnSortResult(sortOrders, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
       }
 
       // Just fist value is empty and `sortEmptyCells` option was set
