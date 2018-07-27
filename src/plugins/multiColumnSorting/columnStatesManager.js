@@ -1,4 +1,5 @@
 import {isObject, objectEach, deepClone} from 'handsontable/helpers/object';
+import {isUndefined} from 'handsontable/helpers/mixed';
 import {arrayMap} from 'handsontable/helpers/array';
 
 const inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'compareFunctionFactory'];
@@ -15,10 +16,31 @@ const SHOW_SORT_INDICATOR_DEFAULT = false;
  * @param {Number} columnState Particular column state.
  * @returns {Boolean}
  */
-export function isValidColumnState(columnState) {
+function isValidColumnState(columnState) {
+  if (isUndefined(columnState)) {
+    return false;
+  }
+
   const {column, sortOrder} = columnState;
 
   return Number.isInteger(column) && [ASC_SORT_STATE, DESC_SORT_STATE].includes(sortOrder);
+}
+
+/**
+ * Get if all sorted columns states are valid.
+ *
+ * @param {Array} sortStates
+ * @returns {Boolean}
+ */
+export function areValidSortStates(sortStates) {
+  if (Array.isArray(sortStates) === false || sortStates.every((columnState) => isObject(columnState)) === false) {
+    return false;
+  }
+
+  const sortedColumns = sortStates.map(({column}) => column);
+  const indexOccursOnlyOnce = new Set(sortedColumns).size === sortedColumns.length;
+
+  return indexOccursOnlyOnce && sortStates.every(isValidColumnState);
 }
 
 /**

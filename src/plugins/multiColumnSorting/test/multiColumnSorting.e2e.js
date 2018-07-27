@@ -2715,4 +2715,120 @@ describe('MultiColumnSorting', () => {
       expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('none');
     });
   });
+
+  describe('Sorting configuration validation', () => {
+    describe('should not change internal state of sorting when wrong configuration was provided', () => {
+      it('when too low column index was passed to the initial config', () => {
+        handsontable({
+          data: createSpreadsheetData(10, 10),
+          colHeaders: true,
+          multiColumnSorting: {
+            indicator: true,
+            columns: [{
+              column: 0,
+              sortOrder: 'asc'
+            }, {
+              column: -1,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+
+        expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+      });
+
+      it('when too high column index was passed to the initial config', () => {
+        handsontable({
+          data: createSpreadsheetData(10, 10),
+          colHeaders: true,
+          multiColumnSorting: {
+            indicator: true,
+            columns: [{
+              column: 0,
+              sortOrder: 'asc'
+            }, {
+              column: 100,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+
+        expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+      });
+
+      it('when not proper sort order was passed to the initial config', () => {
+        handsontable({
+          data: createSpreadsheetData(10, 10),
+          colHeaders: true,
+          multiColumnSorting: {
+            indicator: true,
+            columns: [{
+              column: 0,
+              sortOrder: 'asc'
+            }, {
+              column: 1,
+              sortOrder: 'unknown'
+            }]
+          }
+        });
+
+        expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+      });
+
+      it('when missed sort order was passed to the initial config', () => {
+        handsontable({
+          data: createSpreadsheetData(10, 10),
+          colHeaders: true,
+          multiColumnSorting: {
+            indicator: true,
+            columns: [{
+              column: 0,
+              sortOrder: 'asc'
+            }, {
+              column: 1
+            }]
+          }
+        });
+
+        expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+      });
+
+      it('when missed column index was passed to the initial config', () => {
+        handsontable({
+          data: createSpreadsheetData(10, 10),
+          colHeaders: true,
+          multiColumnSorting: {
+            indicator: true,
+            columns: [{
+              column: 0,
+              sortOrder: 'asc'
+            }, {
+              sortOrder: 'desc'
+            }]
+          }
+        });
+
+        expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+      });
+
+      it('when the same column index was passed twice to the initial config', () => {
+        handsontable({
+          data: createSpreadsheetData(10, 10),
+          colHeaders: true,
+          multiColumnSorting: {
+            indicator: true,
+            columns: [{
+              column: 0,
+              sortOrder: 'asc'
+            }, {
+              column: 0,
+              sortOrder: 'desc'
+            }]
+          }
+        });
+
+        expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+      });
+    });
+  });
 });
