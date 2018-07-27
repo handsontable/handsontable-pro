@@ -1,4 +1,5 @@
 import {
+  hasClass,
   addClass,
   removeClass,
 } from 'handsontable/helpers/dom/element';
@@ -9,9 +10,9 @@ import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
 import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
-import {getCompareFunctionFactory} from './utils';
+import {mainSortComparator} from './sortEngine';
 import {getNextSortOrder, isValidColumnState, ColumnStatesManager} from './columnStatesManager';
-import {DomHelper, HEADER_CLASS} from './domHelper';
+import {DomHelper, HEADER_CLASS, HEADER_SORT_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -132,6 +133,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
+    this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
@@ -431,7 +433,6 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     const indexesWithData = [];
-    const firstSortedColumn = this.hot.toVisualColumn(this.columnStatesManager.getFirstSortedColumn());
     const sortedColumnsList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
@@ -441,7 +442,6 @@ class MultiColumnSorting extends BasePlugin {
 
     arrayEach(sortedColumnsList, (physicalColumn) => this.overwriteFirstCellSettings(this.hot.toVisualColumn(physicalColumn)));
 
-    const sortFunctionForFirstColumn = getCompareFunctionFactory(this.hot.getCellMeta(0, firstSortedColumn));
     const getDataForSortedColumns = (visualRowIndex) =>
       arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
 
@@ -449,8 +449,8 @@ class MultiColumnSorting extends BasePlugin {
       indexesWithData.push([visualRowIndex].concat(getDataForSortedColumns(visualRowIndex)));
     }
 
-    mergeSort(indexesWithData, sortFunctionForFirstColumn(
-      arrayMap(sortedColumnsList, (column) => this.columnStatesManager.getSortOrderOfColumn(column)),
+    mergeSort(indexesWithData, mainSortComparator(
+      arrayMap(sortedColumnsList, (physicalColumn) => this.columnStatesManager.getSortOrderOfColumn(physicalColumn)),
       arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getCellMeta(0, this.hot.toVisualColumn(physicalColumn))))
     );
 
@@ -625,6 +625,24 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
+  }
+
+  /**
+   * `onAfterOnCellMouseDown` hook callback.
+   *
+   * @private
+   * @param {Event} event Event which are provided by hook.
+   * @param {CellCoords} coords Visual coords of the selected cell.
+   */
+  onAfterOnCellMouseDown(event, coords) {
+    if (coords.row >= 0) {
+      return;
+    }
+
+    // Click on the header
+    if (hasClass(event.realTarget, HEADER_SORT_CLASS)) {
+      this.sort(this.getNextSortConfig(coords.col));
+    }
   }
 
   /**

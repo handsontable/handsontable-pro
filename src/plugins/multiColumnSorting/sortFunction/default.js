@@ -1,20 +1,16 @@
 import {isEmpty} from 'handsontable/helpers/mixed';
-import {getNextColumnSortResult, DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../utils';
+import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../sortEngine';
 
 /**
- * Default sorting compare function factory. Method get as parameters `sortOrders` and `columnMetas` and return compare function.
+ * Default sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
  *
- * @param {Array} sortOrders Queue of sort orders.
- * @param {Array} columnMetas Column meta objects.
+ * @param {Array} sortOrder Sort order.
+ * @param {Array} columnMeta Column meta object.
  * @returns {Function} The compare function.
  */
-export default function defaultSort(sortOrders, columnMetas) {
-  // We are soring array of arrays. Single array is in form [rowIndex, ...values]. We compare just values, stored at second index of array.
-  return function([rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex = 0) {
-    let value = values[sortedColumnIndex];
-    let nextValue = nextValues[sortedColumnIndex];
-    const sortOrder = sortOrders[sortedColumnIndex];
-    const {sortEmptyCells} = columnMetas[sortedColumnIndex].multiColumnSorting;
+export default function defaultSort(sortOrder, columnMeta) {
+  return function(value, nextValue) {
+    const {sortEmptyCells} = columnMeta.multiColumnSorting;
 
     if (typeof value === 'string') {
       value = value.toLowerCase();
@@ -26,13 +22,13 @@ export default function defaultSort(sortOrders, columnMetas) {
 
     if (value === nextValue) {
       // Two equal values, we check if sorting should be performed for next columns.
-      return getNextColumnSortResult(sortOrders, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
+      return DO_NOT_SWAP;
     }
 
     if (isEmpty(value)) {
       if (isEmpty(nextValue)) {
         // Two equal values, we check if sorting should be performed for next columns.
-        return getNextColumnSortResult(sortOrders, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
+        return DO_NOT_SWAP;
       }
 
       // Just fist value is empty and `sortEmptyCells` option was set

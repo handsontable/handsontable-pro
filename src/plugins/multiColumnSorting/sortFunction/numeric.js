@@ -1,27 +1,23 @@
 import {isEmpty} from 'handsontable/helpers/mixed';
-import {getNextColumnSortResult, DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../utils';
+import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../sortEngine';
 
 /**
- * Numeric sorting compare function factory. Method get as parameters `sortOrders` and `columnMetas` and return compare function.
+ * Numeric sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
  *
- * @param {Array} sortOrders Queue of sort orders.
- * @param {Array} columnMetas Column meta objects.
+ * @param {Array} sortOrder Sort order.
+ * @param {Array} columnMeta Column meta object.
  * @returns {Function} The compare function.
  */
-export default function numericSort(sortOrders, columnMetas) {
-  // We are soring array of arrays. Single array is in form [rowIndex, ...values]. We compare just values, stored at second index of array.
-  return function([rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex = 0) {
-    const value = values[sortedColumnIndex];
-    const nextValue = nextValues[sortedColumnIndex];
+export default function numericSort(sortOrder, columnMeta) {
+  return function(value, nextValue) {
     const parsedFirstValue = parseFloat(value);
     const parsedSecondValue = parseFloat(nextValue);
-    const sortOrder = sortOrders[sortedColumnIndex];
-    const {sortEmptyCells} = columnMetas[sortedColumnIndex].multiColumnSorting;
+    const {sortEmptyCells} = columnMeta.multiColumnSorting;
 
     // Watch out when changing this part of code! Check below returns 0 (as expected) when comparing empty string, null, undefined
     if (parsedFirstValue === parsedSecondValue || (isNaN(parsedFirstValue) && isNaN(parsedSecondValue))) {
       // Two equal values, we check if sorting should be performed for next columns.
-      return getNextColumnSortResult(sortOrders, columnMetas, [rowIndex, ...values], [nextRowIndex, ...nextValues], sortedColumnIndex);
+      return DO_NOT_SWAP;
     }
 
     if (sortEmptyCells) {

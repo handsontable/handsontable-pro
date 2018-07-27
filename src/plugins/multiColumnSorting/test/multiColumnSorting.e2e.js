@@ -2208,10 +2208,8 @@ describe('MultiColumnSorting', () => {
 
   it('should allow specifiyng a custom sorting function', () => {
     const data = [['1 inch'], ['1 yard'], ['2 feet'], ['0.2 miles']];
-    const compareFunctionFactory = function (sortOrders) {
-      return function ([, ...values], [, ...nextValues]) {
-        const sortOrder = sortOrders[0];
-
+    const compareFunctionFactory = function (sortOrder) {
+      return function (value, nextValue) {
         const unitsRatios = {
           inch: 1,
           yard: 36,
@@ -2219,29 +2217,26 @@ describe('MultiColumnSorting', () => {
           miles: 63360
         };
 
-        let newA = values[0];
-        let newB = nextValues[0];
-
         Handsontable.helper.objectEach(unitsRatios, (val, prop) => {
-          if (values[0].indexOf(prop) > -1) {
-            newA = parseFloat(values[0].replace(prop, '')) * val;
+          if (value.indexOf(prop) > -1) {
+            value = parseFloat(value.replace(prop, '')) * val;
 
             return false;
           }
         });
 
         Handsontable.helper.objectEach(unitsRatios, (val, prop) => {
-          if (nextValues[0].indexOf(prop) > -1) {
-            newB = parseFloat(nextValues[0].replace(prop, '')) * val;
+          if (nextValue.indexOf(prop) > -1) {
+            nextValue = parseFloat(nextValue.replace(prop, '')) * val;
 
             return false;
           }
         });
 
-        if (newA < newB) {
+        if (value < nextValue) {
           return sortOrder === 'asc' ? -1 : 1;
 
-        } else if (newA > newB) {
+        } else if (value > nextValue) {
           return sortOrder === 'asc' ? 1 : -1;
         }
 
