@@ -87,7 +87,7 @@ export class ColumnStatesManager {
      */
     this.indicator = SHOW_SORT_INDICATOR_DEFAULT;
     /**
-     * Determine compare function factory. Method get as parameters `sortState` and `columnMetas` and return compare function.
+     * Determine compare function factory. Method get as parameters `sortOder` and `columnMeta` and return compare function.
      */
     this.compareFunctionFactory = void 0;
   }

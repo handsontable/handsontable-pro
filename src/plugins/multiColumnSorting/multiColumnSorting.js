@@ -47,8 +47,8 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  * multiColumnSorting: {
  *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table
  *   indicator: true, // true = shows indicator for all columns, false = don't show indicator for columns
- *   compareFunctionFactory: function(sortStates, columnMetas) {
- *     return function(rowIndexWithValues, nextRowIndexWithValues, sortedColumnIndex) {
+ *   compareFunctionFactory: function(sortOrder, columnMeta) {
+ *     return function(value, nextValue) {
  *       // Some value comparisons which will return -1, 0 or 1...
  *     }
  *   }
@@ -60,10 +60,9 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *   multiColumnSorting: {
  *     indicator: false, // set off indicator for the first column,
  *     sortEmptyCells: true,
- *     compareFunctionFactory: function(sortStates, columnMetas) {
- *       return function(rowIndexWithValues, nextRowIndexWithValues, sortedColumnIndex = 0) {
- *         // Custom compare function for the first column
- *         return 0; // don't sort
+ *     compareFunctionFactory: function(sortOrder, columnMeta) {
+ *       return function(value, nextValue) {
+ *         return 0; // Custom compare function for the first column (don't sort)
  *       }
  *     }
  *   }

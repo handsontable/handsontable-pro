@@ -21,13 +21,11 @@ export default function defaultSort(sortOrder, columnMeta) {
     }
 
     if (value === nextValue) {
-      // Two equal values, we check if sorting should be performed for next columns.
       return DO_NOT_SWAP;
     }
 
     if (isEmpty(value)) {
       if (isEmpty(nextValue)) {
-        // Two equal values, we check if sorting should be performed for next columns.
         return DO_NOT_SWAP;
       }
 

@@ -16,7 +16,6 @@ export default function numericSort(sortOrder, columnMeta) {
 
     // Watch out when changing this part of code! Check below returns 0 (as expected) when comparing empty string, null, undefined
     if (parsedFirstValue === parsedSecondValue || (isNaN(parsedFirstValue) && isNaN(parsedSecondValue))) {
-      // Two equal values, we check if sorting should be performed for next columns.
       return DO_NOT_SWAP;
     }
 
