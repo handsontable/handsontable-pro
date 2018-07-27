@@ -126,7 +126,7 @@ export class ColumnStatesManager {
    * Get sort order of column.
    *
    * @param {Number} searchedColumn Physical column index.
-   * @returns {String|undefined} sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+   * @returns {String|undefined} Sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
    */
   getSortOrderOfColumn(searchedColumn) {
     const searchedState = this.sortedColumnsStates.find(({column}) => searchedColumn === column);

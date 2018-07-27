@@ -1,11 +1,11 @@
 import {isEmpty} from 'handsontable/helpers/mixed';
-import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../sortEngine';
+import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../comparatorEngine';
 
 /**
  * Numeric sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
  *
- * @param {Array} sortOrder Sort order.
- * @param {Array} columnMeta Column meta object.
+ * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
+ * @param {Object} columnMeta Column meta object.
  * @returns {Function} The compare function.
  */
 export default function numericSort(sortOrder, columnMeta) {

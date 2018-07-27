@@ -10,7 +10,7 @@ import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
 import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
-import {mainSortComparator} from './sortEngine';
+import {mainSortComparator} from './comparatorEngine';
 import {getNextSortOrder, isValidColumnState, ColumnStatesManager} from './columnStatesManager';
 import {DomHelper, HEADER_CLASS, HEADER_SORT_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';

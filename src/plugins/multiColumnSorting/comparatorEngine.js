@@ -28,6 +28,13 @@ function getCompareFunctionFactory(columnMeta) {
   return defaultSort;
 }
 
+/**
+ * Sort comparator handled by conventional sort algorithm.
+ *
+ * @param {Array} sortOrders Sort orders (`asc` for ascending, `desc` for descending).
+ * @param {Array} columnMeta Column meta objects.
+ * @returns {Function}
+ */
 export function mainSortComparator(sortingOrders, columnMetas) {
   return function (rowIndexWithValues, nextRowIndexWithValues) {
     // We are soring array of arrays. Single array is in form [rowIndex, ...values].
