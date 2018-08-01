@@ -2728,4 +2728,57 @@ describe('MultiColumnSorting', () => {
       });
     });
   });
+
+  describe('Sorting more than one column by clicks', () => {
+    it('should sort two columns when ctrl was held while clicking', () => {
+      handsontable({
+        data: multiColumnSortingData(),
+        columns: [
+          {},
+          {},
+          {type: 'date', dateFormat: 'MM/DD/YYYY'},
+          {type: 'numeric'},
+          {}
+        ],
+        colHeaders: true,
+        multiColumnSorting: true
+      });
+
+      spec().sortByClickOnColumnHeader(2);
+
+      keyDown('ctrl');
+
+      spec().sortByClickOnColumnHeader(3);
+
+      expect(getDataAtCol(0)).toEqual(['Ann', 'Mary', 'Mary', 'Henry', 'Robert', 'David', 'John', 'Robert', 'Ann']);
+    });
+
+    it('should push last clicked column to the end of sort queue', () => {
+      handsontable({
+        data: multiColumnSortingData(),
+        columns: [
+          {},
+          {},
+          {type: 'date', dateFormat: 'MM/DD/YYYY'},
+          {type: 'numeric'},
+          {}
+        ],
+        colHeaders: true,
+        multiColumnSorting: true
+      });
+
+      // ASC
+      spec().sortByClickOnColumnHeader(0);
+
+      keyDown('ctrl');
+
+      // ASC as 2nd
+      spec().sortByClickOnColumnHeader(1);
+
+      // DESC as 2nd
+      spec().sortByClickOnColumnHeader(0);
+
+      expect(getDataAtCol(0)).toEqual(['Mary', 'Mary', 'John', 'Robert', 'Robert', 'Ann', 'Henry', 'David', 'Ann']);
+    });
+  });
 });

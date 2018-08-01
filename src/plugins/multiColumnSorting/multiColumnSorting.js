@@ -591,7 +591,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Sort the table by provided configuration. Get all sort config settings. Object contains `columns`, `indicator`,
+   * Sort the table by provided configuration. Get all sort config settings. Object contains `initialConfig`, `indicator`,
    * `sortEmptyCells` and `compareFunctionFactory` properties.
    *
    * @private
