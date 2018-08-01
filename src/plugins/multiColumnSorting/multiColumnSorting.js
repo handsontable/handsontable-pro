@@ -1,4 +1,5 @@
 import {
+  hasClass,
   addClass,
   removeClass,
 } from 'handsontable/helpers/dom/element';
@@ -9,9 +10,10 @@ import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
 import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
+import {isPressedCtrlKey} from 'handsontable/utils/keyStateObserver';
 import {mainSortComparator} from './comparatorEngine';
 import {getNextSortOrder, areValidSortStates, ColumnStatesManager} from './columnStatesManager';
-import {DomHelper, HEADER_CLASS} from './domHelper';
+import {DomHelper, HEADER_CLASS, HEADER_ACTIONS_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -37,7 +39,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *
  * // as an object with initial order (sort ascending column at index 2)
  * multiColumnSorting: {
- *   columns: [{
+ *   initialConfig: [{
  *     column: 2,
  *     sortOrder: 'asc', // 'asc' = ascending, 'desc' = descending
  *   }]
@@ -68,7 +70,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *   }
  * }]```
  *
- * @dependencies ObserveChanges moment
+ * @dependencies moment
  */
 class MultiColumnSorting extends BasePlugin {
   constructor(hotInstance) {
@@ -121,16 +123,14 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
-    if (isUndefined(this.hot.getSettings().observeChanges)) {
-      this.enableObserveChangesPlugin();
-    }
-
     this.addHook('afterTrimRow', () => this.sortByPresetSortState());
     this.addHook('afterUntrimRow', () => this.sortByPresetSortState());
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
+    this.addHook('beforeOnCellMouseDown', (event, coords, TD, controller) => this.beforeOnCellMouseDown(event, coords, TD, controller));
+    this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
@@ -280,7 +280,7 @@ class MultiColumnSorting extends BasePlugin {
   saveAllSortSettings() {
     const allSortSettings = this.columnStatesManager.getAllColumnsProperties();
 
-    allSortSettings.columns = this.columnStatesManager.getSortStates();
+    allSortSettings.initialConfig = this.columnStatesManager.getSortStates();
 
     this.hot.runHooks('persistentStateSave', 'multiColumnSorting', allSortSettings);
   }
@@ -302,27 +302,11 @@ class MultiColumnSorting extends BasePlugin {
     const translateColumnToVisual = ({column: physicalColumn, ...restOfProperties}) =>
       ({ column: this.hot.toVisualColumn(physicalColumn), ...restOfProperties });
 
-    if (isDefined(allSortSettings) && Array.isArray(allSortSettings.columns)) {
-      allSortSettings.columns = arrayMap(allSortSettings.columns, translateColumnToVisual);
+    if (isDefined(allSortSettings) && Array.isArray(allSortSettings.initialConfig)) {
+      allSortSettings.initialConfig = arrayMap(allSortSettings.initialConfig, translateColumnToVisual);
     }
 
     return allSortSettings;
-  }
-
-  /**
-   * Enables the ObserveChanges plugin.
-   *
-   * @private
-   */
-  enableObserveChangesPlugin() {
-    let _this = this;
-
-    this.hot._registerTimeout(
-      setTimeout(() => {
-        _this.hot.updateSettings({
-          observeChanges: true
-        });
-      }, 0));
   }
 
   /**
@@ -565,9 +549,15 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     const physicalColumn = this.hot.toPhysicalColumn(column);
+    const pluginSettings = this.hot.getSettings().multiColumnSorting;
+    let headerActions = true;
+
+    if (isObject(pluginSettings) && isDefined(pluginSettings.headerActions)) {
+      headerActions = pluginSettings.headerActions;
+    }
 
     removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
-    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, this.getColumnSortIndicator(column)));
+    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, this.getColumnSortIndicator(column), headerActions));
   }
 
   /**
@@ -611,7 +601,7 @@ class MultiColumnSorting extends BasePlugin {
     if (isObject(allSortSettings)) {
       this.columnStatesManager.updateAllColumnsProperties(allSortSettings);
 
-      const columnsSettings = allSortSettings.columns;
+      const columnsSettings = allSortSettings.initialConfig;
 
       if (Array.isArray(columnsSettings)) {
         this.sort(columnsSettings);
@@ -644,6 +634,47 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
+  }
+
+  /**
+   * Changes the behavior of selection / dragging.
+   *
+   * @private
+   * @param {MouseEvent} event
+   * @param {CellCoords} coords Visual coordinates.
+   * @param {HTMLElement} TD
+   * @param {Object} blockCalculations
+   */
+  beforeOnCellMouseDown(event, coords, TD, blockCalculations) {
+    if (hasClass(event.realTarget, HEADER_ACTIONS_CLASS) && event.realTarget.nodeName === 'SPAN' && isPressedCtrlKey()) {
+      blockCalculations.column = true;
+    }
+  }
+
+  /**
+   * `onAfterOnCellMouseDown` hook callback.
+   *
+   * @private
+   * @param {Event} event Event which are provided by hook.
+   * @param {CellCoords} coords Visual coords of the selected cell.
+   */
+  onAfterOnCellMouseDown(event, coords) {
+    if (coords.row >= 0) {
+      return;
+    }
+
+    // Click on the header
+    if (hasClass(event.realTarget, HEADER_ACTIONS_CLASS)) {
+      this.hot.deselectCell();
+      this.hot.selectColumns(coords.col);
+
+      if (isPressedCtrlKey()) {
+        this.sort(this.getNextSortConfig(coords.col, APPEND_COLUMN_CONFIG_STRATEGY));
+
+      } else {
+        this.sort(this.getColumnNextConfig(coords.col));
+      }
+    }
   }
 
   /**

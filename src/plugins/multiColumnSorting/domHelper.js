@@ -8,6 +8,7 @@ const COLUMN_ORDER_PREFIX = 'sort';
 
 export const HEADER_CLASS = 'colHeader';
 export const HEADER_SORT_CLASS = 'columnSorting';
+export const HEADER_ACTIONS_CLASS = 'sortActions';
 
 const orderToCssClass = new Map([
   [ASC_SORT_STATE, HEADER_CLASS_ASC_SORT],
@@ -30,10 +31,15 @@ export class DomHelper {
    *
    * @param {Number} column Physical column index.
    * @param {Boolean} showSortIndicator Indicates if indicator should be shown for the particular column.
+   * @param {Boolean} headerActions Indicates if header actions should be possible.
    * @returns {Array} Array of CSS classes.
    */
-  getAddedClasses(column, showSortIndicator) {
+  getAddedClasses(column, showSortIndicator, headerActions) {
     const cssClasses = [HEADER_SORT_CLASS];
+
+    if (headerActions) {
+      cssClasses.push(HEADER_ACTIONS_CLASS);
+    }
 
     if (this.columnStatesManager.isColumnSorted(column) && showSortIndicator) {
       const columnOrder = this.columnStatesManager.getSortOrderOfColumn(column);
