@@ -1,5 +1,4 @@
 import {
-  hasClass,
   addClass,
   removeClass,
 } from 'handsontable/helpers/dom/element';
@@ -14,7 +13,7 @@ import Hooks from 'handsontable/pluginHooks';
 import {isPressedCtrlKey} from 'handsontable/utils/keyStateObserver';
 import {mainSortComparator} from './comparatorEngine';
 import {getNextSortOrder, areValidSortStates, ColumnStatesManager} from './columnStatesManager';
-import {DomHelper, HEADER_CLASS, HEADER_ACTION_CLASS} from './domHelper';
+import {DomHelper, HEADER_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -665,6 +664,23 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
+   * Indicates if clickable header was clicked.
+   *
+   * @param {MouseEvent} event
+   * @param {Number} column Visual column index.
+   * @returns {Boolean}
+   */
+  wasClickableHeaderClicked(event, column) {
+    const headerActionEnabled = this.getColumnSettings(column).multiColumnSorting.headerAction;
+
+    if (headerActionEnabled && event.realTarget.nodeName === 'SPAN') {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Changes the behavior of selection / dragging.
    *
    * @private
@@ -674,9 +690,7 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Object} blockCalculations
    */
   beforeOnCellMouseDown(event, coords, TD, blockCalculations) {
-    const headerActionEnabled = this.getColumnSettings(coords.col).multiColumnSorting.headerAction;
-
-    if (headerActionEnabled && event.realTarget.nodeName === 'SPAN' && isPressedCtrlKey()) {
+    if (this.wasClickableHeaderClicked(event, coords.col) && isPressedCtrlKey()) {
       blockCalculations.column = true;
     }
   }
@@ -693,10 +707,8 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
-    const headerActionEnabled = this.getColumnSettings(coords.col).multiColumnSorting.headerAction;
-
     // Click on the header
-    if (headerActionEnabled && event.realTarget.nodeName === 'SPAN') {
+    if (this.wasClickableHeaderClicked(event, coords.col)) {
       if (isPressedCtrlKey()) {
         this.hot.deselectCell();
         this.hot.selectColumns(coords.col);
