@@ -5,7 +5,8 @@ import {
 } from 'handsontable/helpers/dom/element';
 import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
 import {isObject} from 'handsontable/helpers/object';
-import {arrayMap, arrayEach} from 'handsontable/helpers/array';
+import {arrayMap} from 'handsontable/helpers/array';
+import {rangeEach} from 'handsontable/helpers/number';
 import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
 import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
@@ -13,7 +14,7 @@ import Hooks from 'handsontable/pluginHooks';
 import {isPressedCtrlKey} from 'handsontable/utils/keyStateObserver';
 import {mainSortComparator} from './comparatorEngine';
 import {getNextSortOrder, areValidSortStates, ColumnStatesManager} from './columnStatesManager';
-import {DomHelper, HEADER_CLASS, HEADER_ACTIONS_CLASS} from './domHelper';
+import {DomHelper, HEADER_CLASS, HEADER_ACTION_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -49,6 +50,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  * multiColumnSorting: {
  *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table
  *   indicator: true, // true = shows indicator for all columns, false = don't show indicator for columns
+ *   headerAction: true, // true = allow to click on the headers to sort, false = turn off possibility to click on the headers to sort
  *   compareFunctionFactory: function(sortOrder, columnMeta) {
  *     return function(value, nextValue) {
  *       // Some value comparisons which will return -1, 0 or 1...
@@ -62,6 +64,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *   multiColumnSorting: {
  *     indicator: false, // set off indicator for the first column,
  *     sortEmptyCells: true,
+ *     headerAction: false, // set off clicks on the column to sort
  *     compareFunctionFactory: function(sortOrder, columnMeta) {
  *       return function(value, nextValue) {
  *         return 0; // Custom compare function for the first column (don't sort)
@@ -100,9 +103,16 @@ class MultiColumnSorting extends BasePlugin {
      * It blocks the plugin translation, this flag is checked inside `onModifyRow` listener.
      *
      * @private
-     * @type {boolean}
+     * @type {Boolean}
      */
     this.blockPluginTranslation = true;
+    /**
+     * Flag which determine if read cell meta from the cache.
+     *
+     * @private
+     * @type {Boolean}
+     */
+    this.readCellMetaFromCache = false;
   }
 
   /**
@@ -406,6 +416,30 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
+   * Get settings for first physical cell in the column for purpose of workaround (cell meta isn't merged properly).
+   *
+   * @param {Number} column Visual column index.
+   * @returns {Object}
+   */
+  getColumnSettings(column) {
+    this.blockPluginTranslation = true;
+
+    if (this.readCellMetaFromCache === false) {
+      const numberOfColumns = this.hot.countCols();
+
+      rangeEach(numberOfColumns, (visualColumnIndex) => this.overwriteFirstCellSettings(visualColumnIndex));
+
+      this.readCellMetaFromCache = true;
+    }
+
+    const cellMeta = this.hot.getCellMeta(0, column);
+
+    this.blockPluginTranslation = false;
+
+    return cellMeta;
+  }
+
+  /**
    * Get number of rows which should be sorted.
    *
    * @private
@@ -439,11 +473,9 @@ class MultiColumnSorting extends BasePlugin {
     const sortedColumnsList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
-    // Functions `getDataAtCell` and `getCellMeta` won't call the indices translation inside `onModifyRow` listener - we
-    // check the `blockPluginTranslation` flag (we just want to get data not already modified by `multiColumnSorting` plugin translation).
+    // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` listener - we check the `blockPluginTranslation`
+    // flag inside (we just want to get data not already modified by `multiColumnSorting` plugin translation).
     this.blockPluginTranslation = true;
-
-    arrayEach(sortedColumnsList, (physicalColumn) => this.overwriteFirstCellSettings(this.hot.toVisualColumn(physicalColumn)));
 
     const getDataForSortedColumns = (visualRowIndex) =>
       arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
@@ -454,7 +486,7 @@ class MultiColumnSorting extends BasePlugin {
 
     mergeSort(indexesWithData, mainSortComparator(
       arrayMap(sortedColumnsList, (physicalColumn) => this.columnStatesManager.getSortOrderOfColumn(physicalColumn)),
-      arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getCellMeta(0, this.hot.toVisualColumn(physicalColumn)))
+      arrayMap(sortedColumnsList, (physicalColumn) => this.getColumnSettings(this.hot.toVisualColumn(physicalColumn)))
     ));
 
     // Append spareRows
@@ -511,9 +543,7 @@ class MultiColumnSorting extends BasePlugin {
     const columnSortConfig = this.getSortConfig(column);
 
     if (isDefined(columnSortConfig)) {
-      const columnMeta = this.hot.getCellMeta(0, column);
-
-      return columnMeta.multiColumnSorting.indicator;
+      return this.getColumnSettings(column).multiColumnSorting.indicator;
     }
 
     return false;
@@ -549,15 +579,11 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     const physicalColumn = this.hot.toPhysicalColumn(column);
-    const pluginSettings = this.hot.getSettings().multiColumnSorting;
-    let headerActions = true;
-
-    if (isObject(pluginSettings) && isDefined(pluginSettings.headerActions)) {
-      headerActions = pluginSettings.headerActions;
-    }
+    const headerActionEnabled = this.getColumnSettings(column).multiColumnSorting.headerAction;
+    const showSortIndicator = this.getColumnSortIndicator(column);
 
     removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
-    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, this.getColumnSortIndicator(column), headerActions));
+    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
   }
 
   /**
@@ -567,6 +593,8 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Object} settings New settings object.
    */
   onAfterUpdateSettings(settings) {
+    this.readCellMetaFromCache = false;
+
     if (isDefined(settings.multiColumnSorting)) {
       this.sortBySettings(settings.multiColumnSorting);
     }
@@ -646,7 +674,9 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Object} blockCalculations
    */
   beforeOnCellMouseDown(event, coords, TD, blockCalculations) {
-    if (hasClass(event.realTarget, HEADER_ACTIONS_CLASS) && event.realTarget.nodeName === 'SPAN' && isPressedCtrlKey()) {
+    const headerActionEnabled = this.getColumnSettings(coords.col).multiColumnSorting.headerAction;
+
+    if (headerActionEnabled && event.realTarget.nodeName === 'SPAN' && isPressedCtrlKey()) {
       blockCalculations.column = true;
     }
   }
@@ -663,12 +693,14 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
-    // Click on the header
-    if (hasClass(event.realTarget, HEADER_ACTIONS_CLASS)) {
-      this.hot.deselectCell();
-      this.hot.selectColumns(coords.col);
+    const headerActionEnabled = this.getColumnSettings(coords.col).multiColumnSorting.headerAction;
 
+    // Click on the header
+    if (headerActionEnabled && event.realTarget.nodeName === 'SPAN') {
       if (isPressedCtrlKey()) {
+        this.hot.deselectCell();
+        this.hot.selectColumns(coords.col);
+
         this.sort(this.getNextSortConfig(coords.col, APPEND_COLUMN_CONFIG_STRATEGY));
 
       } else {

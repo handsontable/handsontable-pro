@@ -2,13 +2,14 @@ import {isObject, objectEach, deepClone} from 'handsontable/helpers/object';
 import {isUndefined} from 'handsontable/helpers/mixed';
 import {arrayMap} from 'handsontable/helpers/array';
 
-const inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'compareFunctionFactory'];
+const inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'headerAction', 'compareFunctionFactory'];
 
 export const ASC_SORT_STATE = 'asc';
 export const DESC_SORT_STATE = 'desc';
 
 const SORT_EMPTY_CELLS_DEFAULT = false;
 const SHOW_SORT_INDICATOR_DEFAULT = false;
+const HEADER_ACTION_DEFAULT = true;
 
 /**
  * Get if column state is valid.
@@ -87,6 +88,12 @@ export class ColumnStatesManager {
      */
     this.indicator = SHOW_SORT_INDICATOR_DEFAULT;
     /**
+     * Determine if click on the header perform sorting.
+     *
+     * @type {Boolean}
+     */
+    this.headerAction = HEADER_ACTION_DEFAULT;
+    /**
      * Determine compare function factory. Method get as parameters `sortOder` and `columnMeta` and return compare function.
      */
     this.compareFunctionFactory = void 0;
@@ -119,7 +126,8 @@ export class ColumnStatesManager {
   getAllColumnsProperties() {
     const columnProperties = {
       sortEmptyCells: this.sortEmptyCells,
-      indicator: this.indicator
+      indicator: this.indicator,
+      headerAction: this.headerAction
     };
 
     if (typeof this.compareFunctionFactory !== 'undefined') {

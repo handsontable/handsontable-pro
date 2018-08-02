@@ -2781,4 +2781,93 @@ describe('MultiColumnSorting', () => {
       expect(getDataAtCol(0)).toEqual(['Mary', 'Mary', 'John', 'Robert', 'Robert', 'Ann', 'Henry', 'David', 'Ann']);
     });
   });
+
+  describe('Click on the header sort data', () => {
+    const HEADER_ACTION_CLASS = 'sortAction';
+
+    it('should block action for specific configuration', () => {
+      handsontable({
+        data: multiColumnSortingData(),
+        columns: [
+          {multiColumnSorting: {headerAction: false}},
+          {},
+          {type: 'date', dateFormat: 'MM/DD/YYYY'},
+          {type: 'numeric'},
+          {}
+        ],
+        colHeaders: true,
+        multiColumnSorting: {
+          headerAction: true
+        }
+      });
+
+      const $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
+
+      expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeFalsy();
+
+      spec().sortByClickOnColumnHeader(0);
+
+      expect(getDataAtCol(0)).toEqual(['Mary', 'Henry', 'Ann', 'Robert', 'Ann', 'David', 'John', 'Mary', 'Robert']);
+    });
+
+    it('should not block action for specific configuration updated by `updateSettings`', () => {
+      handsontable({
+        data: multiColumnSortingData(),
+        columns: [
+          {multiColumnSorting: {headerAction: false}},
+          {},
+          {type: 'date', dateFormat: 'MM/DD/YYYY'},
+          {type: 'numeric'},
+          {}
+        ],
+        colHeaders: true,
+        multiColumnSorting: {
+          headerAction: true
+        }
+      });
+
+      let $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
+
+      expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeFalsy();
+
+      updateSettings({columns: () => ({type: 'text'}) });
+
+      $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
+
+      expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeTruthy();
+
+      spec().sortByClickOnColumnHeader(0);
+
+      expect(getDataAtCol(0)).toEqual(['Ann', 'Ann', 'David', 'Henry', 'John', 'Mary', 'Mary', 'Robert', 'Robert']);
+    });
+
+    it('should block action for specific configuration updated by `updateSettings`', () => {
+      handsontable({
+        data: multiColumnSortingData(),
+        columns: [
+          {},
+          {},
+          {type: 'date', dateFormat: 'MM/DD/YYYY'},
+          {type: 'numeric'},
+          {}
+        ],
+        colHeaders: true,
+        multiColumnSorting: true
+      });
+
+      let $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
+
+      expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeTruthy();
+
+      updateSettings({multiColumnSorting: {headerAction: false}});
+
+      $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
+
+      expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeFalsy();
+
+      spec().sortByClickOnColumnHeader(0);
+
+      expect(getDataAtCol(0)).toEqual(['Mary', 'Henry', 'Ann', 'Robert', 'Ann', 'David', 'John', 'Mary', 'Robert']);
+    });
+  });
 });

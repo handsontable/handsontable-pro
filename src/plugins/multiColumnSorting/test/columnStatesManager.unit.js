@@ -36,6 +36,7 @@ describe('MultiColumnSorting', () => {
       expect(columnStatesManager.getAllColumnsProperties()).toEqual({
         sortEmptyCells: false,
         indicator: false,
+        headerAction: true
       });
     });
 
@@ -46,12 +47,14 @@ describe('MultiColumnSorting', () => {
       columnStatesManager.updateAllColumnsProperties({
         sortEmptyCells: true,
         indicator: true,
+        headerAction: false,
         compareFunctionFactory
       });
 
       expect(columnStatesManager.getAllColumnsProperties()).toEqual({
         sortEmptyCells: true,
         indicator: true,
+        headerAction: false,
         compareFunctionFactory
       });
     });
