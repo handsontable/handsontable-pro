@@ -1,10 +1,10 @@
 /* Column's number position */
 .handsontable span.colHeader.columnSorting::after {
   position: absolute;
-  top: 3px;
+  top: 1px;
 
   font-size: 8px;
-  right: -15px;
+  right: -14px;
   text-decoration: underline; /* Workaround for IE9 - IE11 */
 }
 
