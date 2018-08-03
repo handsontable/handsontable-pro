@@ -37,13 +37,13 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  * // as boolean
  * multiColumnSorting: true
  *
- * // as an object with initial sort config (sort ascending for column at index 2 and then sort descending for column at index 3)
+ * // as an object with initial sort config (sort ascending for column at index 1 and then sort descending for column at index 0)
  * multiColumnSorting: {
  *   initialConfig: [{
- *     column: 2,
+ *     column: 1,
  *     sortOrder: 'asc'
  *   }, {
- *     column: 3,
+ *     column: 0,
  *     sortOrder: 'desc'
  *   }]
  * }
@@ -66,7 +66,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *   multiColumnSorting: {
  *     indicator: false, // set off indicator for the first column,
  *     sortEmptyCells: true,
- *     headerAction: false, // set off clicks on the column to sort
+ *     headerAction: false, // clicks on the first column won't sort
  *     compareFunctionFactory: function(sortOrder, columnMeta) {
  *       return function(value, nextValue) {
  *         return 0; // Custom compare function for the first column (don't sort)
