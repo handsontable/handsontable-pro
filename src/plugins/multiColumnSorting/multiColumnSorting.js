@@ -176,6 +176,19 @@ class MultiColumnSorting extends BasePlugin {
    *
    * **Note**: Please keep in mind that every call of `sort` function set an entirely new sort order. Previous sort configs aren't preserved.
    *
+   * @example
+   * ```js
+   * // sort ascending first visual column
+   * hot.getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
+   *
+   * // sort first two visual column in the defined sequence
+   * hot.getPlugin('multiColumnSorting').sort([{
+   *   column: 1, sortOrder: 'asc'
+   * }, {
+   *   column: 0, sortOrder: 'desc'
+   * }]);
+   *
+   *
    * @fires Hooks#beforeColumnSort
    * @fires Hooks#afterColumnSort
    */
@@ -239,7 +252,7 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * Get sort configuration for particular column or for all sorted columns. Objects contain `column` and `sortOrder` properties.
    *
-   * **Note**: Please keep in mind that returned objects expose **visual** column index under the `column` key.
+   * **Note**: Please keep in mind that returned objects expose **visual** column index under the `column` key. They are handled by the `sort` function.
    *
    * @param {Number} [column] Visual column index.
    * @returns {undefined|Object|Array}
