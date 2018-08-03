@@ -29,19 +29,22 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  * @pro
  *
  * @description
- * This plugin sorts the view by a column (but does not sort the data source!). To enable the plugin, set the
- * {@link Options#multiColumnSorting} property to an object defining the initial sort order (see the example below).
+ * This plugin sorts the view by columns (but does not sort the data source!). To enable the plugin, set the
+ * {@link Options#multiColumnSorting} property to the correct value (see the examples below).
  *
  * @example
  * ```js
  * // as boolean
  * multiColumnSorting: true
  *
- * // as an object with initial order (sort ascending column at index 2)
+ * // as an object with initial sort config (sort ascending for column at index 2 and then sort descending for column at index 3)
  * multiColumnSorting: {
  *   initialConfig: [{
  *     column: 2,
- *     sortOrder: 'asc', // 'asc' = ascending, 'desc' = descending
+ *     sortOrder: 'asc'
+ *   }, {
+ *     column: 3,
+ *     sortOrder: 'desc'
  *   }]
  * }
  *
@@ -221,7 +224,7 @@ class MultiColumnSorting extends BasePlugin {
    * Clear the sort performed on the table.
    */
   clearSort() {
-    this.sort();
+    this.sort([]);
   }
 
   /**
@@ -417,10 +420,11 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * Get settings for first physical cell in the column for purpose of workaround (cell meta isn't merged properly).
    *
+   * @private
    * @param {Number} column Visual column index.
    * @returns {Object}
    */
-  getColumnSettings(column) {
+  getFirstCellSettings(column) {
     this.blockPluginTranslation = true;
 
     if (this.readCellMetaFromCache === false) {
@@ -485,7 +489,7 @@ class MultiColumnSorting extends BasePlugin {
 
     mergeSort(indexesWithData, mainSortComparator(
       arrayMap(sortedColumnsList, (physicalColumn) => this.columnStatesManager.getSortOrderOfColumn(physicalColumn)),
-      arrayMap(sortedColumnsList, (physicalColumn) => this.getColumnSettings(this.hot.toVisualColumn(physicalColumn)))
+      arrayMap(sortedColumnsList, (physicalColumn) => this.getFirstCellSettings(this.hot.toVisualColumn(physicalColumn)))
     ));
 
     // Append spareRows
@@ -542,7 +546,7 @@ class MultiColumnSorting extends BasePlugin {
     const columnSortConfig = this.getSortConfig(column);
 
     if (isDefined(columnSortConfig)) {
-      return this.getColumnSettings(column).multiColumnSorting.indicator;
+      return this.getFirstCellSettings(column).multiColumnSorting.indicator;
     }
 
     return false;
@@ -578,7 +582,7 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     const physicalColumn = this.hot.toPhysicalColumn(column);
-    const headerActionEnabled = this.getColumnSettings(column).multiColumnSorting.headerAction;
+    const headerActionEnabled = this.getFirstCellSettings(column).multiColumnSorting.headerAction;
     const showSortIndicator = this.getColumnSortIndicator(column);
 
     removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
@@ -671,7 +675,7 @@ class MultiColumnSorting extends BasePlugin {
    * @returns {Boolean}
    */
   wasClickableHeaderClicked(event, column) {
-    const headerActionEnabled = this.getColumnSettings(column).multiColumnSorting.headerAction;
+    const headerActionEnabled = this.getFirstCellSettings(column).multiColumnSorting.headerAction;
 
     if (headerActionEnabled && event.realTarget.nodeName === 'SPAN') {
       return true;
