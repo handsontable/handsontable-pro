@@ -164,6 +164,11 @@ class MultiColumnSorting extends BasePlugin {
    * Disables the plugin functionality for this Handsontable instance.
    */
   disablePlugin() {
+    this.readCellMetaFromCache = false;
+
+    // The top overlay isn't rendered.
+    this.hot.render();
+
     super.disablePlugin();
   }
 
@@ -427,7 +432,13 @@ class MultiColumnSorting extends BasePlugin {
     const columnMetaHasPluginSettings = Object.hasOwnProperty.call(columnMeta, 'multiColumnSorting');
     const pluginColumnConfig = columnMetaHasPluginSettings ? columnMeta.multiColumnSorting : {};
 
-    cellMeta.multiColumnSorting = Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig);
+    // After `disablePlugin` call.
+    if (pluginMainSettings === false) {
+      cellMeta.multiColumnSorting = {};
+
+    } else {
+      cellMeta.multiColumnSorting = Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig);
+    }
   }
 
   /**
