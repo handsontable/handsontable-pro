@@ -1,7 +1,10 @@
 /* Column's number position */
 .handsontable span.colHeader.columnSorting::after {
   position: absolute;
-  top: 1px;
+  /* Centering start */
+  top: 50%;
+  margin-top: -8px;
+  /* Centering end */
 
   font-size: 8px;
   height: 16px;
