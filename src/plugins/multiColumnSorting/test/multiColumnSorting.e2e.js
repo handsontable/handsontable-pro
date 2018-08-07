@@ -2,51 +2,47 @@ describe('MultiColumnSorting', () => {
   const id = 'testContainer';
 
   beforeEach(function() {
-    spec().$container = $(`<div id="${id}" style="overflow: auto; width: 300px; height: 200px;"></div>`).appendTo('body');
+    this.$container = $(`<div id="${id}" style="overflow: auto; width: 300px; height: 200px;"></div>`).appendTo('body');
 
-    spec().sortByClickOnColumnHeader = function(columnIndex) {
-      const element = spec().$container.find(`th span.columnSorting:eq(${columnIndex})`);
+    this.sortByClickOnColumnHeader = (columnIndex) => {
+      const element = this.$container.find(`th span.columnSorting:eq(${columnIndex})`);
 
       element.simulate('mousedown');
       element.simulate('mouseup');
     };
   });
 
-  afterEach(function () {
-    if (spec().$container) {
+  afterEach(function() {
+    if (this.$container) {
       destroy();
-      spec().$container.remove();
+      this.$container.remove();
     }
   });
 
-  const singleColumnSortingData = function () {
-    return [
-      {id: 1, name: 'Ted', lastName: 'Right'},
-      {id: 2, name: 'Frank', lastName: 'Honest'},
-      {id: 3, name: 'Joan', lastName: 'Well'},
-      {id: 4, name: 'Sid', lastName: 'Strong'},
-      {id: 5, name: 'Jane', lastName: 'Neat'},
-      {id: 6, name: 'Chuck', lastName: 'Jackson'},
-      {id: 7, name: 'Meg', lastName: 'Jansen'},
-      {id: 8, name: 'Rob', lastName: 'Norris'},
-      {id: 9, name: 'Sean', lastName: 'O\'Hara'},
-      {id: 10, name: 'Eve', lastName: 'Branson'}
-    ];
-  };
+  const singleColumnSortingData = () => [
+    {id: 1, name: 'Ted', lastName: 'Right'},
+    {id: 2, name: 'Frank', lastName: 'Honest'},
+    {id: 3, name: 'Joan', lastName: 'Well'},
+    {id: 4, name: 'Sid', lastName: 'Strong'},
+    {id: 5, name: 'Jane', lastName: 'Neat'},
+    {id: 6, name: 'Chuck', lastName: 'Jackson'},
+    {id: 7, name: 'Meg', lastName: 'Jansen'},
+    {id: 8, name: 'Rob', lastName: 'Norris'},
+    {id: 9, name: 'Sean', lastName: 'O\'Hara'},
+    {id: 10, name: 'Eve', lastName: 'Branson'}
+  ];
 
-  const multiColumnSortingData = function () {
-    return [
-      ['Mary', 'Brown', '01/14/2017', 6999.95, 'aa'],
-      ['Henry', 'Jones', '12/01/2018', 8330, 'aaa'],
-      ['Ann', 'Evans', '07/24/2021', 30500, null],
-      ['Robert', 'Evans', '07/24/2019', 12464, 'abaa'],
-      ['Ann', 'Williams', '01/14/2017', 33.9, 'aab'],
-      ['David', 'Taylor', '02/02/2020', 7000, 'bbbb'],
-      ['John', 'Brown', '07/24/2020', 2984, null],
-      ['Mary', 'Brown', '01/14/2017', 4000, ''],
-      ['Robert', 'Evans', '07/24/2020', 30500, undefined]
-    ];
-  };
+  const multiColumnSortingData = () => [
+    ['Mary', 'Brown', '01/14/2017', 6999.95, 'aa'],
+    ['Henry', 'Jones', '12/01/2018', 8330, 'aaa'],
+    ['Ann', 'Evans', '07/24/2021', 30500, null],
+    ['Robert', 'Evans', '07/24/2019', 12464, 'abaa'],
+    ['Ann', 'Williams', '01/14/2017', 33.9, 'aab'],
+    ['David', 'Taylor', '02/02/2020', 7000, 'bbbb'],
+    ['John', 'Brown', '07/24/2020', 2984, null],
+    ['Mary', 'Brown', '01/14/2017', 4000, ''],
+    ['Robert', 'Evans', '07/24/2020', 30500, undefined]
+  ];
 
   it('should sort table by first visible column', () => {
     handsontable({
@@ -189,6 +185,25 @@ describe('MultiColumnSorting', () => {
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
   });
 
+  it('should clear indicator after disabling plugin', () => {
+    handsontable({
+      data: singleColumnSortingData(),
+      colHeaders: true,
+      multiColumnSorting: {
+        initialConfig: [{
+          column: 0,
+          sortOrder: 'asc'
+        }],
+        indicator: true
+      }
+    });
+
+    updateSettings({ multiColumnSorting: false });
+
+    const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+  });
+
   it('should render a correct number of TD elements after sorting', async () => {
     handsontable({
       data: [
@@ -274,7 +289,7 @@ describe('MultiColumnSorting', () => {
     expect(errors).toBe(0);
   });
 
-  it('should sort numbers descending after 2 clicks on table header', function() {
+  it('should sort numbers descending after 2 clicks on table header', () => {
     handsontable({
       data: singleColumnSortingData(),
       colHeaders: true,
@@ -1378,7 +1393,7 @@ describe('MultiColumnSorting', () => {
     expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('1');
   });
 
-  it('should sort table using plugin API method', function() {
+  it('should sort table using plugin API method', () => {
     handsontable({
       data: [
         [1, 'B'],
@@ -2098,7 +2113,7 @@ describe('MultiColumnSorting', () => {
 
   it('should allow specifiyng a custom sorting function', () => {
     const data = [['1 inch'], ['1 yard'], ['2 feet'], ['0.2 miles']];
-    const compareFunctionFactory = function (sortOrder) {
+    const compareFunctionFactory = function(sortOrder) {
       return function (value, nextValue) {
         const unitsRatios = {
           inch: 1,
