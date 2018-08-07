@@ -13,7 +13,7 @@ import Hooks from 'handsontable/pluginHooks';
 import {isPressedCtrlKey} from 'handsontable/utils/keyStateObserver';
 import {mainSortComparator} from './comparatorEngine';
 import {ColumnStatesManager} from './columnStatesManager';
-import {getNextSortOrder, areValidSortStates} from './utils';
+import {getNextSortOrder, areValidSortStates, warnIfPluginsHasConflict} from './utils';
 import {DomHelper, HEADER_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
@@ -135,6 +135,8 @@ class MultiColumnSorting extends BasePlugin {
     if (this.enabled) {
       return;
     }
+
+    warnIfPluginsHasConflict(this.hot.getSettings().columnSorting);
 
     this.addHook('afterTrimRow', () => this.sortByPresetSortState());
     this.addHook('afterUntrimRow', () => this.sortByPresetSortState());
@@ -621,6 +623,8 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Object} settings New settings object.
    */
   onAfterUpdateSettings(settings) {
+    warnIfPluginsHasConflict(settings.columnSorting);
+
     this.readCellMetaFromCache = false;
 
     if (isDefined(settings.multiColumnSorting)) {
@@ -666,7 +670,7 @@ class MultiColumnSorting extends BasePlugin {
     } else if (this.getSortConfig().length > 0) {
       // Clear the sort if the table has been sorted
 
-      this.sort();
+      this.sort([]);
     }
   }
 

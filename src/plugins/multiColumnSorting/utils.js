@@ -1,5 +1,6 @@
 import {isUndefined} from 'handsontable/helpers/mixed';
 import {isObject} from 'handsontable/helpers/object';
+import {warn} from 'handsontable/helpers/console';
 
 export const ASC_SORT_STATE = 'asc';
 export const DESC_SORT_STATE = 'desc';
@@ -52,4 +53,15 @@ export function getNextSortOrder(sortOrder) {
   }
 
   return ASC_SORT_STATE;
+}
+
+/**
+ * Warn users about problems when using `multiColumnSorting` and `columnSorting` plugins simultaneously.
+ *
+ * @param {undefined|Boolean|Object} columnSortingSettings
+ */
+export function warnIfPluginsHasConflict(columnSortingSettings) {
+  if (columnSortingSettings) {
+    warn('Plugins `columnSorting` and `multiColumnSorting` should not be turned on simultaneously.');
+  }
 }
