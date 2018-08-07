@@ -1,17 +1,7 @@
-import {ColumnStatesManager, ASC_SORT_STATE, DESC_SORT_STATE, areValidSortStates} from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
+import {ColumnStatesManager, ASC_SORT_STATE, DESC_SORT_STATE} from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
 import {deepClone} from 'handsontable/helpers/object';
 
 describe('MultiColumnSorting', () => {
-  it('areValidSortStates', () => {
-    expect(areValidSortStates([{}])).toBeFalsy();
-    expect(areValidSortStates([{column: 1}])).toBeFalsy();
-    expect(areValidSortStates([{sortOrder: ASC_SORT_STATE}])).toBeFalsy();
-    expect(areValidSortStates([{sortOrder: DESC_SORT_STATE}])).toBeFalsy();
-    expect(areValidSortStates([{column: 1, sortOrder: DESC_SORT_STATE}, {column: 1, sortOrder: DESC_SORT_STATE}])).toBeFalsy();
-    expect(areValidSortStates([{column: 1, sortOrder: DESC_SORT_STATE}])).toBeTruthy();
-    expect(areValidSortStates([{column: 1, sortOrder: ASC_SORT_STATE}])).toBeTruthy();
-  });
-
   describe('ColumnStatesManager.updateAllColumnsProperties', () => {
     it('should update internal properties', () => {
       const columnStatesManager = new ColumnStatesManager();

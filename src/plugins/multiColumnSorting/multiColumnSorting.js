@@ -12,7 +12,8 @@ import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
 import {isPressedCtrlKey} from 'handsontable/utils/keyStateObserver';
 import {mainSortComparator} from './comparatorEngine';
-import {getNextSortOrder, areValidSortStates, ColumnStatesManager} from './columnStatesManager';
+import {ColumnStatesManager} from './columnStatesManager';
+import {getNextSortOrder, areValidSortStates} from './utils';
 import {DomHelper, HEADER_CLASS} from './domHelper';
 import RowsMapper from './rowsMapper';
 
