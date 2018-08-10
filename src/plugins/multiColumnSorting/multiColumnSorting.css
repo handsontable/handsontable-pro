@@ -1,14 +1,17 @@
 /* Column's number position */
 .handsontable span.colHeader.columnSorting::after {
-  position: absolute;
   /* Centering start */
   top: 50%;
-  margin-top: -8px;
+  margin-top: -2px; /* Two extra pixels for purpose of proper positioning of numeric indicators, when `font-size` set to default */
   /* Centering end */
 
+  position: absolute;
+  right: -15px;
+  padding-left: 5px; ; /* For purpose of continuous mouse over experience, when moving between the `::before` and the `::after` elements */
+
   font-size: 8px;
-  height: 16px;
-  padding-left: 8px;
+  height: 8px;
+  line-height: 1.1;
   text-decoration: underline; /* Workaround for IE9 - IE11 */
 }
 
@@ -48,4 +51,11 @@
 
 .handsontable span.colHeader.columnSorting.sort-7::after {
   content: '7';
+}
+
+.htGhostTable span.colHeader.columnSorting::after {
+  content: '*';
+  display: inline-block;
+  position: relative;
+  padding-right: 18px;  /* The multi-line header need more padding to not hide numeric indicators */
 }
