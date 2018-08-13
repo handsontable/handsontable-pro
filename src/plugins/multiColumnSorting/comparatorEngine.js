@@ -37,7 +37,7 @@ function getCompareFunctionFactory(columnMeta) {
  */
 export function mainSortComparator(sortingOrders, columnMetas) {
   return function (rowIndexWithValues, nextRowIndexWithValues) {
-    // We are soring array of arrays. Single array is in form [rowIndex, ...values].
+    // We sort array of arrays. Single array is in form [rowIndex, ...values].
     // We compare just values, stored at second index of array.
     const [, ...values] = rowIndexWithValues;
     const [, ...nextValues] = nextRowIndexWithValues;

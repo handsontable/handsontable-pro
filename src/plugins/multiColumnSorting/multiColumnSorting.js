@@ -149,6 +149,8 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
+
+    // TODO: Workaround - it should be refactored.
     this.addHook('afterLoadData', () => {
       this.rowsMapper.clearMap();
 
@@ -424,7 +426,7 @@ class MultiColumnSorting extends BasePlugin {
    * to properly created object by cascade settings.
    *
    * @private
-   * @param column Visual column index.
+   * @param {Number} column Visual column index.
    * @returns {Object}
    */
   overwriteFirstCellSettings(column) {
@@ -593,11 +595,7 @@ class MultiColumnSorting extends BasePlugin {
 
     const headerLink = TH.querySelector(`.${HEADER_CLASS}`);
 
-    if (!headerLink) {
-      return;
-    }
-
-    if (this.enabled === false) {
+    if (isUndefined(headerLink) || this.enabled === false) {
       return;
     }
 

@@ -2545,6 +2545,9 @@ describe('MultiColumnSorting', () => {
 
   describe('Numbers presenting sorting sequence', () => {
     it('should be properly presented on the UI when more than 7 columns are sorted', () => {
+      spec().$container[0].style.width = 'auto';
+      spec().$container[0].style.height = 'auto';
+
       handsontable({
         data: createSpreadsheetData(10, 10),
         colHeaders: true,
