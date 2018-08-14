@@ -1438,7 +1438,7 @@ describe('MultiColumnSorting', () => {
     expect(beforeColumnSortHandler).toHaveBeenCalledWith([], [{
       column: 0,
       sortOrder: 'asc'
-    }], void 0, void 0, void 0, void 0);
+    }], true, void 0, void 0, void 0);
   });
 
   it('should not sorting column when beforeColumnSort returns false', (done) => {
@@ -1481,10 +1481,10 @@ describe('MultiColumnSorting', () => {
     expect(beforeColumnSortCallback).toHaveBeenCalledWith([], [{
       column: 0,
       sortOrder: 'asc'
-    }], void 0, void 0, void 0, void 0);
+    }], true, void 0, void 0, void 0);
   });
 
-  it('should fire afterColumnSort event before data has been sorted but before table render', () => {
+  it('should fire afterColumnSort event after data has been sorted', () => {
     handsontable({
       data: [
         [2],
@@ -1494,21 +1494,10 @@ describe('MultiColumnSorting', () => {
       ],
       multiColumnSorting: true
     });
-    let rendered = 'desc';
+
     const afterColumnSortHandler = jasmine.createSpy('afterColumnSortHandler');
-    const afterRenderSpy = jasmine.createSpy('afterRender');
 
-    addHook('afterColumnSort', function () {
-      expect(rendered).toBe('desc');
-      afterColumnSortHandler.apply(afterColumnSortHandler, arguments);
-    });
-
-    addHook('afterRender', function () {
-      rendered = true;
-      afterRenderSpy.apply(afterRenderSpy, arguments);
-    });
-
-    afterRenderSpy.calls.reset();
+    addHook('afterColumnSort', afterColumnSortHandler);
 
     getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
 
@@ -1516,8 +1505,7 @@ describe('MultiColumnSorting', () => {
     expect(afterColumnSortHandler).toHaveBeenCalledWith([], [{
       column: 0,
       sortOrder: 'asc'
-    }], void 0, void 0, void 0, void 0);
-    expect(afterRenderSpy.calls.count()).toBe(1);
+    }], true, void 0, void 0, void 0);
   });
 
   it('should add afterColumnSort event listener in constructor', () => {
@@ -1535,7 +1523,7 @@ describe('MultiColumnSorting', () => {
     expect(afterColumnSortCallback).toHaveBeenCalledWith([], [{
       column: 0,
       sortOrder: 'asc'
-    }], void 0, void 0, void 0, void 0);
+    }], true, void 0, void 0, void 0);
   });
 
   it('should insert row when plugin is enabled, but table hasn\'t been sorted', () => {

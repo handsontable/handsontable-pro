@@ -217,30 +217,28 @@ class MultiColumnSorting extends BasePlugin {
       destinationSortConfigs = [sortConfig];
     }
 
-    if (this.areValidSortConfigs(destinationSortConfigs) === false) {
-      return;
-    }
-
-    const allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs);
+    const sortPossible = this.areValidSortConfigs(destinationSortConfigs);
+    const allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs, sortPossible);
 
     if (allowSort === false) {
       return;
     }
 
-    const translateColumnToPhysical = ({column: visualColumn, ...restOfProperties}) =>
-      ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
+    if (sortPossible) {
+      const translateColumnToPhysical = ({column: visualColumn, ...restOfProperties}) =>
+        ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
 
-    const destinationSortStates = arrayMap(destinationSortConfigs, (columnSortConfig) => translateColumnToPhysical(columnSortConfig));
+      const destinationSortStates = arrayMap(destinationSortConfigs, (columnSortConfig) => translateColumnToPhysical(columnSortConfig));
 
-    this.columnStatesManager.setSortStates(destinationSortStates);
-    this.sortByPresetSortState();
+      this.columnStatesManager.setSortStates(destinationSortStates);
+      this.sortByPresetSortState();
+      this.saveAllSortSettings();
 
-    this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig());
+      this.hot.render();
+      this.hot.view.wt.draw(true); // TODO: Workaround? One test won't pass after removal.
+    }
 
-    this.hot.render();
-    this.hot.view.wt.draw(true);
-
-    this.saveAllSortSettings();
+    this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig(), sortPossible);
   }
 
   /**
