@@ -57,5 +57,9 @@
   content: '*';
   display: inline-block;
   position: relative;
-  padding-right: 18px;  /* The multi-line header need more padding to not hide numeric indicators */
+}
+
+ /* Drop-down menu widens header by 5 pixels, sort sequence numbers won't overlap the icon; mainly for the IE9+ */
+.htGhostTable th div button.changeType + span.colHeader.columnSorting {
+  padding-right: 5px;
 }
