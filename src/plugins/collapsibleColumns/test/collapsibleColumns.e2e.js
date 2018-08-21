@@ -305,5 +305,35 @@ describe('CollapsibleColumns', function() {
 
     });
 
+    it('should expand to master table width after editing and clicking the expand button #105', function() {
+      const hot = handsontable({
+        data: Handsontable.helper.createSpreadsheetData(10, 10),
+        rowHeaders: true,
+        hiddenColumns: true,
+        nestedHeaders: [
+          ['a', {label: 'd', colspan: 4}, 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c', 'd', 'e', 'f', 'g'],
+          ['a', {label: 'b', colspan: 2}, {label: 'c', colspan: 2}, 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'f', 'g']
+        ],
+        collapsibleColumns: true
+      });
+      let topCloneHiderWidth = document.querySelector('.ht_clone_top .wtHider').style.width;
+
+      const button = $('.collapsibleIndicator').first();
+
+      button.simulate('mousedown');
+
+      expect(document.querySelector('.ht_clone_top .wtHider').style.width).toBe(topCloneHiderWidth);
+
+      selectCell(0, 0);
+      keyDown('enter');
+      keyDown('enter');
+
+      expect(document.querySelector('.ht_clone_top .wtHider').style.width).not.toBe(topCloneHiderWidth);
+
+      $('.collapsibleIndicator').first().simulate('mousedown');
+
+      expect(document.querySelector('.ht_clone_top .wtHider').style.width).toBe(topCloneHiderWidth);
+    });
+
   });
 });
