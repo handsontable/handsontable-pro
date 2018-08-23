@@ -322,7 +322,7 @@ describe('CollapsibleColumns', function() {
 
       button.simulate('mousedown');
 
-      expect(document.querySelector('.ht_clone_top .wtHider').style.width).toBe(topCloneHiderWidth);
+      expect(document.querySelector('.ht_clone_top .wtHider').style.width).not.toBe(topCloneHiderWidth);
 
       selectCell(0, 0);
       keyDown('enter');

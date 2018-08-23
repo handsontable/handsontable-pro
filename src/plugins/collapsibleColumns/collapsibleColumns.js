@@ -105,12 +105,6 @@ class CollapsibleColumns extends BasePlugin {
      * @type {EventManager}
      */
     this.eventManager = null;
-    /**
-     * Cached master table width.
-     *
-     * @private
-     */
-    this.hiderWidth = null;
   }
 
   /**
@@ -466,7 +460,7 @@ class CollapsibleColumns extends BasePlugin {
     });
 
     this.hot.render();
-
+    this.hot.view.wt.wtOverlays.adjustElementsSize(true);
   }
 
   /**
@@ -507,7 +501,6 @@ class CollapsibleColumns extends BasePlugin {
         this.toggleCollapsibleSection(coords, 'collapse');
 
       } else if (hasClass(event.target, 'collapsed')) {
-        this.hot.view.wt.wtTable.hider.style.width = this.hiderWidth;
 
         this.markSectionAs('expanded', coords.row, coords.col, true);
         this.eventManager.fireEvent(event.target, 'mouseup');
@@ -517,6 +510,7 @@ class CollapsibleColumns extends BasePlugin {
       stopImmediatePropagation(event);
       return false;
     }
+
   }
 
   /**
@@ -526,7 +520,6 @@ class CollapsibleColumns extends BasePlugin {
    */
   onAfterInit() {
     this.columnHeaderLevelCount = this.hot.view.wt.getSetting('columnHeaders').length;
-    this.hiderWidth = this.hot.view.wt.wtTable.hider.style.width;
   }
 
   /**
