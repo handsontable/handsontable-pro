@@ -316,24 +316,28 @@ describe('CollapsibleColumns', function() {
         ],
         collapsibleColumns: true
       });
-      let topCloneHiderWidth = document.querySelector('.ht_clone_top .wtHider').style.width;
+      const cloneWtHider = spec().$container[0].querySelector('.ht_clone_top .wtHider');
+      let topCloneHiderWidth = cloneWtHider.style.width;
 
       const button = $('.collapsibleIndicator').first();
 
       button.simulate('mousedown');
+      button.simulate('mouseup');
+      button.simulate('click');
 
-      expect(document.querySelector('.ht_clone_top .wtHider').style.width).not.toBe(topCloneHiderWidth);
+      expect(cloneWtHider.style.width).not.toBe(topCloneHiderWidth);
 
       selectCell(0, 0);
-      keyDown('enter');
-      keyDown('enter');
+      keyDownUp('enter');
+      keyDownUp('enter');
 
-      expect(document.querySelector('.ht_clone_top .wtHider').style.width).not.toBe(topCloneHiderWidth);
+      expect(cloneWtHider.style.width).not.toBe(topCloneHiderWidth);
 
       $('.collapsibleIndicator').first().simulate('mousedown');
+      $('.collapsibleIndicator').first().simulate('mouseup');
+      $('.collapsibleIndicator').first().simulate('click');
 
-      expect(document.querySelector('.ht_clone_top .wtHider').style.width).toBe(topCloneHiderWidth);
+      expect(cloneWtHider.style.width).toBe(topCloneHiderWidth);
     });
-
   });
 });
