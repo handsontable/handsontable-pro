@@ -165,7 +165,7 @@ class ColumnSummary extends BasePlugin {
 
     do {
       cellValue = this.getCellValue(i, col) || 0;
-      let decimalPlaces = (((cellValue + '').split('.')[1] || []).length) || 1;
+      let decimalPlaces = (((`${cellValue}`).split('.')[1] || []).length) || 1;
       if (decimalPlaces > biggestDecimalPlacesCount) {
         biggestDecimalPlacesCount = decimalPlaces;
       }

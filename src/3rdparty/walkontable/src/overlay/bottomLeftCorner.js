@@ -42,7 +42,7 @@ class BottomLeftCornerOverlay extends Overlay {
     }
 
     cloneRoot.style.top = '';
-    cloneRoot.style.bottom = scrollbarWidth + 'px';
+    cloneRoot.style.bottom = `${scrollbarWidth}px`;
   }
 
   /**
@@ -91,8 +91,8 @@ class BottomLeftCornerOverlay extends Overlay {
       resetCssTransform(overlayRoot);
       this.repositionOverlay();
     }
-    overlayRoot.style.height = (tableHeight === 0 ? tableHeight : tableHeight) + 'px';
-    overlayRoot.style.width = (tableWidth === 0 ? tableWidth : tableWidth) + 'px';
+    overlayRoot.style.height = `${tableHeight === 0 ? tableHeight : tableHeight}px`;
+    overlayRoot.style.width = `${tableWidth === 0 ? tableWidth : tableWidth}px`;
   }
 }
 
