@@ -1,9 +1,9 @@
 import {condition, CONDITION_NAME} from 'handsontable-pro/plugins/filters/condition/lessThan';
 import {dateRowFactory} from './../helpers/utils';
 
-describe('Filters condition (`lt`)', function() {
+describe('Filters condition (`lt`)', () => {
 
-  it('should filter matching values (numeric cell type)', function() {
+  it('should filter matching values (numeric cell type)', () => {
     var data = dateRowFactory({type: 'numeric'});
 
     expect(condition(data(3), [4])).toBe(true);
@@ -13,7 +13,7 @@ describe('Filters condition (`lt`)', function() {
     expect(condition(data('-5'), [-4])).toBe(true);
   });
 
-  it('should filter not matching values (numeric cell type)', function() {
+  it('should filter not matching values (numeric cell type)', () => {
     var data = dateRowFactory({type: 'numeric'});
 
     expect(condition(data(4), [4])).toBe(false);
@@ -24,7 +24,7 @@ describe('Filters condition (`lt`)', function() {
     expect(condition(data(-3.11), [-4])).toBe(false);
   });
 
-  it('should filter matching values (text cell type)', function() {
+  it('should filter matching values (text cell type)', () => {
     var data = dateRowFactory({type: 'text'});
 
     expect(condition(data('bar'), ['foo'])).toBe(true);
@@ -32,7 +32,7 @@ describe('Filters condition (`lt`)', function() {
     expect(condition(data('1.9'), [4])).toBe(true);
   });
 
-  it('should filter not matching values (text cell type)', function() {
+  it('should filter not matching values (text cell type)', () => {
     var data = dateRowFactory({type: 'text'});
 
     expect(condition(data('zar'), ['boo'])).toBe(false);

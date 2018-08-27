@@ -1,9 +1,9 @@
 import {condition, CONDITION_NAME} from 'handsontable-pro/plugins/filters/condition/date/after';
 import {dateRowFactory} from './../../helpers/utils';
 
-describe('Filters condition (`date_after`)', function() {
+describe('Filters condition (`date_after`)', () => {
 
-  it('should filter matching values', function() {
+  it('should filter matching values', () => {
     var data = dateRowFactory({dateFormat: 'DD/MM/YYYY'});
 
     expect(condition(data('12/05/2015'), ['12/05/2015'])).toBe(true);
@@ -14,7 +14,7 @@ describe('Filters condition (`date_after`)', function() {
     expect(condition(data('12/05/2015'), ['2012'])).toBe(false);
   });
 
-  it('should filter not matching values', function() {
+  it('should filter not matching values', () => {
     var data = dateRowFactory({dateFormat: 'DD/MM/YYYY'});
 
     expect(condition(data('12/05/2015'), ['13/05/2015'])).toBe(false);
