@@ -1,10 +1,10 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {addClass, removeClass} from 'handsontable/helpers/dom/element';
-import {objectEach, clone, deepClone, extend} from 'handsontable/helpers/object';
-import {warn} from 'handsontable/helpers/console';
-import {createEmptySpreadsheetData} from 'handsontable/helpers/data';
-import {registerPlugin} from 'handsontable/plugins';
-import {getDateYear, getEndDate, getStartDate, parseDate} from './utils';
+import { addClass, removeClass } from 'handsontable/helpers/dom/element';
+import { objectEach, clone, deepClone, extend } from 'handsontable/helpers/object';
+import { warn } from 'handsontable/helpers/console';
+import { createEmptySpreadsheetData } from 'handsontable/helpers/data';
+import { registerPlugin } from 'handsontable/plugins';
+import { getDateYear, getEndDate, getStartDate, parseDate } from './utils';
 import DateCalculator from './dateCalculator';
 import GanttChartDataFeed from './ganttChartDataFeed';
 

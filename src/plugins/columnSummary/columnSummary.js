@@ -1,7 +1,7 @@
 import BasePlugin from 'handsontable/plugins/_base.js';
-import {deepClone, objectEach, hasOwnProperty} from 'handsontable/helpers/object';
-import {arrayEach} from 'handsontable/helpers/array';
-import {registerPlugin, getPlugin} from 'handsontable/plugins.js';
+import { deepClone, objectEach, hasOwnProperty } from 'handsontable/helpers/object';
+import { arrayEach } from 'handsontable/helpers/array';
+import { registerPlugin, getPlugin } from 'handsontable/plugins.js';
 import Endpoints from './endpoints';
 
 /**

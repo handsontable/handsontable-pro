@@ -1,5 +1,5 @@
-import {condition, CONDITION_NAME} from 'handsontable-pro/plugins/filters/condition/endsWith';
-import {dateRowFactory} from './../helpers/utils';
+import { condition, CONDITION_NAME } from 'handsontable-pro/plugins/filters/condition/endsWith';
+import { dateRowFactory } from './../helpers/utils';
 
 describe('Filters condition (`ends_with`)', function() {
 

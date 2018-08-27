@@ -121,7 +121,7 @@ describe('DropdownMenu', function () {
       const hot = handsontable({
         data: [],
         colHeaders: ['Year', 'Kia'],
-        columns: [{data: 0}, {data: 1}],
+        columns: [{ data: 0 }, { data: 1 }],
         dropdownMenu: true,
         height: 100
       });

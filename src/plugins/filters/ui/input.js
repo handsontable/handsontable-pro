@@ -1,5 +1,5 @@
-import {addClass} from 'handsontable/helpers/dom/element';
-import {clone, extend} from 'handsontable/helpers/object';
+import { addClass } from 'handsontable/helpers/dom/element';
+import { clone, extend } from 'handsontable/helpers/object';
 import * as C from 'handsontable/i18n/constants';
 import BaseUI from './_base';
 

@@ -1,9 +1,9 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {addClass, removeClass} from 'handsontable/helpers/dom/element';
-import {rangeEach} from 'handsontable/helpers/number';
-import {arrayEach} from 'handsontable/helpers/array';
-import {registerPlugin, getPlugin} from 'handsontable/plugins';
-import {SEPARATOR} from 'handsontable/plugins/contextMenu/predefinedItems';
+import { addClass, removeClass } from 'handsontable/helpers/dom/element';
+import { rangeEach } from 'handsontable/helpers/number';
+import { arrayEach } from 'handsontable/helpers/array';
+import { registerPlugin, getPlugin } from 'handsontable/plugins';
+import { SEPARATOR } from 'handsontable/plugins/contextMenu/predefinedItems';
 import hideColumnItem from './contextMenuItem/hideColumn';
 import showColumnItem from './contextMenuItem/showColumn';
 
@@ -368,7 +368,7 @@ class HiddenColumns extends BasePlugin {
     let newRanges = [];
 
     let pushRange = (startRow, endRow, startCol, endCol) => {
-      newRanges.push({startRow, endRow, startCol, endCol});
+      newRanges.push({ startRow, endRow, startCol, endCol });
     };
 
     arrayEach(ranges, (range) => {
