@@ -497,8 +497,6 @@ describe('GanttChart', function() {
         }
       });
 
-      plugin = hot.getPlugin('ganttChart');
-
       setTimeout(function() {
         expect(hot.getCellMeta(0, 1).className.indexOf('rangeBar')).toBeGreaterThan(-1);
         expect(hot.getCellMeta(0, 2).className.indexOf('rangeBar')).toBeGreaterThan(-1);
