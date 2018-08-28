@@ -315,7 +315,7 @@ describe('TrimRows', () => {
     });
   });
 
-  describe('navigation', function() {
+  describe('navigation', () => {
     it('should ignore trimmed rows while navigating by arrow keys', () => {
       handsontable({
         data: getMultilineData(50, 10),
@@ -346,7 +346,7 @@ describe('TrimRows', () => {
     });
   });
 
-  describe('column sorting', function() {
+  describe('column sorting', () => {
     it('should remove correct rows after sorting', () => {
       handsontable({
         data: getMultilineData(5, 10),

@@ -107,7 +107,7 @@ describe('DataFilter', () => {
 
     it('should filter input data based on condition collection (filtering odd numbers)', () => {
       var conditionCollectionMock = {
-        isMatch: jasmine.createSpy('isMatch').and.callFake((dataRow, column) => dataRow % 2),
+        isMatch: jasmine.createSpy('isMatch').and.callFake(dataRow => dataRow % 2),
       };
       var dataFilter = new DataFilter(conditionCollectionMock, columnDataMock);
       var data = [1, 2, 3, 4, 5];
