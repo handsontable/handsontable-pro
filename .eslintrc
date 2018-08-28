@@ -23,7 +23,7 @@
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
     "new-cap": 2,
-    "newline-per-chained-call": 1,
+    "newline-per-chained-call": 0,
     "no-eq-null": 1,
     "no-irregular-whitespace": 2,
     "no-mixed-spaces-and-tabs": 2,
@@ -39,7 +39,6 @@
     "no-trailing-spaces": 2,
     "no-undef": 0,
     "no-underscore-dangle": 0,
-    "no-unused-vars": 1,
     "no-restricted-globals": [
       2,
       "Handsontable",
@@ -59,10 +58,8 @@
     "prefer-const": 0,
     "prefer-rest-params": 1,
     "prefer-spread": 1,
-    "prefer-template": 1,
     "space-infix-ops": 2,
     "vars-on-top": 0,
-    "linebreak-style": 0,
     "camelcase": [
       2,
       {
@@ -96,6 +93,10 @@
       {
         "allowParens": true
       }
+    ],
+    "no-constant-condition": [
+      "error",
+      { "checkLoops": false }
     ],
     "indent": [
       2,

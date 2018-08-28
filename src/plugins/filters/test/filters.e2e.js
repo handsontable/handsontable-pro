@@ -2,7 +2,7 @@ describe('Filters', function() {
   const id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function () {
@@ -405,7 +405,6 @@ describe('Filters', function() {
           manualColumnMove: true
         });
 
-        const filters = hot.getPlugin('filters');
         const manualColumnMove = hot.getPlugin('manualColumnMove');
 
         manualColumnMove.moveColumn(0, 3);

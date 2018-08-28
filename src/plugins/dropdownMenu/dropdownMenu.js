@@ -1,9 +1,8 @@
 import BasePlugin from 'handsontable/plugins/_base';
 import { arrayEach } from 'handsontable/helpers/array';
-import { objectEach } from 'handsontable/helpers/object';
 import CommandExecutor from 'handsontable/plugins/contextMenu/commandExecutor';
 import EventManager from 'handsontable/eventManager';
-import { getWindowScrollTop, getWindowScrollLeft, hasClass, closest } from 'handsontable/helpers/dom/element';
+import { hasClass } from 'handsontable/helpers/dom/element';
 import ItemsFactory from 'handsontable/plugins/contextMenu/itemsFactory';
 import Menu from 'handsontable/plugins/contextMenu/menu';
 import { registerPlugin } from 'handsontable/plugins';
@@ -338,7 +337,7 @@ class DropdownMenu extends BasePlugin {
       return;
     }
 
-    const existingButton = TH.querySelector('.' + BUTTON_CLASS_NAME);
+    const existingButton = TH.querySelector(`.${BUTTON_CLASS_NAME}`);
 
     // Plugin enabled and buttons already exists, return.
     if (this.enabled && existingButton) {
