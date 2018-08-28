@@ -1,5 +1,5 @@
-import {getComparisonFunction} from 'handsontable/helpers/feature';
-import {arrayUnique, arrayEach} from 'handsontable/helpers/array';
+import { getComparisonFunction } from 'handsontable/helpers/feature';
+import { arrayUnique, arrayEach } from 'handsontable/helpers/array';
 
 const sortCompare = getComparisonFunction();
 
@@ -83,7 +83,7 @@ export function unifyColumnValues(values) {
   } else {
     values = arrayUnique(values);
   }
-  values = values.sort(function(a, b) {
+  values = values.sort((a, b) => {
     if (typeof a === 'number' && typeof b === 'number') {
       return a - b;
     }
@@ -123,7 +123,7 @@ export function intersectValues(base, selected, defaultEmptyValue, callback) {
       checked = true;
     }
 
-    const item = {checked, value, visualValue: toVisualValue(value, defaultEmptyValue)};
+    const item = { checked, value, visualValue: toVisualValue(value, defaultEmptyValue) };
 
     if (callback) {
       callback(item);

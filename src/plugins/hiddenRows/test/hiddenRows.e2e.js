@@ -1,4 +1,4 @@
-describe('HiddenRows', function() {
+describe('HiddenRows', () => {
   var id = 'testContainer';
 
   function getMultilineData(rows, cols) {
@@ -12,7 +12,7 @@ describe('HiddenRows', function() {
   }
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function () {
@@ -22,13 +22,13 @@ describe('HiddenRows', function() {
     }
   });
 
-  it('should hide rows if "hiddenRows" property is set as `true`', function() {
+  it('should hide rows if "hiddenRows" property is set as `true`', () => {
     var hot = handsontable({
       data: Handsontable.helper.createSpreadsheetData(10, 10),
       hiddenRows: {
         rows: [2, 4]
       },
-      cells: function(row, col) {
+      cells: function(row) {
         var meta = {};
 
         if (row === 2) {
@@ -47,14 +47,14 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(5)).not.toBeDefined();
   });
 
-  it('should hide rows if "hiddenRows" property is set as `true` and rowHeaders is set as `false`', function() {
+  it('should hide rows if "hiddenRows" property is set as `true` and rowHeaders is set as `false`', () => {
     var hot = handsontable({
       data: Handsontable.helper.createSpreadsheetData(10, 10),
       hiddenRows: {
         rows: [2, 4]
       },
       rowHeaders: false,
-      cells: function(row, col) {
+      cells: function(row) {
         var meta = {};
 
         if (row === 2) {
@@ -73,7 +73,7 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(5)).not.toBeDefined();
   });
 
-  it('should return to default state after call disablePlugin method', function() {
+  it('should return to default state after call disablePlugin method', () => {
     var hot = handsontable({
       data: getMultilineData(10, 10),
       hiddenRows: {
@@ -100,7 +100,7 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(5)).not.toBeDefined();
   });
 
-  it('should hide rows after call enablePlugin method', function() {
+  it('should hide rows after call enablePlugin method', () => {
     var hot = handsontable({
       data: getMultilineData(5, 10),
       hiddenRows: {
@@ -127,7 +127,7 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(5)).not.toBeDefined();
   });
 
-  it('should update settings after call updateSettings method', function() {
+  it('should update settings after call updateSettings method', () => {
     var hot = handsontable({
       data: getMultilineData(10, 10),
       hiddenRows: {
@@ -146,7 +146,7 @@ describe('HiddenRows', function() {
       height: 300
     });
     hot.updateSettings({
-      hiddenRows: {rows: [1]}
+      hiddenRows: { rows: [1] }
     });
 
     // undefined as default value - not hidden
@@ -157,7 +157,7 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(5)).not.toBeDefined();
   });
 
-  it('should hide row after call hideRow method', function() {
+  it('should hide row after call hideRow method', () => {
     var hot = handsontable({
       data: getMultilineData(5, 10),
       hiddenRows: true,
@@ -173,7 +173,7 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(2)).toBe(0.1);
   });
 
-  it('should show row after call showRow method', function() {
+  it('should show row after call showRow method', () => {
     var hot = handsontable({
       data: getMultilineData(5, 10),
       hiddenRows: {
@@ -191,7 +191,7 @@ describe('HiddenRows', function() {
     expect(hot.getRowHeight(2)).not.toBeDefined();
   });
 
-  it('should show the hidden row indicators if "indicators" property is set to `true`', function() {
+  it('should show the hidden row indicators if "indicators" property is set to `true`', () => {
     var hot = handsontable({
       data: Handsontable.helper.createSpreadsheetData(10, 10),
       hiddenRows: {
@@ -212,7 +212,7 @@ describe('HiddenRows', function() {
     expect(Handsontable.dom.hasClass(trs[5].firstChild, 'afterHiddenRow')).toBe(true);
   });
 
-  it('should not throw any errors, when selecting a whole column with the last row hidden', function() {
+  it('should not throw any errors, when selecting a whole column with the last row hidden', () => {
     var hot = handsontable({
       data: Handsontable.helper.createSpreadsheetData(4, 4),
       hiddenRows: {
@@ -233,8 +233,8 @@ describe('HiddenRows', function() {
     expect(errorThrown).toBe(false);
   });
 
-  describe('alter table', function () {
-    it('should recalculate index of the hidden rows after insert rows', function () {
+  describe('alter table', () => {
+    it('should recalculate index of the hidden rows after insert rows', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         hiddenRows: {
@@ -250,7 +250,7 @@ describe('HiddenRows', function() {
       expect(plugin.hiddenRows[0]).toEqual(5);
     });
 
-    it('should recalculate index of the hidden rows after remove rows', function () {
+    it('should recalculate index of the hidden rows after remove rows', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         hiddenRows: {
@@ -267,7 +267,7 @@ describe('HiddenRows', function() {
     });
   });
 
-  describe('copy-paste functionality', function() {
+  describe('copy-paste functionality', () => {
     class DataTransferObject {
       constructor() {
         this.data = '';
@@ -278,7 +278,7 @@ describe('HiddenRows', function() {
       setData(type, value) {
         this.data = value;
       }
-    };
+    }
 
     function getClipboardEvent() {
       let event = {};
@@ -287,7 +287,7 @@ describe('HiddenRows', function() {
       return event;
     }
 
-    it('should allow to copy hidden rows, when "copyPasteEnabled" property is not set', function() {
+    it('should allow to copy hidden rows, when "copyPasteEnabled" property is not set', () => {
       var hot = handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: {
@@ -320,7 +320,7 @@ describe('HiddenRows', function() {
       );
     });
 
-    it('should allow to copy hidden rows, when "copyPasteEnabled" property is set to `true`', function() {
+    it('should allow to copy hidden rows, when "copyPasteEnabled" property is set to `true`', () => {
       var hot = handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: {
@@ -352,7 +352,7 @@ describe('HiddenRows', function() {
       );
     });
 
-    it('should skip hidden rows, while copying data, when "copyPasteEnabled" property is set to `false`', function() {
+    it('should skip hidden rows, while copying data, when "copyPasteEnabled" property is set to `false`', () => {
       var hot = handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: {
@@ -382,7 +382,7 @@ describe('HiddenRows', function() {
       );
     });
 
-    it('should skip hidden rows, while pasting data, when "copyPasteEnabled" property is set to `false`', function() {
+    it('should skip hidden rows, while pasting data, when "copyPasteEnabled" property is set to `false`', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(10, 5),
         hiddenRows: {
@@ -408,9 +408,9 @@ describe('HiddenRows', function() {
     });
   });
 
-  describe('navigation', function() {
-    it('should ignore hidden rows while navigating by arrow keys', function() {
-      var hot = handsontable({
+  describe('navigation', () => {
+    it('should ignore hidden rows while navigating by arrow keys', () => {
+      handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: {
           rows: [2, 4]
@@ -433,14 +433,14 @@ describe('HiddenRows', function() {
       expect(getSelected()).toEqual([[5, 0, 5, 0]]);
     });
 
-    it('should properly highlight selected cell', function() {
+    it('should properly highlight selected cell', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 5),
         hiddenRows: {
           rows: [0]
         },
         mergeCells: [
-          {row: 1, col: 1, colspan: 2, rowspan: 2}
+          { row: 1, col: 1, colspan: 2, rowspan: 2 }
         ],
         colHeaders: true
       });
@@ -456,9 +456,9 @@ describe('HiddenRows', function() {
 
   });
 
-  describe('context-menu', function() {
-    it('should be visible "Hide row" on context menu when row is selected by header', function() {
-      var hot = handsontable({
+  describe('context-menu', () => {
+    it('should be visible "Hide row" on context menu when row is selected by header', () => {
+      handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: true,
         width: 500,
@@ -478,8 +478,8 @@ describe('HiddenRows', function() {
       expect(actions.text()).toEqual('Hide row');
     });
 
-    it('should be NOT visible "Hide row" on context menu when row is selected by header', function() {
-      var hot = handsontable({
+    it('should be NOT visible "Hide row" on context menu when row is selected by header', () => {
+      handsontable({
         data: getMultilineData(5, 10),
         hiddenRows: true,
         width: 500,
@@ -497,7 +497,7 @@ describe('HiddenRows', function() {
       expect(actions.length).toEqual(0);
     });
 
-    it('should hide selected columns by "Hide row" in context menu', function() {
+    it('should hide selected columns by "Hide row" in context menu', () => {
       var hot = handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: true,
@@ -524,7 +524,7 @@ describe('HiddenRows', function() {
       expect(hot.getRowHeight(4)).toBe(0.1);
     });
 
-    it('should show hidden rows by context menu', function() {
+    it('should show hidden rows by context menu', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(10, 10),
         hiddenRows: {
@@ -555,8 +555,8 @@ describe('HiddenRows', function() {
     });
   });
 
-  describe('manualRowMove', function() {
-    it('should properly render hidden ranges after moving action', function() {
+  describe('manualRowMove', () => {
+    it('should properly render hidden ranges after moving action', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         hiddenRows: {
@@ -577,8 +577,8 @@ describe('HiddenRows', function() {
     });
   });
 
-  describe('maxRows option set', function() {
-    it('should return properly data after hiding', function () {
+  describe('maxRows option set', () => {
+    it('should return properly data after hiding', () => {
       handsontable({
         data: Handsontable.helper.createSpreadsheetData(10, 10),
         maxRows: 5,

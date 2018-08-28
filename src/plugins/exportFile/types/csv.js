@@ -1,5 +1,5 @@
-import {arrayEach, arrayMap} from 'handsontable/helpers/array';
-import {stringify} from 'handsontable/helpers/mixed';
+import { arrayEach, arrayMap } from 'handsontable/helpers/array';
+import { stringify } from 'handsontable/helpers/mixed';
 import BaseType from './_base.js';
 
 const CHAR_CARRIAGE_RETURN = String.fromCharCode(13);
@@ -41,7 +41,7 @@ class Csv extends BaseType {
     let result = options.bom ? String.fromCharCode(0xFEFF) : '';
 
     if (hasColumnHeaders) {
-      columnHeaders = arrayMap(columnHeaders, (value) => this._escapeCell(value, true));
+      columnHeaders = arrayMap(columnHeaders, value => this._escapeCell(value, true));
 
       if (hasRowHeaders) {
         result += options.columnDelimiter;
@@ -57,7 +57,7 @@ class Csv extends BaseType {
       if (hasRowHeaders) {
         result += this._escapeCell(rowHeaders[index]) + options.columnDelimiter;
       }
-      result += value.map((value) => this._escapeCell(value)).join(options.columnDelimiter);
+      result += value.map(value => this._escapeCell(value)).join(options.columnDelimiter);
     });
 
     return result;

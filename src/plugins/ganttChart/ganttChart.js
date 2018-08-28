@@ -1,10 +1,10 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {addClass, removeClass} from 'handsontable/helpers/dom/element';
-import {objectEach, clone, deepClone, extend} from 'handsontable/helpers/object';
-import {warn} from 'handsontable/helpers/console';
-import {createEmptySpreadsheetData} from 'handsontable/helpers/data';
-import {registerPlugin} from 'handsontable/plugins';
-import {getDateYear, getEndDate, getStartDate, parseDate} from './utils';
+import { addClass, removeClass } from 'handsontable/helpers/dom/element';
+import { objectEach, deepClone, extend } from 'handsontable/helpers/object';
+import { warn } from 'handsontable/helpers/console';
+import { createEmptySpreadsheetData } from 'handsontable/helpers/data';
+import { registerPlugin } from 'handsontable/plugins';
+import { getDateYear, parseDate } from './utils';
 import DateCalculator from './dateCalculator';
 import GanttChartDataFeed from './ganttChartDataFeed';
 
@@ -481,7 +481,7 @@ class GanttChart extends BasePlugin {
    * @param {Boolean} following `true` if the following week is needed.
    * @param {Boolean} previous `true` if the previous week is needed.
    */
-  getAdjacentWeekColumn(date, following = true, previous) {
+  getAdjacentWeekColumn(date, following, previous) {
     date = parseDate(date);
     let delta = previous === true ? -7 : 7;
     let adjacentWeek = date.setDate(date.getDate() + delta);
@@ -627,15 +627,14 @@ class GanttChart extends BasePlugin {
    * @param {Number} row Row index.
    * @param {Number} startDateColumn Start column index.
    * @param {Number} endDateColumn End column index.
-   * @param {Object} additionalData Additional range data.
    */
-  renderRangeBar(row, startDateColumn, endDateColumn, additionalData) {
+  renderRangeBar(row, startDateColumn, endDateColumn) {
     const year = this.dateCalculator.getYear();
     let currentBar = this.rangeBars[year][row][startDateColumn];
 
     for (let i = startDateColumn; i <= endDateColumn; i++) {
       let cellMeta = this.hot.getCellMeta(row, i);
-      let newClassName = (cellMeta.className || '') + ' rangeBar';
+      let newClassName = `${cellMeta.className || ''} rangeBar`;
 
       if ((i === startDateColumn && currentBar.partialStart) || (i === endDateColumn && currentBar.partialEnd)) {
         newClassName += ' partial';
@@ -752,7 +751,7 @@ class GanttChart extends BasePlugin {
     let titleValue = '';
 
     objectEach(cellProperties.additionalData, (prop, i) => {
-      titleValue += i + ': ' + prop + '\n';
+      titleValue += `${i}: ${prop}\n`;
     });
 
     titleValue = titleValue.replace(/\n$/, '');

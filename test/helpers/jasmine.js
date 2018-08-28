@@ -3,7 +3,7 @@ var currentSpec;
 
 export function spec() {
   return currentSpec;
-};
+}
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
 
@@ -22,7 +22,7 @@ beforeEach(function() {
     },
     toBeFunction() {
       return {
-        compare(actual, expected) {
+        compare(actual) {
           return {
             pass: typeof actual === 'function'
           };
@@ -52,7 +52,7 @@ beforeEach(function() {
 
   jasmine.addMatchers(matchers);
 
-  if (document.activeElement && document.activeElement != document.body) {
+  if (document.activeElement && document.activeElement !== document.body) {
     document.activeElement.blur();
   } else if (!document.activeElement) { // IE
     document.body.focus();

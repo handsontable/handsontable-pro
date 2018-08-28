@@ -1,14 +1,13 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {arrayEach} from 'handsontable/helpers/array';
-import {objectEach} from 'handsontable/helpers/object';
+import { arrayEach } from 'handsontable/helpers/array';
 import CommandExecutor from 'handsontable/plugins/contextMenu/commandExecutor';
 import EventManager from 'handsontable/eventManager';
-import {getWindowScrollTop, getWindowScrollLeft, hasClass, closest} from 'handsontable/helpers/dom/element';
+import { hasClass } from 'handsontable/helpers/dom/element';
 import ItemsFactory from 'handsontable/plugins/contextMenu/itemsFactory';
 import Menu from 'handsontable/plugins/contextMenu/menu';
-import {registerPlugin} from 'handsontable/plugins';
+import { registerPlugin } from 'handsontable/plugins';
 import Hooks from 'handsontable/pluginHooks';
-import {stopPropagation} from 'handsontable/helpers/dom/event';
+import { stopPropagation } from 'handsontable/helpers/dom/event';
 import {
   COLUMN_LEFT,
   COLUMN_RIGHT,
@@ -178,7 +177,7 @@ class DropdownMenu extends BasePlugin {
       this.menu.addLocalHook('executeCommand', (...params) => this.executeCommand.apply(this, params));
 
       // Register all commands. Predefined and added by user or by plugins
-      arrayEach(menuItems, (command) => this.commandExecutor.registerCommand(command.key, command));
+      arrayEach(menuItems, command => this.commandExecutor.registerCommand(command.key, command));
     });
   }
 
@@ -209,7 +208,7 @@ class DropdownMenu extends BasePlugin {
    * @private
    */
   registerEvents() {
-    this.eventManager.addEventListener(this.hot.rootElement, 'click', (event) => this.onTableClick(event));
+    this.eventManager.addEventListener(this.hot.rootElement, 'click', event => this.onTableClick(event));
   }
 
   /**
@@ -338,7 +337,7 @@ class DropdownMenu extends BasePlugin {
       return;
     }
 
-    const existingButton = TH.querySelector('.' + BUTTON_CLASS_NAME);
+    const existingButton = TH.querySelector(`.${BUTTON_CLASS_NAME}`);
 
     // Plugin enabled and buttons already exists, return.
     if (this.enabled && existingButton) {

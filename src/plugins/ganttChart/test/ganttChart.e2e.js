@@ -1,9 +1,9 @@
-describe('GanttChart', function() {
+describe('GanttChart', () => {
   const id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
-    this.$sourceContainer = $('<div id="source_' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
+    this.$sourceContainer = $(`<div id="source_${id}"></div>`).appendTo('body');
   });
 
   afterEach(function() {
@@ -18,8 +18,8 @@ describe('GanttChart', function() {
     }
   });
 
-  describe('initialization', function() {
-    it('should update all the needed settings for the current instance', function() {
+  describe('initialization', () => {
+    it('should update all the needed settings for the current instance', () => {
       const hot = handsontable({
         colHeaders: true,
         ganttChart: {
@@ -44,10 +44,10 @@ describe('GanttChart', function() {
       expect(ganttPlugin.uniformBackgroundRenderer.calls.count()).toEqual(hot.view.wt.wtTable.getRenderedColumnsCount());
     });
 
-    it('should throw a warning if colHeaders property is not defined for the ganttChart-enabled instance', function() {
+    it('should throw a warning if colHeaders property is not defined for the ganttChart-enabled instance', () => {
       console.warn = jasmine.createSpy('warn');
 
-      const hot = handsontable({
+      handsontable({
         ganttChart: true,
         height: 250
       });
@@ -56,9 +56,9 @@ describe('GanttChart', function() {
     });
   });
 
-  describe('disabling and enabling the plugin', function() {
+  describe('disabling and enabling the plugin', () => {
     // TODO: commenting it out temporarily, to be fixed in #68
-    xit('should revert to a clean Handsontable instance after calling the disablePlugin method', function() {
+    xit('should revert to a clean Handsontable instance after calling the disablePlugin method', () => {
       const hot = handsontable({
         colHeaders: true,
         ganttChart: true,
@@ -72,7 +72,7 @@ describe('GanttChart', function() {
       expect($(hot.rootElement).find('.ht_clone_top thead').find('tr').size()).toEqual(1);
     });
 
-    it('should allow to re-enable the plugin using the disablePlugin->enablePlugin methods', function() {
+    it('should allow to re-enable the plugin using the disablePlugin->enablePlugin methods', () => {
       const hot = handsontable({
         colHeaders: true,
         ganttChart: true,
@@ -90,10 +90,10 @@ describe('GanttChart', function() {
       expect($(hot.rootElement).find('.ht_clone_top thead').find('tr').size()).toEqual(2);
     });
 
-    it('should allow to change the gantt chart\'s year using the updateSettings method', function() {
+    it('should allow to change the gantt chart\'s year using the updateSettings method', () => {
       const source = [
         {
-          additionalData: {vendor: 'Vendor One', format: 'Posters', market: 'New York, NY'},
+          additionalData: { vendor: 'Vendor One', format: 'Posters', market: 'New York, NY' },
           startDate: '1/5/2015',
           endDate: '1/20/2015'
         }
@@ -107,8 +107,6 @@ describe('GanttChart', function() {
         },
         height: 250
       });
-
-      const plugin = hot.getPlugin('ganttChart');
 
       expect(hot.getCellMeta(0, 1).className.indexOf('rangeBar')).toBeGreaterThan(-1);
       expect(hot.getCellMeta(0, 2).className.indexOf('rangeBar')).toBeGreaterThan(-1);
@@ -143,8 +141,8 @@ describe('GanttChart', function() {
     });
   });
 
-  describe('updateSettings', function() {
-    it('should be able to turn on the plugin using the updateSettings method', function() {
+  describe('updateSettings', () => {
+    it('should be able to turn on the plugin using the updateSettings method', () => {
       const hot = handsontable({
         colHeaders: true,
         height: 250
@@ -159,8 +157,8 @@ describe('GanttChart', function() {
     });
   });
 
-  describe('header structure', function() {
-    it('should calculate the right data for month and week structure', function() {
+  describe('header structure', () => {
+    it('should calculate the right data for month and week structure', () => {
       const hot = handsontable({
         colHeaders: true,
         height: 250,
@@ -211,7 +209,7 @@ describe('GanttChart', function() {
       }
     });
 
-    it('should create a month/week structure of nested headers', function() {
+    it('should create a month/week structure of nested headers', () => {
       const hot = handsontable({
         colHeaders: true,
         height: 250,
@@ -415,7 +413,7 @@ describe('GanttChart', function() {
     });
   });
 
-  describe('data sources', function() {
+  describe('data sources', () => {
     it('should be able to feed the gantt chart data from another HOT instance', function() {
       const source = this.$sourceContainer.handsontable({
         data: [
@@ -464,8 +462,6 @@ describe('GanttChart', function() {
     });
 
     it('should be able to feed the gantt chart data from another HOT instance, when the asyncUpdates option is enabled', function(done) {
-      let plugin;
-      let triesLimit;
       let source;
       let hot;
 
@@ -501,9 +497,7 @@ describe('GanttChart', function() {
         }
       });
 
-      plugin = hot.getPlugin('ganttChart');
-
-      setTimeout(function() {
+      setTimeout(() => {
         expect(hot.getCellMeta(0, 1).className.indexOf('rangeBar')).toBeGreaterThan(-1);
         expect(hot.getCellMeta(0, 2).className.indexOf('rangeBar')).toBeGreaterThan(-1);
         expect(hot.getCellMeta(0, 3).className.indexOf('rangeBar')).toBeGreaterThan(-1);
@@ -522,45 +516,45 @@ describe('GanttChart', function() {
       }, 200);
     });
 
-    it('should be able to feed the gantt chart data from an object', function() {
+    it('should be able to feed the gantt chart data from an object', () => {
       const source = [
         {
-          additionalData: {vendor: 'Vendor One', format: 'Posters', market: 'New York, NY'},
+          additionalData: { vendor: 'Vendor One', format: 'Posters', market: 'New York, NY' },
           startDate: '1/5/2015',
           endDate: '1/20/2015'
         },
         {
-          additionalData: {vendor: 'Vendor Two', format: 'Malls', market: 'Los Angeles, CA'},
+          additionalData: { vendor: 'Vendor Two', format: 'Malls', market: 'Los Angeles, CA' },
           startDate: '1/11/2015',
           endDate: '1/29/2015'
         },
         {
-          additionalData: {vendor: 'Vendor Three', format: 'Posters', market: 'Chicago, IL'},
+          additionalData: { vendor: 'Vendor Three', format: 'Posters', market: 'Chicago, IL' },
           startDate: '1/15/2015',
           endDate: '2/20/2015'
         },
         {
-          additionalData: {vendor: 'Vendor Four', format: 'Malls', market: 'Philadelphia, PA'},
+          additionalData: { vendor: 'Vendor Four', format: 'Malls', market: 'Philadelphia, PA' },
           startDate: '1/3/2015',
           endDate: '3/29/2015'
         },
         {
-          additionalData: {vendor: 'Vendor One', format: 'Posters', market: 'San Francisco, CA'},
+          additionalData: { vendor: 'Vendor One', format: 'Posters', market: 'San Francisco, CA' },
           startDate: '4/5/2015',
           endDate: '4/20/2015'
         },
         {
-          additionalData: {vendor: 'Vendor Four', format: 'Malls', market: 'Los Angeles, CA'},
+          additionalData: { vendor: 'Vendor Four', format: 'Malls', market: 'Los Angeles, CA' },
           startDate: '2/11/2015',
           endDate: '5/29/2015'
         },
         {
-          additionalData: {vendor: 'Vendor Two', format: 'Posters', market: 'New York, NY'},
+          additionalData: { vendor: 'Vendor Two', format: 'Posters', market: 'New York, NY' },
           startDate: '2/15/2015',
           endDate: '3/20/2015'
         },
         {
-          additionalData: {vendor: 'Vendor Two', format: 'Malls', market: 'Los Angeles, CA'},
+          additionalData: { vendor: 'Vendor Two', format: 'Malls', market: 'Los Angeles, CA' },
           startDate: '3/2/2015',
           endDate: '4/12/2015'
         },
@@ -574,8 +568,6 @@ describe('GanttChart', function() {
           dataSource: source
         }
       });
-
-      const plugin = hot.getPlugin('ganttChart');
 
       expect(hot.getCellMeta(0, 1).className.indexOf('rangeBar')).toBeGreaterThan(-1);
       expect(hot.getCellMeta(0, 2).className.indexOf('rangeBar')).toBeGreaterThan(-1);
@@ -598,17 +590,17 @@ describe('GanttChart', function() {
       'due to the `hideDaysBeforeFullWeeks` or `hideDaysAfterFullWeeks` setting', () => {
       const source = [
         {
-          additionalData: {vendor: 'Vendor One', format: 'Posters', market: 'New York, NY'},
+          additionalData: { vendor: 'Vendor One', format: 'Posters', market: 'New York, NY' },
           startDate: '2/3/2018',
           endDate: '4/30/2018'
         },
         {
-          additionalData: {vendor: 'Vendor Two', format: 'Malls', market: 'Los Angeles, CA'},
+          additionalData: { vendor: 'Vendor Two', format: 'Malls', market: 'Los Angeles, CA' },
           startDate: '5/3/2018',
           endDate: '5/30/2018'
         },
         {
-          additionalData: {vendor: 'Vendor Three', format: 'Posters', market: 'Chicago, IL'},
+          additionalData: { vendor: 'Vendor Three', format: 'Posters', market: 'Chicago, IL' },
           startDate: '11/1/2018',
           endDate: '2/20/2019'
         },

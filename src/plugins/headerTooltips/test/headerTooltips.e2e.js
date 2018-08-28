@@ -1,8 +1,8 @@
-describe('Header tooltips', function() {
+describe('Header tooltips', () => {
   var id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function() {
@@ -12,8 +12,8 @@ describe('Header tooltips', function() {
     }
   });
 
-  describe('initialization', function() {
-    it('should be initialized by HOT config', function() {
+  describe('initialization', () => {
+    it('should be initialized by HOT config', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
@@ -35,7 +35,7 @@ describe('Header tooltips', function() {
       }
     });
 
-    it('should be initialized by the updateSettings method', function() {
+    it('should be initialized by the updateSettings method', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
@@ -60,7 +60,7 @@ describe('Header tooltips', function() {
       }
     });
 
-    it('should be disabled by the disablePlugin method', function() {
+    it('should be disabled by the disablePlugin method', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
@@ -78,12 +78,11 @@ describe('Header tooltips', function() {
       var headers = hot.view.wt.wtTable.THEAD.childNodes[0].childNodes;
 
       for (var i = 0; i < headers.length; i++) {
-        var title = headers[i].getAttribute('title');
         expect(headers[i].getAttribute('title')).toBe(null);
       }
     });
 
-    it('should be re-enabled by the enablePlugin method', function() {
+    it('should be re-enabled by the enablePlugin method', () => {
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
@@ -112,10 +111,9 @@ describe('Header tooltips', function() {
 
   });
 
-  describe('adding the title attribute', function() {
-
-    it('should add the "title" attribute to both rows and columns, if both "rows" and "columns" properties are set to "true"', function() {
-      var hot = handsontable({
+  describe('adding the title attribute', () => {
+    it('should add the "title" attribute to both rows and columns, if both "rows" and "columns" properties are set to "true"', () => {
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
         headerTooltips: {
@@ -139,8 +137,8 @@ describe('Header tooltips', function() {
       });
     });
 
-    it('should add the "title" attribute to only rows, of only "rows" property is set to "true"', function() {
-      var hot = handsontable({
+    it('should add the "title" attribute to only rows, of only "rows" property is set to "true"', () => {
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
         headerTooltips: {
@@ -164,8 +162,8 @@ describe('Header tooltips', function() {
       });
     });
 
-    it('should add the "title" attribute to only columns, of only "columns" property is set to "true"', function() {
-      var hot = handsontable({
+    it('should add the "title" attribute to only columns, of only "columns" property is set to "true"', () => {
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
         headerTooltips: {
@@ -189,8 +187,8 @@ describe('Header tooltips', function() {
       });
     });
 
-    it('should add the "title" attribute only if the header content exceeds the header with, when onlyTrimmed property is set to true', function() {
-      var hot = handsontable({
+    it('should add the "title" attribute only if the header content exceeds the header with, when onlyTrimmed property is set to true', () => {
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: ['very long column header', 'B', 'very long column header', 'C'],
         rowHeaders: ['very long column header', '1', 'very long column header', '3'],

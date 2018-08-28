@@ -1,8 +1,8 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {addClass, removeClass} from 'handsontable/helpers/dom/element';
-import {rangeEach} from 'handsontable/helpers/number';
-import {arrayEach, arrayFilter} from 'handsontable/helpers/array';
-import {registerPlugin, getPlugin} from 'handsontable/plugins';
+import { addClass, removeClass } from 'handsontable/helpers/dom/element';
+import { rangeEach } from 'handsontable/helpers/number';
+import { arrayEach } from 'handsontable/helpers/array';
+import { registerPlugin } from 'handsontable/plugins';
 import hideRowItem from './contextMenuItem/hideRow';
 import showRowItem from './contextMenuItem/showRow';
 
@@ -111,13 +111,13 @@ class HiddenRows extends BasePlugin {
       this.addHook('afterRenderer', (TD, row) => this.onAfterGetRowHeader(row, TD));
     }
 
-    this.addHook('afterContextMenuDefaultOptions', (options) => this.onAfterContextMenuDefaultOptions(options));
+    this.addHook('afterContextMenuDefaultOptions', options => this.onAfterContextMenuDefaultOptions(options));
     this.addHook('afterGetCellMeta', (row, col, cellProperties) => this.onAfterGetCellMeta(row, col, cellProperties));
     this.addHook('modifyRowHeight', (height, row) => this.onModifyRowHeight(height, row));
-    this.addHook('beforeSetRangeStartOnly', (coords) => this.onBeforeSetRangeStartOnly(coords));
-    this.addHook('beforeSetRangeStart', (coords) => this.onBeforeSetRangeStart(coords));
-    this.addHook('beforeSetRangeEnd', (coords) => this.onBeforeSetRangeEnd(coords));
-    this.addHook('hiddenRow', (row) => this.isHidden(row));
+    this.addHook('beforeSetRangeStartOnly', coords => this.onBeforeSetRangeStartOnly(coords));
+    this.addHook('beforeSetRangeStart', coords => this.onBeforeSetRangeStart(coords));
+    this.addHook('beforeSetRangeEnd', coords => this.onBeforeSetRangeEnd(coords));
+    this.addHook('hiddenRow', row => this.isHidden(row));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
 
@@ -376,7 +376,7 @@ class HiddenRows extends BasePlugin {
     let newRanges = [];
 
     let pushRange = (startRow, endRow, startCol, endCol) => {
-      newRanges.push({startRow, endRow, startCol, endCol});
+      newRanges.push({ startRow, endRow, startCol, endCol });
     };
 
     arrayEach(ranges, (range) => {
@@ -571,7 +571,7 @@ class HiddenRows extends BasePlugin {
         this.hideRows(settings.rows);
       }
       if (!settings.copyPasteEnabled) {
-        this.addHook('modifyCopyableRange', (ranges) => this.onModifyCopyableRange(ranges));
+        this.addHook('modifyCopyableRange', ranges => this.onModifyCopyableRange(ranges));
       }
     }
   }

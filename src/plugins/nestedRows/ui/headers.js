@@ -1,6 +1,6 @@
-import {arrayEach} from 'handsontable/helpers/array';
-import {rangeEach} from 'handsontable/helpers/number';
-import {addClass} from 'handsontable/helpers/dom/element';
+import { arrayEach } from 'handsontable/helpers/array';
+import { rangeEach } from 'handsontable/helpers/number';
+import { addClass } from 'handsontable/helpers/dom/element';
 import BaseUI from './_base';
 
 /**
@@ -78,7 +78,7 @@ class HeadersUI extends BaseUI {
     const innerSpan = innerDiv.querySelector('span.rowHeader');
     const previousIndicators = innerDiv.querySelectorAll('[class^="ht_nesting"]');
 
-    arrayEach(previousIndicators, (elem, i) => {
+    arrayEach(previousIndicators, (elem) => {
       if (elem) {
         innerDiv.removeChild(elem);
       }
@@ -90,7 +90,7 @@ class HeadersUI extends BaseUI {
       const initialContent = innerSpan.cloneNode(true);
       innerDiv.innerHTML = '';
 
-      rangeEach(0, rowLevel - 1, (i) => {
+      rangeEach(0, rowLevel - 1, () => {
         const levelIndicator = document.createElement('SPAN');
         addClass(levelIndicator, HeadersUI.CSS_CLASSES.emptyIndicator);
         innerDiv.appendChild(levelIndicator);
@@ -104,10 +104,10 @@ class HeadersUI extends BaseUI {
       addClass(TH, HeadersUI.CSS_CLASSES.parent);
 
       if (this.collapsingUI.areChildrenCollapsed(row)) {
-        addClass(buttonsContainer, HeadersUI.CSS_CLASSES.button + ' ' + HeadersUI.CSS_CLASSES.expandButton);
+        addClass(buttonsContainer, `${HeadersUI.CSS_CLASSES.button} ${HeadersUI.CSS_CLASSES.expandButton}`);
 
       } else {
-        addClass(buttonsContainer, HeadersUI.CSS_CLASSES.button + ' ' + HeadersUI.CSS_CLASSES.collapseButton);
+        addClass(buttonsContainer, `${HeadersUI.CSS_CLASSES.button} ${HeadersUI.CSS_CLASSES.collapseButton}`);
       }
 
       innerDiv.appendChild(buttonsContainer);

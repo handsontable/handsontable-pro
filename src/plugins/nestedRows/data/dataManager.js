@@ -1,7 +1,7 @@
-import {rangeEach} from 'handsontable/helpers/number';
-import {objectEach, extend, hasOwnProperty} from 'handsontable/helpers/object';
-import {arrayEach} from 'handsontable/helpers/array';
-import {getTranslator} from 'handsontable/utils/recordTranslator';
+import { rangeEach } from 'handsontable/helpers/number';
+import { objectEach, hasOwnProperty } from 'handsontable/helpers/object';
+import { arrayEach } from 'handsontable/helpers/array';
+import { getTranslator } from 'handsontable/utils/recordTranslator';
 
 /**
  * Class responsible for making data operations.
@@ -95,7 +95,7 @@ class DataManager {
     });
 
     if (this.hasChildren(node)) {
-      arrayEach(node.__children, (elem, i) => {
+      arrayEach(node.__children, (elem) => {
         this.cacheNode(elem, level + 1, node);
       });
     }
@@ -136,17 +136,17 @@ class DataManager {
     }
 
     if (neededIndex != null && readCount === neededIndex) {
-      return {result: parent, end: true};
+      return { result: parent, end: true };
     }
 
     if (neededObject != null && parent === neededObject) {
-      return {result: readCount, end: true};
+      return { result: readCount, end: true };
     }
 
     readCount++;
 
     if (parent.__children) {
-      arrayEach(parent.__children, (val, i) => {
+      arrayEach(parent.__children, (val) => {
 
         this.parentReference.set(val, rootLevel ? null : parent);
 
@@ -167,7 +167,7 @@ class DataManager {
    * @private
    */
   updateParentReference() {
-    this.readTreeNodes({__children: this.data}, 0, this.hot.countRows());
+    this.readTreeNodes({ __children: this.data }, 0, this.hot.countRows());
   }
 
   /**
@@ -262,7 +262,7 @@ class DataManager {
       return 0;
     }
 
-    arrayEach(parent.__children, (elem, i) => {
+    arrayEach(parent.__children, (elem) => {
       rowCount++;
       if (elem.__children) {
         rowCount += this.countChildren(elem);
@@ -526,11 +526,11 @@ class DataManager {
   filterData(index, amount, logicRows) {
     const elementsToRemove = [];
 
-    arrayEach(logicRows, (elem, ind) => {
+    arrayEach(logicRows, (elem) => {
       elementsToRemove.push(this.getDataObject(elem));
     });
 
-    arrayEach(elementsToRemove, (elem, ind) => {
+    arrayEach(elementsToRemove, (elem) => {
       const indexWithinParent = this.getRowIndexWithinParent(elem);
       const tempParent = this.getRowParent(elem);
 

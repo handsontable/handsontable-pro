@@ -1,9 +1,9 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {addClass, removeClass} from 'handsontable/helpers/dom/element';
-import {rangeEach} from 'handsontable/helpers/number';
-import {arrayEach} from 'handsontable/helpers/array';
-import {registerPlugin, getPlugin} from 'handsontable/plugins';
-import {SEPARATOR} from 'handsontable/plugins/contextMenu/predefinedItems';
+import { addClass } from 'handsontable/helpers/dom/element';
+import { rangeEach } from 'handsontable/helpers/number';
+import { arrayEach } from 'handsontable/helpers/array';
+import { registerPlugin } from 'handsontable/plugins';
+import { SEPARATOR } from 'handsontable/plugins/contextMenu/predefinedItems';
 import hideColumnItem from './contextMenuItem/hideColumn';
 import showColumnItem from './contextMenuItem/showColumn';
 
@@ -113,12 +113,12 @@ class HiddenColumns extends BasePlugin {
       this.addHook('afterRenderer', (TD, row, col) => this.onAfterGetColHeader(col, TD));
     }
 
-    this.addHook('afterContextMenuDefaultOptions', (options) => this.onAfterContextMenuDefaultOptions(options));
+    this.addHook('afterContextMenuDefaultOptions', options => this.onAfterContextMenuDefaultOptions(options));
     this.addHook('afterGetCellMeta', (row, col, cellProperties) => this.onAfterGetCellMeta(row, col, cellProperties));
     this.addHook('modifyColWidth', (width, col) => this.onModifyColWidth(width, col));
-    this.addHook('beforeSetRangeStartOnly', (coords) => this.onBeforeSetRangeStart(coords));
-    this.addHook('beforeSetRangeEnd', (coords) => this.onBeforeSetRangeEnd(coords));
-    this.addHook('hiddenColumn', (column) => this.isHidden(column));
+    this.addHook('beforeSetRangeStartOnly', coords => this.onBeforeSetRangeStart(coords));
+    this.addHook('beforeSetRangeEnd', coords => this.onBeforeSetRangeEnd(coords));
+    this.addHook('hiddenColumn', column => this.isHidden(column));
     this.addHook('beforeStretchingColumnWidth', (width, column) => this.onBeforeStretchingColumnWidth(width, column));
     this.addHook('afterCreateCol', (index, amount) => this.onAfterCreateCol(index, amount));
     this.addHook('afterRemoveCol', (index, amount) => this.onAfterRemoveCol(index, amount));
@@ -368,7 +368,7 @@ class HiddenColumns extends BasePlugin {
     let newRanges = [];
 
     let pushRange = (startRow, endRow, startCol, endCol) => {
-      newRanges.push({startRow, endRow, startCol, endCol});
+      newRanges.push({ startRow, endRow, startCol, endCol });
     };
 
     arrayEach(ranges, (range) => {
@@ -574,7 +574,7 @@ class HiddenColumns extends BasePlugin {
         this.hideColumns(settings.columns);
       }
       if (!settings.copyPasteEnabled) {
-        this.addHook('modifyCopyableRange', (ranges) => this.onModifyCopyableRange(ranges));
+        this.addHook('modifyCopyableRange', ranges => this.onModifyCopyableRange(ranges));
       }
     }
   }
