@@ -12,7 +12,7 @@ describe('HiddenRows', () => {
   }
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function () {
@@ -28,7 +28,7 @@ describe('HiddenRows', () => {
       hiddenRows: {
         rows: [2, 4]
       },
-      cells: function(row, col) {
+      cells: function(row) {
         var meta = {};
 
         if (row === 2) {
@@ -54,7 +54,7 @@ describe('HiddenRows', () => {
         rows: [2, 4]
       },
       rowHeaders: false,
-      cells: function(row, col) {
+      cells: function(row) {
         var meta = {};
 
         if (row === 2) {
@@ -146,7 +146,7 @@ describe('HiddenRows', () => {
       height: 300
     });
     hot.updateSettings({
-      hiddenRows: {rows: [1]}
+      hiddenRows: { rows: [1] }
     });
 
     // undefined as default value - not hidden
@@ -410,7 +410,7 @@ describe('HiddenRows', () => {
 
   describe('navigation', () => {
     it('should ignore hidden rows while navigating by arrow keys', () => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: {
           rows: [2, 4]
@@ -440,7 +440,7 @@ describe('HiddenRows', () => {
           rows: [0]
         },
         mergeCells: [
-          {row: 1, col: 1, colspan: 2, rowspan: 2}
+          { row: 1, col: 1, colspan: 2, rowspan: 2 }
         ],
         colHeaders: true
       });
@@ -458,7 +458,7 @@ describe('HiddenRows', () => {
 
   describe('context-menu', () => {
     it('should be visible "Hide row" on context menu when row is selected by header', () => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(10, 10),
         hiddenRows: true,
         width: 500,
@@ -479,7 +479,7 @@ describe('HiddenRows', () => {
     });
 
     it('should be NOT visible "Hide row" on context menu when row is selected by header', () => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(5, 10),
         hiddenRows: true,
         width: 500,

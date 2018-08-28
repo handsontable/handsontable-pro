@@ -2,7 +2,7 @@ describe('Formulas -> math trig functions', () => {
   var id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function () {
@@ -96,7 +96,7 @@ describe('Formulas -> math trig functions', () => {
   it('REFERENCE', () => {
     var data = getDataForFormulas(0, 'address', ['=REFERENCE()', '=REFERENCE(A1, "name.firstName")']);
 
-    data[0].id = {name: {firstName: 'Jim'}};
+    data[0].id = { name: { firstName: 'Jim' } };
 
     var hot = handsontable({
       data: data,

@@ -1,10 +1,10 @@
-import {arrayEach, arrayMap, arrayFilter} from 'handsontable/helpers/array';
-import {mixin, objectEach} from 'handsontable/helpers/object';
-import {curry, debounce} from 'handsontable/helpers/function';
+import { arrayEach, arrayMap, arrayFilter } from 'handsontable/helpers/array';
+import { mixin, objectEach } from 'handsontable/helpers/object';
+import { curry } from 'handsontable/helpers/function';
 import localHooks from 'handsontable/mixins/localHooks';
 import ConditionCollection from './conditionCollection';
 import DataFilter from './dataFilter';
-import {createArrayAssertion} from './utils';
+import { createArrayAssertion } from './utils';
 
 /**
  * Class which is designed for observing changes in condition collection. When condition is changed by user at specified
@@ -17,7 +17,7 @@ import {createArrayAssertion} from './utils';
  * @pro
  */
 class ConditionUpdateObserver {
-  constructor(conditionCollection, columnDataFactory = column => []) {
+  constructor(conditionCollection, columnDataFactory = () => []) {
     /**
      * Reference to the instance of {@link ConditionCollection}.
      *
@@ -154,7 +154,7 @@ class ConditionUpdateObserver {
     let editedConditions = [].concat(this.conditionCollection.getConditions(column));
 
     this.runLocalHooks('update', {
-      editedConditionStack: {column, conditions: editedConditions},
+      editedConditionStack: { column, conditions: editedConditions },
       dependentConditionStacks: conditionsAfter,
       filteredRowsFactory: visibleDataFactory,
       conditionArgsChange

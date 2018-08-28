@@ -43,7 +43,7 @@ describe('ColumnSummarySpec', () => {
   };
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function() {
@@ -55,10 +55,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('parseSettings', () => {
     it('should parse the settings from the Handsontable instance', () => {
-      var customFunction = function() {
-        var hi = null;
-      };
-
+      var customFunction = function() {};
       var hot = handsontable({
         data: Handsontable.helper.createSpreadsheetData(15, 15),
         height: 200,
@@ -121,7 +118,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('calculateSum', () => {
     it('should calculate sum  of values from the provided range', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(15, 15),
         height: 200,
         width: 200,
@@ -144,7 +141,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('calculateMinMax', () => {
     it('should calculate the minimum from the provided range', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(15, 15),
         height: 200,
         width: 200,
@@ -165,7 +162,7 @@ describe('ColumnSummarySpec', () => {
     });
 
     it('should calculate the minimum from the provided range', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(15, 15),
         height: 200,
         width: 200,
@@ -189,7 +186,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('countEntries', () => {
     it('should count non-empty entries from the provided range', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(15, 15),
         height: 200,
         width: 200,
@@ -212,7 +209,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('calculateAverage', () => {
     it('should get average value from entries in the provided range', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(15, 15),
         height: 200,
         width: 200,
@@ -235,7 +232,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('customFunction', () => {
     it('should apply a custom function to the entries in the provided range', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(15, 15),
         height: 200,
         width: 200,
@@ -300,7 +297,7 @@ describe('ColumnSummarySpec', () => {
 
   describe('complex setups', () => {
     it('should properly calculate values when many endpoints are declared', () => {
-      var hot = handsontable({
+      handsontable({
         data: createNumericData(40, 40),
         height: 200,
         width: 200,
@@ -633,8 +630,6 @@ describe('ColumnSummarySpec', () => {
         nestedRows: true,
         columnSummary: columnSummaryFunction
       });
-
-      var nestedRowsPlugin = hot.getPlugin('nestedRows');
 
       expect(hot.getDataAtCell(0, 1)).toEqual(106);
       expect(hot.getDataAtCell(4, 1)).toEqual(3996);

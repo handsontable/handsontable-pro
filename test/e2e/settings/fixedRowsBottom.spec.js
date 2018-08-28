@@ -3,7 +3,7 @@ describe('settings', () => {
     var id = 'testContainer';
 
     beforeEach(function () {
-      this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+      this.$container = $(`<div id="${id}"></div>`).appendTo('body');
     });
 
     afterEach(function () {
@@ -89,7 +89,7 @@ describe('settings', () => {
         var spy = jasmine.createSpyObj('error', ['test']);
         var prevError = window.onerror;
 
-        window.onerror = function(messageOrEvent, source, lineno, colno, error) {
+        window.onerror = function() {
           spy.test();
         };
         var hot = handsontable({
@@ -115,7 +115,7 @@ describe('settings', () => {
     });
 
     it('should synchronize scroll with master table', async () => {
-      const hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(50, 50),
         width: 200,
         height: 200,

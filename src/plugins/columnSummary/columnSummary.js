@@ -1,7 +1,6 @@
 import BasePlugin from 'handsontable/plugins/_base.js';
-import {deepClone, objectEach, hasOwnProperty} from 'handsontable/helpers/object';
-import {arrayEach} from 'handsontable/helpers/array';
-import {registerPlugin, getPlugin} from 'handsontable/plugins.js';
+import { hasOwnProperty } from 'handsontable/helpers/object';
+import { registerPlugin } from 'handsontable/plugins.js';
 import Endpoints from './endpoints';
 
 /**
@@ -11,7 +10,7 @@ import Endpoints from './endpoints';
  * @description
  * Allows making pre-defined calculations on the cell values and display the results within Handsontable.
  * [See the demo for more information](https://docs.handsontable.com/pro/demo-summary-calculations.html).
- *
+ *s
  * @example
  * const container = document.getElementById('example');
  * const hot = new Handsontable(container, {
@@ -165,7 +164,7 @@ class ColumnSummary extends BasePlugin {
 
     do {
       cellValue = this.getCellValue(i, col) || 0;
-      let decimalPlaces = (((cellValue + '').split('.')[1] || []).length) || 1;
+      let decimalPlaces = (((`${cellValue}`).split('.')[1] || []).length) || 1;
       if (decimalPlaces > biggestDecimalPlacesCount) {
         biggestDecimalPlacesCount = decimalPlaces;
       }
@@ -383,9 +382,8 @@ class ColumnSummary extends BasePlugin {
    *
    * @private
    * @param {Array} rows Array of logical rows to be moved.
-   * @param {Number} target Index of the destination row.
    */
-  onBeforeRowMove(rows, target) {
+  onBeforeRowMove(rows) {
     this.endpoints.resetSetupBeforeStructureAlteration('move_row', rows[0], rows.length, rows, this.pluginName);
   }
 

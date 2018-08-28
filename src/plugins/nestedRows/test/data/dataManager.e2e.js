@@ -2,7 +2,7 @@ describe('NestedRows Data Manager', () => {
   var id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function() {
@@ -206,7 +206,6 @@ describe('NestedRows Data Manager', () => {
         });
 
         var plugin = hot.getPlugin('nestedRows');
-        var sourceData = hot.getSourceData();
 
         expect(plugin.dataManager.hasChildren(0)).toEqual(true);
         expect(plugin.dataManager.hasChildren(1)).toEqual(false);

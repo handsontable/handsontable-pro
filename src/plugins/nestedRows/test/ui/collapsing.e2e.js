@@ -2,7 +2,7 @@ describe('NestedRows Collapsing UI', () => {
   var id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function() {
@@ -90,7 +90,6 @@ describe('NestedRows Collapsing UI', () => {
 
         var plugin = hot.getPlugin('nestedRows');
         var trimRowsPlugin = hot.getPlugin('trimRows');
-        var child = hot.getSourceData()[0];
 
         plugin.collapsingUI.collapseChildren(0);
         plugin.collapsingUI.expandChildren(0);

@@ -2,7 +2,7 @@ describe('DropdownMenu', () => {
   const id = 'testContainer';
 
   beforeEach(function () {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function () {
@@ -118,10 +118,10 @@ describe('DropdownMenu', () => {
     });
 
     it('should open menu after click on table header button when only header cells are visible', () => {
-      const hot = handsontable({
+      handsontable({
         data: [],
         colHeaders: ['Year', 'Kia'],
-        columns: [{data: 0}, {data: 1}],
+        columns: [{ data: 0 }, { data: 1 }],
         dropdownMenu: true,
         height: 100
       });
@@ -136,7 +136,7 @@ describe('DropdownMenu', () => {
 
   describe('menu closing', () => {
     it('should close menu after click', function () {
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -245,7 +245,7 @@ describe('DropdownMenu', () => {
 
   describe('menu destroy', () => {
     it('should close context menu when HOT is being destroyed', () => {
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100
@@ -263,7 +263,7 @@ describe('DropdownMenu', () => {
 
   describe('default context menu actions', () => {
     it('should display the default set of actions', () => {
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: true,
         colHeaders: true,
         comments: true,
@@ -335,7 +335,7 @@ describe('DropdownMenu', () => {
     });
 
     it('should remove column', () => {
-      const hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: true,
         colHeaders: true,
@@ -375,7 +375,7 @@ describe('DropdownMenu', () => {
     });
 
     it('should display only the specified actions', () => {
-      const hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(4, 4),
         dropdownMenu: ['clear_column'],
         colHeaders: true,
@@ -394,7 +394,7 @@ describe('DropdownMenu', () => {
       const callback1 = jasmine.createSpy('callback1');
       const callback2 = jasmine.createSpy('callback2');
 
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: {
           items: {
             cust1: {
@@ -430,7 +430,7 @@ describe('DropdownMenu', () => {
 
     it('should have custom items list (defined as a function)', () => {
       let enabled = false;
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: {
           items: {
             cust1: {
@@ -468,7 +468,7 @@ describe('DropdownMenu', () => {
     it('should enable to define item options globally', () => {
       const callback = jasmine.createSpy('callback');
 
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: {
           callback: callback,
           items: {
@@ -499,7 +499,7 @@ describe('DropdownMenu', () => {
     it('should override default items options', () => {
       const callback = jasmine.createSpy('callback');
 
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: {
           items: {
             remove_col: {
@@ -532,7 +532,7 @@ describe('DropdownMenu', () => {
 
       spyOn(customItem, 'callback');
 
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: {
           items: {
             customItemKey: customItem
@@ -553,7 +553,7 @@ describe('DropdownMenu', () => {
 
   describe('working with multiple tables', () => {
     beforeEach(function () {
-      this.$container2 = $('<div id="' + id + '-2"></div>').appendTo('body');
+      this.$container2 = $(`<div id="${id}-2"></div>`).appendTo('body');
     });
 
     afterEach(function () {
@@ -605,7 +605,7 @@ describe('DropdownMenu', () => {
 
       Handsontable.hooks.add('afterDropdownMenuDefaultOptions', afterDropdownMenuDefaultOptions);
 
-      const hot = handsontable({
+      handsontable({
         dropdownMenu: true,
         colHeaders: true,
         height: 100

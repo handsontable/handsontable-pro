@@ -20,7 +20,7 @@ describe('DataFilter', () => {
 
   describe('filter', () => {
     it('should not filter input data when condition collection is empty', () => {
-      var conditionCollectionMock = {isEmpty: jasmine.createSpy('isEmpty').and.returnValue(true)};
+      var conditionCollectionMock = { isEmpty: jasmine.createSpy('isEmpty').and.returnValue(true) };
       var dataFilter = new DataFilter(conditionCollectionMock, columnDataMock);
 
       dataFilter.filter();

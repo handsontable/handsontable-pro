@@ -2,7 +2,7 @@ describe('Header tooltips', () => {
   var id = 'testContainer';
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function() {
@@ -78,7 +78,6 @@ describe('Header tooltips', () => {
       var headers = hot.view.wt.wtTable.THEAD.childNodes[0].childNodes;
 
       for (var i = 0; i < headers.length; i++) {
-        var title = headers[i].getAttribute('title');
         expect(headers[i].getAttribute('title')).toBe(null);
       }
     });
@@ -113,9 +112,8 @@ describe('Header tooltips', () => {
   });
 
   describe('adding the title attribute', () => {
-
     it('should add the "title" attribute to both rows and columns, if both "rows" and "columns" properties are set to "true"', () => {
-      var hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
         headerTooltips: {
@@ -140,7 +138,7 @@ describe('Header tooltips', () => {
     });
 
     it('should add the "title" attribute to only rows, of only "rows" property is set to "true"', () => {
-      var hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
         headerTooltips: {
@@ -165,7 +163,7 @@ describe('Header tooltips', () => {
     });
 
     it('should add the "title" attribute to only columns, of only "columns" property is set to "true"', () => {
-      var hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: true,
         headerTooltips: {
@@ -190,7 +188,7 @@ describe('Header tooltips', () => {
     });
 
     it('should add the "title" attribute only if the header content exceeds the header with, when onlyTrimmed property is set to true', () => {
-      var hot = handsontable({
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(5, 10),
         colHeaders: ['very long column header', 'B', 'very long column header', 'C'],
         rowHeaders: ['very long column header', '1', 'very long column header', '3'],

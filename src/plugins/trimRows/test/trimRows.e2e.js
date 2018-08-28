@@ -12,7 +12,7 @@ describe('TrimRows', () => {
   }
 
   beforeEach(function() {
-    this.$container = $('<div id="' + id + '"></div>').appendTo('body');
+    this.$container = $(`<div id="${id}"></div>`).appendTo('body');
   });
 
   afterEach(function () {
@@ -23,10 +23,10 @@ describe('TrimRows', () => {
   });
 
   it('should trim rows defined in `trimRows` property', () => {
-    var hot = handsontable({
+    handsontable({
       data: Handsontable.helper.createSpreadsheetData(10, 10),
       trimRows: [2, 6, 7],
-      cells: function(row, col) {
+      cells: function(row) {
         var meta = {};
 
         if (row === 2) {
@@ -180,7 +180,7 @@ describe('TrimRows', () => {
   });
 
   it('should trim big data set', () => {
-    var hot = handsontable({
+    handsontable({
       data: Handsontable.helper.createSpreadsheetData(1000, 5),
       // leave first row and last 3 rows
       trimRows: Array.apply(null, Array(996)).map((v, i) => i + 1),
@@ -196,7 +196,7 @@ describe('TrimRows', () => {
   });
 
   it('should remove correct rows', () => {
-    var hot = handsontable({
+    handsontable({
       data: getMultilineData(5, 10),
       trimRows: [1],
       width: 500,
@@ -211,7 +211,7 @@ describe('TrimRows', () => {
   });
 
   it('should remove correct rows after inserting new ones', () => {
-    var hot = handsontable({
+    handsontable({
       data: getMultilineData(6, 10),
       trimRows: [1, 4],
       width: 500,
@@ -247,7 +247,7 @@ describe('TrimRows', () => {
       data: Handsontable.helper.createSpreadsheetData(5, 2),
       trimRows: true,
       cells() {
-        return {type: 'numeric'};
+        return { type: 'numeric' };
       }
     });
 
@@ -304,8 +304,6 @@ describe('TrimRows', () => {
       plugin.setCopyableText();
       plugin.onCopy(copyEvent);
 
-      var copyPasteTextarea = $('textarea.copyPaste');
-
       /* eslint-disable no-tabs */
       expect(copyEvent.clipboardData.getData()).toEqual('A1	B1	"C1\n' +
         'line"	D1	E1	F1	G1	H1	I1	J1\n' +
@@ -317,9 +315,9 @@ describe('TrimRows', () => {
     });
   });
 
-  describe('navigation', () => {
+  describe('navigation', function() {
     it('should ignore trimmed rows while navigating by arrow keys', () => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(50, 10),
         trimRows: [1, 5, 6, 7, 8],
         width: 500,
@@ -348,9 +346,9 @@ describe('TrimRows', () => {
     });
   });
 
-  describe('column sorting', () => {
+  describe('column sorting', function() {
     it('should remove correct rows after sorting', () => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(5, 10),
         columnSorting: {
           column: 0,
@@ -369,7 +367,7 @@ describe('TrimRows', () => {
     });
 
     it('should remove correct rows after insert new rows in sorted column', (done) => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(5, 10),
         colHeaders: true,
         columnSorting: {
@@ -398,7 +396,7 @@ describe('TrimRows', () => {
     });
 
     it('should remove correct rows after insert new rows in sorted column (multiple sort click)', (done) => {
-      var hot = handsontable({
+      handsontable({
         data: getMultilineData(5, 10),
         colHeaders: true,
         columnSorting: {

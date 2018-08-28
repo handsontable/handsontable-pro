@@ -1,5 +1,5 @@
-import {rangeEach} from 'handsontable/helpers/number';
-import {arrayEach} from 'handsontable/helpers/array';
+import { rangeEach } from 'handsontable/helpers/number';
+import { arrayEach } from 'handsontable/helpers/array';
 import * as C from 'handsontable/i18n/constants';
 import BaseUI from './_base';
 
@@ -62,9 +62,6 @@ class ContextMenuUI extends BaseUI {
           return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_NESTED_ROWS_DETACH_CHILD);
         },
         callback: () => {
-          const translatedRowIndex = this.dataManager.translateTrimmedRow(this.hot.getSelectedLast()[0]);
-          const element = this.dataManager.getDataObject(translatedRowIndex);
-
           this.dataManager.detachFromParent(this.hot.getSelectedLast());
         },
         disabled: () => {

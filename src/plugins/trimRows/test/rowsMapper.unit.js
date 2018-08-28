@@ -24,7 +24,7 @@ describe('TrimRows -> RowsMapper', () => {
 
   it('should call isTrimmed method "length" times', () => {
     var trimRowsMock = {
-      isTrimmed: function(index) {
+      isTrimmed: function() {
         return false;
       }
     };
@@ -43,7 +43,7 @@ describe('TrimRows -> RowsMapper', () => {
 
   it('should create map with pairs index->value', () => {
     var trimRowsMock = {
-      isTrimmed: function(index) {
+      isTrimmed: function() {
         return false;
       }
     };

@@ -1,8 +1,7 @@
 import BasePlugin from 'handsontable/plugins/_base';
-import {objectEach, extend, clone} from 'handsontable/helpers/object';
-import {registerPlugin} from 'handsontable/plugins';
+import { registerPlugin } from 'handsontable/plugins';
 import DataProvider from './dataProvider';
-import typeFactory, {EXPORT_TYPES} from './typeFactory';
+import typeFactory, { EXPORT_TYPES } from './typeFactory';
 
 /**
  * @plugin ExportFile

@@ -4,14 +4,14 @@ import {
   fastInnerHTML,
   empty,
 } from 'handsontable/helpers/dom/element';
-import {rangeEach} from 'handsontable/helpers/number';
-import {arrayEach} from 'handsontable/helpers/array';
-import {objectEach} from 'handsontable/helpers/object';
-import {toSingleLine} from 'handsontable/helpers/templateLiteralTag';
-import {warn} from 'handsontable/helpers/console';
-import {registerPlugin} from 'handsontable/plugins';
+import { rangeEach } from 'handsontable/helpers/number';
+import { arrayEach } from 'handsontable/helpers/array';
+import { objectEach } from 'handsontable/helpers/object';
+import { toSingleLine } from 'handsontable/helpers/templateLiteralTag';
+import { warn } from 'handsontable/helpers/console';
+import { registerPlugin } from 'handsontable/plugins';
 import BasePlugin from 'handsontable/plugins/_base';
-import {CellCoords} from 'handsontable/3rdparty/walkontable/src';
+import { CellCoords } from 'handsontable/3rdparty/walkontable/src';
 import GhostTable from './utils/ghostTable';
 
 import './nestedHeaders.css';
@@ -99,7 +99,7 @@ class NestedHeaders extends BasePlugin {
 
     this.addHook('afterGetColumnHeaderRenderers', array => this.onAfterGetColumnHeaderRenderers(array));
     this.addHook('afterInit', () => this.onAfterInit());
-    this.addHook('afterOnCellMouseDown', (event, coords, TD) => this.onAfterOnCellMouseDown(event, coords, TD));
+    this.addHook('afterOnCellMouseDown', (event, coords) => this.onAfterOnCellMouseDown(event, coords));
     this.addHook('beforeOnCellMouseOver', (event, coords, TD, blockCalculations) => this.onBeforeOnCellMouseOver(event, coords, TD, blockCalculations));
     this.addHook('afterViewportColumnCalculatorOverride', calc => this.onAfterViewportColumnCalculatorOverride(calc));
     this.addHook('modifyColWidth', (width, column) => this.onModifyColWidth(width, column));
@@ -209,7 +209,7 @@ class NestedHeaders extends BasePlugin {
           if (childHeaders.length > 0) {
             let childColspanSum = 0;
 
-            arrayEach(childHeaders, (col, i) => {
+            arrayEach(childHeaders, (col) => {
               childColspanSum += this.getColspan(row + 1, col);
             });
 
@@ -271,7 +271,7 @@ class NestedHeaders extends BasePlugin {
    * @param {Number} level Header level.
    */
   fillColspanArrayWithDummies(colspan, level) {
-    rangeEach(0, colspan - 2, (i) => {
+    rangeEach(0, colspan - 2, () => {
       this.colspanArray[level].push({
         label: '',
         colspan: 1,
@@ -465,8 +465,6 @@ class NestedHeaders extends BasePlugin {
     if (selection === void 0) {
       return;
     }
-    const highlightHeaderClassName = 'ht__highlight';
-    const activeHeaderClassName = 'ht__active_highlight';
 
     const wtOverlays = this.hot.view.wt.wtOverlays;
     const selectionByHeader = this.hot.selection.isSelectedByColumnHeader();
@@ -488,7 +486,7 @@ class NestedHeaders extends BasePlugin {
         const colspanLen = this.getColspan(level - this.columnHeaderLevelCount, visibleColumnIndex);
         const isInSelection = visibleColumnIndex >= from && (visibleColumnIndex + colspanLen - 1) <= to;
 
-        arrayEach(listTH, (TH, index, array) => {
+        arrayEach(listTH, (TH) => {
           if (TH === void 0) {
             return false;
           }
@@ -541,9 +539,8 @@ class NestedHeaders extends BasePlugin {
    * @private
    * @param {MouseEvent} event Mouse event.
    * @param {Object} coords Clicked cell coords.
-   * @param {HTMLElement} TD
    */
-  onAfterOnCellMouseDown(event, coords, TD) {
+  onAfterOnCellMouseDown(event, coords) {
     if (coords.row < 0) {
       const colspan = this.getColspan(coords.row, coords.col);
       const lastColIndex = coords.col + colspan - 1;
@@ -569,7 +566,7 @@ class NestedHeaders extends BasePlugin {
       return;
     }
 
-    let {from, to} = this.hot.getSelectedRangeLast();
+    let { from, to } = this.hot.getSelectedRangeLast();
     let colspan = this.getColspan(coords.row, coords.col);
     let lastColIndex = coords.col + colspan - 1;
     let changeDirection = false;

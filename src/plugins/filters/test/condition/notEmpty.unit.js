@@ -1,5 +1,5 @@
-import {condition, CONDITION_NAME} from 'handsontable-pro/plugins/filters/condition/notEmpty';
-import {dateRowFactory} from './../helpers/utils';
+import { condition } from 'handsontable-pro/plugins/filters/condition/notEmpty';
+import { dateRowFactory } from './../helpers/utils';
 
 describe('Filters condition (`not_empty`)', () => {
 

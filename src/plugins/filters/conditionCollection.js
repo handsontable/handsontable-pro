@@ -1,10 +1,10 @@
-import {arrayEach, arrayMap, arrayFilter} from 'handsontable/helpers/array';
-import {objectEach, mixin} from 'handsontable/helpers/object';
-import {toSingleLine} from 'handsontable/helpers/templateLiteralTag';
+import { arrayEach, arrayMap, arrayFilter } from 'handsontable/helpers/array';
+import { objectEach, mixin } from 'handsontable/helpers/object';
+import { toSingleLine } from 'handsontable/helpers/templateLiteralTag';
 import localHooks from 'handsontable/mixins/localHooks';
-import {getCondition} from './conditionRegisterer';
-import {OPERATION_ID as OPERATION_AND} from './logicalOperations/conjunction';
-import {operations, getOperationFunc} from './logicalOperationRegisterer';
+import { getCondition } from './conditionRegisterer';
+import { OPERATION_ID as OPERATION_AND } from './logicalOperations/conjunction';
+import { operations, getOperationFunc } from './logicalOperationRegisterer';
 
 /**
  * @class ConditionCollection
@@ -123,7 +123,7 @@ class ConditionCollection {
 
     } else {
       if (!this.conditions[operation]) {
-        throw new Error('Unexpected operation named `' + operation + '`. Possible ones are `disjunction` and `conjunction`.');
+        throw new Error(`Unexpected operation named \`${operation}\`. Possible ones are \`disjunction\` and \`conjunction\`.`);
       }
 
       this.columnTypes[column] = operation;
@@ -168,7 +168,7 @@ class ConditionCollection {
     let result = [];
 
     arrayEach(this.orderStack, (column) => {
-      const conditions = arrayMap(this.getConditions(column), ({name, args} = condition) => ({name, args}));
+      const conditions = arrayMap(this.getConditions(column), ({ name, args } = condition) => ({ name, args }));
       const operation = this.columnTypes[column];
 
       result.push({
