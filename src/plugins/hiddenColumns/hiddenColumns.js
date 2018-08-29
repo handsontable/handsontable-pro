@@ -495,7 +495,7 @@ class HiddenColumns extends BasePlugin {
             });
           }
         } else {
-          col += col;
+          col += 1;
           col = getNextColumn(col);
         }
       }
