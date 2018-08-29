@@ -314,8 +314,9 @@ describe('CollapsibleColumns', () => {
         ],
         collapsibleColumns: true
       });
-      const cloneWtHider = spec().$container[0].querySelector('.ht_clone_top .wtHider');
-      let topCloneHiderWidth = parseInt(cloneWtHider.style.width, 10);
+      const masterWtHider = spec().$container.find('.ht_master .wtHider').first();
+      const cloneWtHider = spec().$container.find('.ht_clone_top .wtHider').first();
+      const hiderWidthBefore = cloneWtHider.width();
 
       let button = $('.collapsibleIndicator').first();
 
@@ -323,7 +324,8 @@ describe('CollapsibleColumns', () => {
       button.simulate('mouseup');
       button.simulate('click');
 
-      expect(parseInt(cloneWtHider.style.width, 10)).toBeLessThan(topCloneHiderWidth);
+      expect(cloneWtHider.width()).toBeLessThan(hiderWidthBefore);
+      expect(cloneWtHider.width()).toBe(masterWtHider.width());
 
       button = $('.collapsibleIndicator').first();
 
@@ -331,7 +333,8 @@ describe('CollapsibleColumns', () => {
       button.simulate('mouseup');
       button.simulate('click');
 
-      expect(parseInt(cloneWtHider.style.width, 10)).toEqual(topCloneHiderWidth);
+      expect(cloneWtHider.width()).toBe(hiderWidthBefore);
+      expect(cloneWtHider.width()).toBe(masterWtHider.width());
     });
   });
 });
