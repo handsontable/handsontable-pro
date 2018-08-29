@@ -1526,6 +1526,28 @@ describe('MultiColumnSorting', () => {
     }], true, void 0, void 0, void 0);
   });
 
+  it('should fire hooks with proper hook argument when sorting is not possible', () => {
+    const beforeColumnSortCallback = jasmine.createSpy('beforeColumnSort');
+    const afterColumnSortCallback = jasmine.createSpy('afterColumnSort');
+
+    handsontable({
+      data: [[2], [4], [1], [3]],
+      multiColumnSorting: true,
+      beforeColumnSort: beforeColumnSortCallback,
+      afterColumnSort: afterColumnSortCallback
+    });
+
+    getPlugin('multiColumnSorting').sort({column: 1000, sortOrder: 'asc'});
+    expect(beforeColumnSortCallback).toHaveBeenCalledWith([], [{
+      column: 1000,
+      sortOrder: 'asc'
+    }], false, void 0, void 0, void 0);
+
+    // "After" hook always run! Team decision.
+
+    expect(afterColumnSortCallback).toHaveBeenCalledWith([], [], false, void 0, void 0, void 0);
+  });
+
   it('should insert row when plugin is enabled, but table hasn\'t been sorted', () => {
     handsontable({
       data: [
