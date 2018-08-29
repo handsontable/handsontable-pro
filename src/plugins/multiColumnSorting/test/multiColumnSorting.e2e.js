@@ -1891,7 +1891,7 @@ describe('MultiColumnSorting', () => {
 
   });
 
-  it('should add a sorting indicator to the column header after it\'s been sorted, only if indicator property is set to true', () => {
+  it('should add a sorting indicator to the column header after it\'s been sorted, if indicator property is set to true (by default)', () => {
     handsontable({
       data: [
         [1, 'Ted', 'Right'],
@@ -1907,7 +1907,7 @@ describe('MultiColumnSorting', () => {
     spec().sortByClickOnColumnHeader(1);
 
     let sortedColumn = spec().$container.find('th span.columnSorting')[1];
-    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
     // ---------------------------------
     // INDICATOR SET FOR THE WHOLE TABLE
@@ -1949,7 +1949,7 @@ describe('MultiColumnSorting', () => {
         if (column === 2) {
           return {
             multiColumnSorting: {
-              indicator: true
+              indicator: false
             }
           };
         }
@@ -1961,18 +1961,18 @@ describe('MultiColumnSorting', () => {
     spec().sortByClickOnColumnHeader(0);
 
     sortedColumn = spec().$container.find('th span.columnSorting')[0];
-    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
     spec().sortByClickOnColumnHeader(1);
 
     // descending
     sortedColumn = spec().$container.find('th span.columnSorting')[1];
-    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
     spec().sortByClickOnColumnHeader(2);
 
     sortedColumn = spec().$container.find('th span.columnSorting')[2];
-    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
+    expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
   });
 
   it('should change sorting indicator state on every plugin API method (calling for different columns)', () => {

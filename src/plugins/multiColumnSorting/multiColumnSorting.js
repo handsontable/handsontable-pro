@@ -437,7 +437,7 @@ class MultiColumnSorting extends BasePlugin {
 
     // After `disablePlugin` call.
     if (pluginMainSettings === false) {
-      cellMeta.multiColumnSorting = {};
+      cellMeta.multiColumnSorting = { indicator: false };
 
     } else {
       cellMeta.multiColumnSorting = Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig);

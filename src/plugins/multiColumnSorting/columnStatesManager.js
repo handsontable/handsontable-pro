@@ -4,7 +4,7 @@ import {arrayMap} from 'handsontable/helpers/array';
 const inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'headerAction', 'compareFunctionFactory'];
 
 const SORT_EMPTY_CELLS_DEFAULT = false;
-const SHOW_SORT_INDICATOR_DEFAULT = false;
+const SHOW_SORT_INDICATOR_DEFAULT = true;
 const HEADER_ACTION_DEFAULT = true;
 
 /**

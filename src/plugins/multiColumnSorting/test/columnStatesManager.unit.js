@@ -25,7 +25,7 @@ describe('MultiColumnSorting', () => {
 
       expect(columnStatesManager.getAllColumnsProperties()).toEqual({
         sortEmptyCells: false,
-        indicator: false,
+        indicator: true,
         headerAction: true
       });
     });
