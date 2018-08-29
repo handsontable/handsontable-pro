@@ -303,7 +303,7 @@ describe('CollapsibleColumns', () => {
 
     });
 
-    it('should expand to master table width after editing and clicking the expand button #105', () => {
+    it('should expand to master table width after clicking the expand button #105', () => {
       handsontable({
         data: Handsontable.helper.createSpreadsheetData(10, 10),
         rowHeaders: true,
@@ -317,7 +317,7 @@ describe('CollapsibleColumns', () => {
       const cloneWtHider = spec().$container[0].querySelector('.ht_clone_top .wtHider');
       let topCloneHiderWidth = parseInt(cloneWtHider.style.width, 10);
 
-      const button = $('.collapsibleIndicator');
+      const button = $('.collapsibleIndicator').first();
 
       button.simulate('mousedown');
       button.simulate('mouseup');
@@ -325,9 +325,9 @@ describe('CollapsibleColumns', () => {
 
       expect(parseInt(cloneWtHider.style.width, 10)).toBeLessThan(topCloneHiderWidth);
 
-      button.simulate('mousedown');
-      button.simulate('mouseup');
-      button.simulate('click');
+      $('.collapsibleIndicator').first().simulate('mousedown');
+      $('.collapsibleIndicator').first().simulate('mouseup');
+      $('.collapsibleIndicator').first().simulate('click');
 
       expect(parseInt(cloneWtHider.style.width, 10)).toEqual(topCloneHiderWidth);
     });
