@@ -303,39 +303,33 @@ describe('CollapsibleColumns', () => {
 
     });
 
-    it('should expand to master table width after editing and clicking the expand button #105', function() {
-      const hot = handsontable({
+    it('should expand to master table width after editing and clicking the expand button #105', () => {
+      handsontable({
         data: Handsontable.helper.createSpreadsheetData(10, 10),
         rowHeaders: true,
         hiddenColumns: true,
         nestedHeaders: [
-          ['a', {label: 'd', colspan: 4}, 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c', 'd', 'e', 'f', 'g'],
-          ['a', {label: 'b', colspan: 2}, {label: 'c', colspan: 2}, 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'f', 'g']
+          ['a', { label: 'd', colspan: 4 }, 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c', 'd', 'e', 'f', 'g'],
+          ['a', { label: 'b', colspan: 2 }, { label: 'c', colspan: 2 }, 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'f', 'g']
         ],
         collapsibleColumns: true
       });
       const cloneWtHider = spec().$container[0].querySelector('.ht_clone_top .wtHider');
-      let topCloneHiderWidth = cloneWtHider.style.width;
+      let topCloneHiderWidth = parseInt(cloneWtHider.style.width, 10);
 
-      const button = $('.collapsibleIndicator').first();
+      const button = $('.collapsibleIndicator');
 
       button.simulate('mousedown');
       button.simulate('mouseup');
       button.simulate('click');
 
-      expect(cloneWtHider.style.width).not.toBe(topCloneHiderWidth);
+      expect(parseInt(cloneWtHider.style.width, 10)).toBeLessThan(topCloneHiderWidth);
 
-      selectCell(0, 0);
-      keyDownUp('enter');
-      keyDownUp('enter');
+      button.simulate('mousedown');
+      button.simulate('mouseup');
+      button.simulate('click');
 
-      expect(cloneWtHider.style.width).not.toBe(topCloneHiderWidth);
-
-      $('.collapsibleIndicator').first().simulate('mousedown');
-      $('.collapsibleIndicator').first().simulate('mouseup');
-      $('.collapsibleIndicator').first().simulate('click');
-
-      expect(cloneWtHider.style.width).toBe(topCloneHiderWidth);
+      expect(parseInt(cloneWtHider.style.width, 10)).toEqual(topCloneHiderWidth);
     });
   });
 });
