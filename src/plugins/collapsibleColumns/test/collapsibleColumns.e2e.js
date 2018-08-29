@@ -317,7 +317,7 @@ describe('CollapsibleColumns', () => {
       const cloneWtHider = spec().$container[0].querySelector('.ht_clone_top .wtHider');
       let topCloneHiderWidth = parseInt(cloneWtHider.style.width, 10);
 
-      const button = $('.collapsibleIndicator').first();
+      let button = $('.collapsibleIndicator').first();
 
       button.simulate('mousedown');
       button.simulate('mouseup');
@@ -325,9 +325,11 @@ describe('CollapsibleColumns', () => {
 
       expect(parseInt(cloneWtHider.style.width, 10)).toBeLessThan(topCloneHiderWidth);
 
-      $('.collapsibleIndicator').first().simulate('mousedown');
-      $('.collapsibleIndicator').first().simulate('mouseup');
-      $('.collapsibleIndicator').first().simulate('click');
+      button = $('.collapsibleIndicator').first();
+
+      button.simulate('mousedown');
+      button.simulate('mouseup');
+      button.simulate('click');
 
       expect(parseInt(cloneWtHider.style.width, 10)).toEqual(topCloneHiderWidth);
     });
