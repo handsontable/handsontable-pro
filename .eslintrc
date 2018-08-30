@@ -51,10 +51,8 @@
     "no-var": 0,
     "no-void": 0,
     "no-with": 2,
-    "object-shorthand": 1,
     "one-var": 0,
     "padded-blocks": 0,
-    "prefer-const": 0,
     "space-infix-ops": 2,
     "vars-on-top": 0,
     "camelcase": [
@@ -78,12 +76,6 @@
       "groups": [
         ["+", "-", "*", "/", "%", "**"]
       ]
-    ],
-    "no-unneeded-ternary": [
-      2,
-      {
-        "defaultAssignment": true
-      }
     ],
     "no-confusing-arrow": [
       2,
