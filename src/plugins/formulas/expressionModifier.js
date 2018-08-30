@@ -151,8 +151,8 @@ class ExpressionModifier {
    */
   _translateCell(cell, axis, delta, startFromIndex) {
     const { start, end } = cell;
-    let startIndex = start[axis].index;
-    let endIndex = end[axis].index;
+    const startIndex = start[axis].index;
+    const endIndex = end[axis].index;
 
     let deltaStart = delta;
     let deltaEnd = delta;
@@ -267,7 +267,7 @@ class ExpressionModifier {
       origLabel: label,
       type: label.indexOf(':') === -1 ? 'cell' : 'range',
       refError: false,
-      toLabel: function() {
+      toLabel() {
         let label = toLabel(this.start.row, this.start.column);
 
         if (this.type === 'range') {

@@ -28,7 +28,7 @@ describe('HiddenColumns', () => {
       hiddenColumns: {
         columns: [2, 4]
       },
-      cells: function(row, col) {
+      cells(row, col) {
         var meta = {};
 
         if (col === 2) {
@@ -53,7 +53,7 @@ describe('HiddenColumns', () => {
       hiddenColumns: {
         columns: [2, 4]
       },
-      cells: function(row, col) {
+      cells(row, col) {
         var meta = {};
 
         if (col === 2) {
@@ -82,7 +82,7 @@ describe('HiddenColumns', () => {
       hiddenColumns: {
         columns: [2, 4]
       },
-      cells: function(row, col) {
+      cells(row, col) {
         var meta = {};
 
         if (col === 2) {
@@ -226,7 +226,7 @@ describe('HiddenColumns', () => {
     }
 
     function getClipboardEvent() {
-      let event = {};
+      const event = {};
       event.clipboardData = new DataTransferObject();
       event.preventDefault = () => {};
       return event;
