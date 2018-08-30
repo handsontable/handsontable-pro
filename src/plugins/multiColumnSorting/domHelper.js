@@ -4,6 +4,7 @@ import {ASC_SORT_STATE, DESC_SORT_STATE} from './utils';
 
 const HEADER_CLASS_ASC_SORT = 'ascending';
 const HEADER_CLASS_DESC_SORT = 'descending';
+const HEADER_CLASS_INDICATOR_DISABLED = 'indicatorDisabled';
 const COLUMN_ORDER_PREFIX = 'sort';
 
 export const HEADER_CLASS = 'colHeader';
@@ -41,7 +42,10 @@ export class DomHelper {
       cssClasses.push(HEADER_ACTION_CLASS);
     }
 
-    if (this.columnStatesManager.isColumnSorted(column) && showSortIndicator) {
+    if (showSortIndicator === false) {
+      cssClasses.push(HEADER_CLASS_INDICATOR_DISABLED);
+
+    } else if (this.columnStatesManager.isColumnSorted(column)) {
       const columnOrder = this.columnStatesManager.getSortOrderOfColumn(column);
 
       cssClasses.push(orderToCssClass.get(columnOrder));

@@ -4,52 +4,84 @@ import {DomHelper} from 'handsontable-pro/plugins/multiColumnSorting/domHelper';
 
 describe('MultiColumnSorting', () => {
   describe('DomHelper.getAddedClasses', () => {
-    it('should return proper CSS classes for single sorted column', () => {
-      const columnStatesManager = new ColumnStatesManager();
-      const domHelper = new DomHelper(columnStatesManager);
-
-      columnStatesManager.setSortStates([{column: 0, sortOrder: DESC_SORT_STATE}]);
-
-      expect(domHelper.getAddedClasses(0)).toEqual(['columnSorting']);
-
-      expect(domHelper.getAddedClasses(0, true, false).length).toEqual(2);
-      expect(domHelper.getAddedClasses(0, true, false).includes('columnSorting')).toBeTruthy();
-      expect(domHelper.getAddedClasses(0, true, false).includes('descending')).toBeTruthy();
-
-      expect(domHelper.getAddedClasses(1)).toEqual(['columnSorting']);
-      expect(domHelper.getAddedClasses(1, true, false)).toEqual(['columnSorting']);
-    });
-
-    it('should return proper CSS classes for multiple sorted columns', () => {
+    it('should add `columnSorting` CSS class by default', () => {
       const columnStatesManager = new ColumnStatesManager();
       const domHelper = new DomHelper(columnStatesManager);
 
       columnStatesManager.setSortStates([
-        {column: 1, sortOrder: DESC_SORT_STATE},
-        {column: 0, sortOrder: ASC_SORT_STATE},
+        {column: 1, sortOrder: DESC_SORT_STATE}
       ]);
 
-      expect(domHelper.getAddedClasses(0)).toEqual(['columnSorting']);
-
-      expect(domHelper.getAddedClasses(0, true, false).length).toEqual(3);
-      expect(domHelper.getAddedClasses(0, true, false).includes('columnSorting')).toBeTruthy();
-      expect(domHelper.getAddedClasses(0, true, false).includes('ascending')).toBeTruthy();
-      expect(domHelper.getAddedClasses(0, true, false).includes('sort-2')).toBeTruthy();
-
-      expect(domHelper.getAddedClasses(1)).toEqual(['columnSorting']);
-
-      expect(domHelper.getAddedClasses(1, true, false).includes('columnSorting')).toBeTruthy();
-      expect(domHelper.getAddedClasses(1, true, false).includes('descending')).toBeTruthy();
-      expect(domHelper.getAddedClasses(1, true, false).includes('sort-1')).toBeTruthy();
+      expect(domHelper.getAddedClasses(0).includes('columnSorting')).toBeTruthy();
+      expect(domHelper.getAddedClasses(1).includes('columnSorting')).toBeTruthy();
     });
 
     it('should add `sortAction` CSS class for clickable header', () => {
       const columnStatesManager = new ColumnStatesManager();
       const domHelper = new DomHelper(columnStatesManager);
 
-      expect(domHelper.getAddedClasses(0, true, true).length).toEqual(2);
-      expect(domHelper.getAddedClasses(0, true, true).includes('columnSorting')).toBeTruthy();
-      expect(domHelper.getAddedClasses(0, true, true).includes('sortAction')).toBeTruthy();
+      columnStatesManager.setSortStates([
+        {column: 1, sortOrder: DESC_SORT_STATE}
+      ]);
+
+      expect(domHelper.getAddedClasses(0, void 0, true).includes('sortAction')).toBeTruthy();
+      expect(domHelper.getAddedClasses(0, void 0, false).includes('sortAction')).toBeFalsy();
+
+      expect(domHelper.getAddedClasses(1, void 0, true).includes('sortAction')).toBeTruthy();
+      expect(domHelper.getAddedClasses(1, void 0, false).includes('sortAction')).toBeFalsy();
+    });
+
+    describe('should add proper CSS classes for enabled / disabled indicator', () => {
+      it('single sorted column', () => {
+        const columnStatesManager = new ColumnStatesManager();
+        const domHelper = new DomHelper(columnStatesManager);
+
+        columnStatesManager.setSortStates([
+          {column: 1, sortOrder: DESC_SORT_STATE}
+        ]);
+
+        expect(domHelper.getAddedClasses(0, false).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, false).includes('descending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, false).includes('indicatorDisabled')).toBeTruthy();
+        expect(domHelper.getAddedClasses(0, true).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, true).includes('descending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, true).includes('indicatorDisabled')).toBeFalsy();
+
+        expect(domHelper.getAddedClasses(1, false).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, false).includes('descending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, false).includes('indicatorDisabled')).toBeTruthy();
+        expect(domHelper.getAddedClasses(1, true).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, true).includes('descending')).toBeTruthy();
+        expect(domHelper.getAddedClasses(1, true).includes('indicatorDisabled')).toBeFalsy();
+      });
+
+      it('multiple sorted columns', () => {
+        const columnStatesManager = new ColumnStatesManager();
+        const domHelper = new DomHelper(columnStatesManager);
+
+        columnStatesManager.setSortStates([
+          {column: 1, sortOrder: DESC_SORT_STATE},
+          {column: 0, sortOrder: ASC_SORT_STATE},
+        ]);
+
+        expect(domHelper.getAddedClasses(0, false).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, false).includes('descending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, false).includes('sort-2')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, false).includes('indicatorDisabled')).toBeTruthy();
+        expect(domHelper.getAddedClasses(0, true).includes('ascending')).toBeTruthy();
+        expect(domHelper.getAddedClasses(0, true).includes('descending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(0, true).includes('sort-2')).toBeTruthy();
+        expect(domHelper.getAddedClasses(0, true).includes('indicatorDisabled')).toBeFalsy();
+
+        expect(domHelper.getAddedClasses(1, false).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, false).includes('descending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, false).includes('indicatorDisabled')).toBeTruthy();
+        expect(domHelper.getAddedClasses(1, false).includes('sort-1')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, true).includes('ascending')).toBeFalsy();
+        expect(domHelper.getAddedClasses(1, true).includes('descending')).toBeTruthy();
+        expect(domHelper.getAddedClasses(1, true).includes('sort-1')).toBeTruthy();
+        expect(domHelper.getAddedClasses(1, true).includes('indicatorDisabled')).toBeFalsy();
+      });
     });
   });
 

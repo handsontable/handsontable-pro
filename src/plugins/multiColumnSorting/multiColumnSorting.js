@@ -563,23 +563,6 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get if sort indicator is enabled and should be visible for particular column.
-   *
-   * @private
-   * @param {Number} column Visual column index.
-   * @returns {Boolean}
-   */
-  getColumnSortIndicator(column) {
-    const columnSortConfig = this.getSortConfig(column);
-
-    if (isDefined(columnSortConfig)) {
-      return this.getFirstCellSettings(column).multiColumnSorting.indicator;
-    }
-
-    return false;
-  }
-
-  /**
    * `onAfterGetColHeader` callback. Adds column sorting css classes to clickable headers.
    *
    * @private
@@ -604,9 +587,11 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
+    const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
+
     const physicalColumn = this.hot.toPhysicalColumn(column);
-    const headerActionEnabled = this.getFirstCellSettings(column).multiColumnSorting.headerAction;
-    const showSortIndicator = this.getColumnSortIndicator(column);
+    const showSortIndicator = pluginSettingsForColumn.indicator;
+    const headerActionEnabled = pluginSettingsForColumn.headerAction;
 
     removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
     addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
@@ -634,6 +619,8 @@ class MultiColumnSorting extends BasePlugin {
    * @private
    */
   loadOrSortBySettings() {
+    this.readCellMetaFromCache = false;
+
     const storedAllSortSettings = this.getAllSavedSortSettings();
 
     if (isObject(storedAllSortSettings)) {
@@ -668,6 +655,13 @@ class MultiColumnSorting extends BasePlugin {
 
       this.sort([]);
     }
+
+    this.hot.render();
+
+    this.hot._registerTimeout(setTimeout(() => {
+      this.hot.render();
+      this.hot.view.wt.wtOverlays.adjustElementsSize(true);
+    }));
   }
 
   /**
