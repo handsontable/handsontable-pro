@@ -51,7 +51,6 @@
     "no-var": 0,
     "no-void": 0,
     "no-with": 2,
-    "object-shorthand": 1,
     "padded-blocks": 0,
     "prefer-rest-params": 1,
     "space-infix-ops": 2,
@@ -77,12 +76,6 @@
       "groups": [
         ["+", "-", "*", "/", "%", "**"]
       ]
-    ],
-    "no-unneeded-ternary": [
-      2,
-      {
-        "defaultAssignment": true
-      }
     ],
     "no-confusing-arrow": [
       2,
