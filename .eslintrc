@@ -35,7 +35,6 @@
       { "allowForLoopAfterthoughts": true }
     ],
     "no-restricted-syntax": 1,
-    "no-shadow": 1,
     "no-spaced-func": 2,
     "no-trailing-spaces": 2,
     "no-underscore-dangle": 0,

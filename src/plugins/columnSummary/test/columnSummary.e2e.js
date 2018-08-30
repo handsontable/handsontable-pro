@@ -248,7 +248,6 @@ describe('ColumnSummarySpec', () => {
             type: 'custom',
             customFunction(endpoint) {
               const hotInstance = this.hot;
-              let counter = 0;
 
               // helper function
               function checkRange(rowRange) {
@@ -266,6 +265,7 @@ describe('ColumnSummarySpec', () => {
                 return counter;
               }
 
+              let counter = 0;
               // go through all declared ranges
               for (const r in endpoint.ranges) {
                 if (Object.prototype.hasOwnProperty.call(endpoint.ranges, r)) {
