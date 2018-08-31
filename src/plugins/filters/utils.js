@@ -89,7 +89,7 @@ export function unifyColumnValues(values) {
   } else {
     unifiedValues = arrayUnique(unifiedValues);
   }
-  unifiedValues = values.sort((a, b) => {
+  unifiedValues = unifiedValues.sort((a, b) => {
     if (typeof a === 'number' && typeof b === 'number') {
       return a - b;
     }
