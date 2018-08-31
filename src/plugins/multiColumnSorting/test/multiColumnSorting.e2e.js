@@ -775,7 +775,7 @@ describe('MultiColumnSorting', () => {
         multiColumnSorting: true
       });
 
-      expect(getPlugin('multiColumnSorting').isSorted()).toBeFalsy();
+      expect(getPlugin('multiColumnSorting').isSorted()).toBeTruthy();
 
       updateSettings({
         multiColumnSorting: {
@@ -2889,6 +2889,120 @@ describe('MultiColumnSorting', () => {
       spec().sortByClickOnColumnHeader(0);
 
       expect(getDataAtCol(0)).toEqual(['Mary', 'Henry', 'Ann', 'Robert', 'Ann', 'David', 'John', 'Mary', 'Robert']);
+    });
+  });
+
+  describe('rendering headers', () => {
+    it('should change width of headers when plugin is enabled / disabled and sort indicator is enabled', async () => {
+      handsontable({
+        colHeaders: true
+      });
+
+      const headerWidthAtStart = spec().$container.find('th').eq(0).width();
+
+      updateSettings({ multiColumnSorting: true });
+
+      await sleep(0);
+
+      let newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
+
+      updateSettings({ multiColumnSorting: false });
+
+      await sleep(0);
+
+      newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBe(newHeaderWidth);
+
+      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc'}] } });
+
+      await sleep(0);
+
+      newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
+    });
+
+    it('should work properly also when `rowHeaders` option is set to `true`', async () => {
+      handsontable({
+        colHeaders: true,
+        rowHeaders: true
+      });
+
+      spec().$container[0].style.width = 'auto';
+      spec().$container[0].style.height = 'auto';
+
+      const wtHiderWidthAtStart = spec().$container.find('.wtHider').eq(0).width();
+      const htCoreWidthAtStart = spec().$container.find('.htCore').eq(0).width();
+
+      updateSettings({ multiColumnSorting: true });
+
+      await sleep(0);
+
+      let newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
+      let newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
+
+      expect(wtHiderWidthAtStart).toBeLessThan(newWtHiderWidth);
+      expect(htCoreWidthAtStart).toBeLessThan(newHtCoreWidth);
+      expect(newWtHiderWidth).toBe(newHtCoreWidth);
+
+      updateSettings({ multiColumnSorting: false });
+
+      await sleep(0);
+
+      newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
+      newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
+
+      expect(wtHiderWidthAtStart).toBe(newWtHiderWidth);
+      expect(htCoreWidthAtStart).toBe(newHtCoreWidth);
+      expect(newWtHiderWidth).toBe(newHtCoreWidth);
+
+      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc'}] } });
+
+      await sleep(0);
+
+      newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
+      newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
+
+      expect(wtHiderWidthAtStart).toBeLessThan(newWtHiderWidth);
+      expect(htCoreWidthAtStart).toBeLessThan(newHtCoreWidth);
+      expect(newWtHiderWidth).toBe(newHtCoreWidth);
+    });
+
+    it('should not change width of headers when plugin is enabled / disabled and sort indicator is disabled', async () => {
+      handsontable({
+        colHeaders: true
+      });
+
+      const headerWidthAtStart = spec().$container.find('th').eq(0).width();
+      const wtHiderWidthAtStart = spec().$container.find('.wtHider').eq(0).width();
+      const htCoreWidthAtStart = spec().$container.find('.htCore').eq(0).width();
+
+      updateSettings({ multiColumnSorting: { indicator: false } });
+
+      await sleep(0);
+
+      let newHeaderWidth = spec().$container.find('th').eq(0).width();
+      let newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
+      let newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
+
+      expect(headerWidthAtStart).toBe(newHeaderWidth);
+      expect(wtHiderWidthAtStart).toBe(newWtHiderWidth);
+      expect(htCoreWidthAtStart).toBe(newHtCoreWidth);
+
+      updateSettings({ multiColumnSorting: false });
+
+      await sleep(0);
+
+      newHeaderWidth = spec().$container.find('th').eq(0).width();
+      newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
+      newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
+
+      expect(headerWidthAtStart).toBe(newHeaderWidth);
+      expect(wtHiderWidthAtStart).toBe(newWtHiderWidth);
+      expect(htCoreWidthAtStart).toBe(newHtCoreWidth);
     });
   });
 });

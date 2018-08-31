@@ -171,7 +171,10 @@ class MultiColumnSorting extends BasePlugin {
   disablePlugin() {
     this.readCellMetaFromCache = false;
 
-    // The top overlay isn't rendered.
+    this.rowsMapper.clearMap();
+    this.columnStatesManager.setSortStates([]);
+
+    // The top overlay isn't rendered. Next `render` call narrows the header and remove sort indicator if necessary.
     this.hot.render();
 
     super.disablePlugin();
@@ -644,22 +647,18 @@ class MultiColumnSorting extends BasePlugin {
     if (isObject(allSortSettings)) {
       this.columnStatesManager.updateAllColumnsProperties(allSortSettings);
 
-      const columnsSettings = allSortSettings.initialConfig;
+      const initialConfig = allSortSettings.initialConfig;
 
-      if (Array.isArray(columnsSettings)) {
-        this.sort(columnsSettings);
+      if (Array.isArray(initialConfig)) {
+        this.sort(initialConfig);
       }
-
-    } else if (this.getSortConfig().length > 0) {
-      // Clear the sort if the table has been sorted
-
-      this.sort([]);
     }
 
-    this.hot.render();
-
+    // It render the table after merging settings. The `AutoColumnSize` plugin will count the table width properly after that.
     this.hot._registerTimeout(setTimeout(() => {
       this.hot.render();
+
+      // When option `rowHeaders` is set to `true` the table doesn't look properly.
       this.hot.view.wt.wtOverlays.adjustElementsSize(true);
     }));
   }
