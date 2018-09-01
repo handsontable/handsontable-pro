@@ -126,11 +126,13 @@ export const TYPES = {
  */
 export default function getOptionsList(type) {
   const items = [];
+  let typeName = type;
 
-  if (!TYPES[type]) {
-    type = TYPE_TEXT;
+  if (!TYPES[typeName]) {
+    typeName = TYPE_TEXT;
   }
-  arrayEach(TYPES[type], (typeValue) => {
+
+  arrayEach(TYPES[typeName], (typeValue) => {
     let option;
 
     if (typeValue === SEPARATOR) {
