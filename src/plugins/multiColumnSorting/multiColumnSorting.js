@@ -110,12 +110,18 @@ class MultiColumnSorting extends BasePlugin {
      */
     this.blockPluginTranslation = true;
     /**
-     * Flag which determine if read cell meta from the cache.
+     * Flag which determine if read column meta from the cache.
      *
      * @private
      * @type {Boolean}
      */
-    this.readCellMetaFromCache = false;
+    this.readColumnMetaFromCache = false;
+    /**
+     * Column properties from plugin like `indicator`, `headerAction`, `sortEmptyCells`.
+     *
+     * @type {Map<number, Object>}
+     */
+    this.columnMetaCache = new Map();
   }
 
   /**
@@ -169,8 +175,6 @@ class MultiColumnSorting extends BasePlugin {
    * Disables the plugin functionality for this Handsontable instance.
    */
   disablePlugin() {
-    this.readCellMetaFromCache = false;
-
     this.rowsMapper.clearMap();
     this.columnStatesManager.setSortStates([]);
 
@@ -423,14 +427,15 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * This function is workaround for not working inheriting for non-primitive cell meta values. It change column setting object
-   * to properly created object by cascade settings.
+   * This function is workaround for not working inheriting of non-primitive cell meta values. It saves to cache properly
+   * merged object from cascade settings.
    *
    * @private
    * @param {Number} column Visual column index.
    * @returns {Object}
    */
-  overwriteFirstCellSettings(column) {
+  setMergedPluginSettings(column) {
+    const physicalColumnIndex = this.hot.toPhysicalColumn(column);
     const pluginMainSettings = this.hot.getSettings().multiColumnSorting;
     const storedColumnProperties = this.columnStatesManager.getAllColumnsProperties();
     const cellMeta = this.hot.getCellMeta(0, column);
@@ -438,17 +443,11 @@ class MultiColumnSorting extends BasePlugin {
     const columnMetaHasPluginSettings = Object.hasOwnProperty.call(columnMeta, 'multiColumnSorting');
     const pluginColumnConfig = columnMetaHasPluginSettings ? columnMeta.multiColumnSorting : {};
 
-    // After `disablePlugin` call.
-    if (pluginMainSettings === false) {
-      cellMeta.multiColumnSorting = { indicator: false };
-
-    } else {
-      cellMeta.multiColumnSorting = Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig);
-    }
+    this.columnMetaCache.set(physicalColumnIndex, Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig));
   }
 
   /**
-   * Get settings for first physical cell in the column for purpose of workaround (cell meta isn't merged properly).
+   * Get settings for first cell in the column for purpose of workaround (cell meta isn't merged properly).
    *
    * @private
    * @param {Number} column Visual column index.
@@ -457,19 +456,22 @@ class MultiColumnSorting extends BasePlugin {
   getFirstCellSettings(column) {
     this.blockPluginTranslation = true;
 
-    if (this.readCellMetaFromCache === false) {
+    if (this.readColumnMetaFromCache === false) {
       const numberOfColumns = this.hot.countCols();
 
-      rangeEach(numberOfColumns, (visualColumnIndex) => this.overwriteFirstCellSettings(visualColumnIndex));
+      rangeEach(numberOfColumns, (visualColumnIndex) => this.setMergedPluginSettings(visualColumnIndex));
 
-      this.readCellMetaFromCache = true;
+      this.readColumnMetaFromCache = true;
     }
 
     const cellMeta = this.hot.getCellMeta(0, column);
 
     this.blockPluginTranslation = false;
 
-    return cellMeta;
+    const cellMetaCopy = Object.create(cellMeta);
+    cellMetaCopy.multiColumnSorting = this.columnMetaCache.get(this.hot.toPhysicalColumn(column));
+
+    return cellMetaCopy;
   }
 
   /**
@@ -590,11 +592,16 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
-    const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
-
     const physicalColumn = this.hot.toPhysicalColumn(column);
-    const showSortIndicator = pluginSettingsForColumn.indicator;
-    const headerActionEnabled = pluginSettingsForColumn.headerAction;
+    let showSortIndicator = false;
+    let headerActionEnabled = false;
+
+    if (this.isEnabled()) {
+      const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
+
+      showSortIndicator = pluginSettingsForColumn.indicator;
+      headerActionEnabled = pluginSettingsForColumn.headerAction;
+    }
 
     removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
     addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
@@ -609,7 +616,7 @@ class MultiColumnSorting extends BasePlugin {
   onAfterUpdateSettings(settings) {
     warnIfPluginsHasConflict(settings.columnSorting);
 
-    this.readCellMetaFromCache = false;
+    this.readColumnMetaFromCache = false;
 
     if (isDefined(settings.multiColumnSorting)) {
       this.sortBySettings(settings.multiColumnSorting);
@@ -622,7 +629,7 @@ class MultiColumnSorting extends BasePlugin {
    * @private
    */
   loadOrSortBySettings() {
-    this.readCellMetaFromCache = false;
+    this.readColumnMetaFromCache = false;
 
     const storedAllSortSettings = this.getAllSavedSortSettings();
 
@@ -693,7 +700,8 @@ class MultiColumnSorting extends BasePlugin {
    * @returns {Boolean}
    */
   wasClickableHeaderClicked(event, column) {
-    const headerActionEnabled = this.getFirstCellSettings(column).multiColumnSorting.headerAction;
+    const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
+    const headerActionEnabled = pluginSettingsForColumn.headerAction;
 
     if (headerActionEnabled && event.realTarget.nodeName === 'SPAN') {
       return true;
@@ -712,6 +720,10 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Object} blockCalculations
    */
   beforeOnCellMouseDown(event, coords, TD, blockCalculations) {
+    if (coords.col < 0) {
+      return;
+    }
+
     if (this.wasClickableHeaderClicked(event, coords.col) && isPressedCtrlKey()) {
       blockCalculations.column = true;
     }
