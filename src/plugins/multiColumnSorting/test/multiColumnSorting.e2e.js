@@ -2879,9 +2879,6 @@ describe('MultiColumnSorting', () => {
 
         const htCore = getHtCore();
 
-        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
-        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('2');
-
         setDataAtCell(1, 0, 20);
 
         render();
@@ -3033,6 +3030,38 @@ describe('MultiColumnSorting', () => {
         expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('60');
         expect(spec().$container.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('40');
         expect(spec().$container.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('20');
+      });
+    });
+
+    describe('should not turn off sorting', () => {
+      it('after value update in NOT sorted column', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [3, 'D'],
+            [2, 'A'],
+            [0, 'C']
+          ],
+          colHeaders: true,
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'desc'
+            }]
+          }
+        });
+
+        const htCore = getHtCore();
+
+        setDataAtCell(1, 1, 'Z');
+
+        render();
+
+        expect(htCore.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('D');
+        expect(htCore.find('tbody tr:eq(1) td:eq(1)').text()).toEqual('Z');
+
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
       });
     });
   });

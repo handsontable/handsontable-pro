@@ -4,7 +4,7 @@ import {
 } from 'handsontable/helpers/dom/element';
 import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
 import {isObject} from 'handsontable/helpers/object';
-import {arrayMap} from 'handsontable/helpers/array';
+import {arrayMap, arrayEach} from 'handsontable/helpers/array';
 import {rangeEach} from 'handsontable/helpers/number';
 import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
@@ -155,7 +155,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
-    this.addHook('afterChange', () => this.clearSortWithoutChangingDataSequence());
+    this.addHook('afterChange', (changes) => this.onAfterChange(changes));
     this.addHook('afterRowMove', () => this.clearSortWithoutChangingDataSequence());
 
     this.addHook('afterLoadData', (initialLoad) => {
@@ -672,6 +672,29 @@ class MultiColumnSorting extends BasePlugin {
       // When option `rowHeaders` is set to `true` the table doesn't look properly.
       this.hot.view.wt.wtOverlays.adjustElementsSize(true);
     }));
+  }
+
+  /**
+   * `afterChange` listener.
+   *
+   * @private
+   * @param {Array} changes Array of changes.
+   */
+  onAfterChange(changes) {
+    if (changes === null) {
+      return;
+    }
+
+    arrayEach(changes, ([, prop]) => {
+      const visualColumn = this.hot.propToCol(prop);
+      const physicalColumn = this.hot.toPhysicalColumn(visualColumn);
+
+      if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
+        this.clearSortWithoutChangingDataSequence();
+
+        return false;
+      }
+    });
   }
 
   /**
