@@ -103,7 +103,7 @@ class MultiColumnSorting extends BasePlugin {
      */
     this.rowsMapper = new RowsMapper(this);
     /**
-     * It blocks the plugin translation, this flag is checked inside `onModifyRow` listener.
+     * It blocks the plugin translation, this flag is checked inside `onModifyRow` callback.
      *
      * @private
      * @type {Boolean}
@@ -117,7 +117,7 @@ class MultiColumnSorting extends BasePlugin {
      */
     this.readColumnMetaFromCache = false;
     /**
-     * Cached column properties from plugin like i.e. `indicator`, `headerAction`, `sortEmptyCells`.
+     * Cached column properties from plugin like i.e. `indicator`, `headerAction`.
      *
      * @private
      * @type {Map<number, Object>}
@@ -517,7 +517,7 @@ class MultiColumnSorting extends BasePlugin {
     const sortedColumnsList = this.columnStatesManager.getSortedColumns();
     const numberOfRows = this.hot.countRows();
 
-    // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` listener - we check the `blockPluginTranslation`
+    // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` callback - we check the `blockPluginTranslation`
     // flag inside it (we just want to get data not already modified by `multiColumnSorting` plugin translation).
     this.blockPluginTranslation = true;
 
@@ -546,7 +546,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * `modifyRow` hook callback. Translates visual row index to the sorted row index.
+   * Callback for `modifyRow` hook. Translates visual row index to the sorted row index.
    *
    * @private
    * @param {Number} row Visual row index.
@@ -562,7 +562,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Translates sorted row index to visual row index.
+   * Callback for `unmodifyRow` hook. Translates sorted row index to visual row index.
    *
    * @private
    * @param {Number} row Physical row index.
@@ -577,7 +577,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * `onAfterGetColHeader` callback. Adds column sorting css classes to clickable headers.
+   * Callback for the `onAfterGetColHeader` hook. Adds column sorting CSS classes.
    *
    * @private
    * @param {Number} column Visual column index.
@@ -618,7 +618,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * afterUpdateSettings callback.
+   * Callback for the `afterUpdateSettings` hook.
    *
    * @private
    * @param {Object} settings New settings object.
@@ -654,11 +654,11 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Sort the table by provided configuration. Get all sort config settings. Object contains `initialConfig`, `indicator`,
-   * `sortEmptyCells` and `compareFunctionFactory` properties.
+   * Sort the table by provided configuration.
    *
    * @private
-   * @param {Object} allSortSettings
+   * @param {Object} allSortSettings All sort config settings. Object may contain `initialConfig`, `indicator`,
+   * `sortEmptyCells`, `headerAction` and `compareFunctionFactory` properties.
    */
   sortBySettings(allSortSettings) {
     if (isObject(allSortSettings)) {
@@ -681,7 +681,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * `afterChange` listener.
+   * Callback for the `afterChange` hook.
    *
    * @private
    * @param {Array} changes Array of changes.
@@ -705,7 +705,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * `afterCreateRow` callback. Updates the sort state after a row have been created.
+   * Callback for the `afterCreateRow` hook.
    *
    * @private
    * @param {Number} index Visual index of the created row.
@@ -718,7 +718,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * `afterRemoveRow` hook callback.
+   * Callback for the `afterRemoveRow` hook.
    *
    * @private
    * @param {Number} removedRows Visual indexes of the removed row.
@@ -769,7 +769,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * `onAfterOnCellMouseDown` hook callback.
+   * Callback for the `onAfterOnCellMouseDown` hook.
    *
    * @private
    * @param {Event} event Event which are provided by hook.
