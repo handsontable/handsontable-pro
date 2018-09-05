@@ -51,9 +51,9 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  *
  * // as an object which define specific sorting options for all columns
  * multiColumnSorting: {
- *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table
- *   indicator: true, // true = shows indicator for all columns, false = don't show indicator for columns
- *   headerAction: true, // true = allow to click on the headers to sort, false = turn off possibility to click on the headers to sort
+ *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table (by default)
+ *   indicator: true, // true = shows indicator for all columns (by default), false = don't show indicator for columns
+ *   headerAction: true, // true = allow to click on the headers to sort (by default), false = turn off possibility to click on the headers to sort
  *   compareFunctionFactory: function(sortOrder, columnMeta) {
  *     return function(value, nextValue) {
  *       // Some value comparisons which will return -1, 0 or 1...
@@ -117,15 +117,16 @@ class MultiColumnSorting extends BasePlugin {
      */
     this.readColumnMetaFromCache = false;
     /**
-     * Column properties from plugin like `indicator`, `headerAction`, `sortEmptyCells`.
+     * Cached column properties from plugin like i.e. `indicator`, `headerAction`, `sortEmptyCells`.
      *
+     * @private
      * @type {Map<number, Object>}
      */
     this.columnMetaCache = new Map();
   }
 
   /**
-   * Checks if the plugin is enabled in the handsontable settings. This method is executed in {@link Hooks#beforeInit}
+   * Checks if the plugin is enabled in the Handsontable settings. This method is executed in {@link Hooks#beforeInit}
    * hook and if it returns `true` than the {@link MultiColumnSorting#enablePlugin} method is called.
    *
    * @returns {Boolean}
@@ -144,8 +145,8 @@ class MultiColumnSorting extends BasePlugin {
 
     warnIfPluginsHasConflict(this.hot.getSettings().columnSorting);
 
-    this.addHook('afterTrimRow', () => this.clearSortWithoutChangingDataSequence());
-    this.addHook('afterUntrimRow', () => this.clearSortWithoutChangingDataSequence());
+    this.addHook('afterTrimRow', () => this.clearSortStatesWithoutChangingDataSequence());
+    this.addHook('afterUntrimRow', () => this.clearSortStatesWithoutChangingDataSequence());
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
@@ -156,19 +157,20 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
     this.addHook('afterChange', (changes) => this.onAfterChange(changes));
-    this.addHook('afterRowMove', () => this.clearSortWithoutChangingDataSequence());
+    this.addHook('afterRowMove', () => this.clearSortStatesWithoutChangingDataSequence());
 
     this.addHook('afterLoadData', (initialLoad) => {
       this.rowsMapper.clearMap();
 
       if (initialLoad === true) {
-        // TODO: Workaround - it should be refactored.
+        // TODO: Workaround? It should be refactored / described.
         if (this.hot.view) {
           this.loadOrSortBySettings();
         }
       }
     });
 
+    // TODO: Workaround? It should be refactored / described.
     if (this.hot.view) {
       this.loadOrSortBySettings();
     }
@@ -246,7 +248,7 @@ class MultiColumnSorting extends BasePlugin {
       this.saveAllSortSettings();
 
       this.hot.render();
-      this.hot.view.wt.draw(true); // TODO: Workaround? One test won't pass after removal.
+      this.hot.view.wt.draw(true); // TODO: Workaround? One test won't pass after removal. It should be refactored / described.
     }
 
     this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig(), sortPossible);
@@ -431,13 +433,14 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * This function is workaround for not working inheriting of non-primitive cell meta values. It saves to cache properly
-   * merged object from cascade settings.
+   * Saves to cache part of plugins related properties, properly merged from cascade settings.
    *
    * @private
    * @param {Number} column Visual column index.
    * @returns {Object}
    */
+  // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. Using this function we don't count
+  // merged properties few times.
   setMergedPluginSettings(column) {
     const physicalColumnIndex = this.hot.toPhysicalColumn(column);
     const pluginMainSettings = this.hot.getSettings().multiColumnSorting;
@@ -451,12 +454,14 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get settings for first cell in the column for purpose of workaround (cell meta isn't merged properly).
+   * Get copy of settings for first cell in the column.
    *
    * @private
    * @param {Number} column Visual column index.
    * @returns {Object}
    */
+  // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. Instead of getting properties from
+  // column meta we call this function.
   getFirstCellSettings(column) {
     this.blockPluginTranslation = true;
 
@@ -488,7 +493,7 @@ class MultiColumnSorting extends BasePlugin {
   getNumberOfRowsToSort(numberOfRows) {
     const settings = this.hot.getSettings();
 
-    // `maxRows` option doesn't take into account `minSpareRows` option in specific situation.
+    // `maxRows` option doesn't take into account `minSpareRows` option in this case.
     if (settings.maxRows <= numberOfRows) {
       return settings.maxRows;
     }
@@ -513,7 +518,7 @@ class MultiColumnSorting extends BasePlugin {
     const numberOfRows = this.hot.countRows();
 
     // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` listener - we check the `blockPluginTranslation`
-    // flag inside (we just want to get data not already modified by `multiColumnSorting` plugin translation).
+    // flag inside it (we just want to get data not already modified by `multiColumnSorting` plugin translation).
     this.blockPluginTranslation = true;
 
     const getDataForSortedColumns = (visualRowIndex) =>
@@ -600,6 +605,7 @@ class MultiColumnSorting extends BasePlugin {
     let showSortIndicator = false;
     let headerActionEnabled = false;
 
+    // Extra `render` function is called in the `disablePlugin` method. This `if` statement filter that case.
     if (this.isEnabled()) {
       const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
 
@@ -685,12 +691,13 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
+    // Clear sort only when any cell in already sorted column was changed.
     arrayEach(changes, ([, prop]) => {
       const visualColumn = this.hot.propToCol(prop);
       const physicalColumn = this.hot.toPhysicalColumn(visualColumn);
 
       if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
-        this.clearSortWithoutChangingDataSequence();
+        this.clearSortStatesWithoutChangingDataSequence();
 
         return false;
       }
@@ -707,7 +714,7 @@ class MultiColumnSorting extends BasePlugin {
   onAfterCreateRow(index, amount) {
     this.rowsMapper.shiftItems(index, amount);
 
-    this.clearSortWithoutChangingDataSequence();
+    this.clearSortStatesWithoutChangingDataSequence();
   }
 
   /**
@@ -720,7 +727,7 @@ class MultiColumnSorting extends BasePlugin {
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
 
-    this.clearSortWithoutChangingDataSequence();
+    this.clearSortStatesWithoutChangingDataSequence();
   }
 
   /**
@@ -751,7 +758,8 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Object} blockCalculations
    */
   beforeOnCellMouseDown(event, coords, TD, blockCalculations) {
-    if (coords.col < 0) {
+    // Click below the level of column headers
+    if (coords.row >= 0) {
       return;
     }
 
@@ -768,11 +776,11 @@ class MultiColumnSorting extends BasePlugin {
    * @param {CellCoords} coords Visual coords of the selected cell.
    */
   onAfterOnCellMouseDown(event, coords) {
+    // Click below the level of column headers
     if (coords.row >= 0) {
       return;
     }
 
-    // Click on the header
     if (this.wasClickableHeaderClicked(event, coords.col)) {
       if (isPressedCtrlKey()) {
         this.hot.deselectCell();
@@ -791,7 +799,9 @@ class MultiColumnSorting extends BasePlugin {
    *
    * @private
    */
-  clearSortWithoutChangingDataSequence() {
+  // TODO: Workaround. Plugin should be disabled after some actions. Now we have no ability to save row indexes,
+  // after change which called that function. #5112 should help with that.
+  clearSortStatesWithoutChangingDataSequence() {
     this.columnStatesManager.setSortStates([]);
     this.hot.render();
   }
