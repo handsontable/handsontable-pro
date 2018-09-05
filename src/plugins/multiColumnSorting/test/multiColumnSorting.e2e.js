@@ -2902,7 +2902,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: true });
 
-      await sleep(0);
+      await sleep(100);
 
       let newHeaderWidth = spec().$container.find('th').eq(0).width();
 
@@ -2910,7 +2910,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: false });
 
-      await sleep(0);
+      await sleep(100);
 
       newHeaderWidth = spec().$container.find('th').eq(0).width();
 
@@ -2918,7 +2918,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc'}] } });
 
-      await sleep(0);
+      await sleep(100);
 
       newHeaderWidth = spec().$container.find('th').eq(0).width();
 
@@ -2939,7 +2939,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: true });
 
-      await sleep(0);
+      await sleep(100);
 
       let newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       let newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
@@ -2950,7 +2950,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: false });
 
-      await sleep(0);
+      await sleep(100);
 
       newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
@@ -2961,7 +2961,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc'}] } });
 
-      await sleep(0);
+      await sleep(100);
 
       newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
@@ -2982,7 +2982,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: { indicator: false } });
 
-      await sleep(0);
+      await sleep(100);
 
       let newHeaderWidth = spec().$container.find('th').eq(0).width();
       let newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
@@ -2994,7 +2994,7 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: false });
 
-      await sleep(0);
+      await sleep(100);
 
       newHeaderWidth = spec().$container.find('th').eq(0).width();
       newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();

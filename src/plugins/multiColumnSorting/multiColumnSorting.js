@@ -4,7 +4,7 @@ import {
 } from 'handsontable/helpers/dom/element';
 import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
 import {isObject} from 'handsontable/helpers/object';
-import {arrayMap} from 'handsontable/helpers/array';
+import {arrayMap, arrayEach} from 'handsontable/helpers/array';
 import {rangeEach} from 'handsontable/helpers/number';
 import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
@@ -144,8 +144,8 @@ class MultiColumnSorting extends BasePlugin {
 
     warnIfPluginsHasConflict(this.hot.getSettings().columnSorting);
 
-    this.addHook('afterTrimRow', () => this.sortByPresetSortState());
-    this.addHook('afterUntrimRow', () => this.sortByPresetSortState());
+    this.addHook('afterTrimRow', () => this.clearSortWithoutChangingDataSequence());
+    this.addHook('afterUntrimRow', () => this.clearSortWithoutChangingDataSequence());
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
@@ -155,6 +155,8 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
+    this.addHook('afterChange', () => this.clearSortWithoutChangingDataSequence());
+    this.addHook('afterRowMove', () => this.clearSortWithoutChangingDataSequence());
 
     // TODO: Workaround - it should be refactored.
     this.addHook('afterLoadData', () => {
@@ -679,6 +681,8 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterCreateRow(index, amount) {
     this.rowsMapper.shiftItems(index, amount);
+
+    this.clearSortWithoutChangingDataSequence();
   }
 
   /**
@@ -690,6 +694,8 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
+
+    this.clearSortWithoutChangingDataSequence();
   }
 
   /**
@@ -753,6 +759,16 @@ class MultiColumnSorting extends BasePlugin {
         this.sort(this.getColumnNextConfig(coords.col));
       }
     }
+  }
+
+  /**
+   * Clear the sort performed on the table WITHOUT changing the rows mapper indexes.
+   *
+   * @private
+   */
+  clearSortWithoutChangingDataSequence() {
+    this.columnStatesManager.setSortStates([]);
+    this.hot.render();
   }
 
   /**
