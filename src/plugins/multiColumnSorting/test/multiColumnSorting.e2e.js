@@ -302,132 +302,6 @@ describe('MultiColumnSorting', () => {
     expect(spec().$container.find('tr td').first().html()).toEqual('10');
   });
 
-  it('should remove specified row from sorted table and NOT sort the table again', () => {
-    handsontable({
-      data: [
-        [1, 'B'],
-        [3, 'D'],
-        [2, 'A'],
-        [0, 'C']
-      ],
-      colHeaders: true,
-      multiColumnSorting: true
-    });
-
-    spec().sortByClickOnColumnHeader(0);
-
-    const htCore = getHtCore();
-
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
-    expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
-
-    expect(htCore.find('tbody tr').length).toEqual(4);
-
-    alter('remove_row', 0);
-
-    expect(htCore.find('tbody tr').length).toEqual(3);
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('1');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('2');
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('3');
-  });
-
-  it('should add an empty row to sorted table', () => {
-    handsontable({
-      data: [
-        [1, 'B'],
-        [0, 'A'],
-        [3, 'D'],
-        [2, 'C']
-      ],
-      colHeaders: true,
-      multiColumnSorting: true
-    });
-
-    spec().sortByClickOnColumnHeader(0);
-
-    const htCore = getHtCore();
-
-    expect(htCore.find('tbody tr').length).toEqual(4);
-
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
-    expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
-
-    alter('insert_row', 1, 2);
-
-    expect(htCore.find('tbody tr').length).toEqual(6);
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('');
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('');
-    expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('1');
-    expect(htCore.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('2');
-    expect(htCore.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('3');
-  });
-
-  it('should add an empty row to sorted table at a given index', () => {
-    handsontable({
-      data: [
-        [1, 'B'],
-        [0, 'A'],
-        [3, 'D'],
-        [2, 'C']
-      ],
-      colHeaders: true,
-      multiColumnSorting: true
-    });
-
-    const htCore = getHtCore();
-
-    spec().sortByClickOnColumnHeader(0);
-
-    expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
-    expect(htCore.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('');
-
-    alter('insert_row', 2);
-
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
-
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('');
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('');
-    expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('');
-
-    expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('2');
-  });
-
-  it('should NOT sort the table after value update in sorted column', () => {
-    handsontable({
-      data: [
-        [1, 'B'],
-        [0, 'A'],
-        [3, 'D'],
-        [2, 'C']
-      ],
-      colHeaders: true,
-      multiColumnSorting: true
-    });
-
-    const htCore = getHtCore();
-
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('1');
-
-    spec().sortByClickOnColumnHeader(0);
-    spec().sortByClickOnColumnHeader(0);
-
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('2');
-
-    setDataAtCell(1, 0, 20);
-
-    render();
-
-    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
-    expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('20');
-  });
-
   it('should place empty strings, null and undefined values at proper position (stability of default comparing function)', () => {
     handsontable({
       data: [
@@ -1592,105 +1466,6 @@ describe('MultiColumnSorting', () => {
 
     spec().$container2.handsontable('destroy');
     spec().$container2.remove();
-  });
-
-  it('should reset sorting after loading new data', () => {
-    handsontable({
-      data: [
-        [1, 'B'],
-        [0, 'D'],
-        [3, 'A'],
-        [2, 'C']
-      ],
-      multiColumnSorting: true
-    });
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('1');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('0');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('3');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('2');
-
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
-
-    loadData([
-      [50, 'E'],
-      [10, 'G'],
-      [30, 'F'],
-      [60, 'I'],
-      [40, 'J'],
-      [20, 'H']
-    ]);
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('50');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('10');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('30');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('60');
-    expect(spec().$container.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('40');
-    expect(spec().$container.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('20');
-
-  });
-
-  it('should reset sorting after loading new data (default sorting column and order set)', () => {
-    handsontable({
-      data: [
-        [1, 'B'],
-        [0, 'D'],
-        [3, 'A'],
-        [2, 'C']
-      ],
-      multiColumnSorting: {
-        initialConfig: [{
-          column: 1,
-          sortOrder: 'asc'
-        }]
-      }
-    });
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('0');
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('A');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(1)').text()).toEqual('B');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(1)').text()).toEqual('C');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(1)').text()).toEqual('D');
-
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
-
-    loadData([
-      [50, 'E'],
-      [10, 'G'],
-      [30, 'F'],
-      [60, 'I'],
-      [40, 'J'],
-      [20, 'H']
-    ]);
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('50');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('30');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('10');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('20');
-    expect(spec().$container.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('60');
-    expect(spec().$container.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('40');
-
-    expect(spec().$container.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('E');
-    expect(spec().$container.find('tbody tr:eq(1) td:eq(1)').text()).toEqual('F');
-    expect(spec().$container.find('tbody tr:eq(2) td:eq(1)').text()).toEqual('G');
-    expect(spec().$container.find('tbody tr:eq(3) td:eq(1)').text()).toEqual('H');
-    expect(spec().$container.find('tbody tr:eq(4) td:eq(1)').text()).toEqual('I');
-    expect(spec().$container.find('tbody tr:eq(5) td:eq(1)').text()).toEqual('J');
-
   });
 
   it('should return updated data at specyfied row after sorted', () => {
@@ -3003,6 +2778,262 @@ describe('MultiColumnSorting', () => {
       expect(headerWidthAtStart).toBe(newHeaderWidth);
       expect(wtHiderWidthAtStart).toBe(newWtHiderWidth);
       expect(htCoreWidthAtStart).toBe(newHtCoreWidth);
+    });
+  });
+
+  describe('sorting is passive by default', () => {
+    describe('should turn off sorting and leave new data untouched (not sort again)', () => {
+      it('after removing a row from sorted table', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [3, 'D'],
+            [2, 'A'],
+            [0, 'C']
+          ],
+          colHeaders: true,
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+
+        const htCore = getHtCore();
+
+        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
+        expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
+        expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
+
+        expect(htCore.find('tbody tr').length).toEqual(4);
+
+        alter('remove_row', 1);
+
+        expect(htCore.find('tbody tr').length).toEqual(3);
+        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('2');
+        expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('3');
+
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+      });
+
+      it('after adding rows to sorted table', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [3, 'D'],
+            [2, 'A'],
+            [0, 'C']
+          ],
+          colHeaders: true,
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+
+        const htCore = getHtCore();
+
+        expect(htCore.find('tbody tr').length).toEqual(4);
+
+        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
+        expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('2');
+        expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('3');
+
+        alter('insert_row', 1, 2);
+
+        expect(htCore.find('tbody tr').length).toEqual(6);
+        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('');
+        expect(htCore.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('');
+        expect(htCore.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('1');
+        expect(htCore.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('2');
+        expect(htCore.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('3');
+
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+      });
+
+      it('after value update in sorted column', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [3, 'D'],
+            [2, 'A'],
+            [0, 'C']
+          ],
+          colHeaders: true,
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'desc'
+            }]
+          }
+        });
+
+        const htCore = getHtCore();
+
+        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('2');
+
+        setDataAtCell(1, 0, 20);
+
+        render();
+
+        expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('20');
+
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+      });
+
+      it('after moving row', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [0, 'A'],
+            [3, 'D'],
+            [2, 'C']
+          ],
+          colHeaders: true,
+          manualRowMove: true,
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
+
+        getPlugin('manualRowMove').moveRows(0, 2);
+
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+      });
+
+      it('after trimming row', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [0, 'A'],
+            [3, 'D'],
+            [2, 'C']
+          ],
+          colHeaders: true,
+          trimRows: true,
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
+
+        getPlugin('trimRows').trimRows([0]);
+
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+      });
+
+      it('after untrimming row', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [0, 'A'],
+            [3, 'D'],
+            [2, 'C']
+          ],
+          colHeaders: true,
+          trimRows: [0],
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'asc'
+            }]
+          }
+        });
+        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
+
+        getPlugin('trimRows').untrimRow([0]);
+
+        expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
+      });
+
+      it('after loading data next to sorting data by API', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [0, 'D'],
+            [3, 'A'],
+            [2, 'C']
+          ],
+          multiColumnSorting: true
+        });
+
+        getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+
+        loadData([
+          [50, 'E'],
+          [10, 'G'],
+          [30, 'F'],
+          [60, 'I'],
+          [40, 'J'],
+          [20, 'H']
+        ]);
+
+        expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('50');
+        expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('10');
+        expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('30');
+        expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('60');
+        expect(spec().$container.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('40');
+        expect(spec().$container.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('20');
+      });
+
+      it('after loading data when initial sort config was set', () => {
+        handsontable({
+          data: [
+            [1, 'B'],
+            [0, 'D'],
+            [3, 'A'],
+            [2, 'C']
+          ],
+          multiColumnSorting: {
+            initialConfig: [{
+              column: 0,
+              sortOrder: 'desc'
+            }]
+          }
+        });
+
+        loadData([
+          [50, 'E'],
+          [10, 'G'],
+          [30, 'F'],
+          [60, 'I'],
+          [40, 'J'],
+          [20, 'H']
+        ]);
+
+        expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('50');
+        expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('10');
+        expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('30');
+        expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('60');
+        expect(spec().$container.find('tbody tr:eq(4) td:eq(0)').text()).toEqual('40');
+        expect(spec().$container.find('tbody tr:eq(5) td:eq(0)').text()).toEqual('20');
+      });
     });
   });
 });

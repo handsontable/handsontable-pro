@@ -4,7 +4,7 @@ import {
 } from 'handsontable/helpers/dom/element';
 import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
 import {isObject} from 'handsontable/helpers/object';
-import {arrayMap, arrayEach} from 'handsontable/helpers/array';
+import {arrayMap} from 'handsontable/helpers/array';
 import {rangeEach} from 'handsontable/helpers/number';
 import BasePlugin from 'handsontable/plugins/_base';
 import {registerPlugin} from 'handsontable/plugins';
@@ -158,12 +158,14 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterChange', () => this.clearSortWithoutChangingDataSequence());
     this.addHook('afterRowMove', () => this.clearSortWithoutChangingDataSequence());
 
-    // TODO: Workaround - it should be refactored.
-    this.addHook('afterLoadData', () => {
+    this.addHook('afterLoadData', (initialLoad) => {
       this.rowsMapper.clearMap();
 
-      if (this.hot.view) {
-        this.loadOrSortBySettings();
+      if (initialLoad === true) {
+        // TODO: Workaround - it should be refactored.
+        if (this.hot.view) {
+          this.loadOrSortBySettings();
+        }
       }
     });
 
