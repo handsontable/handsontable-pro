@@ -1,6 +1,6 @@
 import moment from 'moment';
-import {isEmpty} from 'handsontable/helpers/mixed';
-import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../comparatorEngine';
+import { isEmpty } from 'handsontable/helpers/mixed';
+import { DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND } from '../comparatorEngine';
 
 /**
  * Date sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
@@ -11,7 +11,7 @@ import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../comparato
  */
 export default function dateSort(sortOrder, columnMeta) {
   return function(value, nextValue) {
-    const {sortEmptyCells} = columnMeta.multiColumnSorting;
+    const { sortEmptyCells } = columnMeta.multiColumnSorting;
 
     if (value === nextValue) {
       return DO_NOT_SWAP;

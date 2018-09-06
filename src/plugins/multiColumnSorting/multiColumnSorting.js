@@ -2,19 +2,19 @@ import {
   addClass,
   removeClass,
 } from 'handsontable/helpers/dom/element';
-import {isUndefined, isDefined} from 'handsontable/helpers/mixed';
-import {isObject} from 'handsontable/helpers/object';
-import {arrayMap, arrayEach} from 'handsontable/helpers/array';
-import {rangeEach} from 'handsontable/helpers/number';
+import { isUndefined, isDefined } from 'handsontable/helpers/mixed';
+import { isObject } from 'handsontable/helpers/object';
+import { arrayMap, arrayEach } from 'handsontable/helpers/array';
+import { rangeEach } from 'handsontable/helpers/number';
 import BasePlugin from 'handsontable/plugins/_base';
-import {registerPlugin} from 'handsontable/plugins';
+import { registerPlugin } from 'handsontable/plugins';
 import mergeSort from 'handsontable/utils/sortingAlgorithms/mergeSort';
 import Hooks from 'handsontable/pluginHooks';
-import {isPressedCtrlKey} from 'handsontable/utils/keyStateObserver';
-import {mainSortComparator} from './comparatorEngine';
-import {ColumnStatesManager} from './columnStatesManager';
-import {getNextSortOrder, areValidSortStates, warnIfPluginsHasConflict} from './utils';
-import {DomHelper, HEADER_CLASS} from './domHelper';
+import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
+import { mainSortComparator } from './comparatorEngine';
+import { ColumnStatesManager } from './columnStatesManager';
+import { getNextSortOrder, areValidSortStates, warnIfPluginsHasConflict } from './utils';
+import { DomHelper, HEADER_CLASS } from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -149,14 +149,14 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterUntrimRow', () => this.clearSortStatesWithoutChangingDataSequence());
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
-    this.addHook('afterUpdateSettings', (settings) => this.onAfterUpdateSettings(settings));
+    this.addHook('afterUpdateSettings', settings => this.onAfterUpdateSettings(settings));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
     this.addHook('beforeOnCellMouseDown', (event, coords, TD, controller) => this.beforeOnCellMouseDown(event, coords, TD, controller));
     this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
-    this.addHook('afterChange', (changes) => this.onAfterChange(changes));
+    this.addHook('afterChange', changes => this.onAfterChange(changes));
     this.addHook('afterRowMove', () => this.clearSortStatesWithoutChangingDataSequence());
 
     this.addHook('afterLoadData', (initialLoad) => {
@@ -238,10 +238,10 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     if (sortPossible) {
-      const translateColumnToPhysical = ({column: visualColumn, ...restOfProperties}) =>
+      const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
         ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
 
-      const destinationSortStates = arrayMap(destinationSortConfigs, (columnSortConfig) => translateColumnToPhysical(columnSortConfig));
+      const destinationSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
 
       this.columnStatesManager.setSortStates(destinationSortStates);
       this.sortByPresetSortState();
@@ -279,7 +279,7 @@ class MultiColumnSorting extends BasePlugin {
    * @returns {undefined|Object|Array}
    */
   getSortConfig(column) {
-    const translateColumnToVisual = ({column: physicalColumn, ...restOfProperties}) =>
+    const translateColumnToVisual = ({ column: physicalColumn, ...restOfProperties }) =>
       ({ column: this.hot.toVisualColumn(physicalColumn), ...restOfProperties });
 
     if (isDefined(column)) {
@@ -295,7 +295,7 @@ class MultiColumnSorting extends BasePlugin {
 
     const sortStates = this.columnStatesManager.getSortStates();
 
-    return arrayMap(sortStates, (columnState) => translateColumnToVisual(columnState));
+    return arrayMap(sortStates, columnState => translateColumnToVisual(columnState));
   }
 
   /**
@@ -306,10 +306,10 @@ class MultiColumnSorting extends BasePlugin {
    * @returns {Boolean}
    */
   areValidSortConfigs(sortConfigs) {
-    const sortedColumns = sortConfigs.map(({column}) => column);
+    const sortedColumns = sortConfigs.map(({ column }) => column);
     const numberOfColumns = this.hot.countCols();
 
-    const onlyExistingVisualIndexes = sortedColumns.every((visualColumn) =>
+    const onlyExistingVisualIndexes = sortedColumns.every(visualColumn =>
       visualColumn <= numberOfColumns && visualColumn >= 0);
     const likeSortStates = sortConfigs; // We don't translate visual indexes to physical indexes.
 
@@ -345,7 +345,7 @@ class MultiColumnSorting extends BasePlugin {
     this.hot.runHooks('persistentStateLoad', 'multiColumnSorting', storedAllSortSettings);
 
     const allSortSettings = storedAllSortSettings.value;
-    const translateColumnToVisual = ({column: physicalColumn, ...restOfProperties}) =>
+    const translateColumnToVisual = ({ column: physicalColumn, ...restOfProperties }) =>
       ({ column: this.hot.toVisualColumn(physicalColumn), ...restOfProperties });
 
     if (isDefined(allSortSettings) && Array.isArray(allSortSettings.initialConfig)) {
@@ -468,7 +468,7 @@ class MultiColumnSorting extends BasePlugin {
     if (this.readColumnMetaFromCache === false) {
       const numberOfColumns = this.hot.countCols();
 
-      rangeEach(numberOfColumns, (visualColumnIndex) => this.setMergedPluginSettings(visualColumnIndex));
+      rangeEach(numberOfColumns, visualColumnIndex => this.setMergedPluginSettings(visualColumnIndex));
 
       this.readColumnMetaFromCache = true;
     }
@@ -521,16 +521,16 @@ class MultiColumnSorting extends BasePlugin {
     // flag inside it (we just want to get data not already modified by `multiColumnSorting` plugin translation).
     this.blockPluginTranslation = true;
 
-    const getDataForSortedColumns = (visualRowIndex) =>
-      arrayMap(sortedColumnsList, (physicalColumn) => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
+    const getDataForSortedColumns = visualRowIndex =>
+      arrayMap(sortedColumnsList, physicalColumn => this.hot.getDataAtCell(visualRowIndex, this.hot.toVisualColumn(physicalColumn)));
 
     for (let visualRowIndex = 0; visualRowIndex < this.getNumberOfRowsToSort(numberOfRows); visualRowIndex += 1) {
       indexesWithData.push([visualRowIndex].concat(getDataForSortedColumns(visualRowIndex)));
     }
 
     mergeSort(indexesWithData, mainSortComparator(
-      arrayMap(sortedColumnsList, (physicalColumn) => this.columnStatesManager.getSortOrderOfColumn(physicalColumn)),
-      arrayMap(sortedColumnsList, (physicalColumn) => this.getFirstCellSettings(this.hot.toVisualColumn(physicalColumn)))
+      arrayMap(sortedColumnsList, physicalColumn => this.columnStatesManager.getSortOrderOfColumn(physicalColumn)),
+      arrayMap(sortedColumnsList, physicalColumn => this.getFirstCellSettings(this.hot.toVisualColumn(physicalColumn)))
     ));
 
     // Append spareRows
@@ -542,7 +542,7 @@ class MultiColumnSorting extends BasePlugin {
     this.blockPluginTranslation = false;
 
     // Save all indexes to arrayMapper, a completely new sequence is set by the plugin
-    this.rowsMapper._arrayMap = arrayMap(indexesWithData, (indexWithData) => indexWithData[0]);
+    this.rowsMapper._arrayMap = arrayMap(indexesWithData, indexWithData => indexWithData[0]);
   }
 
   /**
@@ -554,7 +554,7 @@ class MultiColumnSorting extends BasePlugin {
    */
   onModifyRow(row, source) {
     if (this.blockPluginTranslation === false && source !== this.pluginName) {
-      let rowInMapper = this.rowsMapper.getValueByIndex(row);
+      const rowInMapper = this.rowsMapper.getValueByIndex(row);
       row = rowInMapper === null ? row : rowInMapper;
     }
 

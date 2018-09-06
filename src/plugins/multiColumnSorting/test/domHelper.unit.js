@@ -1,6 +1,6 @@
-import {ColumnStatesManager} from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
-import {DESC_SORT_STATE, ASC_SORT_STATE} from 'handsontable-pro/plugins/multiColumnSorting/utils';
-import {DomHelper} from 'handsontable-pro/plugins/multiColumnSorting/domHelper';
+import { ColumnStatesManager } from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
+import { DESC_SORT_STATE, ASC_SORT_STATE } from 'handsontable-pro/plugins/multiColumnSorting/utils';
+import { DomHelper } from 'handsontable-pro/plugins/multiColumnSorting/domHelper';
 
 describe('MultiColumnSorting', () => {
   describe('DomHelper.getAddedClasses', () => {
@@ -9,7 +9,7 @@ describe('MultiColumnSorting', () => {
       const domHelper = new DomHelper(columnStatesManager);
 
       columnStatesManager.setSortStates([
-        {column: 1, sortOrder: DESC_SORT_STATE}
+        { column: 1, sortOrder: DESC_SORT_STATE }
       ]);
 
       expect(domHelper.getAddedClasses(0).includes('columnSorting')).toBeTruthy();
@@ -21,7 +21,7 @@ describe('MultiColumnSorting', () => {
       const domHelper = new DomHelper(columnStatesManager);
 
       columnStatesManager.setSortStates([
-        {column: 1, sortOrder: DESC_SORT_STATE}
+        { column: 1, sortOrder: DESC_SORT_STATE }
       ]);
 
       expect(domHelper.getAddedClasses(0, void 0, true).includes('sortAction')).toBeTruthy();
@@ -37,7 +37,7 @@ describe('MultiColumnSorting', () => {
         const domHelper = new DomHelper(columnStatesManager);
 
         columnStatesManager.setSortStates([
-          {column: 1, sortOrder: DESC_SORT_STATE}
+          { column: 1, sortOrder: DESC_SORT_STATE }
         ]);
 
         expect(domHelper.getAddedClasses(0, false).includes('ascending')).toBeFalsy();
@@ -60,8 +60,8 @@ describe('MultiColumnSorting', () => {
         const domHelper = new DomHelper(columnStatesManager);
 
         columnStatesManager.setSortStates([
-          {column: 1, sortOrder: DESC_SORT_STATE},
-          {column: 0, sortOrder: ASC_SORT_STATE},
+          { column: 1, sortOrder: DESC_SORT_STATE },
+          { column: 0, sortOrder: ASC_SORT_STATE },
         ]);
 
         expect(domHelper.getAddedClasses(0, false).includes('ascending')).toBeFalsy();
@@ -91,10 +91,10 @@ describe('MultiColumnSorting', () => {
       const domHelper = new DomHelper(columnStatesManager);
 
       columnStatesManager.setSortStates([
-        {column: 1, sortOrder: DESC_SORT_STATE},
-        {column: 0, sortOrder: ASC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 3, sortOrder: ASC_SORT_STATE},
+        { column: 1, sortOrder: DESC_SORT_STATE },
+        { column: 0, sortOrder: ASC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 3, sortOrder: ASC_SORT_STATE },
       ]);
 
       const htmlElementMock = { className: 'columnSorting sort-1 sort-2 sort-3 sort-4 sortAction' };

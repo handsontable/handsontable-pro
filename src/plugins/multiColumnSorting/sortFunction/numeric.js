@@ -1,5 +1,5 @@
-import {isEmpty} from 'handsontable/helpers/mixed';
-import {DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND} from '../comparatorEngine';
+import { isEmpty } from 'handsontable/helpers/mixed';
+import { DO_NOT_SWAP, FIRST_BEFORE_SECOND, FIRST_AFTER_SECOND } from '../comparatorEngine';
 
 /**
  * Numeric sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
@@ -12,7 +12,7 @@ export default function numericSort(sortOrder, columnMeta) {
   return function(value, nextValue) {
     const parsedFirstValue = parseFloat(value);
     const parsedSecondValue = parseFloat(nextValue);
-    const {sortEmptyCells} = columnMeta.multiColumnSorting;
+    const { sortEmptyCells } = columnMeta.multiColumnSorting;
 
     // Watch out when changing this part of code! Check below returns 0 (as expected) when comparing empty string, null, undefined
     if (parsedFirstValue === parsedSecondValue || (isNaN(parsedFirstValue) && isNaN(parsedSecondValue))) {

@@ -36,7 +36,7 @@ function getCompareFunctionFactory(columnMeta) {
  * @returns {Function}
  */
 export function mainSortComparator(sortingOrders, columnMetas) {
-  return function (rowIndexWithValues, nextRowIndexWithValues) {
+  return function(rowIndexWithValues, nextRowIndexWithValues) {
     // We sort array of arrays. Single array is in form [rowIndex, ...values].
     // We compare just values, stored at second index of array.
     const [, ...values] = rowIndexWithValues;
@@ -62,4 +62,4 @@ export function mainSortComparator(sortingOrders, columnMetas) {
       return compareResult;
     }(0));
   };
-};
+}

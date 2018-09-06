@@ -1,6 +1,6 @@
 import arrayMapper from 'handsontable/mixins/arrayMapper';
-import {mixin} from 'handsontable/helpers/object';
-import {rangeEach} from 'handsontable/helpers/number';
+import { mixin } from 'handsontable/helpers/object';
+import { rangeEach } from 'handsontable/helpers/number';
 
 /**
  * @class RowsMapper
@@ -22,7 +22,7 @@ class RowsMapper {
    * @param {Number} [length] Custom generated map length.
    */
   createMap(length) {
-    let originLength = length === void 0 ? this._arrayMap.length : length;
+    const originLength = length === void 0 ? this._arrayMap.length : length;
 
     this._arrayMap.length = 0;
 

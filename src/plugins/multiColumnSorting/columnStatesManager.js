@@ -1,5 +1,5 @@
-import {isObject, objectEach, deepClone} from 'handsontable/helpers/object';
-import {arrayMap} from 'handsontable/helpers/array';
+import { isObject, objectEach, deepClone } from 'handsontable/helpers/object';
+import { arrayMap } from 'handsontable/helpers/array';
 
 const inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'headerAction', 'compareFunctionFactory'];
 
@@ -106,7 +106,7 @@ export class ColumnStatesManager {
    * @returns {String|undefined} Sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
    */
   getSortOrderOfColumn(searchedColumn) {
-    const searchedState = this.sortedColumnsStates.find(({column}) => searchedColumn === column);
+    const searchedState = this.sortedColumnsStates.find(({ column }) => searchedColumn === column);
     let sortOrder;
 
     if (isObject(searchedState)) {
@@ -122,7 +122,7 @@ export class ColumnStatesManager {
    * @returns {Array}
    */
   getSortedColumns() {
-    return arrayMap(this.sortedColumnsStates, ({column}) => column);
+    return arrayMap(this.sortedColumnsStates, ({ column }) => column);
   }
 
   /**

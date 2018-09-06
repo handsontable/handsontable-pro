@@ -1,6 +1,6 @@
-import {isUndefined} from 'handsontable/helpers/mixed';
-import {isObject} from 'handsontable/helpers/object';
-import {warn} from 'handsontable/helpers/console';
+import { isUndefined } from 'handsontable/helpers/mixed';
+import { isObject } from 'handsontable/helpers/object';
+import { warn } from 'handsontable/helpers/console';
 
 export const ASC_SORT_STATE = 'asc';
 export const DESC_SORT_STATE = 'desc';
@@ -16,7 +16,7 @@ function isValidColumnState(columnState) {
     return false;
   }
 
-  const {column, sortOrder} = columnState;
+  const { column, sortOrder } = columnState;
 
   return Number.isInteger(column) && [ASC_SORT_STATE, DESC_SORT_STATE].includes(sortOrder);
 }
@@ -28,11 +28,11 @@ function isValidColumnState(columnState) {
  * @returns {Boolean}
  */
 export function areValidSortStates(sortStates) {
-  if (Array.isArray(sortStates) === false || sortStates.every((columnState) => isObject(columnState)) === false) {
+  if (Array.isArray(sortStates) === false || sortStates.every(columnState => isObject(columnState)) === false) {
     return false;
   }
 
-  const sortedColumns = sortStates.map(({column}) => column);
+  const sortedColumns = sortStates.map(({ column }) => column);
   const indexOccursOnlyOnce = new Set(sortedColumns).size === sortedColumns.length;
 
   return indexOccursOnlyOnce && sortStates.every(isValidColumnState);

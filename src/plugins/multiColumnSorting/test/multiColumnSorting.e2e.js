@@ -20,16 +20,16 @@ describe('MultiColumnSorting', () => {
   });
 
   const singleColumnSortingData = () => [
-    {id: 1, name: 'Ted', lastName: 'Right'},
-    {id: 2, name: 'Frank', lastName: 'Honest'},
-    {id: 3, name: 'Joan', lastName: 'Well'},
-    {id: 4, name: 'Sid', lastName: 'Strong'},
-    {id: 5, name: 'Jane', lastName: 'Neat'},
-    {id: 6, name: 'Chuck', lastName: 'Jackson'},
-    {id: 7, name: 'Meg', lastName: 'Jansen'},
-    {id: 8, name: 'Rob', lastName: 'Norris'},
-    {id: 9, name: 'Sean', lastName: 'O\'Hara'},
-    {id: 10, name: 'Eve', lastName: 'Branson'}
+    { id: 1, name: 'Ted', lastName: 'Right' },
+    { id: 2, name: 'Frank', lastName: 'Honest' },
+    { id: 3, name: 'Joan', lastName: 'Well' },
+    { id: 4, name: 'Sid', lastName: 'Strong' },
+    { id: 5, name: 'Jane', lastName: 'Neat' },
+    { id: 6, name: 'Chuck', lastName: 'Jackson' },
+    { id: 7, name: 'Meg', lastName: 'Jansen' },
+    { id: 8, name: 'Rob', lastName: 'Norris' },
+    { id: 9, name: 'Sean', lastName: 'O\'Hara' },
+    { id: 10, name: 'Eve', lastName: 'Branson' }
   ];
 
   const multiColumnSortingData = () => [
@@ -72,8 +72,8 @@ describe('MultiColumnSorting', () => {
       columns: [
         {},
         {},
-        {type: 'date', dateFormat: 'MM/DD/YYYY'},
-        {type: 'numeric'},
+        { type: 'date', dateFormat: 'MM/DD/YYYY' },
+        { type: 'numeric' },
         {}
       ],
       multiColumnSorting: {
@@ -123,8 +123,8 @@ describe('MultiColumnSorting', () => {
       columns: [
         {},
         {},
-        {type: 'date', dateFormat: 'MM/DD/YYYY'},
-        {type: 'numeric'},
+        { type: 'date', dateFormat: 'MM/DD/YYYY' },
+        { type: 'numeric' },
         {}
       ],
       multiColumnSorting: {
@@ -133,11 +133,11 @@ describe('MultiColumnSorting', () => {
     });
 
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual(predefinedSortQueue);
-    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({column: 0, sortOrder: 'asc'});
-    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({column: 1, sortOrder: 'desc'});
+    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'asc' });
+    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'desc' });
 
     // changing column sequence: 0 <-> 1
-    updateSettings({modifyCol: modification, unmodifyCol: modification});
+    updateSettings({ modifyCol: modification, unmodifyCol: modification });
 
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([{
       column: 1,
@@ -147,8 +147,8 @@ describe('MultiColumnSorting', () => {
       sortOrder: 'desc'
     }]);
 
-    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({column: 0, sortOrder: 'desc'});
-    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({column: 1, sortOrder: 'asc'});
+    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'desc' });
+    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'asc' });
   });
 
   it('should display indicator properly after changing sorted column sequence', () => {
@@ -176,10 +176,10 @@ describe('MultiColumnSorting', () => {
       }
     });
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     // changing column sequence: 0 <-> 1
-    updateSettings({modifyCol: modification, unmodifyCol: modification});
+    updateSettings({ modifyCol: modification, unmodifyCol: modification });
 
     const sortedColumn = spec().$container.find('th span.columnSorting')[1];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
@@ -204,7 +204,7 @@ describe('MultiColumnSorting', () => {
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
   });
 
-  it('should render a correct number of TD elements after sorting', async () => {
+  it('should render a correct number of TD elements after sorting', async() => {
     handsontable({
       data: [
         ['1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'],
@@ -217,7 +217,7 @@ describe('MultiColumnSorting', () => {
 
     const htCore = getHtCore();
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'desc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'desc' });
 
     await sleep(300);
 
@@ -254,7 +254,7 @@ describe('MultiColumnSorting', () => {
       multiColumnSorting: true
     });
 
-    getPlugin('multiColumnSorting').sort({column: 1, sortOrder: 'asc'}); // ASC
+    getPlugin('multiColumnSorting').sort({ column: 1, sortOrder: 'asc' }); // ASC
 
     expect(getDataAtCol(0)).toEqual([
       'bmw1', 'bmw2', 'bmw3',
@@ -263,7 +263,7 @@ describe('MultiColumnSorting', () => {
       'opel1', 'opel2', 'opel3'
     ]);
 
-    getPlugin('multiColumnSorting').sort({column: 1, sortOrder: 'desc'}); // DESC
+    getPlugin('multiColumnSorting').sort({ column: 1, sortOrder: 'desc' }); // DESC
 
     expect(getDataAtCol(0)).toEqual([
       'opel1', 'opel2', 'opel3',
@@ -283,7 +283,7 @@ describe('MultiColumnSorting', () => {
         multiColumnSorting: true
       });
     } catch (e) {
-      errors++;
+      errors += 1;
     }
 
     expect(errors).toBe(0);
@@ -320,7 +320,7 @@ describe('MultiColumnSorting', () => {
       multiColumnSorting: true
     });
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'}); // ASC
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' }); // ASC
 
     expect(getDataAtCol(1)).toEqual([
       'Frank Honest',
@@ -337,7 +337,7 @@ describe('MultiColumnSorting', () => {
       'Eve Branson',
     ]);
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'desc'}); // DESC
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'desc' }); // DESC
 
     expect(getDataAtCol(1)).toEqual([
       'Eve Well',
@@ -375,7 +375,7 @@ describe('MultiColumnSorting', () => {
       }
     });
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'}); // ASC
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' }); // ASC
 
     expect(getDataAtCol(1)).toEqual([
       'Ted Right',
@@ -391,7 +391,7 @@ describe('MultiColumnSorting', () => {
       'Rob Norris'
     ]);
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'desc'}); // DESC
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'desc' }); // DESC
 
     expect(getDataAtCol(1)).toEqual([
       'Rob Norris',
@@ -789,7 +789,7 @@ describe('MultiColumnSorting', () => {
         multiColumnSorting: true
       });
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'asc'}); // ASC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'asc' }); // ASC
 
       expect(getDataAtRow(0)).toEqual(['Opel', 'Astra', '02/02/2004', 7000]);
       expect(getDataAtRow(1)).toEqual(['Mercedes', 'A 160', '01/14/2006', 6999.9999]);
@@ -797,7 +797,7 @@ describe('MultiColumnSorting', () => {
       expect(getDataAtRow(3)).toEqual(['BMW', '320i Coupe', '07/24/2011', 30500]);
       expect(getDataAtRow(4)).toEqual(['Audi', 'A4 Avant', '11/19/2011', 33900]);
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'desc'}); // DESC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'desc' }); // DESC
 
       expect(getDataAtRow(0)).toEqual(['Audi', 'A4 Avant', '11/19/2011', 33900]);
       expect(getDataAtRow(1)).toEqual(['BMW', '320i Coupe', '07/24/2011', 30500]);
@@ -830,7 +830,7 @@ describe('MultiColumnSorting', () => {
         multiColumnSorting: true
       });
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'asc'}); // ASC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'asc' }); // ASC
 
       expect(getDataAtRow(0)).toEqual(['Mercedes', 'A 160', '01/12/2012', 6999.9999]);
       expect(getDataAtRow(1)).toEqual(['Citroen', 'C4 Coupe', '12/01/2013', 8330]);
@@ -838,7 +838,7 @@ describe('MultiColumnSorting', () => {
       expect(getDataAtRow(3)).toEqual(['Audi', 'A4 Avant', '11/10/2014', 33900]);
       expect(getDataAtRow(4)).toEqual(['Opel', 'Astra', '02/02/2015', 7000]);
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'desc'}); // DESC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'desc' }); // DESC
 
       expect(getDataAtRow(0)).toEqual(['Opel', 'Astra', '02/02/2015', 7000]);
       expect(getDataAtRow(1)).toEqual(['Audi', 'A4 Avant', '11/10/2014', 33900]);
@@ -871,7 +871,7 @@ describe('MultiColumnSorting', () => {
         multiColumnSorting: true
       });
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'asc'}); // ASC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'asc' }); // ASC
 
       expect(getDataAtRow(0)).toEqual(['Audi', 'A4 Avant', 'July 8th 1999', 33900]);
       expect(getDataAtRow(1)).toEqual(['Opel', 'Astra', 'June 1st 2001', 7000]);
@@ -879,7 +879,7 @@ describe('MultiColumnSorting', () => {
       expect(getDataAtRow(3)).toEqual(['Citroen', 'C4 Coupe', 'October 27th 2001', 8330]);
       expect(getDataAtRow(4)).toEqual(['Mercedes', 'A 160', 'October 28th 2016', 6999.9999]);
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'desc'}); // DESC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'desc' }); // DESC
 
       expect(getDataAtRow(0)).toEqual(['Mercedes', 'A 160', 'October 28th 2016', 6999.9999]);
       expect(getDataAtRow(1)).toEqual(['Citroen', 'C4 Coupe', 'October 27th 2001', 8330]);
@@ -914,7 +914,7 @@ describe('MultiColumnSorting', () => {
         multiColumnSorting: true
       });
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'asc'}); // ASC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'asc' }); // ASC
 
       expect(getDataAtRow(0)).toEqual(['Mercedes', 'A 160', '01/14/2006', 6999.9999]);
       expect(getDataAtRow(1)).toEqual(['Opel', 'Astra', '02/02/2004', 7000]);
@@ -922,7 +922,7 @@ describe('MultiColumnSorting', () => {
       expect(getDataAtRow(3)).toEqual(['Audi', 'A4 Avant', '11/19/2011', 33900]);
       expect(getDataAtRow(4)).toEqual(['Citroen', 'C4 Coupe', '12/01/2008', 8330]);
 
-      getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'desc'}); // DESC
+      getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'desc' }); // DESC
 
       expect(getDataAtRow(0)).toEqual(['Citroen', 'C4 Coupe', '12/01/2008', 8330]);
       expect(getDataAtRow(1)).toEqual(['Audi', 'A4 Avant', '11/19/2011', 33900]);
@@ -1174,10 +1174,10 @@ describe('MultiColumnSorting', () => {
 
   it('should NOT sort spare rows', () => {
     const myData = [
-      {a: 'aaa', b: 2, c: 3},
-      {a: 'z', b: 11, c: -4},
-      {a: 'dddd', b: 13, c: 13},
-      {a: 'bbbb', b: 10, c: 11}
+      { a: 'aaa', b: 2, c: 3 },
+      { a: 'z', b: 11, c: -4 },
+      { a: 'dddd', b: 13, c: 13 },
+      { a: 'bbbb', b: 10, c: 11 }
     ];
 
     function customIsEmptyRow(row) {
@@ -1190,11 +1190,11 @@ describe('MultiColumnSorting', () => {
       rowHeaders: true,
       colHeaders: ['A', 'B', 'C'],
       columns: [
-        {data: 'a', type: 'text'},
-        {data: 'b', type: 'text'},
-        {data: 'c', type: 'text'}
+        { data: 'a', type: 'text' },
+        { data: 'b', type: 'text' },
+        { data: 'c', type: 'text' }
       ],
-      dataSchema: {isNew: true, a: false}, // default for a to avoid #bad value#
+      dataSchema: { isNew: true, a: false }, // default for a to avoid #bad value#
       multiColumnSorting: true,
       minSpareRows: 3,
       isEmptyRow: customIsEmptyRow
@@ -1283,7 +1283,7 @@ describe('MultiColumnSorting', () => {
     expect(spec().$container.find('tbody tr:eq(2) td:eq(0)').text()).toEqual('3');
     expect(spec().$container.find('tbody tr:eq(3) td:eq(0)').text()).toEqual('2');
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
     expect(spec().$container.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('1');
@@ -1306,7 +1306,7 @@ describe('MultiColumnSorting', () => {
 
     addHook('beforeColumnSort', beforeColumnSortHandler);
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     expect(beforeColumnSortHandler.calls.count()).toEqual(1);
     expect(beforeColumnSortHandler).toHaveBeenCalledWith([], [{
@@ -1329,7 +1329,7 @@ describe('MultiColumnSorting', () => {
       }
     });
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     setTimeout(() => {
       expect(spec().$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('2');
@@ -1349,7 +1349,7 @@ describe('MultiColumnSorting', () => {
       beforeColumnSort: beforeColumnSortCallback
     });
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     expect(beforeColumnSortCallback.calls.count()).toEqual(1);
     expect(beforeColumnSortCallback).toHaveBeenCalledWith([], [{
@@ -1373,7 +1373,7 @@ describe('MultiColumnSorting', () => {
 
     addHook('afterColumnSort', afterColumnSortHandler);
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     expect(afterColumnSortHandler.calls.count()).toBe(1);
     expect(afterColumnSortHandler).toHaveBeenCalledWith([], [{
@@ -1391,7 +1391,7 @@ describe('MultiColumnSorting', () => {
       afterColumnSort: afterColumnSortCallback
     });
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     expect(afterColumnSortCallback.calls.count()).toEqual(1);
     expect(afterColumnSortCallback).toHaveBeenCalledWith([], [{
@@ -1411,7 +1411,7 @@ describe('MultiColumnSorting', () => {
       afterColumnSort: afterColumnSortCallback
     });
 
-    getPlugin('multiColumnSorting').sort({column: 1000, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 1000, sortOrder: 'asc' });
     expect(beforeColumnSortCallback).toHaveBeenCalledWith([], [{
       column: 1000,
       sortOrder: 'asc'
@@ -1458,7 +1458,6 @@ describe('MultiColumnSorting', () => {
 
     spec().$container2 = $(`<div id='${id}-2'></div>`).appendTo('body');
     spec().$container2.handsontable();
-    const hot2 = spec().$container2.handsontable('getInstance');
 
     selectCell(0, 1);
     keyDown('enter');
@@ -1765,37 +1764,37 @@ describe('MultiColumnSorting', () => {
       },
     });
 
-    getPlugin('multiColumnSorting').sort({column: 1, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 1, sortOrder: 'asc' });
 
     // ascending
     let sortedColumn = spec().$container.find('th span.columnSorting')[1];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'asc' });
 
     // ascending
     sortedColumn = spec().$container.find('th span.columnSorting')[2];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 1, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 1, sortOrder: 'asc' });
 
     // ascending
     sortedColumn = spec().$container.find('th span.columnSorting')[1];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'desc'});
+    getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'desc' });
 
     // descending
     sortedColumn = spec().$container.find('th span.columnSorting')[2];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'desc'});
+    getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'desc' });
 
     // descending
     sortedColumn = spec().$container.find('th span.columnSorting')[2];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 2, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 2, sortOrder: 'asc' });
 
     // ascending
     sortedColumn = spec().$container.find('th span.columnSorting')[2];
@@ -1831,13 +1830,13 @@ describe('MultiColumnSorting', () => {
     sortedColumn = spec().$container.find('th span.columnSorting')[1];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 1, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 1, sortOrder: 'asc' });
 
     // ascending
     sortedColumn = spec().$container.find('th span.columnSorting')[1];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
-    getPlugin('multiColumnSorting').sort({column: 1, sortOrder: 'desc'});
+    getPlugin('multiColumnSorting').sort({ column: 1, sortOrder: 'desc' });
 
     // descending
     sortedColumn = spec().$container.find('th span.columnSorting')[1];
@@ -1874,14 +1873,14 @@ describe('MultiColumnSorting', () => {
 
     hot.view.wt.wtOverlays.leftOverlay.scrollTo(15);
     render();
-    getPlugin('multiColumnSorting').sort({column: 15, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 15, sortOrder: 'asc' });
 
     expect(getDataAtCell(0, 15)).toEqual('Ball Levy');
     expect(getDataAtCell(1, 15)).toEqual('Hubbard Nichols');
     expect(getDataAtCell(2, 15)).toEqual('Lenora Guzman');
     expect(getDataAtCell(3, 15)).toEqual('Nita Holloway');
 
-    getPlugin('multiColumnSorting').sort({column: 15, sortOrder: 'desc'});
+    getPlugin('multiColumnSorting').sort({ column: 15, sortOrder: 'desc' });
 
     expect(getDataAtCell(3, 15)).toEqual('Ball Levy');
     expect(getDataAtCell(2, 15)).toEqual('Hubbard Nichols');
@@ -1899,7 +1898,7 @@ describe('MultiColumnSorting', () => {
   it('should allow specifiyng a custom sorting function', () => {
     const data = [['1 inch'], ['1 yard'], ['2 feet'], ['0.2 miles']];
     const compareFunctionFactory = function(sortOrder) {
-      return function (value, nextValue) {
+      return function(value, nextValue) {
         const unitsRatios = {
           inch: 1,
           yard: 36,
@@ -1950,14 +1949,14 @@ describe('MultiColumnSorting', () => {
     expect(getDataAtCell(2, 0)).toEqual('2 feet');
     expect(getDataAtCell(3, 0)).toEqual('0.2 miles');
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
     expect(getDataAtCell(0, 0)).toEqual('1 inch');
     expect(getDataAtCell(1, 0)).toEqual('2 feet');
     expect(getDataAtCell(2, 0)).toEqual('1 yard');
     expect(getDataAtCell(3, 0)).toEqual('0.2 miles');
 
-    getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'desc'});
+    getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'desc' });
 
     expect(getDataAtCell(0, 0)).toEqual('0.2 miles');
     expect(getDataAtCell(1, 0)).toEqual('1 yard');
@@ -2174,9 +2173,9 @@ describe('MultiColumnSorting', () => {
           columns: [
             {},
             {},
-            {type: 'date', dateFormat: 'MM/DD/YYYY'},
-            {type: 'numeric'},
-            {multiColumnSorting: {sortEmptyCells: true}}
+            { type: 'date', dateFormat: 'MM/DD/YYYY' },
+            { type: 'numeric' },
+            { multiColumnSorting: { sortEmptyCells: true } }
           ],
           multiColumnSorting: true
         });
@@ -2198,9 +2197,9 @@ describe('MultiColumnSorting', () => {
           columns: [
             {},
             {},
-            {type: 'date', dateFormat: 'MM/DD/YYYY'},
-            {type: 'numeric'},
-            {multiColumnSorting: {sortEmptyCells: true}}
+            { type: 'date', dateFormat: 'MM/DD/YYYY' },
+            { type: 'numeric' },
+            { multiColumnSorting: { sortEmptyCells: true } }
           ],
           multiColumnSorting: true
         });
@@ -2222,9 +2221,9 @@ describe('MultiColumnSorting', () => {
           columns: [
             {},
             {},
-            {type: 'date', dateFormat: 'MM/DD/YYYY'},
-            {type: 'numeric'},
-            {multiColumnSorting: {sortEmptyCells: true}}
+            { type: 'date', dateFormat: 'MM/DD/YYYY' },
+            { type: 'numeric' },
+            { multiColumnSorting: { sortEmptyCells: true } }
           ],
           multiColumnSorting: true
         });
@@ -2246,9 +2245,9 @@ describe('MultiColumnSorting', () => {
           columns: [
             {},
             {},
-            {type: 'date', dateFormat: 'MM/DD/YYYY'},
-            {type: 'numeric'},
-            {multiColumnSorting: {sortEmptyCells: true}}
+            { type: 'date', dateFormat: 'MM/DD/YYYY' },
+            { type: 'numeric' },
+            { multiColumnSorting: { sortEmptyCells: true } }
           ],
           multiColumnSorting: true
         });
@@ -2278,8 +2277,8 @@ describe('MultiColumnSorting', () => {
           columns: [
             {},
             {},
-            {type: 'date', dateFormat: 'MM/DD/YYYY'},
-            {type: 'numeric'},
+            { type: 'date', dateFormat: 'MM/DD/YYYY' },
+            { type: 'numeric' },
             {}
           ],
           multiColumnSorting: {
@@ -2308,9 +2307,9 @@ describe('MultiColumnSorting', () => {
           columns: [
             {},
             {},
-            {type: 'date', dateFormat: 'MM/DD/YYYY'},
-            {type: 'numeric'},
-            {multiColumnSorting: {sortEmptyCells: true}}
+            { type: 'date', dateFormat: 'MM/DD/YYYY' },
+            { type: 'numeric' },
+            { multiColumnSorting: { sortEmptyCells: true } }
           ],
           multiColumnSorting: {
             initialConfig: [{
@@ -2402,7 +2401,7 @@ describe('MultiColumnSorting', () => {
       expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[0], ':after').getPropertyValue('content')).toEqual('"2"');
       expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('"1"');
 
-      getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+      getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
       expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[0], ':after').getPropertyValue('content')).toEqual('none');
       expect(window.getComputedStyle(spec().$container.find('th span.columnSorting')[1], ':after').getPropertyValue('content')).toEqual('none');
@@ -2532,8 +2531,8 @@ describe('MultiColumnSorting', () => {
         columns: [
           {},
           {},
-          {type: 'date', dateFormat: 'MM/DD/YYYY'},
-          {type: 'numeric'},
+          { type: 'date', dateFormat: 'MM/DD/YYYY' },
+          { type: 'numeric' },
           {}
         ],
         colHeaders: true,
@@ -2555,8 +2554,8 @@ describe('MultiColumnSorting', () => {
         columns: [
           {},
           {},
-          {type: 'date', dateFormat: 'MM/DD/YYYY'},
-          {type: 'numeric'},
+          { type: 'date', dateFormat: 'MM/DD/YYYY' },
+          { type: 'numeric' },
           {}
         ],
         colHeaders: true,
@@ -2585,10 +2584,10 @@ describe('MultiColumnSorting', () => {
       handsontable({
         data: multiColumnSortingData(),
         columns: [
-          {multiColumnSorting: {headerAction: false}},
+          { multiColumnSorting: { headerAction: false } },
           {},
-          {type: 'date', dateFormat: 'MM/DD/YYYY'},
-          {type: 'numeric'},
+          { type: 'date', dateFormat: 'MM/DD/YYYY' },
+          { type: 'numeric' },
           {}
         ],
         colHeaders: true,
@@ -2610,10 +2609,10 @@ describe('MultiColumnSorting', () => {
       handsontable({
         data: multiColumnSortingData(),
         columns: [
-          {multiColumnSorting: {headerAction: false}},
+          { multiColumnSorting: { headerAction: false } },
           {},
-          {type: 'date', dateFormat: 'MM/DD/YYYY'},
-          {type: 'numeric'},
+          { type: 'date', dateFormat: 'MM/DD/YYYY' },
+          { type: 'numeric' },
           {}
         ],
         colHeaders: true,
@@ -2626,7 +2625,7 @@ describe('MultiColumnSorting', () => {
 
       expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeFalsy();
 
-      updateSettings({columns: () => ({type: 'text'}) });
+      updateSettings({ columns: () => ({ type: 'text' }) });
 
       $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
 
@@ -2643,8 +2642,8 @@ describe('MultiColumnSorting', () => {
         columns: [
           {},
           {},
-          {type: 'date', dateFormat: 'MM/DD/YYYY'},
-          {type: 'numeric'},
+          { type: 'date', dateFormat: 'MM/DD/YYYY' },
+          { type: 'numeric' },
           {}
         ],
         colHeaders: true,
@@ -2655,7 +2654,7 @@ describe('MultiColumnSorting', () => {
 
       expect($clickedHeader.hasClass(HEADER_ACTION_CLASS)).toBeTruthy();
 
-      updateSettings({multiColumnSorting: {headerAction: false}});
+      updateSettings({ multiColumnSorting: { headerAction: false } });
 
       $clickedHeader = spec().$container.find('th span.columnSorting:eq(0)');
 
@@ -2668,7 +2667,7 @@ describe('MultiColumnSorting', () => {
   });
 
   describe('rendering headers', () => {
-    it('should change width of headers when plugin is enabled / disabled and sort indicator is enabled', async () => {
+    it('should change width of headers when plugin is enabled / disabled and sort indicator is enabled', async() => {
       handsontable({
         colHeaders: true
       });
@@ -2691,7 +2690,7 @@ describe('MultiColumnSorting', () => {
 
       expect(headerWidthAtStart).toBe(newHeaderWidth);
 
-      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc'}] } });
+      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc' }] } });
 
       await sleep(100);
 
@@ -2700,7 +2699,7 @@ describe('MultiColumnSorting', () => {
       expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
     });
 
-    it('should work properly also when `rowHeaders` option is set to `true`', async () => {
+    it('should work properly also when `rowHeaders` option is set to `true`', async() => {
       handsontable({
         colHeaders: true,
         rowHeaders: true
@@ -2734,7 +2733,7 @@ describe('MultiColumnSorting', () => {
       expect(htCoreWidthAtStart).toBe(newHtCoreWidth);
       expect(newWtHiderWidth).toBe(newHtCoreWidth);
 
-      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc'}] } });
+      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc' }] } });
 
       await sleep(100);
 
@@ -2746,7 +2745,7 @@ describe('MultiColumnSorting', () => {
       expect(newWtHiderWidth).toBe(newHtCoreWidth);
     });
 
-    it('should not change width of headers when plugin is enabled / disabled and sort indicator is disabled', async () => {
+    it('should not change width of headers when plugin is enabled / disabled and sort indicator is disabled', async() => {
       handsontable({
         colHeaders: true
       });
@@ -2980,7 +2979,7 @@ describe('MultiColumnSorting', () => {
           multiColumnSorting: true
         });
 
-        getPlugin('multiColumnSorting').sort({column: 0, sortOrder: 'asc'});
+        getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
 
         loadData([
           [50, 'E'],

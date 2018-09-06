@@ -1,5 +1,5 @@
-import {ColumnStatesManager, ASC_SORT_STATE, DESC_SORT_STATE} from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
-import {deepClone} from 'handsontable/helpers/object';
+import { ColumnStatesManager, ASC_SORT_STATE, DESC_SORT_STATE } from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
+import { deepClone } from 'handsontable/helpers/object';
 
 describe('MultiColumnSorting', () => {
   describe('ColumnStatesManager.updateAllColumnsProperties', () => {
@@ -55,7 +55,7 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
       const initialState = deepClone(columnStatesManager.sortedColumnsStates);
 
-      columnStatesManager.setSortStates([{column: 0, sortOrder: ASC_SORT_STATE}]);
+      columnStatesManager.setSortStates([{ column: 0, sortOrder: ASC_SORT_STATE }]);
 
       const stateAfterFunctionCall = deepClone(columnStatesManager.sortedColumnsStates);
 
@@ -67,9 +67,9 @@ describe('MultiColumnSorting', () => {
     it('should return copy of states', () => {
       const columnStatesManager = new ColumnStatesManager();
       const newStatesQueue = [
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ];
 
       columnStatesManager.setSortStates(newStatesQueue);
@@ -83,9 +83,9 @@ describe('MultiColumnSorting', () => {
     it('should return copy of state', () => {
       const columnStatesManager = new ColumnStatesManager();
       const newStatesQueue = [
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ];
 
       columnStatesManager.setSortStates(newStatesQueue);
@@ -105,7 +105,7 @@ describe('MultiColumnSorting', () => {
     it('should return `true` when state of the only sorted column was changed to not sorted', () => {
       const columnStatesManager = new ColumnStatesManager();
 
-      columnStatesManager.setSortStates([{column: 0, sortOrder: ASC_SORT_STATE}]);
+      columnStatesManager.setSortStates([{ column: 0, sortOrder: ASC_SORT_STATE }]);
       columnStatesManager.setSortStates([]);
 
       expect(columnStatesManager.isListOfSortedColumnsEmpty()).toBeTruthy();
@@ -114,7 +114,7 @@ describe('MultiColumnSorting', () => {
     it('should return `false` when state queue is not empty', () => {
       const columnStatesManager = new ColumnStatesManager();
 
-      columnStatesManager.setSortStates([{column: 0, sortOrder: ASC_SORT_STATE}]);
+      columnStatesManager.setSortStates([{ column: 0, sortOrder: ASC_SORT_STATE }]);
 
       expect(columnStatesManager.isListOfSortedColumnsEmpty()).toBeFalsy();
     });
@@ -125,9 +125,9 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
 
       columnStatesManager.setSortStates([
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ]);
 
       expect(columnStatesManager.getSortedColumns()).toEqual([0, 2, 1]);
@@ -145,9 +145,9 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
 
       columnStatesManager.setSortStates([
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ]);
 
       expect(columnStatesManager.getIndexOfColumnInSortQueue(0)).toEqual(0);
@@ -167,16 +167,16 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
 
       columnStatesManager.setSortStates([
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ]);
 
       expect(columnStatesManager.getNumberOfSortedColumns()).toEqual(3);
 
       columnStatesManager.setSortStates([
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ]);
 
       expect(columnStatesManager.getNumberOfSortedColumns()).toEqual(2);
@@ -192,9 +192,9 @@ describe('MultiColumnSorting', () => {
       const columnStatesManager = new ColumnStatesManager();
 
       columnStatesManager.setSortStates([
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 2, sortOrder: ASC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE},
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 2, sortOrder: ASC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE },
       ]);
 
       expect(columnStatesManager.getFirstSortedColumn()).toEqual(0);
@@ -211,7 +211,7 @@ describe('MultiColumnSorting', () => {
     it('should return if particular column is sorted', () => {
       const columnStatesManager = new ColumnStatesManager();
 
-      columnStatesManager.setSortStates([{column: 1, sortOrder: ASC_SORT_STATE}]);
+      columnStatesManager.setSortStates([{ column: 1, sortOrder: ASC_SORT_STATE }]);
 
       expect(columnStatesManager.isColumnSorted(1)).toBeTruthy();
       expect(columnStatesManager.isColumnSorted(2)).toBeFalsy();
@@ -228,8 +228,8 @@ describe('MultiColumnSorting', () => {
     it('should return proper order when column is sorted', () => {
       const columnStatesManager = new ColumnStatesManager();
       columnStatesManager.setSortStates([
-        {column: 0, sortOrder: DESC_SORT_STATE},
-        {column: 1, sortOrder: ASC_SORT_STATE}
+        { column: 0, sortOrder: DESC_SORT_STATE },
+        { column: 1, sortOrder: ASC_SORT_STATE }
       ]);
 
       expect(columnStatesManager.getSortOrderOfColumn(0)).toEqual(DESC_SORT_STATE);

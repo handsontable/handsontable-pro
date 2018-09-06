@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import {ASC_SORT_STATE, DESC_SORT_STATE} from './utils';
+import { ASC_SORT_STATE, DESC_SORT_STATE } from './utils';
 
 const HEADER_CLASS_ASC_SORT = 'ascending';
 const HEADER_CLASS_DESC_SORT = 'descending';
@@ -67,7 +67,7 @@ export class DomHelper {
   getRemovedClasses(htmlElement) {
     const cssClasses = htmlElement.className.split(' ');
     const sortSequenceRegExp = new RegExp(`^${COLUMN_ORDER_PREFIX}-[0-9]{1,2}$`);
-    const someCssClassesToRemove = cssClasses.filter((cssClass) => sortSequenceRegExp.test(cssClass));
+    const someCssClassesToRemove = cssClasses.filter(cssClass => sortSequenceRegExp.test(cssClass));
 
     return Array.from(orderToCssClass.values()).concat(someCssClassesToRemove, HEADER_ACTION_CLASS);
   }
