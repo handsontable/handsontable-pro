@@ -5,10 +5,12 @@ describe('MultiColumnSorting', () => {
     this.$container = $(`<div id="${id}" style="overflow: auto; width: 300px; height: 200px;"></div>`).appendTo('body');
 
     this.sortByClickOnColumnHeader = (columnIndex) => {
-      const element = this.$container.find(`th span.columnSorting:eq(${columnIndex})`);
+      const hot = this.$container.data('handsontable');
+      const $columnHeader = $(hot.view.wt.wtTable.getColumnHeader(columnIndex));
+      const $spanInsideHeader = $columnHeader.find('.columnSorting');
 
-      element.simulate('mousedown');
-      element.simulate('mouseup');
+      $spanInsideHeader.simulate('mousedown');
+      $spanInsideHeader.simulate('mouseup');
     };
   });
 
