@@ -110,13 +110,6 @@ class MultiColumnSorting extends BasePlugin {
      */
     this.blockPluginTranslation = true;
     /**
-     * Flag which determine if read column meta from the cache.
-     *
-     * @private
-     * @type {Boolean}
-     */
-    this.readColumnMetaFromCache = false;
-    /**
      * Cached column properties from plugin like i.e. `indicator`, `headerAction`.
      *
      * @private
@@ -463,12 +456,10 @@ class MultiColumnSorting extends BasePlugin {
   getFirstCellSettings(column) {
     this.blockPluginTranslation = true;
 
-    if (this.readColumnMetaFromCache === false) {
+    if (this.columnMetaCache.size === 0) {
       const numberOfColumns = this.hot.countCols();
 
       rangeEach(numberOfColumns, visualColumnIndex => this.setMergedPluginSettings(visualColumnIndex));
-
-      this.readColumnMetaFromCache = true;
     }
 
     const cellMeta = this.hot.getCellMeta(0, column);
@@ -625,7 +616,7 @@ class MultiColumnSorting extends BasePlugin {
   onAfterUpdateSettings(settings) {
     warnIfPluginsHasConflict(settings.columnSorting);
 
-    this.readColumnMetaFromCache = false;
+    this.columnMetaCache.clear();
 
     if (isDefined(settings.multiColumnSorting)) {
       this.sortBySettings(settings.multiColumnSorting);
@@ -638,7 +629,7 @@ class MultiColumnSorting extends BasePlugin {
    * @private
    */
   loadOrSortBySettings() {
-    this.readColumnMetaFromCache = false;
+    this.columnMetaCache.clear();
 
     const storedAllSortSettings = this.getAllSavedSortSettings();
 
