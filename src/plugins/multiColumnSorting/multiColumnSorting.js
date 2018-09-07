@@ -671,12 +671,12 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     // It render the table after merging settings. The `AutoColumnSize` plugin will count the table width properly after that.
-    this.hot._registerTimeout(setTimeout(() => {
+    this.hot._registerImmediate(() => {
       this.hot.render();
 
       // When option `rowHeaders` is set to `true` the table doesn't look properly.
       this.hot.view.wt.wtOverlays.adjustElementsSize(true);
-    }));
+    });
   }
 
   /**
