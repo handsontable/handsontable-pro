@@ -267,7 +267,7 @@ class MultiColumnSorting extends BasePlugin {
    * @returns {Boolean}
    */
   isSorted() {
-    return this.isEnabled() && !this.columnStatesManager.isListOfSortedColumnsEmpty();
+    return this.enabled && !this.columnStatesManager.isListOfSortedColumnsEmpty();
   }
 
   /**
@@ -606,6 +606,7 @@ class MultiColumnSorting extends BasePlugin {
     let headerActionEnabled = false;
 
     // Extra `render` function is called in the `disablePlugin` method. This `if` statement filter that case.
+    // We are not checking `this.enabled` property as it would be yet equal to `true` in this case.
     if (this.isEnabled()) {
       const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
 

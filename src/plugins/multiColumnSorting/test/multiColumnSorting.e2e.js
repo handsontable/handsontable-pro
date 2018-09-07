@@ -591,6 +591,21 @@ describe('MultiColumnSorting', () => {
       expect(getPlugin('multiColumnSorting').isSorted()).toBeFalsy();
     });
 
+    it('should return `false` when plugin has been disabled by the `disablePlugin` method', () => {
+      handsontable({
+        multiColumnSorting: {
+          initialConfig: [{
+            column: 1,
+            sortOrder: 'asc'
+          }]
+        }
+      });
+
+      getPlugin('multiColumnSorting').disablePlugin()
+
+      expect(getPlugin('multiColumnSorting').isSorted()).toBeFalsy();
+    });
+
     it('should return `false` when plugin is enabled and the table was not sorted #1', () => {
       handsontable({
         multiColumnSorting: true
@@ -663,6 +678,12 @@ describe('MultiColumnSorting', () => {
       });
 
       expect(getPlugin('multiColumnSorting').isSorted()).toBeTruthy();
+
+      updateSettings({
+        multiColumnSorting: false
+      });
+
+      expect(getPlugin('multiColumnSorting').isSorted()).toBeFalsy();
     });
   });
 
