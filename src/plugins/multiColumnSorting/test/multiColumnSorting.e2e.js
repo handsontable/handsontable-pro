@@ -601,7 +601,7 @@ describe('MultiColumnSorting', () => {
         }
       });
 
-      getPlugin('multiColumnSorting').disablePlugin()
+      getPlugin('multiColumnSorting').disablePlugin();
 
       expect(getPlugin('multiColumnSorting').isSorted()).toBeFalsy();
     });

@@ -290,7 +290,7 @@ class MultiColumnSorting extends BasePlugin {
         return translateColumnToVisual(columnSortState);
       }
 
-      return void 0;
+      return;
     }
 
     const sortStates = this.columnStatesManager.getSortStates();
@@ -377,7 +377,7 @@ class MultiColumnSorting extends BasePlugin {
         return columnSortConfig;
       }
 
-      return void 0;
+      return;
     }
 
     const nrOfColumns = this.hot.countCols();
@@ -385,11 +385,9 @@ class MultiColumnSorting extends BasePlugin {
     if (Number.isInteger(column) && column >= 0 && column < nrOfColumns) {
       return {
         column,
-        sortOrder: getNextSortOrder(void 0)
+        sortOrder: getNextSortOrder()
       };
     }
-
-    return void 0;
   }
 
   /**
