@@ -233,7 +233,7 @@ describe('MultiColumnSorting', () => {
 
     updateSettings({ multiColumnSorting: false });
 
-    const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+    const sortedColumn = spec().$container.find('th span')[0];
     expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
   });
 
@@ -2965,7 +2965,7 @@ describe('MultiColumnSorting', () => {
       });
 
       it('after moving row', () => {
-        handsontable({
+        const hot = handsontable({
           data: [
             [1, 'B'],
             [0, 'A'],
@@ -2982,17 +2982,19 @@ describe('MultiColumnSorting', () => {
           }
         });
 
-        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        const sortedColumn = spec().$container.find('th span')[0];
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
         getPlugin('manualRowMove').moveRows(0, 2);
 
+        hot.render();
+
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });
 
       it('after trimming row', () => {
-        handsontable({
+        const hot = handsontable({
           data: [
             [1, 'B'],
             [0, 'A'],
@@ -3008,17 +3010,19 @@ describe('MultiColumnSorting', () => {
             }]
           }
         });
-        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        const sortedColumn = spec().$container.find('th span')[0];
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
         getPlugin('trimRows').trimRows([0]);
 
+        hot.render();
+
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });
 
       it('after untrimming row', () => {
-        handsontable({
+        const hot = handsontable({
           data: [
             [1, 'B'],
             [0, 'A'],
@@ -3034,11 +3038,13 @@ describe('MultiColumnSorting', () => {
             }]
           }
         });
-        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        const sortedColumn = spec().$container.find('th span')[0];
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
 
         getPlugin('trimRows').untrimRow([0]);
+
+        hot.render();
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });

@@ -138,8 +138,8 @@ class MultiColumnSorting extends BasePlugin {
 
     warnIfPluginsHasConflict(this.hot.getSettings().columnSorting);
 
-    this.addHook('afterTrimRow', () => this.clearSortStatesWithoutChangingDataSequence());
-    this.addHook('afterUntrimRow', () => this.clearSortStatesWithoutChangingDataSequence());
+    this.addHook('afterTrimRow', () => this.removeSortAction());
+    this.addHook('afterUntrimRow', () => this.removeSortAction());
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
@@ -149,7 +149,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
     this.addHook('afterChange', changes => this.onAfterChange(changes));
-    this.addHook('afterRowMove', () => this.clearSortStatesWithoutChangingDataSequence());
+    this.addHook('afterRowMove', () => this.removeSortAction());
 
     this.addHook('afterLoadData', (initialLoad) => {
       this.rowsMapper.clearMap();
@@ -191,7 +191,7 @@ class MultiColumnSorting extends BasePlugin {
     });
 
     this.rowsMapper.clearMap();
-    this.columnStatesManager.setSortStates([]);
+    this.removeSortAction();
 
     super.disablePlugin();
   }
@@ -680,7 +680,7 @@ class MultiColumnSorting extends BasePlugin {
       const physicalColumn = this.hot.toPhysicalColumn(visualColumn);
 
       if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
-        this.clearSortStatesWithoutChangingDataSequence();
+        this.removeSortAction();
 
         return false;
       }
@@ -697,7 +697,7 @@ class MultiColumnSorting extends BasePlugin {
   onAfterCreateRow(index, amount) {
     this.rowsMapper.shiftItems(index, amount);
 
-    this.clearSortStatesWithoutChangingDataSequence();
+    this.removeSortAction();
   }
 
   /**
@@ -710,7 +710,7 @@ class MultiColumnSorting extends BasePlugin {
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
 
-    this.clearSortStatesWithoutChangingDataSequence();
+    this.removeSortAction();
   }
 
   /**
@@ -778,15 +778,12 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Clear the sort performed on the table WITHOUT changing the rows mapper indexes.
+   * Clear the sort action performed on the table WITHOUT changing the rows mapper indexes.
    *
    * @private
    */
-  // TODO: Workaround. Plugin should be disabled after some actions. Now we have no ability to save row indexes,
-  // after change which called that function. #5112 should help with that.
-  clearSortStatesWithoutChangingDataSequence() {
+  removeSortAction() {
     this.columnStatesManager.setSortStates([]);
-    this.hot.render();
   }
 
   /**
