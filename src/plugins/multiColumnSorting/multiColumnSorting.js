@@ -216,7 +216,7 @@ class MultiColumnSorting extends BasePlugin {
    * }, {
    *   column: 0, sortOrder: 'desc'
    * }]);
-   *
+   * ```
    *
    * @fires Hooks#beforeColumnSort
    * @fires Hooks#afterColumnSort
@@ -716,7 +716,7 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * Indicates if clickable header was clicked.
    *
-   * @param {MouseEvent} event
+   * @param {MouseEvent} event The `mousedown` event.
    * @param {Number} column Visual column index.
    * @returns {Boolean}
    */
@@ -735,7 +735,7 @@ class MultiColumnSorting extends BasePlugin {
    * Changes the behavior of selection / dragging.
    *
    * @private
-   * @param {MouseEvent} event
+   * @param {MouseEvent} event The `mousedown` event.
    * @param {CellCoords} coords Visual coordinates.
    * @param {HTMLElement} TD
    * @param {Object} blockCalculations
