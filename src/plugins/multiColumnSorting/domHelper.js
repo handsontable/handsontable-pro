@@ -7,7 +7,6 @@ const HEADER_CLASS_DESC_SORT = 'descending';
 const HEADER_CLASS_INDICATOR_DISABLED = 'indicatorDisabled';
 const COLUMN_ORDER_PREFIX = 'sort';
 
-export const HEADER_CLASS = 'colHeader';
 export const HEADER_SORT_CLASS = 'columnSorting';
 export const HEADER_ACTION_CLASS = 'sortAction';
 
@@ -69,7 +68,8 @@ export class DomHelper {
     const sortSequenceRegExp = new RegExp(`^${COLUMN_ORDER_PREFIX}-[0-9]{1,2}$`);
     const someCssClassesToRemove = cssClasses.filter(cssClass => sortSequenceRegExp.test(cssClass));
 
-    return Array.from(orderToCssClass.values()).concat(someCssClassesToRemove, HEADER_ACTION_CLASS);
+    return Array.from(orderToCssClass.values())
+      .concat(someCssClassesToRemove, HEADER_ACTION_CLASS, HEADER_CLASS_INDICATOR_DISABLED, HEADER_SORT_CLASS);
   }
 
   /**

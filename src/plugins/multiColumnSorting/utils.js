@@ -4,6 +4,7 @@ import { warn } from 'handsontable/helpers/console';
 
 export const ASC_SORT_STATE = 'asc';
 export const DESC_SORT_STATE = 'desc';
+export const HEADER_SPAN_CLASS = 'colHeader';
 
 /**
  * Get if column state is valid.
@@ -64,4 +65,39 @@ export function warnIfPluginsHasConflict(columnSortingSettings) {
   if (columnSortingSettings) {
     warn('Plugins `columnSorting` and `multiColumnSorting` should not be turned on simultaneously.');
   }
+}
+
+/**
+ * Get `span` DOM element inside `th` DOM element.
+ *
+ * @param {Element} TH th HTML element.
+ * @returns {Element | null}
+ */
+export function getHeaderSpanElement(TH) {
+  const headerSpanElement = TH.querySelector(`.${HEADER_SPAN_CLASS}`);
+
+  return headerSpanElement;
+}
+
+/**
+ *
+ * Get if handled header is first level column header.
+ *
+ * @param {Number} column Visual column index.
+ * @param {Element} TH th HTML element.
+ * @returns {Boolean}
+ */
+export function isFirstLevelColumnHeader(column, TH) {
+  if (column < 0 || !TH.parentNode) {
+    return false;
+  }
+
+  const TRs = TH.parentNode.parentNode.childNodes;
+  const headerLevel = Array.from(TRs).indexOf(TH.parentNode) - TRs.length;
+
+  if (headerLevel !== -1) {
+    return false;
+  }
+
+  return true;
 }

@@ -68,6 +68,37 @@ describe('MultiColumnSorting', () => {
     expect(htCore.find('tbody tr:eq(0) td:eq(3)').text()).toEqual('5');
   });
 
+  it('should not change row indexes in the sorted table after using `disablePlugin` until next render is called', () => {
+    const hot = handsontable({
+      data: [
+        [1, 9, 3, 4, 5, 6, 7, 8, 9],
+        [9, 8, 7, 6, 5, 4, 3, 2, 1],
+        [8, 7, 6, 5, 4, 3, 3, 1, 9],
+        [0, 3, 0, 5, 6, 7, 8, 9, 1]
+      ],
+      colHeaders: true,
+      multiColumnSorting: true
+    });
+
+    const htCore = getHtCore();
+
+    spec().sortByClickOnColumnHeader(0);
+
+    getPlugin('multiColumnSorting').disablePlugin();
+
+    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('0');
+    expect(htCore.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('3');
+    expect(htCore.find('tbody tr:eq(0) td:eq(2)').text()).toEqual('0');
+    expect(htCore.find('tbody tr:eq(0) td:eq(3)').text()).toEqual('5');
+
+    hot.render();
+
+    expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('1');
+    expect(htCore.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('9');
+    expect(htCore.find('tbody tr:eq(0) td:eq(2)').text()).toEqual('3');
+    expect(htCore.find('tbody tr:eq(0) td:eq(3)').text()).toEqual('4');
+  });
+
   it('should clear the sort performed on the table by the `clearSort` method', () => {
     handsontable({
       data: multiColumnSortingData(),
@@ -2690,7 +2721,7 @@ describe('MultiColumnSorting', () => {
   });
 
   describe('rendering headers', () => {
-    it('should change width of headers when plugin is enabled / disabled and sort indicator is enabled', async() => {
+    it('should change width of headers when plugin is enabled / disabled by `updateSettings` and sort indicator is enabled', () => {
       handsontable({
         colHeaders: true
       });
@@ -2699,15 +2730,11 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: true });
 
-      await sleep(100);
-
       let newHeaderWidth = spec().$container.find('th').eq(0).width();
 
       expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
 
       updateSettings({ multiColumnSorting: false });
-
-      await sleep(100);
 
       newHeaderWidth = spec().$container.find('th').eq(0).width();
 
@@ -2715,14 +2742,45 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc' }] } });
 
-      await sleep(100);
+      newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
+    });
+
+    it('should change width of headers when plugin is enabled / disabled by `enablePlugin` and `disablePlugin` methods ' +
+      'and sort indicator is enabled', () => {
+      const hot = handsontable({
+        colHeaders: true
+      });
+
+      const headerWidthAtStart = spec().$container.find('th').eq(0).width();
+
+      getPlugin('multiColumnSorting').enablePlugin();
+
+      let newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
+
+      getPlugin('multiColumnSorting').disablePlugin();
+
+      newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
+
+      hot.render();
+
+      newHeaderWidth = spec().$container.find('th').eq(0).width();
+
+      expect(headerWidthAtStart).toBe(newHeaderWidth);
+
+      getPlugin('multiColumnSorting').enablePlugin();
 
       newHeaderWidth = spec().$container.find('th').eq(0).width();
 
       expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
     });
 
-    it('should work properly also when `rowHeaders` option is set to `true`', async() => {
+    it('should work properly also when `rowHeaders` option is set to `true`', () => {
       handsontable({
         colHeaders: true,
         rowHeaders: true
@@ -2736,8 +2794,6 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: true });
 
-      await sleep(100);
-
       let newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       let newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
 
@@ -2747,8 +2803,6 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({ multiColumnSorting: false });
 
-      await sleep(100);
-
       newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
 
@@ -2757,8 +2811,6 @@ describe('MultiColumnSorting', () => {
       expect(newWtHiderWidth).toBe(newHtCoreWidth);
 
       updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc' }] } });
-
-      await sleep(100);
 
       newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();

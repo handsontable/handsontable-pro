@@ -13,8 +13,8 @@ import Hooks from 'handsontable/pluginHooks';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { mainSortComparator } from './comparatorEngine';
 import { ColumnStatesManager } from './columnStatesManager';
-import { getNextSortOrder, areValidSortStates, warnIfPluginsHasConflict } from './utils';
-import { DomHelper, HEADER_CLASS } from './domHelper';
+import { getNextSortOrder, areValidSortStates, warnIfPluginsHasConflict, getHeaderSpanElement, isFirstLevelColumnHeader } from './utils';
+import { DomHelper } from './domHelper';
 import RowsMapper from './rowsMapper';
 
 import './multiColumnSorting.css';
@@ -142,7 +142,6 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterUntrimRow', () => this.clearSortStatesWithoutChangingDataSequence());
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
-    this.addHook('afterUpdateSettings', settings => this.onAfterUpdateSettings(settings));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
     this.addHook('beforeOnCellMouseDown', (event, coords, TD, controller) => this.beforeOnCellMouseDown(event, coords, TD, controller));
     this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
@@ -167,6 +166,7 @@ class MultiColumnSorting extends BasePlugin {
     if (this.hot.view) {
       this.loadOrSortBySettings();
     }
+
     super.enablePlugin();
   }
 
@@ -174,11 +174,24 @@ class MultiColumnSorting extends BasePlugin {
    * Disables the plugin functionality for this Handsontable instance.
    */
   disablePlugin() {
+    const clearColHeader = (column, TH) => {
+      const headerSpanElement = getHeaderSpanElement(TH);
+
+      if (isFirstLevelColumnHeader(column, TH) === false || headerSpanElement === null) {
+        return;
+      }
+
+      removeClass(headerSpanElement, this.domHelper.getRemovedClasses(headerSpanElement));
+    };
+
+    // Changing header width and removing indicator.
+    this.hot.addHook('afterGetColHeader', clearColHeader);
+    this.hot.addHookOnce('afterRender', () => {
+      this.hot.removeHook('afterGetColHeader', clearColHeader);
+    });
+
     this.rowsMapper.clearMap();
     this.columnStatesManager.setSortStates([]);
-
-    // The top overlay isn't rendered. Next `render` call narrows the header and remove sort indicator if necessary.
-    this.hot.render();
 
     super.disablePlugin();
   }
@@ -573,53 +586,37 @@ class MultiColumnSorting extends BasePlugin {
    * @param {Element} TH TH HTML element.
    */
   onAfterGetColHeader(column, TH) {
-    if (column < 0 || !TH.parentNode) {
-      return;
-    }
+    const headerSpanElement = getHeaderSpanElement(TH);
 
-    const headerLink = TH.querySelector(`.${HEADER_CLASS}`);
-
-    if (isUndefined(headerLink) || this.enabled === false) {
-      return;
-    }
-
-    const TRs = TH.parentNode.parentNode.childNodes;
-    const headerLevel = Array.from(TRs).indexOf(TH.parentNode) - TRs.length;
-
-    if (headerLevel !== -1) {
+    if (isFirstLevelColumnHeader(column, TH) === false || headerSpanElement === null) {
       return;
     }
 
     const physicalColumn = this.hot.toPhysicalColumn(column);
-    let showSortIndicator = false;
-    let headerActionEnabled = false;
+    const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
+    const showSortIndicator = pluginSettingsForColumn.indicator;
+    const headerActionEnabled = pluginSettingsForColumn.headerAction;
 
-    // Extra `render` function is called in the `disablePlugin` method. This `if` statement filter that case.
-    // We are not checking `this.enabled` property as it would be yet equal to `true` in this case.
-    if (this.isEnabled()) {
-      const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
-
-      showSortIndicator = pluginSettingsForColumn.indicator;
-      headerActionEnabled = pluginSettingsForColumn.headerAction;
-    }
-
-    removeClass(headerLink, this.domHelper.getRemovedClasses(headerLink));
-    addClass(headerLink, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
+    removeClass(headerSpanElement, this.domHelper.getRemovedClasses(headerSpanElement));
+    addClass(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
   }
 
   /**
-   * Callback for the `afterUpdateSettings` hook.
+   * Overwriting base plugin's `onUpdateSettings` method. Please keep in mind that `onAfterUpdateSettings` isn't called
+   * for `updateSettings` in specific situations.
    *
    * @private
-   * @param {Object} settings New settings object.
+   * @param {Object} newSettings New settings object.
    */
-  onAfterUpdateSettings(settings) {
-    warnIfPluginsHasConflict(settings.columnSorting);
+  onUpdateSettings(newSettings) {
+    super.onUpdateSettings();
+
+    warnIfPluginsHasConflict(newSettings.columnSorting);
 
     this.columnMetaCache.clear();
 
-    if (isDefined(settings.multiColumnSorting)) {
-      this.sortBySettings(settings.multiColumnSorting);
+    if (isDefined(newSettings.multiColumnSorting)) {
+      this.sortBySettings(newSettings.multiColumnSorting);
     }
   }
 
@@ -659,15 +656,11 @@ class MultiColumnSorting extends BasePlugin {
       if (Array.isArray(initialConfig)) {
         this.sort(initialConfig);
       }
-    }
 
-    // It render the table after merging settings. The `AutoColumnSize` plugin will count the table width properly after that.
-    this.hot._registerImmediate(() => {
+    } else {
+      // Extra render for headers. Their width may change.
       this.hot.render();
-
-      // When option `rowHeaders` is set to `true` the table doesn't look properly.
-      this.hot.view.wt.wtOverlays.adjustElementsSize(true);
-    });
+    }
   }
 
   /**

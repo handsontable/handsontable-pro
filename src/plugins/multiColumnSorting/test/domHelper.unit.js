@@ -99,11 +99,13 @@ describe('MultiColumnSorting', () => {
 
       const htmlElementMock = { className: 'columnSorting sort-1 sort-2 sort-3 sort-4 sortAction' };
 
-      expect(domHelper.getRemovedClasses(htmlElementMock).length).toEqual(7);
+      expect(domHelper.getRemovedClasses(htmlElementMock).length).toEqual(9);
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('sort-1')).toBeTruthy();
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('sort-2')).toBeTruthy();
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('sort-3')).toBeTruthy();
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('sort-4')).toBeTruthy();
+      expect(domHelper.getRemovedClasses(htmlElementMock).includes('columnSorting')).toBeTruthy();
+      expect(domHelper.getRemovedClasses(htmlElementMock).includes('indicatorDisabled')).toBeTruthy();
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('sortAction')).toBeTruthy();
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('ascending')).toBeTruthy();
       expect(domHelper.getRemovedClasses(htmlElementMock).includes('descending')).toBeTruthy();
