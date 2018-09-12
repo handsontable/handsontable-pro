@@ -784,6 +784,7 @@ class MultiColumnSorting extends BasePlugin {
    */
   removeSortAction() {
     this.columnStatesManager.setSortStates([]);
+    this.saveAllSortSettings();
   }
 
   /**
