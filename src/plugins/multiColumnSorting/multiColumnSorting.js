@@ -150,17 +150,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterInit', () => this.loadOrSortBySettings());
     this.addHook('beforeChange', changes => this.onBeforeChange(changes));
     this.addHook('afterRowMove', () => this.removeSortAction());
-
-    this.addHook('afterLoadData', (initialLoad) => {
-      this.rowsMapper.clearMap();
-
-      if (initialLoad === true) {
-        // TODO: Workaround? It should be refactored / described.
-        if (this.hot.view) {
-          this.loadOrSortBySettings();
-        }
-      }
-    });
+    this.addHook('afterLoadData', initialLoad => this.onAfterLoadData(initialLoad));
 
     // TODO: Workaround? It should be refactored / described.
     if (this.hot.view) {
@@ -660,6 +650,23 @@ class MultiColumnSorting extends BasePlugin {
     } else {
       // Extra render for headers. Their width may change.
       this.hot.render();
+    }
+  }
+
+  /**
+   * Callback for the `afterLoadData` hook.
+   *
+   * @private
+   * @param {Boolean} initialLoad flag that determines whether the data has been loaded during the initialization.
+   */
+  onAfterLoadData(initialLoad) {
+    this.rowsMapper.clearMap();
+
+    if (initialLoad === true) {
+      // TODO: Workaround? It should be refactored / described.
+      if (this.hot.view) {
+        this.loadOrSortBySettings();
+      }
     }
   }
 
