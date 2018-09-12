@@ -3010,6 +3010,7 @@ describe('MultiColumnSorting', () => {
             }]
           }
         });
+
         const sortedColumn = spec().$container.find('th span')[0];
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
@@ -3022,7 +3023,7 @@ describe('MultiColumnSorting', () => {
       });
 
       it('after untrimming row', () => {
-        const hot = handsontable({
+        handsontable({
           data: [
             [1, 'B'],
             [0, 'A'],
@@ -3038,6 +3039,7 @@ describe('MultiColumnSorting', () => {
             }]
           }
         });
+
         const sortedColumn = spec().$container.find('th span')[0];
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
