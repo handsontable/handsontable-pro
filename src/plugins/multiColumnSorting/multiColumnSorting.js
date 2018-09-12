@@ -719,6 +719,7 @@ class MultiColumnSorting extends BasePlugin {
   /**
    * Indicates if clickable header was clicked.
    *
+   * @private
    * @param {MouseEvent} event The `mousedown` event.
    * @param {Number} column Visual column index.
    * @returns {Boolean}
