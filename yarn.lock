@@ -1882,8 +1882,8 @@ ecstatic@^3.2.0:
     url-join "^2.0.5"
 
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.47:
-  version "1.3.65"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.65.tgz#0655c238e45fea7e0e0e81fd0cac62b8186129c2"
+  version "1.3.66"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.66.tgz#1410d8f8768a14dcd09d96222990f43c969af270"
 
 elliptic@^6.0.0:
   version "6.4.1"
@@ -2629,8 +2629,8 @@ handlebars@^4.0.3:
     uglify-js "^3.1.4"
 
 "handsontable@github:handsontable/handsontable#feature/issue-5282":
-  version "5.0.1"
-  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/3fe25cfb3a974d4686cb8184efe6b1fde8bc4fa0"
+  version "5.0.2"
+  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/254c140c9fe55ace151160074edd0c3bce361f3a"
   dependencies:
     moment "2.20.1"
     numbro "^2.0.6"
