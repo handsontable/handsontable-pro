@@ -701,7 +701,6 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterCreateRow(index, amount) {
     this.rowsMapper.shiftItems(index, amount);
-
     this.removeSortAction();
   }
 
@@ -714,7 +713,6 @@ class MultiColumnSorting extends BasePlugin {
    */
   onAfterRemoveRow(removedRows, amount) {
     this.rowsMapper.unshiftItems(removedRows, amount);
-
     this.removeSortAction();
   }
 
