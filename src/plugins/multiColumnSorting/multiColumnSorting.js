@@ -148,7 +148,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
     this.addHook('afterInit', () => this.loadOrSortBySettings());
-    this.addHook('afterChange', changes => this.onAfterChange(changes));
+    this.addHook('beforeChange', changes => this.onBeforeChange(changes));
     this.addHook('afterRowMove', () => this.removeSortAction());
 
     this.addHook('afterLoadData', (initialLoad) => {
@@ -664,12 +664,12 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Callback for the `afterChange` hook.
+   * Callback for the `beforeChange` hook.
    *
    * @private
    * @param {Array} changes Array of changes.
    */
-  onAfterChange(changes) {
+  onBeforeChange(changes) {
     if (changes === null) {
       return;
     }
