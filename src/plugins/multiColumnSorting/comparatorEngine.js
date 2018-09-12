@@ -48,7 +48,6 @@ export function mainSortComparator(sortingOrders, columnMetas) {
       const value = values[column];
       const nextValue = nextValues[column];
       const compareFunctionFactory = getCompareFunctionFactory(columnMeta);
-
       const compareResult = compareFunctionFactory(sortingOrder, columnMeta)(value, nextValue);
 
       if (compareResult === DO_NOT_SWAP) {

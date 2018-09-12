@@ -304,12 +304,10 @@ class MultiColumnSorting extends BasePlugin {
   areValidSortConfigs(sortConfigs) {
     const sortedColumns = sortConfigs.map(({ column }) => column);
     const numberOfColumns = this.hot.countCols();
-
     const onlyExistingVisualIndexes = sortedColumns.every(visualColumn =>
       visualColumn <= numberOfColumns && visualColumn >= 0);
-    const likeSortStates = sortConfigs; // We don't translate visual indexes to physical indexes.
 
-    return areValidSortStates(likeSortStates) && onlyExistingVisualIndexes;
+    return areValidSortStates(sortConfigs) && onlyExistingVisualIndexes; // We don't translate visual indexes to physical indexes.
   }
 
   /**
@@ -731,11 +729,7 @@ class MultiColumnSorting extends BasePlugin {
     const pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
     const headerActionEnabled = pluginSettingsForColumn.headerAction;
 
-    if (headerActionEnabled && event.realTarget.nodeName === 'SPAN') {
-      return true;
-    }
-
-    return false;
+    return headerActionEnabled && event.realTarget.nodeName === 'SPAN';
   }
 
   /**

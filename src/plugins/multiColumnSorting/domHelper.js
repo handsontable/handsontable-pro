@@ -23,6 +23,11 @@ const orderToCssClass = new Map([
  */
 export class DomHelper {
   constructor(columnStatesManager) {
+    /**
+     * Instance of column states manager.
+     *
+     * @private
+     */
     this.columnStatesManager = columnStatesManager;
   }
 

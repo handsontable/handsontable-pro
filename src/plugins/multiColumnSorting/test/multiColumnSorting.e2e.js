@@ -11,6 +11,7 @@ describe('MultiColumnSorting', () => {
 
       $spanInsideHeader.simulate('mousedown');
       $spanInsideHeader.simulate('mouseup');
+      $spanInsideHeader.simulate('click');
     };
   });
 
@@ -486,7 +487,7 @@ describe('MultiColumnSorting', () => {
       spec().$container.remove();
     }
 
-    hot = handsontable({
+    handsontable({
       data: [
         [6, 'Frank Honest'],
         [null, 'Ted Right'],
@@ -576,7 +577,7 @@ describe('MultiColumnSorting', () => {
       spec().$container.remove();
     }
 
-    hot = handsontable({
+    handsontable({
       data: [
         [6, 'Frank Honest'],
         [null, 'Ted Right'],
@@ -772,7 +773,7 @@ describe('MultiColumnSorting', () => {
         spec().$container.remove();
       }
 
-      hot = handsontable({
+      handsontable({
         data: [
           ['Citroen1', 'C4 Coupe', null],
           ['Mercedes1', 'A 160', '12/01/2008'],
