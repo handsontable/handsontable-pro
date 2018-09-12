@@ -69,7 +69,7 @@ describe('MultiColumnSorting', () => {
   });
 
   it('should not change row indexes in the sorted table after using `disablePlugin` until next render is called', () => {
-    const hot = handsontable({
+    handsontable({
       data: [
         [1, 9, 3, 4, 5, 6, 7, 8, 9],
         [9, 8, 7, 6, 5, 4, 3, 2, 1],
@@ -91,7 +91,7 @@ describe('MultiColumnSorting', () => {
     expect(htCore.find('tbody tr:eq(0) td:eq(2)').text()).toEqual('0');
     expect(htCore.find('tbody tr:eq(0) td:eq(3)').text()).toEqual('5');
 
-    hot.render();
+    render();
 
     expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('1');
     expect(htCore.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('9');
@@ -2856,7 +2856,7 @@ describe('MultiColumnSorting', () => {
   });
 
   describe('sorting is passive by default', () => {
-    describe('should turn off sorting and leave new data untouched (not sort again)', () => {
+    describe('should clear sort state and leave new data untouched (not sort again)', () => {
       it('after removing a row from sorted table', () => {
         handsontable({
           data: [
@@ -2953,19 +2953,19 @@ describe('MultiColumnSorting', () => {
 
         const htCore = getHtCore();
 
-        setDataAtCell(1, 0, 20);
+        setDataAtCell(1, 0, '2');
 
         render();
 
         expect(htCore.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('3');
-        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('20');
+        expect(htCore.find('tbody tr:eq(1) td:eq(0)').text()).toEqual('2');
 
         const sortedColumn = spec().$container.find('th span.columnSorting')[0];
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });
 
       it('after moving row', () => {
-        const hot = handsontable({
+        handsontable({
           data: [
             [1, 'B'],
             [0, 'A'],
@@ -2988,13 +2988,13 @@ describe('MultiColumnSorting', () => {
 
         getPlugin('manualRowMove').moveRows(0, 2);
 
-        hot.render();
+        render();
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });
 
       it('after trimming row', () => {
-        const hot = handsontable({
+        handsontable({
           data: [
             [1, 'B'],
             [0, 'A'],
@@ -3016,7 +3016,7 @@ describe('MultiColumnSorting', () => {
 
         getPlugin('trimRows').trimRows([0]);
 
-        hot.render();
+        render();
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });
@@ -3044,7 +3044,7 @@ describe('MultiColumnSorting', () => {
 
         getPlugin('trimRows').untrimRow([0]);
 
-        hot.render();
+        render();
 
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).not.toMatch(/url/);
       });
@@ -3113,7 +3113,7 @@ describe('MultiColumnSorting', () => {
       });
     });
 
-    describe('should not turn off sorting', () => {
+    describe('should not clear sort state', () => {
       it('after value update in NOT sorted column', () => {
         handsontable({
           data: [
@@ -3140,9 +3140,39 @@ describe('MultiColumnSorting', () => {
         expect(htCore.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('D');
         expect(htCore.find('tbody tr:eq(1) td:eq(1)').text()).toEqual('Z');
 
-        const sortedColumn = spec().$container.find('th span.columnSorting')[0];
+        const sortedColumn = spec().$container.find('th span')[0];
         expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
       });
+    });
+
+    it('after value update from the value to the same value (there has been no real change)', () => {
+      handsontable({
+        data: [
+          [1, 'B'],
+          [3, 'D'],
+          [2, 'A'],
+          [0, 'C']
+        ],
+        colHeaders: true,
+        multiColumnSorting: {
+          initialConfig: [{
+            column: 0,
+            sortOrder: 'desc'
+          }]
+        }
+      });
+
+      const htCore = getHtCore();
+
+      setDataAtCell(0, 0, 3);
+
+      render();
+
+      expect(htCore.find('tbody tr:eq(0) td:eq(1)').text()).toEqual('D');
+      expect(htCore.find('tbody tr:eq(1) td:eq(1)').text()).toEqual('A');
+
+      const sortedColumn = spec().$container.find('th span')[0];
+      expect(window.getComputedStyle(sortedColumn, ':before').getPropertyValue('background-image')).toMatch(/url/);
     });
   });
 });

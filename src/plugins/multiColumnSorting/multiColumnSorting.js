@@ -675,11 +675,11 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     // Clear sort only when any cell in already sorted column was changed.
-    arrayEach(changes, ([, prop]) => {
+    arrayEach(changes, ([, prop, oldVal, newVal]) => {
       const visualColumn = this.hot.propToCol(prop);
       const physicalColumn = this.hot.toPhysicalColumn(visualColumn);
 
-      if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
+      if (this.columnStatesManager.isColumnSorted(physicalColumn) && oldVal !== newVal) {
         this.removeSortAction();
 
         return false;
