@@ -9,6 +9,10 @@ describe('MultiColumnSorting', () => {
       const $columnHeader = $(hot.view.wt.wtTable.getColumnHeader(columnIndex));
       const $spanInsideHeader = $columnHeader.find('.columnSorting');
 
+      if ($spanInsideHeader.length === 0) {
+        throw Error('Please check the test scenario. The header doesn\'t exist.');
+      }
+
       $spanInsideHeader.simulate('mousedown');
       $spanInsideHeader.simulate('mouseup');
       $spanInsideHeader.simulate('click');

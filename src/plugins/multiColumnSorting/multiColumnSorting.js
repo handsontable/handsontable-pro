@@ -389,7 +389,7 @@ class MultiColumnSorting extends BasePlugin {
    *
    * @private
    * @param {Number} columnToChange Visual column index of column which order will be changed.
-   * @param {String} strategyId ID of strategy. Possible values: 'append' and 'replace. The first one
+   * @param {String} strategyId ID of strategy. Possible values: 'append' and 'replace'. The first one
    * change order of particular column and change it's position in the sort queue to the last one. The second one
    * just change order of particular column.
    *
@@ -641,7 +641,7 @@ class MultiColumnSorting extends BasePlugin {
 
       const initialConfig = allSortSettings.initialConfig;
 
-      if (Array.isArray(initialConfig)) {
+      if (Array.isArray(initialConfig) || isObject(initialConfig)) {
         this.sort(initialConfig);
       }
 

@@ -23,25 +23,25 @@ export class ColumnStatesManager {
      */
     this.sortedColumnsStates = [];
     /**
-     * Determine if we should sort empty cells.
+     * Determines whether we should sort empty cells.
      *
      * @type {Boolean}
      */
     this.sortEmptyCells = SORT_EMPTY_CELLS_DEFAULT;
     /**
-     * Determine if indicator should be visible (for sorted columns).
+     * Determines whether indicator should be visible (for sorted columns).
      *
      * @type {Boolean}
      */
     this.indicator = SHOW_SORT_INDICATOR_DEFAULT;
     /**
-     * Determine if click on the header perform sorting.
+     * Determines whether click on the header perform sorting.
      *
      * @type {Boolean}
      */
     this.headerAction = HEADER_ACTION_DEFAULT;
     /**
-     * Determine compare function factory. Method get as parameters `sortOder` and `columnMeta` and return compare function.
+     * Determines compare function factory. Method get as parameters `sortOder` and `columnMeta` and return compare function.
      */
     this.compareFunctionFactory = void 0;
   }
