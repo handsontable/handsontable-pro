@@ -385,7 +385,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
-   * Get sort state with "next order" for particular column.
+   * Get sort configuration with "next order" for particular column.
    *
    * @private
    * @param {Number} columnToChange Visual column index of column which order will be changed.
@@ -586,7 +586,11 @@ class MultiColumnSorting extends BasePlugin {
     const headerActionEnabled = pluginSettingsForColumn.headerAction;
 
     removeClass(headerSpanElement, this.domHelper.getRemovedClasses(headerSpanElement));
-    addClass(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
+
+    // TODO: Workaround - the GhostTable always render headers.
+    if (this.hot.getSettings().colHeaders === true) {
+      addClass(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
+    }
   }
 
   /**

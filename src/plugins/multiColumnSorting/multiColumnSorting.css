@@ -2,7 +2,7 @@
 .handsontable span.colHeader.columnSorting::after {
   /* Centering start */
   top: 50%;
-  margin-top: -2px; /* Two extra pixels for purpose of proper positioning of numeric indicators, when `font-size` set to default */
+  margin-top: -2px; /* Two extra pixels (-2 instead of -4) for purpose of proper positioning of numeric indicators, when `font-size` set to default */
   /* Centering end */
 
   position: absolute;
@@ -21,42 +21,46 @@
 }
 
 /* We support up to 7 numeric indicators, describing order of column in sorted columns queue */
-.handsontable span.colHeader.columnSorting[class^="sort-"]::after, .handsontable .colHeader.columnSorting[class*=" sort-"]::after {
+.handsontable span.colHeader.columnSorting[class^="sort-"]::after,
+.handsontable span.colHeader.columnSorting[class*=" sort-"]::after,
+.htGhostTable span.colHeader.columnSorting[class^="sort-"]::after,
+.htGhostTable span.colHeader.columnSorting[class*=" sort-"]::after {
   content: "+"
 }
 
-.handsontable span.colHeader.columnSorting.sort-1::after {
+.handsontable span.colHeader.columnSorting.sort-1::after,
+.htGhostTable span.colHeader.columnSorting.sort-1::after {
   content: '1';
 }
 
-.handsontable span.colHeader.columnSorting.sort-2::after {
+.handsontable span.colHeader.columnSorting.sort-2::after,
+.htGhostTable span.colHeader.columnSorting.sort-2::after {
   content: '2';
 }
 
-.handsontable span.colHeader.columnSorting.sort-3::after {
+.handsontable span.colHeader.columnSorting.sort-3::after,
+.htGhostTable span.colHeader.columnSorting.sort-3::after {
   content: '3';
 }
 
-.handsontable span.colHeader.columnSorting.sort-4::after {
+.handsontable span.colHeader.columnSorting.sort-4::after,
+.htGhostTable span.colHeader.columnSorting.sort-4::after {
   content: '4';
 }
 
-.handsontable span.colHeader.columnSorting.sort-5::after {
+.handsontable span.colHeader.columnSorting.sort-5::after,
+.htGhostTable span.colHeader.columnSorting.sort-5::after {
   content: '5';
 }
 
-.handsontable span.colHeader.columnSorting.sort-6::after {
+.handsontable span.colHeader.columnSorting.sort-6::after,
+.htGhostTable span.colHeader.columnSorting.sort-6::after {
   content: '6';
 }
 
-.handsontable span.colHeader.columnSorting.sort-7::after {
+.handsontable span.colHeader.columnSorting.sort-7::after,
+.htGhostTable span.colHeader.columnSorting.sort-7::after {
   content: '7';
-}
-
-.htGhostTable span.colHeader.columnSorting::after {
-  content: '*';
-  display: inline-block;
-  position: relative;
 }
 
 /* Drop-down menu widens header by 5 pixels, sort sequence numbers won't overlap the icon; mainly for the IE9+ */
