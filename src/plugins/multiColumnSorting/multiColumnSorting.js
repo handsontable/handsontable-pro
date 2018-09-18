@@ -240,7 +240,7 @@ class MultiColumnSorting extends BasePlugin {
       const destinationSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
 
       this.columnStatesManager.setSortStates(destinationSortStates);
-      this.sortByPresetSortState();
+      this.sortByPresetSortStates();
       this.saveAllSortSettings();
 
       this.hot.render();
@@ -496,7 +496,7 @@ class MultiColumnSorting extends BasePlugin {
    *
    * @private
    */
-  sortByPresetSortState() {
+  sortByPresetSortStates() {
     if (this.columnStatesManager.isListOfSortedColumnsEmpty()) {
       this.rowsMapper.clearMap();
 
@@ -586,11 +586,7 @@ class MultiColumnSorting extends BasePlugin {
     const headerActionEnabled = pluginSettingsForColumn.headerAction;
 
     removeClass(headerSpanElement, this.domHelper.getRemovedClasses(headerSpanElement));
-
-    // TODO: Workaround - the GhostTable always render headers.
-    if (this.hot.getSettings().colHeaders === true) {
-      addClass(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
-    }
+    addClass(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
   }
 
   /**
