@@ -2779,9 +2779,9 @@ describe('MultiColumnSorting', () => {
   });
 
   describe('rendering headers', () => {
-    it('should change width of headers when plugin is enabled / disabled by `updateSettings` and sort indicator is enabled', () => {
+    it('should change width of multi-line headers when plugin is enabled / disabled by `updateSettings` and sort indicator is enabled', () => {
       handsontable({
-        colHeaders: true
+        colHeaders: ['AAA<br>BB']
       });
 
       const headerWidthAtStart = spec().$container.find('th').eq(0).width();
@@ -2805,10 +2805,10 @@ describe('MultiColumnSorting', () => {
       expect(headerWidthAtStart).toBeLessThan(newHeaderWidth);
     });
 
-    it('should change width of headers when plugin is enabled / disabled by `enablePlugin` and `disablePlugin` methods ' +
+    it('should change width of multi-line headers when plugin is enabled / disabled by `enablePlugin` and `disablePlugin` methods ' +
       'and sort indicator is enabled', () => {
       const hot = handsontable({
-        colHeaders: true
+        colHeaders: ['AAA<br>BB']
       });
 
       const headerWidthAtStart = spec().$container.find('th').eq(0).width();
@@ -2840,7 +2840,7 @@ describe('MultiColumnSorting', () => {
 
     it('should work properly also when `rowHeaders` option is set to `true`', () => {
       handsontable({
-        colHeaders: true,
+        colHeaders: ['AAA<br>BB'],
         rowHeaders: true
       });
 
@@ -2878,9 +2878,9 @@ describe('MultiColumnSorting', () => {
       expect(newWtHiderWidth).toBe(newHtCoreWidth);
     });
 
-    it('should not change width of headers when plugin is enabled / disabled and sort indicator is disabled', async() => {
+    it('should not change width of multi-line headers when plugin is enabled / disabled and sort indicator is disabled', async() => {
       handsontable({
-        colHeaders: true
+        colHeaders: ['AAA<br>BB']
       });
 
       const headerWidthAtStart = spec().$container.find('th').eq(0).width();

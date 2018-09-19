@@ -54,12 +54,6 @@
   content: '7';
 }
 
-.htGhostTable span.colHeader.columnSorting::after {
-  content: '*';
-  display: inline-block;
-  position: relative;
-}
-
 /* Drop-down menu widens header by 5 pixels, sort sequence numbers won't overlap the icon; mainly for the IE9+ */
 .htGhostTable th div button.changeType + span.colHeader.columnSorting:not(.indicatorDisabled) {
   padding-right: 5px;
