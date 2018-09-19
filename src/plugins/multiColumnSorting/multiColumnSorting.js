@@ -143,7 +143,7 @@ class MultiColumnSorting extends BasePlugin {
     this.addHook('modifyRow', (row, source) => this.onModifyRow(row, source));
     this.addHook('unmodifyRow', (row, source) => this.onUnmodifyRow(row, source));
     this.addHook('afterGetColHeader', (column, TH) => this.onAfterGetColHeader(column, TH));
-    this.addHook('beforeOnCellMouseDown', (event, coords, TD, controller) => this.beforeOnCellMouseDown(event, coords, TD, controller));
+    this.addHook('beforeOnCellMouseDown', (event, coords, TD, controller) => this.onBeforeOnCellMouseDown(event, coords, TD, controller));
     this.addHook('afterOnCellMouseDown', (event, target) => this.onAfterOnCellMouseDown(event, target));
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('afterRemoveRow', (index, amount) => this.onAfterRemoveRow(index, amount));
@@ -295,13 +295,46 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   /**
+   * @description
+   * Set sort configuration for all sorted columns. May be useful for providing server side sort implementation (see in the example below).
+   *
+   * @example
+   * ```js
+   * beforeColumnSort: function(currentSortConfig, destinationSortConfigs) {
+   *   const columnSortPlugin = this.getPlugin('multiColumnSorting');
+   *
+   *   columnSortPlugin.setSortConfigs(destinationSortConfigs);
+   *
+   *   // const newData = ... // Calculated data set, ie. from an AJAX call.
+   *
+   *   this.loadData(newData);
+   *
+   *   return false; // The blockade for the default sort action.
+   * }```
+   *
+   * @param {Array} sortConfigs Sort configuration for all sorted columns. Objects contain `column` and `sortOrder` properties.
+   */
+  setSortConfigs(sortConfigs) {
+    const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
+      ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
+
+    if (this.areValidSortConfigs(sortConfigs)) {
+      this.columnStatesManager.setSortStates(arrayMap(sortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig)));
+    }
+  }
+
+  /**
    * Get if sort configs are valid.
    *
    * @private
-   * @param {Array} sortConfig Sort configuration for all sorted columns. Objects contain `column` and `sortOrder` properties.
+   * @param {Array} sortConfigs Sort configuration for all sorted columns. Objects contain `column` and `sortOrder` properties.
    * @returns {Boolean}
    */
   areValidSortConfigs(sortConfigs) {
+    if (Array.isArray(sortConfigs) === false) {
+      return false;
+    }
+
     const sortedColumns = sortConfigs.map(({ column }) => column);
     const numberOfColumns = this.hot.countCols();
     const onlyExistingVisualIndexes = sortedColumns.every(visualColumn =>
@@ -740,7 +773,7 @@ class MultiColumnSorting extends BasePlugin {
    * @param {HTMLElement} TD
    * @param {Object} blockCalculations
    */
-  beforeOnCellMouseDown(event, coords, TD, blockCalculations) {
+  onBeforeOnCellMouseDown(event, coords, TD, blockCalculations) {
     // Click below the level of column headers
     if (coords.row >= 0) {
       return;
