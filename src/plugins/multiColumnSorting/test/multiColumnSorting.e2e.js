@@ -189,6 +189,59 @@ describe('MultiColumnSorting', () => {
     expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'asc' });
   });
 
+  it('should set properly sort config by the `setSortConfig` method', () => {
+    const sortQueue = [{
+      column: 0,
+      sortOrder: 'asc'
+    }, {
+      column: 1,
+      sortOrder: 'desc'
+    }];
+
+    const modification = (column) => {
+      if (column === 0) {
+        return 1;
+
+      } else if (column === 1) {
+        return 0;
+      }
+
+      return column;
+    };
+
+    handsontable({
+      data: multiColumnSortingData(),
+      columns: [
+        {},
+        {},
+        { type: 'date', dateFormat: 'MM/DD/YYYY' },
+        { type: 'numeric' },
+        {}
+      ],
+      multiColumnSorting: true
+    });
+
+    getPlugin('multiColumnSorting').setSortConfigs(sortQueue);
+
+    expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual(sortQueue);
+    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'asc' });
+    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'desc' });
+
+    // changing column sequence: 0 <-> 1
+    updateSettings({ modifyCol: modification, unmodifyCol: modification });
+
+    expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([{
+      column: 1,
+      sortOrder: 'asc'
+    }, {
+      column: 0,
+      sortOrder: 'desc'
+    }]);
+
+    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'desc' });
+    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'asc' });
+  });
+
   it('should display indicator properly after changing sorted column sequence', () => {
     const modification = (column) => {
       if (column === 0) {
