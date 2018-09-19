@@ -61,10 +61,17 @@ export function getNextSortOrder(sortOrder) {
  *
  * @param {undefined|Boolean|Object} columnSortingSettings
  */
-export function warnIfPluginsHasConflict(columnSortingSettings) {
+export function warnIfPluginsHaveConflict(columnSortingSettings) {
   if (columnSortingSettings) {
-    warn('Plugins `columnSorting` and `multiColumnSorting` should not be turned on simultaneously.');
+    warn('Plugins `columnSorting` and `multiColumnSorting` should not be enabled simultaneously.');
   }
+}
+
+/**
+ * Warn users about problems with validating sort config.
+ */
+export function warnAboutNotValidatedConfig() {
+  warn('Sort configuration failed to validate properly.');
 }
 
 /**

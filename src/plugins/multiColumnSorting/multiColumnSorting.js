@@ -13,7 +13,14 @@ import Hooks from 'handsontable/pluginHooks';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { mainSortComparator } from './comparatorEngine';
 import { ColumnStatesManager } from './columnStatesManager';
-import { getNextSortOrder, areValidSortStates, warnIfPluginsHasConflict, getHeaderSpanElement, isFirstLevelColumnHeader } from './utils';
+import {
+  getNextSortOrder,
+  areValidSortStates,
+  warnIfPluginsHaveConflict,
+  warnAboutNotValidatedConfig,
+  getHeaderSpanElement,
+  isFirstLevelColumnHeader
+} from './utils';
 import { DomHelper } from './domHelper';
 import RowsMapper from './rowsMapper';
 
@@ -136,7 +143,7 @@ class MultiColumnSorting extends BasePlugin {
       return;
     }
 
-    warnIfPluginsHasConflict(this.hot.getSettings().columnSorting);
+    warnIfPluginsHaveConflict(this.hot.getSettings().columnSorting);
 
     this.addHook('afterTrimRow', () => this.removeSortAction());
     this.addHook('afterUntrimRow', () => this.removeSortAction());
@@ -229,17 +236,16 @@ class MultiColumnSorting extends BasePlugin {
     const sortPossible = this.areValidSortConfigs(destinationSortConfigs);
     const allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs, sortPossible);
 
+    if (sortPossible === false) {
+      warnAboutNotValidatedConfig();
+    }
+
     if (allowSort === false) {
       return;
     }
 
     if (sortPossible) {
-      const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
-        ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
-
-      const destinationSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
-
-      this.columnStatesManager.setSortStates(destinationSortStates);
+      this.setSortConfigs(destinationSortConfigs);
       this.sortByPresetSortStates();
       this.saveAllSortSettings();
 
@@ -320,6 +326,9 @@ class MultiColumnSorting extends BasePlugin {
 
     if (this.areValidSortConfigs(sortConfigs)) {
       this.columnStatesManager.setSortStates(arrayMap(sortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig)));
+
+    } else {
+      warnAboutNotValidatedConfig();
     }
   }
 
@@ -632,7 +641,7 @@ class MultiColumnSorting extends BasePlugin {
   onUpdateSettings(newSettings) {
     super.onUpdateSettings();
 
-    warnIfPluginsHasConflict(newSettings.columnSorting);
+    warnIfPluginsHaveConflict(newSettings.columnSorting);
 
     this.columnMetaCache.clear();
 
