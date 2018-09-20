@@ -26,7 +26,7 @@ describe('MultiColumnSorting', () => {
     }
   });
 
-  const singleColumnSortingData = () => [
+  const arrayOfObjects = () => [
     { id: 1, name: 'Ted', lastName: 'Right' },
     { id: 2, name: 'Frank', lastName: 'Honest' },
     { id: 3, name: 'Joan', lastName: 'Well' },
@@ -39,7 +39,7 @@ describe('MultiColumnSorting', () => {
     { id: 10, name: 'Eve', lastName: 'Branson' }
   ];
 
-  const multiColumnSortingData = () => [
+  const arrayOfArrays = () => [
     ['Mary', 'Brown', '01/14/2017', 6999.95, 'aa'],
     ['Henry', 'Jones', '12/01/2018', 8330, 'aaa'],
     ['Ann', 'Evans', '07/24/2021', 30500, null],
@@ -106,43 +106,24 @@ describe('MultiColumnSorting', () => {
 
   it('should clear the sort performed on the table by the `clearSort` method', () => {
     handsontable({
-      data: multiColumnSortingData(),
-      columns: [
-        {},
-        {},
-        { type: 'date', dateFormat: 'MM/DD/YYYY' },
-        { type: 'numeric' },
-        {}
-      ],
+      data: arrayOfArrays(),
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }, {
-          column: 1,
-          sortOrder: 'asc'
-        }, {
-          column: 2,
-          sortOrder: 'asc'
-        }, {
-          column: 3,
-          sortOrder: 'asc'
-        }]
+        }
       }
     });
 
     getPlugin('multiColumnSorting').clearSort();
 
-    expect(getData()).toEqual(multiColumnSortingData());
+    expect(getData()).toEqual(arrayOfArrays());
   });
 
   it('should return sorting state with visual column index under `column` key by the `getSortConfig` method', () => {
     const predefinedSortQueue = [{
       column: 0,
       sortOrder: 'asc'
-    }, {
-      column: 1,
-      sortOrder: 'desc'
     }];
 
     const modification = (column) => {
@@ -157,7 +138,7 @@ describe('MultiColumnSorting', () => {
     };
 
     handsontable({
-      data: multiColumnSortingData(),
+      data: arrayOfArrays(),
       columns: [
         {},
         {},
@@ -172,7 +153,6 @@ describe('MultiColumnSorting', () => {
 
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual(predefinedSortQueue);
     expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'asc' });
-    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'desc' });
 
     // changing column sequence: 0 <-> 1
     updateSettings({ modifyCol: modification, unmodifyCol: modification });
@@ -180,12 +160,8 @@ describe('MultiColumnSorting', () => {
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([{
       column: 1,
       sortOrder: 'asc'
-    }, {
-      column: 0,
-      sortOrder: 'desc'
     }]);
 
-    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'desc' });
     expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'asc' });
   });
 
@@ -193,9 +169,6 @@ describe('MultiColumnSorting', () => {
     const sortQueue = [{
       column: 0,
       sortOrder: 'asc'
-    }, {
-      column: 1,
-      sortOrder: 'desc'
     }];
 
     const modification = (column) => {
@@ -210,7 +183,7 @@ describe('MultiColumnSorting', () => {
     };
 
     handsontable({
-      data: multiColumnSortingData(),
+      data: arrayOfArrays(),
       columns: [
         {},
         {},
@@ -225,7 +198,6 @@ describe('MultiColumnSorting', () => {
 
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual(sortQueue);
     expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'asc' });
-    expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'desc' });
 
     // changing column sequence: 0 <-> 1
     updateSettings({ modifyCol: modification, unmodifyCol: modification });
@@ -233,12 +205,8 @@ describe('MultiColumnSorting', () => {
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([{
       column: 1,
       sortOrder: 'asc'
-    }, {
-      column: 0,
-      sortOrder: 'desc'
     }]);
 
-    expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'desc' });
     expect(getPlugin('multiColumnSorting').getSortConfig(1)).toEqual({ column: 1, sortOrder: 'asc' });
   });
 
@@ -278,13 +246,13 @@ describe('MultiColumnSorting', () => {
 
   it('should clear indicator after disabling plugin', () => {
     handsontable({
-      data: singleColumnSortingData(),
+      data: arrayOfObjects(),
       colHeaders: true,
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }],
+        },
         indicator: true
       }
     });
@@ -369,7 +337,7 @@ describe('MultiColumnSorting', () => {
 
     try {
       handsontable({
-        data: singleColumnSortingData(),
+        data: arrayOfObjects(),
         autoRowSize: true,
         multiColumnSorting: true
       });
@@ -382,7 +350,7 @@ describe('MultiColumnSorting', () => {
 
   it('should sort numbers descending after 2 clicks on table header', () => {
     handsontable({
-      data: singleColumnSortingData(),
+      data: arrayOfObjects(),
       colHeaders: true,
       columnSorting: true
     });
@@ -500,7 +468,7 @@ describe('MultiColumnSorting', () => {
   });
 
   it('should place empty strings, null and undefined values at proper position when `sortEmptyCells` ' +
-    'option is enabled and `column` property of `columnSorting` option is set (data type: default)', () => {
+    'option is enabled and `column` property of `multiColumnSorting` option is set (data type: default)', () => {
     handsontable({
       data: [
         [6, 'Frank Honest'],
@@ -516,10 +484,10 @@ describe('MultiColumnSorting', () => {
       ],
       multiColumnSorting: {
         sortEmptyCells: true,
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -559,10 +527,10 @@ describe('MultiColumnSorting', () => {
       ],
       multiColumnSorting: {
         sortEmptyCells: true,
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'desc'
-        }]
+        }
       }
     });
 
@@ -584,7 +552,7 @@ describe('MultiColumnSorting', () => {
   });
 
   it('should place empty strings, null and undefined values at proper position when `sortEmptyCells` ' +
-    'option is enabled and `column` property of `columnSorting` option is set (data type: numeric)', () => {
+    'option is enabled and `column` property of `multiColumnSorting` option is set (data type: numeric)', () => {
     handsontable({
       data: [
         [6, 'Frank Honest'],
@@ -606,10 +574,10 @@ describe('MultiColumnSorting', () => {
       ],
       multiColumnSorting: {
         sortEmptyCells: true,
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -649,10 +617,10 @@ describe('MultiColumnSorting', () => {
       ],
       multiColumnSorting: {
         sortEmptyCells: true,
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'desc'
-        }]
+        }
       }
     });
 
@@ -683,10 +651,10 @@ describe('MultiColumnSorting', () => {
     it('should return `false` when plugin has been disabled by the `disablePlugin` method', () => {
       handsontable({
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 1,
             sortOrder: 'asc'
-          }]
+          }
         }
       });
 
@@ -726,10 +694,10 @@ describe('MultiColumnSorting', () => {
           ['Mercedes2', 'A 160', '01/14/2006'],
         ],
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 1,
             sortOrder: 'asc'
-          }]
+          }
         }
       });
 
@@ -744,10 +712,10 @@ describe('MultiColumnSorting', () => {
           ['Mercedes2', 'A 160', '01/14/2006'],
         ],
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 1,
             sortOrder: 'asc'
-          }]
+          }
         }
       });
 
@@ -759,10 +727,10 @@ describe('MultiColumnSorting', () => {
 
       updateSettings({
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 1,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -778,7 +746,7 @@ describe('MultiColumnSorting', () => {
 
   describe('data type: date', () => {
     it('should place empty strings, null and undefined values at proper position when `sortEmptyCells` ' +
-      'option is enabled and `column` property of `columnSorting` option is set', () => {
+      'option is enabled and `column` property of `multiColumnSorting` option is set', () => {
       handsontable({
         data: [
           ['Citroen1', 'C4 Coupe', null],
@@ -802,10 +770,10 @@ describe('MultiColumnSorting', () => {
         ],
         multiColumnSorting: {
           sortEmptyCells: true,
-          initialConfig: [{
+          initialConfig: {
             column: 2,
             sortOrder: 'asc'
-          }]
+          }
         }
       });
 
@@ -853,10 +821,10 @@ describe('MultiColumnSorting', () => {
         ],
         multiColumnSorting: {
           sortEmptyCells: true,
-          initialConfig: [{
+          initialConfig: {
             column: 2,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -1063,10 +1031,10 @@ describe('MultiColumnSorting', () => {
         ],
         colHeaders: true,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -1161,10 +1129,10 @@ describe('MultiColumnSorting', () => {
       ],
       colHeaders: true,
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1182,10 +1150,10 @@ describe('MultiColumnSorting', () => {
       ],
       colHeaders: true,
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1194,10 +1162,10 @@ describe('MultiColumnSorting', () => {
 
     updateSettings({
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 1,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1215,10 +1183,10 @@ describe('MultiColumnSorting', () => {
       ],
       colHeaders: true,
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1226,10 +1194,10 @@ describe('MultiColumnSorting', () => {
 
     updateSettings({
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'desc'
-        }]
+        }
       }
     });
 
@@ -1250,20 +1218,20 @@ describe('MultiColumnSorting', () => {
       colHeaders: true,
       multiColumnSorting: {
         sortEmptyCells: false,
-        initialConfig: [{
+        initialConfig: {
           column: 1,
           sortOrder: 'desc'
-        }]
+        }
       }
     });
 
     updateSettings({
       multiColumnSorting: {
         sortEmptyCells: true,
-        initialConfig: [{
+        initialConfig: {
           column: 1,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1273,10 +1241,10 @@ describe('MultiColumnSorting', () => {
     updateSettings({
       multiColumnSorting: {
         sortEmptyCells: false,
-        initialConfig: [{
+        initialConfig: {
           column: 1,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1316,10 +1284,10 @@ describe('MultiColumnSorting', () => {
 
     updateSettings({
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1335,10 +1303,10 @@ describe('MultiColumnSorting', () => {
 
     updateSettings({
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'desc'
-        }]
+        }
       }
     });
 
@@ -1363,10 +1331,10 @@ describe('MultiColumnSorting', () => {
       ],
       colHeaders: true,
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 0,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1515,6 +1483,7 @@ describe('MultiColumnSorting', () => {
   it('should fire hooks with proper hook argument when sorting is not possible', () => {
     const beforeColumnSortCallback = jasmine.createSpy('beforeColumnSort');
     const afterColumnSortCallback = jasmine.createSpy('afterColumnSort');
+    const warnSpy = spyOn(console, 'warn');
 
     handsontable({
       data: [[2], [4], [1], [3]],
@@ -1532,6 +1501,7 @@ describe('MultiColumnSorting', () => {
     // "After" hook always run! Team decision.
 
     expect(afterColumnSortCallback).toHaveBeenCalledWith([], [], false, void 0, void 0, void 0);
+    expect(warnSpy).toHaveBeenCalled();
   });
 
   it('should insert row when plugin is enabled, but table hasn\'t been sorted', () => {
@@ -1561,10 +1531,10 @@ describe('MultiColumnSorting', () => {
         [2, 'C']
       ],
       multiColumnSorting: {
-        initialConfig: [{
+        initialConfig: {
           column: 1,
           sortOrder: 'asc'
-        }]
+        }
       }
     });
 
@@ -1925,10 +1895,10 @@ describe('MultiColumnSorting', () => {
       colHeaders: true,
       multiColumnSorting: {
         indicator: true,
-        initialConfig: [{
+        initialConfig: {
           column: 1,
           sortOrder: 'desc'
-        }]
+        }
       },
     });
 
@@ -2203,10 +2173,10 @@ describe('MultiColumnSorting', () => {
         data: createSpreadsheetData(9, 9),
         maxRows: 6,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -2218,10 +2188,10 @@ describe('MultiColumnSorting', () => {
         data: createSpreadsheetData(9, 9),
         maxRows: 20,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -2234,10 +2204,10 @@ describe('MultiColumnSorting', () => {
         maxRows: 5,
         minSpareRows: 3,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -2250,10 +2220,10 @@ describe('MultiColumnSorting', () => {
         maxRows: 9,
         minSpareRows: 3,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -2266,10 +2236,10 @@ describe('MultiColumnSorting', () => {
         maxRows: 15,
         minSpareRows: 2,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 
@@ -2281,7 +2251,7 @@ describe('MultiColumnSorting', () => {
     describe('by the `sort` method', () => {
       it('when sorting two columns with default type of data', () => {
         handsontable({
-          data: multiColumnSortingData(),
+          data: arrayOfArrays(),
           columns: [
             {},
             {},
@@ -2305,7 +2275,7 @@ describe('MultiColumnSorting', () => {
 
       it('when sorting first column with default type of data, the second one with numeric data', () => {
         handsontable({
-          data: multiColumnSortingData(),
+          data: arrayOfArrays(),
           columns: [
             {},
             {},
@@ -2329,7 +2299,7 @@ describe('MultiColumnSorting', () => {
 
       it('when sorting first column with date type of data, the second one with numeric data', () => {
         handsontable({
-          data: multiColumnSortingData(),
+          data: arrayOfArrays(),
           columns: [
             {},
             {},
@@ -2353,7 +2323,7 @@ describe('MultiColumnSorting', () => {
 
       it('when sorting four columns with three different kind of data', () => {
         handsontable({
-          data: multiColumnSortingData(),
+          data: arrayOfArrays(),
           columns: [
             {},
             {},
@@ -2385,7 +2355,7 @@ describe('MultiColumnSorting', () => {
     describe('by provided initial configuration', () => {
       it('when simple configuration was set', () => {
         handsontable({
-          data: multiColumnSortingData(),
+          data: arrayOfArrays(),
           columns: [
             {},
             {},
@@ -2415,7 +2385,7 @@ describe('MultiColumnSorting', () => {
 
       it('when `sortEmptyCells` option was set for one column', () => {
         handsontable({
-          data: multiColumnSortingData(),
+          data: arrayOfArrays(),
           columns: [
             {},
             {},
@@ -2523,6 +2493,8 @@ describe('MultiColumnSorting', () => {
   describe('Sorting configuration validation', () => {
     describe('should not change internal state of sorting when wrong configuration was provided', () => {
       it('when too low column index was passed to the initial config', () => {
+        const warnSpy = spyOn(console, 'warn');
+
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2539,9 +2511,12 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when too high column index was passed to the initial config', () => {
+        const warnSpy = spyOn(console, 'warn');
+
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2558,9 +2533,12 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when not proper sort order was passed to the initial config', () => {
+        const warnSpy = spyOn(console, 'warn');
+
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2577,9 +2555,12 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when missed sort order was passed to the initial config', () => {
+        const warnSpy = spyOn(console, 'warn');
+
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2595,9 +2576,12 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when missed column index was passed to the initial config', () => {
+        const warnSpy = spyOn(console, 'warn');
+
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2613,9 +2597,12 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when the same column index was passed twice to the initial config', () => {
+        const warnSpy = spyOn(console, 'warn');
+
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2632,6 +2619,7 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
+        expect(warnSpy).toHaveBeenCalled();
       });
     });
   });
@@ -2639,7 +2627,7 @@ describe('MultiColumnSorting', () => {
   describe('Sorting more than one column by clicks', () => {
     it('should sort two columns when ctrl was held while clicking', () => {
       handsontable({
-        data: multiColumnSortingData(),
+        data: arrayOfArrays(),
         columns: [
           {},
           {},
@@ -2662,7 +2650,7 @@ describe('MultiColumnSorting', () => {
 
     it('should push last clicked column to the end of sort queue', () => {
       handsontable({
-        data: multiColumnSortingData(),
+        data: arrayOfArrays(),
         columns: [
           {},
           {},
@@ -2694,7 +2682,7 @@ describe('MultiColumnSorting', () => {
 
     it('should block action for specific configuration', () => {
       handsontable({
-        data: multiColumnSortingData(),
+        data: arrayOfArrays(),
         columns: [
           { multiColumnSorting: { headerAction: false } },
           {},
@@ -2719,7 +2707,7 @@ describe('MultiColumnSorting', () => {
 
     it('should not block action for specific configuration updated by `updateSettings`', () => {
       handsontable({
-        data: multiColumnSortingData(),
+        data: arrayOfArrays(),
         columns: [
           { multiColumnSorting: { headerAction: false } },
           {},
@@ -2750,7 +2738,7 @@ describe('MultiColumnSorting', () => {
 
     it('should block action for specific configuration updated by `updateSettings`', () => {
       handsontable({
-        data: multiColumnSortingData(),
+        data: arrayOfArrays(),
         columns: [
           {},
           {},
@@ -2798,7 +2786,7 @@ describe('MultiColumnSorting', () => {
 
       expect(headerWidthAtStart).toBe(newHeaderWidth);
 
-      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc' }] } });
+      updateSettings({ multiColumnSorting: { initialConfig: { column: 0, sortOrder: 'asc' } } });
 
       newHeaderWidth = spec().$container.find('th').eq(0).width();
 
@@ -2868,7 +2856,7 @@ describe('MultiColumnSorting', () => {
       expect(htCoreWidthAtStart).toBe(newHtCoreWidth);
       expect(newWtHiderWidth).toBe(newHtCoreWidth);
 
-      updateSettings({ multiColumnSorting: { initialConfig: [{ column: 0, sortOrder: 'asc' }] } });
+      updateSettings({ multiColumnSorting: { initialConfig: { column: 0, sortOrder: 'asc' } } });
 
       newWtHiderWidth = spec().$container.find('.wtHider').eq(0).width();
       newHtCoreWidth = spec().$container.find('.htCore').eq(0).width();
@@ -2925,10 +2913,10 @@ describe('MultiColumnSorting', () => {
           ],
           colHeaders: true,
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'asc'
-            }]
+            }
           }
         });
 
@@ -2962,10 +2950,10 @@ describe('MultiColumnSorting', () => {
           ],
           colHeaders: true,
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'asc'
-            }]
+            }
           }
         });
 
@@ -3002,10 +2990,10 @@ describe('MultiColumnSorting', () => {
           ],
           colHeaders: true,
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'desc'
-            }]
+            }
           }
         });
 
@@ -3033,10 +3021,10 @@ describe('MultiColumnSorting', () => {
           colHeaders: true,
           manualRowMove: true,
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'asc'
-            }]
+            }
           }
         });
 
@@ -3062,10 +3050,10 @@ describe('MultiColumnSorting', () => {
           colHeaders: true,
           trimRows: true,
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'asc'
-            }]
+            }
           }
         });
 
@@ -3091,10 +3079,10 @@ describe('MultiColumnSorting', () => {
           colHeaders: true,
           trimRows: [0],
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'asc'
-            }]
+            }
           }
         });
 
@@ -3148,10 +3136,10 @@ describe('MultiColumnSorting', () => {
             [2, 'C']
           ],
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'desc'
-            }]
+            }
           }
         });
 
@@ -3184,10 +3172,10 @@ describe('MultiColumnSorting', () => {
           ],
           colHeaders: true,
           multiColumnSorting: {
-            initialConfig: [{
+            initialConfig: {
               column: 0,
               sortOrder: 'desc'
-            }]
+            }
           }
         });
 
@@ -3215,10 +3203,10 @@ describe('MultiColumnSorting', () => {
         ],
         colHeaders: true,
         multiColumnSorting: {
-          initialConfig: [{
+          initialConfig: {
             column: 0,
             sortOrder: 'desc'
-          }]
+          }
         }
       });
 

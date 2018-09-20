@@ -184,8 +184,6 @@ export class ColumnStatesManager {
     if (this.isColumnSorted(column)) {
       return deepClone(this.sortedColumnsStates[this.getIndexOfColumnInSortQueue(column)]);
     }
-
-    return void 0;
   }
 
   /**

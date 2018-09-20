@@ -72,7 +72,7 @@ const REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
  * // please take a look at documentation of `column` property: https://docs.handsontable.com/pro/Options.html#columns
  * columns: [{
  *   multiColumnSorting: {
- *     indicator: false, // set off indicator for the first column,
+ *     indicator: false, // disable indicator for the first column,
  *     sortEmptyCells: true,
  *     headerAction: false, // clicks on the first column won't sort
  *     compareFunctionFactory: function(sortOrder, columnMeta) {

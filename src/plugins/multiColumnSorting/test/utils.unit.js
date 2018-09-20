@@ -1,4 +1,4 @@
-import { areValidSortStates, ASC_SORT_STATE, DESC_SORT_STATE } from '../utils';
+import { areValidSortStates, ASC_SORT_STATE, DESC_SORT_STATE } from 'handsontable-pro/plugins/multiColumnSorting/utils';
 
 describe('MultiColumnSorting', () => {
   it('areValidSortStates', () => {
