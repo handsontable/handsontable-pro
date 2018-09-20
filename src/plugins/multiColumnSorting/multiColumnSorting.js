@@ -357,7 +357,6 @@ class MultiColumnSorting extends BasePlugin {
    *
    * @private
    * @fires Hooks#persistentStateSave
-   * @fires Hooks#multiColumnSorting
    */
   saveAllSortSettings() {
     const allSortSettings = this.columnStatesManager.getAllColumnsProperties();
