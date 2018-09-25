@@ -4,7 +4,7 @@ import {
 } from 'handsontable/helpers/dom/element';
 import { isUndefined, isDefined } from 'handsontable/helpers/mixed';
 import { isObject } from 'handsontable/helpers/object';
-import { arrayMap, arrayEach } from 'handsontable/helpers/array';
+import { arrayMap } from 'handsontable/helpers/array';
 import { rangeEach } from 'handsontable/helpers/number';
 import BasePlugin from 'handsontable/plugins/_base';
 import { registerPlugin } from 'handsontable/plugins';
