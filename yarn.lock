@@ -2640,7 +2640,7 @@ handlebars@^4.0.3:
 
 "handsontable@github:handsontable/handsontable#feature/issue-5282":
   version "5.0.2"
-  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/9f5c485b30a1c0bcd5cddd8cc34bec41f3a5d785"
+  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/f887cb86287d2896077a237d63c40d304c88541b"
   dependencies:
     moment "2.20.1"
     numbro "^2.0.6"
@@ -4488,7 +4488,7 @@ posix-character-classes@^0.1.0:
 
 postcss-calc@^5.2.0:
   version "5.3.1"
-  resolved "https://registry.yarnpkg.com/postcss-calc/-/postcss-calc-5.3.1.tgz#77bae7ca928ad85716e2fda42f261bf7c1d65b5e"
+  resolved "http://registry.npmjs.org/postcss-calc/-/postcss-calc-5.3.1.tgz#77bae7ca928ad85716e2fda42f261bf7c1d65b5e"
   dependencies:
     postcss "^5.0.2"
     postcss-message-helpers "^2.0.0"
@@ -6174,8 +6174,8 @@ yargs@~3.10.0:
     window-size "0.1.0"
 
 yarn@^1.5.1:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.9.4.tgz#3b82d8446b652775723900b470d966861976924b"
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.10.0.tgz#f7d81802586fa8b3b4bf3ac6fb493fbc6c29845c"
 
 yauzl@2.4.1:
   version "2.4.1"
