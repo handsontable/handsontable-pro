@@ -16,6 +16,7 @@ import { ColumnStatesManager } from './columnStatesManager';
 import {
   getNextSortOrder,
   areValidSortStates,
+  getFullSortConfiguration,
   warnIfPluginsHaveConflict,
   warnAboutNotValidatedConfig,
   getHeaderSpanElement,
@@ -221,18 +222,9 @@ class MultiColumnSorting extends BasePlugin {
    */
   sort(sortConfig) {
     const currentSortConfig = this.getSortConfig();
-    let destinationSortConfigs;
 
-    // We always transfer configs defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
-    if (isUndefined(sortConfig)) {
-      destinationSortConfigs = [];
-
-    } else if (Array.isArray(sortConfig)) {
-      destinationSortConfigs = sortConfig;
-
-    } else {
-      destinationSortConfigs = [sortConfig];
-    }
+    // We always pass to hook configs defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
+    const destinationSortConfigs = getFullSortConfiguration(sortConfig);
 
     const sortPossible = this.areValidSortConfigs(destinationSortConfigs);
     const allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs, sortPossible);
@@ -246,7 +238,11 @@ class MultiColumnSorting extends BasePlugin {
     }
 
     if (sortPossible) {
-      this.setSortConfigs(destinationSortConfigs);
+      const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
+        ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
+      const internalSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
+
+      this.columnStatesManager.setSortStates(internalSortStates);
       this.sortByPresetSortStates();
       this.saveAllSortSettings();
 
@@ -310,7 +306,7 @@ class MultiColumnSorting extends BasePlugin {
    * beforeColumnSort: function(currentSortConfig, destinationSortConfigs) {
    *   const columnSortPlugin = this.getPlugin('multiColumnSorting');
    *
-   *   columnSortPlugin.setSortConfigs(destinationSortConfigs);
+   *   columnSortPlugin.setSortConfig(destinationSortConfigs);
    *
    *   // const newData = ... // Calculated data set, ie. from an AJAX call.
    *
@@ -319,14 +315,19 @@ class MultiColumnSorting extends BasePlugin {
    *   return false; // The blockade for the default sort action.
    * }```
    *
-   * @param {Array} sortConfigs Sort configuration for all sorted columns. Objects contain `column` and `sortOrder` properties.
+   * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
+   * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
+   * sort order (`asc` for ascending, `desc` for descending).
    */
-  setSortConfigs(sortConfigs) {
-    const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
-      ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
+  setSortConfig(sortConfig) {
+    const destinationSortConfigs = getFullSortConfiguration(sortConfig);
 
-    if (this.areValidSortConfigs(sortConfigs)) {
-      this.columnStatesManager.setSortStates(arrayMap(sortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig)));
+    if (this.areValidSortConfigs(destinationSortConfigs)) {
+      const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
+        ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
+      const internalSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
+
+      this.columnStatesManager.setSortStates(internalSortStates);
 
     } else {
       warnAboutNotValidatedConfig();

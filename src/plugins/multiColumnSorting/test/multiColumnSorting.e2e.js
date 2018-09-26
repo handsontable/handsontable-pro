@@ -194,7 +194,7 @@ describe('MultiColumnSorting', () => {
       multiColumnSorting: true
     });
 
-    getPlugin('multiColumnSorting').setSortConfigs(sortQueue);
+    getPlugin('multiColumnSorting').setSortConfig(sortQueue);
 
     expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual(sortQueue);
     expect(getPlugin('multiColumnSorting').getSortConfig(0)).toEqual({ column: 0, sortOrder: 'asc' });
