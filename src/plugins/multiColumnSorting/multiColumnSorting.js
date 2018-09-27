@@ -752,6 +752,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. We clear the cache after action which reorganize sequence of columns.
+  // TODO: Remove test named: "should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)".
   /**
    * Callback for the `afterCreateCol` hook.
    *
@@ -762,6 +763,7 @@ class MultiColumnSorting extends BasePlugin {
   }
 
   // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. We clear the cache after action which reorganize sequence of columns.
+  // TODO: Remove test named: "should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)".
   /**
    * Callback for the `afterRemoveCol` hook.
    *
