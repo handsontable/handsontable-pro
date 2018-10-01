@@ -339,7 +339,7 @@ describe('MultiColumnSorting', () => {
       colHeaders: true,
       rowHeaders: true,
       data: arrayOfObjects(),
-      columnSorting: true
+      multiColumnSorting: true
     });
 
     $('.ht_clone_top_left_corner .htCore span').simulate('mousedown');
