@@ -2917,5 +2917,22 @@ describe('MultiColumnSorting', () => {
 
       expect(getHtCore().find('tbody tr:eq(0) td').length).toEqual(7);
     });
+
+    it('should not break the dataset when inserted new row', () => {
+      handsontable({
+        colHeaders: true,
+        data: Handsontable.helper.createSpreadsheetData(3, 3),
+        multiColumnSorting: true
+      });
+
+      alter('insert_row', 2);
+
+      expect(getData()).toEqual([
+        ['A1', 'B1', 'C1'],
+        ['A2', 'B2', 'C2'],
+        [null, null, null],
+        ['A3', 'B3', 'C3']
+      ]);
+    });
   });
 });
