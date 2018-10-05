@@ -1,11 +1,6 @@
 import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
-import {
-  getFullSortConfiguration,
-  warnAboutNotValidatedConfig
-} from 'handsontable/plugins/columnSorting/utils';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
-import { arrayMap } from 'handsontable/helpers/array';
 import { mainSortComparator } from './comparatorEngine';
 import { DomHelper } from './domHelper';
 import './multiColumnSorting.css';
@@ -118,36 +113,7 @@ class MultiColumnSorting extends ColumnSorting {
    * @fires Hooks#afterColumnSort
    */
   sort(sortConfig) {
-    const currentSortConfig = this.getSortConfig();
-
-    // We always pass to hook configs defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
-    const destinationSortConfigs = getFullSortConfiguration(sortConfig);
-
-    const sortPossible = this.areValidSortConfigs(destinationSortConfigs);
-    const allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs, sortPossible);
-
-    if (sortPossible === false) {
-      warnAboutNotValidatedConfig();
-    }
-
-    if (allowSort === false) {
-      return;
-    }
-
-    if (sortPossible) {
-      const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
-        ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
-      const internalSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
-
-      this.columnStatesManager.setSortStates(internalSortStates);
-      this.sortByPresetSortStates();
-      this.saveAllSortSettings();
-
-      this.hot.render();
-      this.hot.view.wt.draw(true); // TODO: Workaround? One test won't pass after removal. It should be refactored / described.
-    }
-
-    this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig(), sortPossible);
+    return super.sort(sortConfig);
   }
 
   /**
@@ -201,18 +167,7 @@ class MultiColumnSorting extends ColumnSorting {
    * sort order (`asc` for ascending, `desc` for descending).
    */
   setSortConfig(sortConfig) {
-    const destinationSortConfigs = getFullSortConfiguration(sortConfig);
-
-    if (this.areValidSortConfigs(destinationSortConfigs)) {
-      const translateColumnToPhysical = ({ column: visualColumn, ...restOfProperties }) =>
-        ({ column: this.hot.toPhysicalColumn(visualColumn), ...restOfProperties });
-      const internalSortStates = arrayMap(destinationSortConfigs, columnSortConfig => translateColumnToPhysical(columnSortConfig));
-
-      this.columnStatesManager.setSortStates(internalSortStates);
-
-    } else {
-      warnAboutNotValidatedConfig();
-    }
+    return super.setSortConfig(sortConfig);
   }
 
   /**
