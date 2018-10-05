@@ -1,32 +1,6 @@
-import dateSort from './sortFunction/date';
-import defaultSort from './sortFunction/default';
-import numericSort from './sortFunction/numeric';
+/* eslint-disable import/prefer-default-export */
 
-export const DO_NOT_SWAP = 0;
-export const FIRST_BEFORE_SECOND = -1;
-export const FIRST_AFTER_SECOND = 1;
-
-/**
- * Gets sort function for the particular column basing on its column meta.
- *
- * @param {Array} columnMeta Column meta object.
- * @returns {Function}
- */
-function getCompareFunctionFactory(columnMeta) {
-  const columnSettings = columnMeta.multiColumnSorting;
-
-  if (columnSettings.compareFunctionFactory) {
-    return columnSettings.compareFunctionFactory;
-
-  } else if (columnMeta.type === 'date') {
-    return dateSort;
-
-  } else if (columnMeta.type === 'numeric') {
-    return numericSort;
-  }
-
-  return defaultSort;
-}
+import { getCompareFunctionFactory, DO_NOT_SWAP } from 'handsontable/plugins/columnSorting/comparatorEngine';
 
 /**
  * Sort comparator handled by conventional sort algorithm.
