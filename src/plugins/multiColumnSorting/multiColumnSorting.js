@@ -13,6 +13,59 @@ import './multiColumnSorting.css';
 const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
 const PLUGIN_KEY = 'multiColumnSorting';
 
+/**
+ * @plugin MultiColumnSorting
+ * @pro
+ *
+ * @description
+ * This plugin sorts the view by columns (but does not sort the data source!). To enable the plugin, set the
+ * {@link Options#multiColumnSorting} property to the correct value (see the examples below).
+ *
+ * @example
+ * ```js
+ * // as boolean
+ * multiColumnSorting: true
+ *
+ * // as an object with initial sort config (sort ascending for column at index 1 and then sort descending for column at index 0)
+ * multiColumnSorting: {
+ *   initialConfig: [{
+ *     column: 1,
+ *     sortOrder: 'asc'
+ *   }, {
+ *     column: 0,
+ *     sortOrder: 'desc'
+ *   }]
+ * }
+ *
+ * // as an object which define specific sorting options for all columns
+ * multiColumnSorting: {
+ *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table (by default)
+ *   indicator: true, // true = shows indicator for all columns (by default), false = don't show indicator for columns
+ *   headerAction: true, // true = allow to click on the headers to sort (by default), false = turn off possibility to click on the headers to sort
+ *   compareFunctionFactory: function(sortOrder, columnMeta) {
+ *     return function(value, nextValue) {
+ *       // Some value comparisons which will return -1, 0 or 1...
+ *     }
+ *   }
+ * }
+ *
+ * // as an object passed to the `column` property, allows specifying a custom options for the desired column.
+ * // please take a look at documentation of `column` property: https://docs.handsontable.com/pro/Options.html#columns
+ * columns: [{
+ *   multiColumnSorting: {
+ *     indicator: false, // disable indicator for the first column,
+ *     sortEmptyCells: true,
+ *     headerAction: false, // clicks on the first column won't sort
+ *     compareFunctionFactory: function(sortOrder, columnMeta) {
+ *       return function(value, nextValue) {
+ *         return 0; // Custom compare function for the first column (don't sort)
+ *       }
+ *     }
+ *   }
+ * }]```
+ *
+ * @dependencies ObserveChanges moment
+ */
 class MultiColumnSorting extends ColumnSorting {
   constructor(hotInstance) {
     super(hotInstance);
