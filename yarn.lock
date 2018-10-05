@@ -2640,7 +2640,7 @@ handlebars@^4.0.3:
 
 handsontable@handsontable/handsontable#feature/issue-5457:
   version "6.0.1"
-  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/38e2a73fc0a2ffe638ff189e5c1a4da078be5c35"
+  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/438f661be560f3eaf2e1bf8a344512f25959ef86"
   dependencies:
     moment "2.20.1"
     numbro "^2.0.6"
