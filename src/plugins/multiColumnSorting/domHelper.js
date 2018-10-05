@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { ASC_SORT_STATE, DESC_SORT_STATE } from './utils';
+import { ASC_SORT_STATE, DESC_SORT_STATE } from 'handsontable/plugins/columnSorting/utils';
 
 const HEADER_CLASS_ASC_SORT = 'ascending';
 const HEADER_CLASS_DESC_SORT = 'descending';

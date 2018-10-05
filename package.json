@@ -56,7 +56,7 @@
     "data-spreadsheet"
   ],
   "dependencies": {
-    "handsontable": "6.0.1",
+    "handsontable": "handsontable/handsontable#feature/issue-5457",
     "hot-formula-parser": "^2.3.1",
     "moment": "2.20.1",
     "numbro": "^2.0.6",

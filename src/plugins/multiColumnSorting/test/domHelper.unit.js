@@ -1,5 +1,5 @@
-import { ColumnStatesManager } from 'handsontable-pro/plugins/multiColumnSorting/columnStatesManager';
-import { DESC_SORT_STATE, ASC_SORT_STATE } from 'handsontable-pro/plugins/multiColumnSorting/utils';
+import { ColumnStatesManager } from 'handsontable/plugins/columnSorting/columnStatesManager';
+import { DESC_SORT_STATE, ASC_SORT_STATE } from 'handsontable/plugins/columnSorting/utils';
 import { DomHelper } from 'handsontable-pro/plugins/multiColumnSorting/domHelper';
 
 describe('MultiColumnSorting', () => {
