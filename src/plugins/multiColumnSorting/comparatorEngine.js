@@ -21,8 +21,8 @@ export function mainSortComparator(sortingOrders, columnMetas) {
       const columnMeta = columnMetas[column];
       const value = values[column];
       const nextValue = nextValues[column];
-      const compareFunctionFactory = getCompareFunctionFactory(columnMeta);
-      const compareResult = compareFunctionFactory(sortingOrder, columnMeta)(value, nextValue);
+      const compareFunctionFactory = getCompareFunctionFactory(columnMeta, columnMeta.multiColumnSorting);
+      const compareResult = compareFunctionFactory(sortingOrder, columnMeta, columnMeta.multiColumnSorting)(value, nextValue);
 
       if (compareResult === DO_NOT_SWAP) {
         const nextSortedColumn = column + 1;
