@@ -9,10 +9,9 @@
 
 ### Demo
 <!--- Provide a link to a live example on JSFiddle or Codepen or fill the following demo with your settings -->
-https://jsfiddle.net/handsoncode/j3yx6wxd/
+https://jsfiddle.net/5o1Ledx4/
 
 ### Your environment
 * Handsontable version:
 * Browser Name and version:
 * Operating System:
-
