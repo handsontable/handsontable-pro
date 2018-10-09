@@ -157,6 +157,7 @@ class MultipleSelectUI extends BaseUI {
         },
         autoWrapCol: true,
         height: 110,
+        // Workaround for #151.
         colWidths: () => this.itemsBox.container.scrollWidth - getScrollbarWidth(),
         copyPaste: false,
         disableVisualSelection: 'area',
