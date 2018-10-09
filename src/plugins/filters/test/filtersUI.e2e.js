@@ -3325,10 +3325,10 @@ describe('Filters UI', () => {
       await sleep(300);
 
       const $multipleSelect = $('.htUIMultipleSelectHot');
-      const wtHolderWidth = $multipleSelect.find('.wtHolder').width();
+      const wtHolderWidth = $multipleSelect.find('.wtHolder').scrollWidth;
       const wtHiderWidth = $multipleSelect.find('.wtHider').width();
 
-      expect(wtHolderWidth - getScrollbarWidth()).toBe(wtHiderWidth);
+      expect(wtHolderWidth).toBe(wtHiderWidth);
     });
 
     it('should not expand the drop-down menu after selecting longer value inside the conditional select', async() => {
