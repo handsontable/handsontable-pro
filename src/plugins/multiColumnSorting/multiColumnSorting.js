@@ -1,4 +1,5 @@
 import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
+import { warnAboutPluginsConflict } from 'handsontable/plugins/columnSorting/utils';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { mainSortComparator } from './comparatorEngine';
@@ -7,6 +8,7 @@ import './multiColumnSorting.css';
 
 const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
 const PLUGIN_KEY = 'multiColumnSorting';
+const CONFLICTED_PLUGIN_KEY = 'columnSorting';
 
 /**
  * @plugin MultiColumnSorting
@@ -85,6 +87,34 @@ class MultiColumnSorting extends ColumnSorting {
      * @type {DomHelper}
      */
     this.domHelper = new DomHelper(this.columnStatesManager);
+  }
+
+  /**
+   * Checks if the plugin is enabled in the Handsontable settings. This method is executed in {@link Hooks#beforeInit}
+   * hook and if it returns `true` than the {@link MultiColumnSorting#enablePlugin} method is called.
+   *
+   * @returns {Boolean}
+   */
+  isEnabled() {
+    return super.isEnabled();
+  }
+
+  /**
+   * Enables the plugin functionality for this Handsontable instance.
+   */
+  enablePlugin() {
+    if (!this.enabled && this.hot.getSettings()[this.pluginKey] && this.hot.getSettings()[CONFLICTED_PLUGIN_KEY]) {
+      warnAboutPluginsConflict();
+    }
+
+    return super.enablePlugin();
+  }
+
+  /**
+   * Disables the plugin functionality for this Handsontable instance.
+   */
+  disablePlugin() {
+    return super.disablePlugin();
   }
 
   /**
@@ -168,6 +198,21 @@ class MultiColumnSorting extends ColumnSorting {
    */
   setSortConfig(sortConfig) {
     return super.setSortConfig(sortConfig);
+  }
+
+  /**
+   * Overwriting base plugin's `onUpdateSettings` method. Please keep in mind that `onAfterUpdateSettings` isn't called
+   * for `updateSettings` in specific situations.
+   *
+   * @private
+   * @param {Object} newSettings New settings object.
+   */
+  onUpdateSettings(newSettings) {
+    if (this.hot.getSettings()[this.pluginKey] && this.hot.getSettings()[CONFLICTED_PLUGIN_KEY]) {
+      warnAboutPluginsConflict();
+    }
+
+    return super.onUpdateSettings(newSettings);
   }
 
   /**
