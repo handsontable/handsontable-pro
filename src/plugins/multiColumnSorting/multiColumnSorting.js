@@ -2,8 +2,9 @@ import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
 import { warnAboutPluginsConflict } from 'handsontable/plugins/columnSorting/utils';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
+import { addClass, removeClass,} from 'handsontable/helpers/dom/element';
 import { mainSortComparator } from './comparatorEngine';
-import { DomHelper } from './domHelper';
+import { getAddedClasses, getRemovedClasses } from './domHelper';
 import './multiColumnSorting.css';
 
 const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
@@ -80,13 +81,6 @@ class MultiColumnSorting extends ColumnSorting {
      * @type {Function}
      */
     this.mainSortComparator = mainSortComparator;
-    /**
-     * Instance of DOM helper.
-     *
-     * @private
-     * @type {DomHelper}
-     */
-    this.domHelper = new DomHelper(this.columnStatesManager);
   }
 
   /**
@@ -198,6 +192,22 @@ class MultiColumnSorting extends ColumnSorting {
    */
   setSortConfig(sortConfig) {
     return super.setSortConfig(sortConfig);
+  }
+
+  /**
+   * Update header classes.
+   *
+   * @param {HTMLElement} headerSpanElement Header span element.
+   * @param {...*} options Extra options for helpers.
+   */
+  updateHeaderClasses(headerSpanElement, ...options) {
+    super.updateHeaderClasses(headerSpanElement, ...options);
+
+    removeClass(headerSpanElement, getRemovedClasses(headerSpanElement));
+
+    if (this.enabled !== false) {
+      addClass(headerSpanElement, getAddedClasses(...options));
+    }
   }
 
   /**
