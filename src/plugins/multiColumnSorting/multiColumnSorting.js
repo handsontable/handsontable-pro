@@ -2,7 +2,7 @@ import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
 import { warnAboutPluginsConflict } from 'handsontable/plugins/columnSorting/utils';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
-import { addClass, removeClass,} from 'handsontable/helpers/dom/element';
+import { addClass, removeClass } from 'handsontable/helpers/dom/element';
 import { mainSortComparator } from './comparatorEngine';
 import { getAddedClasses, getRemovedClasses } from './domHelper';
 import './multiColumnSorting.css';
@@ -198,15 +198,15 @@ class MultiColumnSorting extends ColumnSorting {
    * Update header classes.
    *
    * @param {HTMLElement} headerSpanElement Header span element.
-   * @param {...*} options Extra options for helpers.
+   * @param {...*} args Extra arguments for helpers.
    */
-  updateHeaderClasses(headerSpanElement, ...options) {
-    super.updateHeaderClasses(headerSpanElement, ...options);
+  updateHeaderClasses(headerSpanElement, ...args) {
+    super.updateHeaderClasses(headerSpanElement, ...args);
 
     removeClass(headerSpanElement, getRemovedClasses(headerSpanElement));
 
     if (this.enabled !== false) {
-      addClass(headerSpanElement, getAddedClasses(...options));
+      addClass(headerSpanElement, getAddedClasses(...args));
     }
   }
 
