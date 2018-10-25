@@ -1,11 +1,13 @@
 import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
 import { warnAboutPluginsConflict } from 'handsontable/plugins/columnSorting/utils';
+import { registerMainSortComparator, registerSortConfigNormalizator } from 'handsontable/plugins/columnSorting/sortingService';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { addClass, removeClass } from 'handsontable/helpers/dom/element';
-import { mainSortComparator } from './comparatorEngine';
+import { mainSortComparator } from './mainSortComparator';
 import { getAddedClasses, getRemovedClasses } from './domHelper';
 import './multiColumnSorting.css';
+import { sortConfigNormalizator } from './sortConfigNormalizator';
 
 const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
 const PLUGIN_KEY = 'multiColumnSorting';
@@ -74,13 +76,9 @@ class MultiColumnSorting extends ColumnSorting {
      * @type {String}
      */
     this.pluginKey = PLUGIN_KEY;
-    /**
-     * Main sort comparator which is passed to the sort function.
-     *
-     * @private
-     * @type {Function}
-     */
-    this.mainSortComparator = mainSortComparator;
+
+    registerMainSortComparator(mainSortComparator);
+    registerSortConfigNormalizator(sortConfigNormalizator);
   }
 
   /**
