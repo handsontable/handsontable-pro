@@ -5,7 +5,7 @@ import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { addClass, removeClass } from 'handsontable/helpers/dom/element';
 import { mainSortComparator } from './mainSortComparator';
-import { getAddedClasses, getRemovedClasses } from './domHelper';
+import { getAddedClasses, getRemovedClasses } from './domHelpers';
 import './multiColumnSorting.css';
 import { sortConfigNormalizator } from './sortConfigNormalizator';
 
@@ -76,9 +76,6 @@ class MultiColumnSorting extends ColumnSorting {
      * @type {String}
      */
     this.pluginKey = PLUGIN_KEY;
-
-    registerMainSortComparator(mainSortComparator);
-    registerSortConfigNormalizator(sortConfigNormalizator);
   }
 
   /**
@@ -251,5 +248,7 @@ class MultiColumnSorting extends ColumnSorting {
 }
 
 registerPlugin(PLUGIN_KEY, MultiColumnSorting);
+registerMainSortComparator(MultiColumnSorting, mainSortComparator);
+registerSortConfigNormalizator(MultiColumnSorting, sortConfigNormalizator);
 
 export default MultiColumnSorting;

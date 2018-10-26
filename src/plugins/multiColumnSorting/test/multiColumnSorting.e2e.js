@@ -349,7 +349,7 @@ describe('MultiColumnSorting', () => {
     expect(onErrorSpy).not.toHaveBeenCalled();
   });
 
-  it('should not throw error when trying run handsontable with columnSorting and autoRowSize in the same time.', () => {
+  it('should not throw error when trying run handsontable with multiColumnSorting and autoRowSize in the same time.', () => {
     let errors = 0;
 
     try {
@@ -369,7 +369,7 @@ describe('MultiColumnSorting', () => {
     handsontable({
       data: arrayOfObjects(),
       colHeaders: true,
-      columnSorting: true
+      multiColumnSorting: true
     });
 
     spec().sortByClickOnColumnHeader(0);
@@ -2904,7 +2904,7 @@ describe('MultiColumnSorting', () => {
       ]);
     });
 
-    it('should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)', () => {
+    it('should add new columns properly when the `multiColumnSorting` plugin is enabled (inheriting of non-primitive cell meta values)', () => {
       spec().$container[0].style.width = 'auto';
       spec().$container[0].style.height = 'auto';
 
