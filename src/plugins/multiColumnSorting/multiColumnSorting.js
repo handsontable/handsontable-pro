@@ -1,13 +1,13 @@
 import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
 import { warnAboutPluginsConflict } from 'handsontable/plugins/columnSorting/utils';
-import { registerMainSortComparator, registerSortConfigNormalizator } from 'handsontable/plugins/columnSorting/sortingService';
+import { registerMainSortComparator } from 'handsontable/plugins/columnSorting/sortingService';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { addClass, removeClass } from 'handsontable/helpers/dom/element';
+import { isUndefined } from 'handsontable/helpers/mixed';
 import { mainSortComparator } from './mainSortComparator';
 import { getAddedClasses, getRemovedClasses } from './domHelpers';
 import './multiColumnSorting.css';
-import { sortConfigNormalizator } from './sortConfigNormalizator';
 
 const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
 const PLUGIN_KEY = 'multiColumnSorting';
@@ -190,8 +190,30 @@ class MultiColumnSorting extends ColumnSorting {
   }
 
   /**
+   * Get normalized sort configs.
+   *
+   * @private
+   * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
+   * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
+   * sort order (`asc` for ascending, `desc` for descending).
+   * @returns {Array}
+   */
+  getNormalizedSortConfigs(sortConfig) {
+    if (isUndefined(sortConfig)) {
+      return [];
+    }
+
+    if (Array.isArray(sortConfig)) {
+      return sortConfig;
+    }
+
+    return [sortConfig];
+  }
+
+  /**
    * Update header classes.
    *
+   * @private
    * @param {HTMLElement} headerSpanElement Header span element.
    * @param {...*} args Extra arguments for helpers.
    */
@@ -248,7 +270,6 @@ class MultiColumnSorting extends ColumnSorting {
 }
 
 registerPlugin(PLUGIN_KEY, MultiColumnSorting);
-registerMainSortComparator(MultiColumnSorting, mainSortComparator);
-registerSortConfigNormalizator(MultiColumnSorting, sortConfigNormalizator);
+registerMainSortComparator(PLUGIN_KEY, mainSortComparator);
 
 export default MultiColumnSorting;

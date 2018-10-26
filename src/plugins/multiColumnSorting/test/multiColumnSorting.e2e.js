@@ -1500,7 +1500,6 @@ describe('MultiColumnSorting', () => {
   it('should fire hooks with proper hook argument when sorting is not possible', () => {
     const beforeColumnSortCallback = jasmine.createSpy('beforeColumnSort');
     const afterColumnSortCallback = jasmine.createSpy('afterColumnSort');
-    const warnSpy = spyOn(console, 'warn');
 
     handsontable({
       data: [[2], [4], [1], [3]],
@@ -1518,7 +1517,6 @@ describe('MultiColumnSorting', () => {
     // "After" hook always run! Team decision.
 
     expect(afterColumnSortCallback).toHaveBeenCalledWith([], [], false, void 0, void 0, void 0);
-    expect(warnSpy).toHaveBeenCalled();
   });
 
   it('should insert row when plugin is enabled, but table hasn\'t been sorted', () => {
@@ -2510,8 +2508,6 @@ describe('MultiColumnSorting', () => {
   describe('Sorting configuration validation', () => {
     describe('should not change internal state of sorting when wrong configuration was provided', () => {
       it('when too low column index was passed to the initial config', () => {
-        const warnSpy = spyOn(console, 'warn');
-
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2528,12 +2524,9 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
-        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when too high column index was passed to the initial config', () => {
-        const warnSpy = spyOn(console, 'warn');
-
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2550,12 +2543,9 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
-        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when not proper sort order was passed to the initial config', () => {
-        const warnSpy = spyOn(console, 'warn');
-
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2572,12 +2562,9 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
-        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when missed sort order was passed to the initial config', () => {
-        const warnSpy = spyOn(console, 'warn');
-
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2593,12 +2580,9 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
-        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when missed column index was passed to the initial config', () => {
-        const warnSpy = spyOn(console, 'warn');
-
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2614,12 +2598,9 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
-        expect(warnSpy).toHaveBeenCalled();
       });
 
       it('when the same column index was passed twice to the initial config', () => {
-        const warnSpy = spyOn(console, 'warn');
-
         handsontable({
           data: createSpreadsheetData(10, 10),
           colHeaders: true,
@@ -2636,7 +2617,6 @@ describe('MultiColumnSorting', () => {
         });
 
         expect(getPlugin('multiColumnSorting').getSortConfig()).toEqual([]);
-        expect(warnSpy).toHaveBeenCalled();
       });
     });
   });
