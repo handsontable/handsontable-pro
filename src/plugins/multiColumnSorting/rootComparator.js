@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { getCompareFunctionFactory, DO_NOT_SWAP } from 'handsontable/plugins/columnSorting/sortingService';
+import { getCompareFunctionFactory, DO_NOT_SWAP } from 'handsontable/plugins/columnSorting/sortService';
 
 /**
  * Sort comparator handled by conventional sort algorithm.
@@ -9,7 +9,7 @@ import { getCompareFunctionFactory, DO_NOT_SWAP } from 'handsontable/plugins/col
  * @param {Array} columnMeta Column meta objects.
  * @returns {Function}
  */
-export function mainSortComparator(sortingOrders, columnMetas) {
+export function rootComparator(sortingOrders, columnMetas) {
   return function(rowIndexWithValues, nextRowIndexWithValues) {
     // We sort array of arrays. Single array is in form [rowIndex, ...values].
     // We compare just values, stored at second index of array.
@@ -21,8 +21,9 @@ export function mainSortComparator(sortingOrders, columnMetas) {
       const columnMeta = columnMetas[column];
       const value = values[column];
       const nextValue = nextValues[column];
-      const compareFunctionFactory = getCompareFunctionFactory(columnMeta, columnMeta.multiColumnSorting);
-      const compareResult = compareFunctionFactory(sortingOrder, columnMeta, columnMeta.multiColumnSorting)(value, nextValue);
+      const pluginSettings = columnMeta.multiColumnSorting;
+      const compareFunctionFactory = pluginSettings.compareFunctionFactory ? pluginSettings.compareFunctionFactory : getCompareFunctionFactory(columnMeta.type);
+      const compareResult = compareFunctionFactory(sortingOrder, columnMeta, pluginSettings)(value, nextValue);
 
       if (compareResult === DO_NOT_SWAP) {
         const nextSortedColumn = column + 1;
