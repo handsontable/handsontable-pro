@@ -10,7 +10,7 @@ const COLUMN_ORDER_PREFIX = 'sort';
  * @param {Boolean} showSortIndicator Indicates if indicator should be shown for the particular column.
  * @returns {Array} Array of CSS classes.
  */
-export function getAddedClasses(columnStatesManager, column, showSortIndicator) {
+export function getClassesToAdd(columnStatesManager, column, showSortIndicator) {
   const cssClasses = [];
 
   if (showSortIndicator === false) {
@@ -30,7 +30,7 @@ export function getAddedClasses(columnStatesManager, column, showSortIndicator) 
  * @param {HTMLElement} htmlElement
  * @returns {Array} Array of CSS classes.
  */
-export function getRemovedClasses(htmlElement) {
+export function getClassedToRemove(htmlElement) {
   const cssClasses = htmlElement.className.split(' ');
   const sortSequenceRegExp = new RegExp(`^${COLUMN_ORDER_PREFIX}-[0-9]{1,2}$`);
 

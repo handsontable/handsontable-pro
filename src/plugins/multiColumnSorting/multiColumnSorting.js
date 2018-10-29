@@ -1,12 +1,12 @@
 import ColumnSorting from 'handsontable/plugins/columnSorting/columnSorting';
-import { warnAboutPluginsConflict } from 'handsontable/plugins/columnSorting/utils';
 import { registerMainSortComparator } from 'handsontable/plugins/columnSorting/sortingService';
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { addClass, removeClass } from 'handsontable/helpers/dom/element';
 import { isUndefined } from 'handsontable/helpers/mixed';
 import { mainSortComparator } from './mainSortComparator';
-import { getAddedClasses, getRemovedClasses } from './domHelpers';
+import { warnAboutPluginsConflict } from './utils';
+import { getClassesToAdd, getClassedToRemove } from './domHelpers';
 import './multiColumnSorting.css';
 
 const APPEND_COLUMN_CONFIG_STRATEGY = 'append';
@@ -220,10 +220,10 @@ class MultiColumnSorting extends ColumnSorting {
   updateHeaderClasses(headerSpanElement, ...args) {
     super.updateHeaderClasses(headerSpanElement, ...args);
 
-    removeClass(headerSpanElement, getRemovedClasses(headerSpanElement));
+    removeClass(headerSpanElement, getClassedToRemove(headerSpanElement));
 
     if (this.enabled !== false) {
-      addClass(headerSpanElement, getAddedClasses(...args));
+      addClass(headerSpanElement, getClassesToAdd(...args));
     }
   }
 
