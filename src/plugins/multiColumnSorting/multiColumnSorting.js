@@ -3,7 +3,6 @@ import { registerRootComparator } from 'handsontable/plugins/columnSorting/sortS
 import { registerPlugin } from 'handsontable/plugins';
 import { isPressedCtrlKey } from 'handsontable/utils/keyStateObserver';
 import { addClass, removeClass } from 'handsontable/helpers/dom/element';
-import { isUndefined } from 'handsontable/helpers/mixed';
 import { rootComparator } from './rootComparator';
 import { warnAboutPluginsConflict } from './utils';
 import { getClassesToAdd, getClassedToRemove } from './domHelpers';
