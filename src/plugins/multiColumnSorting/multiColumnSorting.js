@@ -65,7 +65,7 @@ registerRootComparator(PLUGIN_KEY, rootComparator);
  *   }
  * }]```
  *
- * @dependencies ObserveChanges moment
+ * @dependencies ObserveChanges
  */
 class MultiColumnSorting extends ColumnSorting {
   constructor(hotInstance) {

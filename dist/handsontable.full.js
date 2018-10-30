@@ -20,8 +20,8 @@
  * RELIABILITY AND PERFORMANCE WILL MEET YOUR REQUIREMENTS OR THAT THE OPERATION OF THE SOFTWARE WILL BE
  * UNINTERRUPTED OR ERROR FREE.
  * 
- * Version: 6.0.1
- * Release date: 02/10/2018 (built at 02/10/2018 13:01:10)
+ * Version: 6.1.1
+ * Release date: 23/10/2018 (built at 23/10/2018 12:28:31)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -1458,12 +1458,16 @@ function getTrimmingContainer(base) {
   while (el && el.style && document.body !== el) {
     if (el.style.overflow !== 'visible' && el.style.overflow !== '') {
       return el;
-    } else if (window.getComputedStyle) {
-      var computedStyle = window.getComputedStyle(el);
+    }
 
-      if (computedStyle.getPropertyValue('overflow') !== 'visible' && computedStyle.getPropertyValue('overflow') !== '') {
-        return el;
-      }
+    var computedStyle = getComputedStyle(el);
+    var allowedProperties = ['scroll', 'hidden', 'auto'];
+    var property = computedStyle.getPropertyValue('overflow');
+    var propertyY = computedStyle.getPropertyValue('overflow-y');
+    var propertyX = computedStyle.getPropertyValue('overflow-x');
+
+    if (allowedProperties.includes(property) || allowedProperties.includes(propertyY) || allowedProperties.includes(propertyX)) {
+      return el;
     }
 
     el = el.parentNode;
@@ -2555,7 +2559,7 @@ function _injectProductInfo(key, element) {
 
   if (trial || schemaValidity) {
     if (schemaValidity) {
-      var releaseTime = Math.floor((0, _moment2.default)('02/10/2018', 'DD/MM/YYYY').toDate().getTime() / 8.64e7);
+      var releaseTime = Math.floor((0, _moment2.default)('23/10/2018', 'DD/MM/YYYY').toDate().getTime() / 8.64e7);
       var keyGenTime = _extractTime(key);
 
       if (keyGenTime > 45000 || keyGenTime !== parseInt(keyGenTime, 10)) {
@@ -2613,228 +2617,6 @@ function _checkKeySchema(v) {
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.Viewport = exports.TableRenderer = exports.Table = exports.Settings = exports.Selection = exports.Scroll = exports.Overlays = exports.Event = exports.Core = exports.default = exports.Border = exports.TopLeftCornerOverlay = exports.TopOverlay = exports.LeftOverlay = exports.DebugOverlay = exports.RowFilter = exports.ColumnFilter = exports.CellRange = exports.CellCoords = exports.ViewportRowsCalculator = exports.ViewportColumnsCalculator = undefined;
-
-__webpack_require__(90);
-
-__webpack_require__(99);
-
-__webpack_require__(100);
-
-__webpack_require__(101);
-
-__webpack_require__(102);
-
-__webpack_require__(105);
-
-__webpack_require__(107);
-
-__webpack_require__(108);
-
-__webpack_require__(109);
-
-__webpack_require__(110);
-
-__webpack_require__(111);
-
-__webpack_require__(112);
-
-__webpack_require__(113);
-
-__webpack_require__(114);
-
-__webpack_require__(115);
-
-__webpack_require__(116);
-
-__webpack_require__(117);
-
-__webpack_require__(118);
-
-__webpack_require__(119);
-
-__webpack_require__(120);
-
-__webpack_require__(121);
-
-__webpack_require__(122);
-
-__webpack_require__(123);
-
-__webpack_require__(124);
-
-__webpack_require__(125);
-
-__webpack_require__(128);
-
-__webpack_require__(129);
-
-__webpack_require__(130);
-
-__webpack_require__(131);
-
-__webpack_require__(132);
-
-__webpack_require__(133);
-
-__webpack_require__(134);
-
-__webpack_require__(135);
-
-__webpack_require__(137);
-
-__webpack_require__(138);
-
-__webpack_require__(139);
-
-__webpack_require__(140);
-
-__webpack_require__(141);
-
-__webpack_require__(82);
-
-__webpack_require__(142);
-
-__webpack_require__(143);
-
-__webpack_require__(144);
-
-__webpack_require__(145);
-
-__webpack_require__(146);
-
-__webpack_require__(147);
-
-__webpack_require__(148);
-
-__webpack_require__(149);
-
-__webpack_require__(150);
-
-__webpack_require__(151);
-
-__webpack_require__(152);
-
-__webpack_require__(153);
-
-__webpack_require__(154);
-
-__webpack_require__(155);
-
-__webpack_require__(156);
-
-var _viewportColumns = __webpack_require__(194);
-
-var _viewportColumns2 = _interopRequireDefault(_viewportColumns);
-
-var _viewportRows = __webpack_require__(195);
-
-var _viewportRows2 = _interopRequireDefault(_viewportRows);
-
-var _coords = __webpack_require__(64);
-
-var _coords2 = _interopRequireDefault(_coords);
-
-var _range = __webpack_require__(196);
-
-var _range2 = _interopRequireDefault(_range);
-
-var _column = __webpack_require__(197);
-
-var _column2 = _interopRequireDefault(_column);
-
-var _row = __webpack_require__(198);
-
-var _row2 = _interopRequireDefault(_row);
-
-var _debug = __webpack_require__(507);
-
-var _debug2 = _interopRequireDefault(_debug);
-
-var _left = __webpack_require__(509);
-
-var _left2 = _interopRequireDefault(_left);
-
-var _top = __webpack_require__(510);
-
-var _top2 = _interopRequireDefault(_top);
-
-var _topLeftCorner = __webpack_require__(511);
-
-var _topLeftCorner2 = _interopRequireDefault(_topLeftCorner);
-
-var _border = __webpack_require__(327);
-
-var _border2 = _interopRequireDefault(_border);
-
-var _core = __webpack_require__(199);
-
-var _core2 = _interopRequireDefault(_core);
-
-var _event = __webpack_require__(320);
-
-var _event2 = _interopRequireDefault(_event);
-
-var _overlays = __webpack_require__(321);
-
-var _overlays2 = _interopRequireDefault(_overlays);
-
-var _scroll = __webpack_require__(322);
-
-var _scroll2 = _interopRequireDefault(_scroll);
-
-var _selection = __webpack_require__(512);
-
-var _selection2 = _interopRequireDefault(_selection);
-
-var _settings = __webpack_require__(323);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-var _table = __webpack_require__(324);
-
-var _table2 = _interopRequireDefault(_table);
-
-var _tableRenderer = __webpack_require__(325);
-
-var _tableRenderer2 = _interopRequireDefault(_tableRenderer);
-
-var _viewport = __webpack_require__(326);
-
-var _viewport2 = _interopRequireDefault(_viewport);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.ViewportColumnsCalculator = _viewportColumns2.default;
-exports.ViewportRowsCalculator = _viewportRows2.default;
-exports.CellCoords = _coords2.default;
-exports.CellRange = _range2.default;
-exports.ColumnFilter = _column2.default;
-exports.RowFilter = _row2.default;
-exports.DebugOverlay = _debug2.default;
-exports.LeftOverlay = _left2.default;
-exports.TopOverlay = _top2.default;
-exports.TopLeftCornerOverlay = _topLeftCorner2.default;
-exports.Border = _border2.default;
-exports.default = _core2.default;
-exports.Core = _core2.default;
-exports.Event = _event2.default;
-exports.Overlays = _overlays2.default;
-exports.Scroll = _scroll2.default;
-exports.Selection = _selection2.default;
-exports.Settings = _settings2.default;
-exports.Table = _table2.default;
-exports.TableRenderer = _tableRenderer2.default;
-exports.Viewport = _viewport2.default;
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3148,6 +2930,238 @@ function getListenersCounter() {
 }
 
 /***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Viewport = exports.TableRenderer = exports.Table = exports.Settings = exports.Selection = exports.Scroll = exports.Overlays = exports.Event = exports.Core = exports.default = exports.Border = exports.BottomLeftCornerOverlay = exports.BottomOverlay = exports.TopLeftCornerOverlay = exports.TopOverlay = exports.LeftOverlay = exports.DebugOverlay = exports.RowFilter = exports.ColumnFilter = exports.CellRange = exports.CellCoords = exports.ViewportRowsCalculator = exports.ViewportColumnsCalculator = undefined;
+
+__webpack_require__(90);
+
+__webpack_require__(99);
+
+__webpack_require__(100);
+
+__webpack_require__(101);
+
+__webpack_require__(102);
+
+__webpack_require__(105);
+
+__webpack_require__(107);
+
+__webpack_require__(108);
+
+__webpack_require__(109);
+
+__webpack_require__(110);
+
+__webpack_require__(111);
+
+__webpack_require__(112);
+
+__webpack_require__(113);
+
+__webpack_require__(114);
+
+__webpack_require__(115);
+
+__webpack_require__(116);
+
+__webpack_require__(117);
+
+__webpack_require__(118);
+
+__webpack_require__(119);
+
+__webpack_require__(120);
+
+__webpack_require__(121);
+
+__webpack_require__(122);
+
+__webpack_require__(123);
+
+__webpack_require__(124);
+
+__webpack_require__(125);
+
+__webpack_require__(128);
+
+__webpack_require__(129);
+
+__webpack_require__(130);
+
+__webpack_require__(131);
+
+__webpack_require__(132);
+
+__webpack_require__(133);
+
+__webpack_require__(134);
+
+__webpack_require__(135);
+
+__webpack_require__(137);
+
+__webpack_require__(138);
+
+__webpack_require__(139);
+
+__webpack_require__(140);
+
+__webpack_require__(141);
+
+__webpack_require__(82);
+
+__webpack_require__(142);
+
+__webpack_require__(143);
+
+__webpack_require__(144);
+
+__webpack_require__(145);
+
+__webpack_require__(146);
+
+__webpack_require__(147);
+
+__webpack_require__(148);
+
+__webpack_require__(149);
+
+__webpack_require__(150);
+
+__webpack_require__(151);
+
+__webpack_require__(152);
+
+__webpack_require__(153);
+
+__webpack_require__(154);
+
+__webpack_require__(155);
+
+__webpack_require__(156);
+
+var _viewportColumns = __webpack_require__(194);
+
+var _viewportColumns2 = _interopRequireDefault(_viewportColumns);
+
+var _viewportRows = __webpack_require__(195);
+
+var _viewportRows2 = _interopRequireDefault(_viewportRows);
+
+var _coords = __webpack_require__(64);
+
+var _coords2 = _interopRequireDefault(_coords);
+
+var _range = __webpack_require__(196);
+
+var _range2 = _interopRequireDefault(_range);
+
+var _column = __webpack_require__(197);
+
+var _column2 = _interopRequireDefault(_column);
+
+var _row = __webpack_require__(198);
+
+var _row2 = _interopRequireDefault(_row);
+
+var _debug = __webpack_require__(507);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+var _left = __webpack_require__(509);
+
+var _left2 = _interopRequireDefault(_left);
+
+var _top = __webpack_require__(510);
+
+var _top2 = _interopRequireDefault(_top);
+
+var _topLeftCorner = __webpack_require__(511);
+
+var _topLeftCorner2 = _interopRequireDefault(_topLeftCorner);
+
+var _bottom = __webpack_require__(512);
+
+var _bottom2 = _interopRequireDefault(_bottom);
+
+var _bottomLeftCorner = __webpack_require__(513);
+
+var _bottomLeftCorner2 = _interopRequireDefault(_bottomLeftCorner);
+
+var _border = __webpack_require__(327);
+
+var _border2 = _interopRequireDefault(_border);
+
+var _core = __webpack_require__(199);
+
+var _core2 = _interopRequireDefault(_core);
+
+var _event = __webpack_require__(320);
+
+var _event2 = _interopRequireDefault(_event);
+
+var _overlays = __webpack_require__(321);
+
+var _overlays2 = _interopRequireDefault(_overlays);
+
+var _scroll = __webpack_require__(322);
+
+var _scroll2 = _interopRequireDefault(_scroll);
+
+var _selection = __webpack_require__(514);
+
+var _selection2 = _interopRequireDefault(_selection);
+
+var _settings = __webpack_require__(323);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _table = __webpack_require__(324);
+
+var _table2 = _interopRequireDefault(_table);
+
+var _tableRenderer = __webpack_require__(325);
+
+var _tableRenderer2 = _interopRequireDefault(_tableRenderer);
+
+var _viewport = __webpack_require__(326);
+
+var _viewport2 = _interopRequireDefault(_viewport);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.ViewportColumnsCalculator = _viewportColumns2.default;
+exports.ViewportRowsCalculator = _viewportRows2.default;
+exports.CellCoords = _coords2.default;
+exports.CellRange = _range2.default;
+exports.ColumnFilter = _column2.default;
+exports.RowFilter = _row2.default;
+exports.DebugOverlay = _debug2.default;
+exports.LeftOverlay = _left2.default;
+exports.TopOverlay = _top2.default;
+exports.TopLeftCornerOverlay = _topLeftCorner2.default;
+exports.BottomOverlay = _bottom2.default;
+exports.BottomLeftCornerOverlay = _bottomLeftCorner2.default;
+exports.Border = _border2.default;
+exports.default = _core2.default;
+exports.Core = _core2.default;
+exports.Event = _event2.default;
+exports.Overlays = _overlays2.default;
+exports.Scroll = _scroll2.default;
+exports.Selection = _selection2.default;
+exports.Settings = _settings2.default;
+exports.Table = _table2.default;
+exports.TableRenderer = _tableRenderer2.default;
+exports.Viewport = _viewport2.default;
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3355,31 +3369,31 @@ var _staticRegister2 = __webpack_require__(49);
 
 var _staticRegister3 = _interopRequireDefault(_staticRegister2);
 
-var _cellDecorator = __webpack_require__(524);
+var _cellDecorator = __webpack_require__(526);
 
 var _cellDecorator2 = _interopRequireDefault(_cellDecorator);
 
-var _autocompleteRenderer = __webpack_require__(525);
+var _autocompleteRenderer = __webpack_require__(527);
 
 var _autocompleteRenderer2 = _interopRequireDefault(_autocompleteRenderer);
 
-var _checkboxRenderer = __webpack_require__(526);
+var _checkboxRenderer = __webpack_require__(528);
 
 var _checkboxRenderer2 = _interopRequireDefault(_checkboxRenderer);
 
-var _htmlRenderer = __webpack_require__(527);
+var _htmlRenderer = __webpack_require__(529);
 
 var _htmlRenderer2 = _interopRequireDefault(_htmlRenderer);
 
-var _numericRenderer = __webpack_require__(528);
+var _numericRenderer = __webpack_require__(530);
 
 var _numericRenderer2 = _interopRequireDefault(_numericRenderer);
 
-var _passwordRenderer = __webpack_require__(529);
+var _passwordRenderer = __webpack_require__(531);
 
 var _passwordRenderer2 = _interopRequireDefault(_passwordRenderer);
 
-var _textRenderer = __webpack_require__(530);
+var _textRenderer = __webpack_require__(532);
 
 var _textRenderer2 = _interopRequireDefault(_textRenderer);
 
@@ -3786,6 +3800,20 @@ var REGISTERED_HOOKS = [
  * @param {HTMLTableCellElement} TD Cell's TD (or TH) element.
  */
 'afterOnCellMouseDown',
+
+/**
+ * Fired after clicking on a cell or row/column header. In case the row/column header was clicked, the coordinate
+ * indexes are negative.
+ *
+ * For example clicking on the row header of cell (0, 0) results with `afterOnCellMouseUp` called
+ * with coordinates `{row: 0, col: -1}`.
+ *
+ * @event Hooks#afterOnCellMouseUp
+ * @param {Event} event `mouseup` event object.
+ * @param {CellCoords} coords Coordinates object containing the visual row and visual column indexes of the clicked cell.
+ * @param {HTMLTableCellElement} TD Cell's TD (or TH) element.
+ */
+'afterOnCellMouseUp',
 
 /**
  * Fired after clicking right mouse button on a cell or row/column header.
@@ -4195,6 +4223,18 @@ var REGISTERED_HOOKS = [
  *                            object allows or disallows changing the selection for the particular axies.
  */
 'beforeOnCellMouseDown',
+
+/**
+ * Fired after the user clicked a cell.
+ *
+ * @event Hooks#beforeOnCellMouseUp
+ * @param {Event} event The `mouseup` event object.
+ * @param {CellCoords} coords Cell coords object containing the visual coordinates of the clicked cell.
+ * @param {HTMLTableCellElement} TD TD element.
+ * @param {Object} controller An object with keys `row`, `column` and `cells` which contains boolean values. This
+ *                            object allows or disallows changing the selection for the particular axies.
+ */
+'beforeOnCellMouseUp',
 
 /**
  * Fired after the user clicked a cell, but before all the calculations related with it.
@@ -5723,15 +5763,15 @@ var _autocompleteEditor = __webpack_require__(328);
 
 var _autocompleteEditor2 = _interopRequireDefault(_autocompleteEditor);
 
-var _checkboxEditor = __webpack_require__(514);
+var _checkboxEditor = __webpack_require__(516);
 
 var _checkboxEditor2 = _interopRequireDefault(_checkboxEditor);
 
-var _dateEditor = __webpack_require__(515);
+var _dateEditor = __webpack_require__(517);
 
 var _dateEditor2 = _interopRequireDefault(_dateEditor);
 
-var _dropdownEditor = __webpack_require__(520);
+var _dropdownEditor = __webpack_require__(522);
 
 var _dropdownEditor2 = _interopRequireDefault(_dropdownEditor);
 
@@ -5739,15 +5779,15 @@ var _handsontableEditor = __webpack_require__(329);
 
 var _handsontableEditor2 = _interopRequireDefault(_handsontableEditor);
 
-var _numericEditor = __webpack_require__(521);
+var _numericEditor = __webpack_require__(523);
 
 var _numericEditor2 = _interopRequireDefault(_numericEditor);
 
-var _passwordEditor = __webpack_require__(522);
+var _passwordEditor = __webpack_require__(524);
 
 var _passwordEditor2 = _interopRequireDefault(_passwordEditor);
 
-var _selectEditor = __webpack_require__(523);
+var _selectEditor = __webpack_require__(525);
 
 var _selectEditor2 = _interopRequireDefault(_selectEditor);
 
@@ -11046,7 +11086,7 @@ var _object = __webpack_require__(1);
 
 var _array = __webpack_require__(0);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -12001,19 +12041,19 @@ var _staticRegister2 = __webpack_require__(49);
 
 var _staticRegister3 = _interopRequireDefault(_staticRegister2);
 
-var _autocompleteValidator = __webpack_require__(531);
+var _autocompleteValidator = __webpack_require__(533);
 
 var _autocompleteValidator2 = _interopRequireDefault(_autocompleteValidator);
 
-var _dateValidator = __webpack_require__(532);
+var _dateValidator = __webpack_require__(534);
 
 var _dateValidator2 = _interopRequireDefault(_dateValidator);
 
-var _numericValidator = __webpack_require__(533);
+var _numericValidator = __webpack_require__(535);
 
 var _numericValidator2 = _interopRequireDefault(_numericValidator);
 
-var _timeValidator = __webpack_require__(534);
+var _timeValidator = __webpack_require__(536);
 
 var _timeValidator2 = _interopRequireDefault(_timeValidator);
 
@@ -12066,7 +12106,7 @@ exports.ITEMS = exports.UNDO = exports.SEPARATOR = exports.ROW_BELOW = exports.R
 
 var _predefinedItems2;
 
-var _alignment = __webpack_require__(584);
+var _alignment = __webpack_require__(586);
 
 Object.defineProperty(exports, 'ALIGNMENT', {
   enumerable: true,
@@ -12075,7 +12115,7 @@ Object.defineProperty(exports, 'ALIGNMENT', {
   }
 });
 
-var _clearColumn = __webpack_require__(585);
+var _clearColumn = __webpack_require__(587);
 
 Object.defineProperty(exports, 'CLEAR_COLUMN', {
   enumerable: true,
@@ -12084,7 +12124,7 @@ Object.defineProperty(exports, 'CLEAR_COLUMN', {
   }
 });
 
-var _columnLeft = __webpack_require__(586);
+var _columnLeft = __webpack_require__(588);
 
 Object.defineProperty(exports, 'COLUMN_LEFT', {
   enumerable: true,
@@ -12093,7 +12133,7 @@ Object.defineProperty(exports, 'COLUMN_LEFT', {
   }
 });
 
-var _columnRight = __webpack_require__(587);
+var _columnRight = __webpack_require__(589);
 
 Object.defineProperty(exports, 'COLUMN_RIGHT', {
   enumerable: true,
@@ -12102,7 +12142,7 @@ Object.defineProperty(exports, 'COLUMN_RIGHT', {
   }
 });
 
-var _readOnly = __webpack_require__(588);
+var _readOnly = __webpack_require__(590);
 
 Object.defineProperty(exports, 'READ_ONLY', {
   enumerable: true,
@@ -12111,7 +12151,7 @@ Object.defineProperty(exports, 'READ_ONLY', {
   }
 });
 
-var _redo = __webpack_require__(589);
+var _redo = __webpack_require__(591);
 
 Object.defineProperty(exports, 'REDO', {
   enumerable: true,
@@ -12120,7 +12160,7 @@ Object.defineProperty(exports, 'REDO', {
   }
 });
 
-var _removeColumn = __webpack_require__(590);
+var _removeColumn = __webpack_require__(592);
 
 Object.defineProperty(exports, 'REMOVE_COLUMN', {
   enumerable: true,
@@ -12129,7 +12169,7 @@ Object.defineProperty(exports, 'REMOVE_COLUMN', {
   }
 });
 
-var _removeRow = __webpack_require__(591);
+var _removeRow = __webpack_require__(593);
 
 Object.defineProperty(exports, 'REMOVE_ROW', {
   enumerable: true,
@@ -12138,7 +12178,7 @@ Object.defineProperty(exports, 'REMOVE_ROW', {
   }
 });
 
-var _rowAbove = __webpack_require__(592);
+var _rowAbove = __webpack_require__(594);
 
 Object.defineProperty(exports, 'ROW_ABOVE', {
   enumerable: true,
@@ -12147,7 +12187,7 @@ Object.defineProperty(exports, 'ROW_ABOVE', {
   }
 });
 
-var _rowBelow = __webpack_require__(593);
+var _rowBelow = __webpack_require__(595);
 
 Object.defineProperty(exports, 'ROW_BELOW', {
   enumerable: true,
@@ -12165,7 +12205,7 @@ Object.defineProperty(exports, 'SEPARATOR', {
   }
 });
 
-var _undo = __webpack_require__(594);
+var _undo = __webpack_require__(596);
 
 Object.defineProperty(exports, 'UNDO', {
   enumerable: true,
@@ -12329,7 +12369,7 @@ var _hotFormulaParser = __webpack_require__(69);
 
 var _array = __webpack_require__(0);
 
-var _base = __webpack_require__(481);
+var _base = __webpack_require__(482);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -13512,7 +13552,7 @@ exports.f = {}.propertyIsEnumerable;
 exports.__esModule = true;
 exports.EditorState = undefined;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _mixed = __webpack_require__(8);
 
@@ -13947,7 +13987,7 @@ exports.__esModule = true;
 
 var _element = __webpack_require__(2);
 
-var _autoResize = __webpack_require__(513);
+var _autoResize = __webpack_require__(515);
 
 var _autoResize2 = _interopRequireDefault(_autoResize);
 
@@ -13955,7 +13995,7 @@ var _baseEditor = __webpack_require__(63);
 
 var _baseEditor2 = _interopRequireDefault(_baseEditor);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -14258,11 +14298,11 @@ TextEditor.prototype.refreshDimensions = function () {
 
   var currentOffset = (0, _element.offset)(this.TD);
   var containerOffset = (0, _element.offset)(this.instance.rootElement);
-  var scrollableContainer = this.instance.view.wt.wtOverlays.topOverlay.mainTableScrollableElement;
+  var scrollableContainerTop = this.instance.view.wt.wtOverlays.topOverlay.mainTableScrollableElement;
+  var scrollableContainerLeft = this.instance.view.wt.wtOverlays.leftOverlay.mainTableScrollableElement;
   var totalRowsCount = this.instance.countRows();
-  var containerScrollTop = scrollableContainer !== window ? scrollableContainer.scrollTop : 0;
-  var containerScrollLeft = scrollableContainer !== window ? scrollableContainer.scrollLeft : 0;
-
+  var containerScrollTop = scrollableContainerTop !== window ? scrollableContainerTop.scrollTop : 0;
+  var containerScrollLeft = scrollableContainerLeft !== window ? scrollableContainerLeft.scrollLeft : 0;
   var editorSection = this.checkEditorSection();
 
   var scrollTop = ['', 'left'].includes(editorSection) ? containerScrollTop : 0;
@@ -14328,8 +14368,8 @@ TextEditor.prototype.refreshDimensions = function () {
   var cellLeftOffset = this.TD.offsetLeft + firstColumnOffset - horizontalScrollPosition;
 
   var width = (0, _element.innerWidth)(this.TD) - 8;
-  var actualVerticalScrollbarWidth = (0, _element.hasVerticalScrollbar)(scrollableContainer) ? scrollbarWidth : 0;
-  var actualHorizontalScrollbarWidth = (0, _element.hasHorizontalScrollbar)(scrollableContainer) ? scrollbarWidth : 0;
+  var actualVerticalScrollbarWidth = (0, _element.hasVerticalScrollbar)(scrollableContainerTop) ? scrollbarWidth : 0;
+  var actualHorizontalScrollbarWidth = (0, _element.hasHorizontalScrollbar)(scrollableContainerLeft) ? scrollbarWidth : 0;
   var maxWidth = this.instance.view.maximumVisibleElementWidth(cellLeftOffset) - 9 - actualVerticalScrollbarWidth;
   var height = this.TD.scrollHeight + 1;
   var maxHeight = Math.max(this.instance.view.maximumVisibleElementHeight(cellTopOffset) - actualHorizontalScrollbarWidth, 23);
@@ -14613,7 +14653,7 @@ var _localHooks = __webpack_require__(21);
 
 var _localHooks2 = _interopRequireDefault(_localHooks);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -32267,7 +32307,7 @@ var _staticRegister2 = __webpack_require__(49);
 
 var _staticRegister3 = _interopRequireDefault(_staticRegister2);
 
-var _enUS = __webpack_require__(550);
+var _enUS = __webpack_require__(552);
 
 var _enUS2 = _interopRequireDefault(_enUS);
 
@@ -32385,7 +32425,7 @@ registerLanguage(_enUS2.default);
 exports.__esModule = true;
 exports.stopObserving = exports.startObserving = exports.isPressedCtrlKey = exports.isPressed = exports._resetState = exports._getRefCount = undefined;
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -32508,7 +32548,7 @@ exports.transformSelectionToColumnDistance = transformSelectionToColumnDistance;
 exports.transformSelectionToRowDistance = transformSelectionToRowDistance;
 exports.isValidCoord = isValidCoord;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _array = __webpack_require__(0);
 
@@ -32766,15 +32806,15 @@ exports.__esModule = true;
 exports.FIRST_AFTER_SECOND = exports.FIRST_BEFORE_SECOND = exports.DO_NOT_SWAP = undefined;
 exports.mainSortComparator = mainSortComparator;
 
-var _date = __webpack_require__(573);
+var _date = __webpack_require__(575);
 
 var _date2 = _interopRequireDefault(_date);
 
-var _default = __webpack_require__(574);
+var _default = __webpack_require__(576);
 
 var _default2 = _interopRequireDefault(_default);
 
-var _numeric = __webpack_require__(575);
+var _numeric = __webpack_require__(577);
 
 var _numeric2 = _interopRequireDefault(_numeric);
 
@@ -32846,6 +32886,95 @@ function mainSortComparator(sortingOrders, columnMetas) {
 
 
 exports.__esModule = true;
+exports.FIRST_AFTER_SECOND = exports.FIRST_BEFORE_SECOND = exports.DO_NOT_SWAP = undefined;
+exports.mainSortComparator = mainSortComparator;
+
+var _date = __webpack_require__(662);
+
+var _date2 = _interopRequireDefault(_date);
+
+var _default = __webpack_require__(663);
+
+var _default2 = _interopRequireDefault(_default);
+
+var _numeric = __webpack_require__(664);
+
+var _numeric2 = _interopRequireDefault(_numeric);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
+
+var DO_NOT_SWAP = exports.DO_NOT_SWAP = 0;
+var FIRST_BEFORE_SECOND = exports.FIRST_BEFORE_SECOND = -1;
+var FIRST_AFTER_SECOND = exports.FIRST_AFTER_SECOND = 1;
+
+/**
+ * Gets sort function for the particular column basing on its column meta.
+ *
+ * @param {Array} columnMeta Column meta object.
+ * @returns {Function}
+ */
+function getCompareFunctionFactory(columnMeta) {
+  var columnSettings = columnMeta.multiColumnSorting;
+
+  if (columnSettings.compareFunctionFactory) {
+    return columnSettings.compareFunctionFactory;
+  } else if (columnMeta.type === 'date') {
+    return _date2.default;
+  } else if (columnMeta.type === 'numeric') {
+    return _numeric2.default;
+  }
+
+  return _default2.default;
+}
+
+/**
+ * Sort comparator handled by conventional sort algorithm.
+ *
+ * @param {Array} sortOrders Sort orders (`asc` for ascending, `desc` for descending).
+ * @param {Array} columnMeta Column meta objects.
+ * @returns {Function}
+ */
+function mainSortComparator(sortingOrders, columnMetas) {
+  return function (rowIndexWithValues, nextRowIndexWithValues) {
+    // We sort array of arrays. Single array is in form [rowIndex, ...values].
+    // We compare just values, stored at second index of array.
+    var _rowIndexWithValues = _toArray(rowIndexWithValues),
+        values = _rowIndexWithValues.slice(1);
+
+    var _nextRowIndexWithValu = _toArray(nextRowIndexWithValues),
+        nextValues = _nextRowIndexWithValu.slice(1);
+
+    return function getCompareResult(column) {
+      var sortingOrder = sortingOrders[column];
+      var columnMeta = columnMetas[column];
+      var value = values[column];
+      var nextValue = nextValues[column];
+      var compareFunctionFactory = getCompareFunctionFactory(columnMeta);
+      var compareResult = compareFunctionFactory(sortingOrder, columnMeta)(value, nextValue);
+
+      if (compareResult === DO_NOT_SWAP) {
+        var nextSortedColumn = column + 1;
+
+        if (typeof columnMetas[nextSortedColumn] !== 'undefined') {
+          return getCompareResult(nextSortedColumn);
+        }
+      }
+
+      return compareResult;
+    }(0);
+  };
+}
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -32857,7 +32986,7 @@ var _localHooks = __webpack_require__(21);
 
 var _localHooks2 = _interopRequireDefault(_localHooks);
 
-var _stateSaver = __webpack_require__(660);
+var _stateSaver = __webpack_require__(671);
 
 var _stateSaver2 = _interopRequireDefault(_stateSaver);
 
@@ -32956,95 +33085,6 @@ var BaseComponent = function () {
 (0, _object.mixin)(BaseComponent, _stateSaver2.default);
 
 exports.default = BaseComponent;
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.FIRST_AFTER_SECOND = exports.FIRST_BEFORE_SECOND = exports.DO_NOT_SWAP = undefined;
-exports.mainSortComparator = mainSortComparator;
-
-var _date = __webpack_require__(706);
-
-var _date2 = _interopRequireDefault(_date);
-
-var _default = __webpack_require__(707);
-
-var _default2 = _interopRequireDefault(_default);
-
-var _numeric = __webpack_require__(708);
-
-var _numeric2 = _interopRequireDefault(_numeric);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
-
-var DO_NOT_SWAP = exports.DO_NOT_SWAP = 0;
-var FIRST_BEFORE_SECOND = exports.FIRST_BEFORE_SECOND = -1;
-var FIRST_AFTER_SECOND = exports.FIRST_AFTER_SECOND = 1;
-
-/**
- * Gets sort function for the particular column basing on its column meta.
- *
- * @param {Array} columnMeta Column meta object.
- * @returns {Function}
- */
-function getCompareFunctionFactory(columnMeta) {
-  var columnSettings = columnMeta.multiColumnSorting;
-
-  if (columnSettings.compareFunctionFactory) {
-    return columnSettings.compareFunctionFactory;
-  } else if (columnMeta.type === 'date') {
-    return _date2.default;
-  } else if (columnMeta.type === 'numeric') {
-    return _numeric2.default;
-  }
-
-  return _default2.default;
-}
-
-/**
- * Sort comparator handled by conventional sort algorithm.
- *
- * @param {Array} sortOrders Sort orders (`asc` for ascending, `desc` for descending).
- * @param {Array} columnMeta Column meta objects.
- * @returns {Function}
- */
-function mainSortComparator(sortingOrders, columnMetas) {
-  return function (rowIndexWithValues, nextRowIndexWithValues) {
-    // We sort array of arrays. Single array is in form [rowIndex, ...values].
-    // We compare just values, stored at second index of array.
-    var _rowIndexWithValues = _toArray(rowIndexWithValues),
-        values = _rowIndexWithValues.slice(1);
-
-    var _nextRowIndexWithValu = _toArray(nextRowIndexWithValues),
-        nextValues = _nextRowIndexWithValu.slice(1);
-
-    return function getCompareResult(column) {
-      var sortingOrder = sortingOrders[column];
-      var columnMeta = columnMetas[column];
-      var value = values[column];
-      var nextValue = nextValues[column];
-      var compareFunctionFactory = getCompareFunctionFactory(columnMeta);
-      var compareResult = compareFunctionFactory(sortingOrder, columnMeta)(value, nextValue);
-
-      if (compareResult === DO_NOT_SWAP) {
-        var nextSortedColumn = column + 1;
-
-        if (typeof columnMetas[nextSortedColumn] !== 'undefined') {
-          return getCompareResult(nextSortedColumn);
-        }
-      }
-
-      return compareResult;
-    }(0);
-  };
-}
 
 /***/ }),
 /* 90 */
@@ -34946,39 +34986,39 @@ var _renderers = __webpack_require__(15);
 
 var _validators = __webpack_require__(42);
 
-var _autocompleteType = __webpack_require__(535);
+var _autocompleteType = __webpack_require__(537);
 
 var _autocompleteType2 = _interopRequireDefault(_autocompleteType);
 
-var _checkboxType = __webpack_require__(536);
+var _checkboxType = __webpack_require__(538);
 
 var _checkboxType2 = _interopRequireDefault(_checkboxType);
 
-var _dateType = __webpack_require__(537);
+var _dateType = __webpack_require__(539);
 
 var _dateType2 = _interopRequireDefault(_dateType);
 
-var _dropdownType = __webpack_require__(538);
+var _dropdownType = __webpack_require__(540);
 
 var _dropdownType2 = _interopRequireDefault(_dropdownType);
 
-var _handsontableType = __webpack_require__(539);
+var _handsontableType = __webpack_require__(541);
 
 var _handsontableType2 = _interopRequireDefault(_handsontableType);
 
-var _numericType = __webpack_require__(540);
+var _numericType = __webpack_require__(542);
 
 var _numericType2 = _interopRequireDefault(_numericType);
 
-var _passwordType = __webpack_require__(541);
+var _passwordType = __webpack_require__(543);
 
 var _passwordType2 = _interopRequireDefault(_passwordType);
 
-var _textType = __webpack_require__(542);
+var _textType = __webpack_require__(544);
 
 var _textType2 = _interopRequireDefault(_textType);
 
-var _timeType = __webpack_require__(543);
+var _timeType = __webpack_require__(545);
 
 var _timeType2 = _interopRequireDefault(_timeType);
 
@@ -35075,15 +35115,15 @@ var _mixed = __webpack_require__(8);
 
 var _browser = __webpack_require__(50);
 
-var _dataMap = __webpack_require__(544);
+var _dataMap = __webpack_require__(546);
 
 var _dataMap2 = _interopRequireDefault(_dataMap);
 
-var _editorManager = __webpack_require__(547);
+var _editorManager = __webpack_require__(549);
 
 var _editorManager2 = _interopRequireDefault(_editorManager);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -35103,11 +35143,11 @@ var _string = __webpack_require__(32);
 
 var _number = __webpack_require__(4);
 
-var _tableView = __webpack_require__(548);
+var _tableView = __webpack_require__(550);
 
 var _tableView2 = _interopRequireDefault(_tableView);
 
-var _dataSource = __webpack_require__(549);
+var _dataSource = __webpack_require__(551);
 
 var _dataSource2 = _interopRequireDefault(_dataSource);
 
@@ -35117,7 +35157,7 @@ var _recordTranslator = __webpack_require__(55);
 
 var _rootInstance = __webpack_require__(457);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _pluginHooks = __webpack_require__(17);
 
@@ -36076,7 +36116,9 @@ function Core(rootElement, userSettings) {
                 changes.splice(index, 1); // cancel the change
                 cellPropertiesReference.valid = true; // we cancelled the change, so cell value is still valid
                 var cell = instance.getCell(cellPropertiesReference.visualRow, cellPropertiesReference.visualCol);
-                (0, _element.removeClass)(cell, instance.getSettings().invalidCellClassName);
+                if (cell !== null) {
+                  (0, _element.removeClass)(cell, instance.getSettings().invalidCellClassName);
+                }
                 // index -= 1;
               }
               waitingForValidator.removeValidatorFormQueue();
@@ -39414,11 +39456,11 @@ var _element = __webpack_require__(2);
 
 var _array = __webpack_require__(0);
 
-var _cursor = __webpack_require__(595);
+var _cursor = __webpack_require__(597);
 
 var _cursor2 = _interopRequireDefault(_cursor);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -40302,7 +40344,7 @@ var _templateObject = _taggedTemplateLiteral(['The merged cell declared with {ro
     _templateObject3 = _taggedTemplateLiteral(['The merged cell declared at [', ', ', '] has both "rowspan" \n     and "colspan" declared as "1", which makes it a single cell. It cannot be added to the collection.'], ['The merged cell declared at [', ', ', '] has both "rowspan" \n     and "colspan" declared as "1", which makes it a single cell. It cannot be added to the collection.']),
     _templateObject4 = _taggedTemplateLiteral(['The merged cell declared at [', ', ', '] has "rowspan" or "colspan" declared as \n      "0", which is not supported. It cannot be added to the collection.'], ['The merged cell declared at [', ', ', '] has "rowspan" or "colspan" declared as \n      "0", which is not supported. It cannot be added to the collection.']);
 
-var _index = __webpack_require__(9);
+var _index = __webpack_require__(10);
 
 var _templateLiteralTag = __webpack_require__(26);
 
@@ -40686,57 +40728,57 @@ var _predefinedItems = __webpack_require__(43);
 
 var _conditionRegisterer = __webpack_require__(11);
 
-var _none = __webpack_require__(661);
+var _none = __webpack_require__(672);
 
-var _empty = __webpack_require__(471);
+var _empty = __webpack_require__(472);
 
-var _notEmpty = __webpack_require__(662);
+var _notEmpty = __webpack_require__(673);
 
-var _equal = __webpack_require__(472);
+var _equal = __webpack_require__(473);
 
-var _notEqual = __webpack_require__(663);
+var _notEqual = __webpack_require__(674);
 
-var _greaterThan = __webpack_require__(664);
+var _greaterThan = __webpack_require__(675);
 
-var _greaterThanOrEqual = __webpack_require__(665);
+var _greaterThanOrEqual = __webpack_require__(676);
 
-var _lessThan = __webpack_require__(666);
+var _lessThan = __webpack_require__(677);
 
-var _lessThanOrEqual = __webpack_require__(667);
+var _lessThanOrEqual = __webpack_require__(678);
 
-var _between = __webpack_require__(473);
+var _between = __webpack_require__(474);
 
-var _notBetween = __webpack_require__(668);
+var _notBetween = __webpack_require__(679);
 
-var _beginsWith = __webpack_require__(669);
+var _beginsWith = __webpack_require__(680);
 
-var _endsWith = __webpack_require__(670);
+var _endsWith = __webpack_require__(681);
 
-var _contains = __webpack_require__(476);
+var _contains = __webpack_require__(477);
 
-var _notContains = __webpack_require__(671);
+var _notContains = __webpack_require__(682);
 
-var _before = __webpack_require__(475);
+var _before = __webpack_require__(476);
 
-var _after = __webpack_require__(474);
+var _after = __webpack_require__(475);
 
-var _tomorrow = __webpack_require__(672);
+var _tomorrow = __webpack_require__(683);
 
-var _today = __webpack_require__(673);
+var _today = __webpack_require__(684);
 
-var _yesterday = __webpack_require__(674);
+var _yesterday = __webpack_require__(685);
 
-var _byValue = __webpack_require__(675);
+var _byValue = __webpack_require__(686);
 
-var _true = __webpack_require__(676);
+var _true = __webpack_require__(687);
 
-var _false = __webpack_require__(677);
+var _false = __webpack_require__(688);
 
 var _conjunction = __webpack_require__(165);
 
-var _disjunction = __webpack_require__(477);
+var _disjunction = __webpack_require__(478);
 
-var _disjunctionWithExtraCondition = __webpack_require__(478);
+var _disjunctionWithExtraCondition = __webpack_require__(479);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -44509,7 +44551,7 @@ var _function = __webpack_require__(34);
 
 var _browser = __webpack_require__(50);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -44628,6 +44670,10 @@ function Event(instance) {
       // if not right mouse button
       var cell = that.parentCell(event.realTarget);
 
+      if (cell.TD && that.instance.hasSetting('onCellMouseUp')) {
+        that.instance.getSetting('onCellMouseUp', event, cell.coords, cell.TD, that.instance);
+      }
+
       if (cell.TD === dblClickOrigin[0] && cell.TD === dblClickOrigin[1]) {
         if ((0, _element.hasClass)(event.realTarget, 'corner')) {
           that.instance.getSetting('onCellCornerDblClick', event, cell.coords, cell.TD, that.instance);
@@ -44638,15 +44684,13 @@ function Event(instance) {
         dblClickOrigin[0] = null;
         dblClickOrigin[1] = null;
       } else if (cell.TD === dblClickOrigin[0]) {
-        that.instance.getSetting('onCellMouseUp', event, cell.coords, cell.TD, that.instance);
-
         dblClickOrigin[1] = cell.TD;
+
         clearTimeout(that.dblClickTimeout[1]);
+
         that.dblClickTimeout[1] = setTimeout(function () {
           dblClickOrigin[1] = null;
         }, 500);
-      } else if (cell.TD && that.instance.hasSetting('onCellMouseUp')) {
-        that.instance.getSetting('onCellMouseUp', event, cell.coords, cell.TD, that.instance);
       }
     }
   };
@@ -44784,7 +44828,7 @@ var _unicode = __webpack_require__(18);
 
 var _browser = __webpack_require__(50);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -47562,7 +47606,7 @@ var _element = __webpack_require__(2);
 
 var _object = __webpack_require__(1);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -48123,7 +48167,7 @@ var _object = __webpack_require__(1);
 
 var _browser = __webpack_require__(50);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -50343,7 +50387,7 @@ exports.default = HandsontableEditor;
 /* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var require;var require;!function(e){if(true)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).numbro=e()}}(function(){return function e(t,n,r){function i(o,u){if(!n[o]){if(!t[o]){var s="function"==typeof require&&require;if(!u&&s)return require(o,!0);if(a)return a(o,!0);var c=new Error("Cannot find module '"+o+"'");throw c.code="MODULE_NOT_FOUND",c}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return i(n||e)},l,l.exports,e,t,n,r)}return n[o].exports}for(var a="function"==typeof require&&require,o=0;o<r.length;o++)i(r[o]);return i}({1:[function(e,t,n){!function(e){"use strict";function n(e){function t(e,n){var r,i,a,o,u,s,c=this;if(!(c instanceof t))return q&&_(26,"constructor call without new",e),new t(e,n);if(null!=n&&Z(n,2,64,T,"base")){if(n|=0,s=e+"",10==n)return c=new t(e instanceof t?e:s),A(c,C+c.e+1,R);if((o="number"==typeof e)&&0*e!=0||!new RegExp("^-?"+(r="["+b.slice(0,n)+"]+")+"(?:\\."+r+")?$",n<37?"i":"").test(s))return E(c,s,o,n);o?(c.s=1/e<0?(s=s.slice(1),-1):1,q&&s.replace(/^0\.0*|\./,"").length>15&&_(T,y,e),o=!1):c.s=45===s.charCodeAt(0)?(s=s.slice(1),-1):1,s=g(s,10,n,c.s)}else{if(e instanceof t)return c.s=e.s,c.e=e.e,c.c=(e=e.c)?e.slice():e,void(T=0);if((o="number"==typeof e)&&0*e==0){if(c.s=1/e<0?(e=-e,-1):1,e===~~e){for(i=0,a=e;a>=10;a/=10,i++);return c.e=i,c.c=[e],void(T=0)}s=e+""}else{if(!p.test(s=e+""))return E(c,s,o);c.s=45===s.charCodeAt(0)?(s=s.slice(1),-1):1}}for((i=s.indexOf("."))>-1&&(s=s.replace(".","")),(a=s.search(/e/i))>0?(i<0&&(i=a),i+=+s.slice(a+1),s=s.substring(0,a)):i<0&&(i=s.length),a=0;48===s.charCodeAt(a);a++);for(u=s.length;48===s.charCodeAt(--u););if(s=s.slice(a,u+1))if(u=s.length,o&&q&&u>15&&(e>S||e!==h(e))&&_(T,y,c.s*e),(i=i-a-1)>V)c.c=c.e=null;else if(i<I)c.c=[c.e=0];else{if(c.e=i,c.c=[],a=(i+1)%x,i<0&&(a+=x),a<u){for(a&&c.c.push(+s.slice(0,a)),u-=x;a<u;)c.c.push(+s.slice(a,a+=x));s=s.slice(a),a=x-s.length}else a-=u;for(;a--;s+="0");c.c.push(+s)}else c.c=[c.e=0];T=0}function g(e,n,r,a){var o,u,c,f,g,p,d,h=e.indexOf("."),v=C,m=R;for(r<37&&(e=e.toLowerCase()),h>=0&&(c=W,W=0,e=e.replace(".",""),g=(d=new t(r)).pow(e.length-h),W=c,d.c=s(l(i(g.c),g.e),10,n),d.e=d.c.length),u=c=(p=s(e,r,n)).length;0==p[--c];p.pop());if(!p[0])return"0";if(h<0?--u:(g.c=p,g.e=u,g.s=a,p=(g=L(g,d,v,m,n)).c,f=g.r,u=g.e),o=u+v+1,h=p[o],c=n/2,f=f||o<0||null!=p[o+1],f=m<4?(null!=h||f)&&(0==m||m==(g.s<0?3:2)):h>c||h==c&&(4==m||f||6==m&&1&p[o-1]||m==(g.s<0?8:7)),o<1||!p[0])e=f?l("1",-v):"0";else{if(p.length=o,f)for(--n;++p[--o]>n;)p[o]=0,o||(++u,p=[1].concat(p));for(c=p.length;!p[--c];);for(h=0,e="";h<=c;e+=b.charAt(p[h++]));e=l(e,u)}return e}function F(e,n,r,a){var o,u,s,f,g;if(r=null!=r&&Z(r,0,8,a,m)?0|r:R,!e.c)return e.toString();if(o=e.c[0],s=e.e,null==n)g=i(e.c),g=19==a||24==a&&s<=$?c(g,s):l(g,s);else if(e=A(new t(e),n,r),u=e.e,g=i(e.c),f=g.length,19==a||24==a&&(n<=u||u<=$)){for(;f<n;g+="0",f++);g=c(g,u)}else if(n-=s,g=l(g,u),u+1>f){if(--n>0)for(g+=".";n--;g+="0");}else if((n+=u-f)>0)for(u+1==f&&(g+=".");n--;g+="0");return e.s<0&&o?"-"+g:g}function D(e,n){var r,i,a=0;for(u(e[0])&&(e=e[0]),r=new t(e[0]);++a<e.length;){if(!(i=new t(e[a])).s){r=i;break}n.call(r,i)&&(r=i)}return r}function B(e,t,n,r,i){return(e<t||e>n||e!=f(e))&&_(r,(i||"decimal places")+(e<t||e>n?" out of range":" not an integer"),e),!0}function k(e,t,n){for(var r=1,i=t.length;!t[--i];t.pop());for(i=t[0];i>=10;i/=10,r++);return(n=r+n*x-1)>V?e.c=e.e=null:n<I?e.c=[e.e=0]:(e.e=n,e.c=t),e}function _(e,t,n){var r=new Error(["new BigNumber","cmp","config","div","divToInt","eq","gt","gte","lt","lte","minus","mod","plus","precision","random","round","shift","times","toDigits","toExponential","toFixed","toFormat","toFraction","pow","toPrecision","toString","BigNumber"][e]+"() "+t+": "+n);throw r.name="BigNumber Error",T=0,r}function A(e,t,n,r){var i,a,o,u,s,c,l,f=e.c,g=N;if(f){e:{for(i=1,u=f[0];u>=10;u/=10,i++);if((a=t-i)<0)a+=x,o=t,l=(s=f[c=0])/g[i-o-1]%10|0;else if((c=d((a+1)/x))>=f.length){if(!r)break e;for(;f.length<=c;f.push(0));s=l=0,i=1,o=(a%=x)-x+1}else{for(s=u=f[c],i=1;u>=10;u/=10,i++);l=(o=(a%=x)-x+i)<0?0:s/g[i-o-1]%10|0}if(r=r||t<0||null!=f[c+1]||(o<0?s:s%g[i-o-1]),r=n<4?(l||r)&&(0==n||n==(e.s<0?3:2)):l>5||5==l&&(4==n||r||6==n&&(a>0?o>0?s/g[i-o]:0:f[c-1])%10&1||n==(e.s<0?8:7)),t<1||!f[0])return f.length=0,r?(t-=e.e+1,f[0]=g[(x-t%x)%x],e.e=-t||0):f[0]=e.e=0,e;if(0==a?(f.length=c,u=1,c--):(f.length=c+1,u=g[x-a],f[c]=o>0?h(s/g[i-o]%g[o])*u:0),r)for(;;){if(0==c){for(a=1,o=f[0];o>=10;o/=10,a++);for(o=f[0]+=u,u=1;o>=10;o/=10,u++);a!=u&&(e.e++,f[0]==w&&(f[0]=1));break}if(f[c]+=u,f[c]!=w)break;f[c--]=0,u=1}for(a=f.length;0===f[--a];f.pop());}e.e>V?e.c=e.e=null:e.e<I&&(e.c=[e.e=0])}return e}var L,E,T=0,U=t.prototype,j=new t(1),C=20,R=4,$=-7,P=21,I=-1e7,V=1e7,q=!0,Z=B,z=!1,G=1,W=0,H={decimalSeparator:".",groupSeparator:",",groupSize:3,secondaryGroupSize:0,fractionGroupSeparator:" ",fractionGroupSize:0};return t.another=n,t.ROUND_UP=0,t.ROUND_DOWN=1,t.ROUND_CEIL=2,t.ROUND_FLOOR=3,t.ROUND_HALF_UP=4,t.ROUND_HALF_DOWN=5,t.ROUND_HALF_EVEN=6,t.ROUND_HALF_CEIL=7,t.ROUND_HALF_FLOOR=8,t.EUCLID=9,t.config=t.set=function(){var e,t,n=0,r={},i=arguments,a=i[0],s=a&&"object"==typeof a?function(){if(a.hasOwnProperty(t))return null!=(e=a[t])}:function(){if(i.length>n)return null!=(e=i[n++])};return s(t="DECIMAL_PLACES")&&Z(e,0,M,2,t)&&(C=0|e),r[t]=C,s(t="ROUNDING_MODE")&&Z(e,0,8,2,t)&&(R=0|e),r[t]=R,s(t="EXPONENTIAL_AT")&&(u(e)?Z(e[0],-M,0,2,t)&&Z(e[1],0,M,2,t)&&($=0|e[0],P=0|e[1]):Z(e,-M,M,2,t)&&($=-(P=0|(e<0?-e:e)))),r[t]=[$,P],s(t="RANGE")&&(u(e)?Z(e[0],-M,-1,2,t)&&Z(e[1],1,M,2,t)&&(I=0|e[0],V=0|e[1]):Z(e,-M,M,2,t)&&(0|e?I=-(V=0|(e<0?-e:e)):q&&_(2,t+" cannot be zero",e))),r[t]=[I,V],s(t="ERRORS")&&(e===!!e||1===e||0===e?(T=0,Z=(q=!!e)?B:o):q&&_(2,t+v,e)),r[t]=q,s(t="CRYPTO")&&(!0===e||!1===e||1===e||0===e?e?!(e="undefined"==typeof crypto)&&crypto&&(crypto.getRandomValues||crypto.randomBytes)?z=!0:q?_(2,"crypto unavailable",e?void 0:crypto):z=!1:z=!1:q&&_(2,t+v,e)),r[t]=z,s(t="MODULO_MODE")&&Z(e,0,9,2,t)&&(G=0|e),r[t]=G,s(t="POW_PRECISION")&&Z(e,0,M,2,t)&&(W=0|e),r[t]=W,s(t="FORMAT")&&("object"==typeof e?H=e:q&&_(2,t+" not an object",e)),r[t]=H,r},t.max=function(){return D(arguments,U.lt)},t.min=function(){return D(arguments,U.gt)},t.random=function(){var e=9007199254740992*Math.random()&2097151?function(){return h(9007199254740992*Math.random())}:function(){return 8388608*(1073741824*Math.random()|0)+(8388608*Math.random()|0)};return function(n){var r,i,a,o,u,s=0,c=[],l=new t(j);if(n=null!=n&&Z(n,0,M,14)?0|n:C,o=d(n/x),z)if(crypto.getRandomValues){for(r=crypto.getRandomValues(new Uint32Array(o*=2));s<o;)(u=131072*r[s]+(r[s+1]>>>11))>=9e15?(i=crypto.getRandomValues(new Uint32Array(2)),r[s]=i[0],r[s+1]=i[1]):(c.push(u%1e14),s+=2);s=o/2}else if(crypto.randomBytes){for(r=crypto.randomBytes(o*=7);s<o;)(u=281474976710656*(31&r[s])+1099511627776*r[s+1]+4294967296*r[s+2]+16777216*r[s+3]+(r[s+4]<<16)+(r[s+5]<<8)+r[s+6])>=9e15?crypto.randomBytes(7).copy(r,s):(c.push(u%1e14),s+=7);s=o/7}else z=!1,q&&_(14,"crypto unavailable",crypto);if(!z)for(;s<o;)(u=e())<9e15&&(c[s++]=u%1e14);for(o=c[--s],n%=x,o&&n&&(u=N[x-n],c[s]=h(o/u)*u);0===c[s];c.pop(),s--);if(s<0)c=[a=0];else{for(a=-1;0===c[0];c.splice(0,1),a-=x);for(s=1,u=c[0];u>=10;u/=10,s++);s<x&&(a-=x-s)}return l.e=a,l.c=c,l}}(),L=function(){function e(e,t,n){var r,i,a,o,u=0,s=e.length,c=t%O,l=t/O|0;for(e=e.slice();s--;)u=((i=c*(a=e[s]%O)+(r=l*a+(o=e[s]/O|0)*c)%O*O+u)/n|0)+(r/O|0)+l*o,e[s]=i%n;return u&&(e=[u].concat(e)),e}function n(e,t,n,r){var i,a;if(n!=r)a=n>r?1:-1;else for(i=a=0;i<n;i++)if(e[i]!=t[i]){a=e[i]>t[i]?1:-1;break}return a}function i(e,t,n,r){for(var i=0;n--;)e[n]-=i,i=e[n]<t[n]?1:0,e[n]=i*r+e[n]-t[n];for(;!e[0]&&e.length>1;e.splice(0,1));}return function(a,o,u,s,c){var l,f,g,p,d,v,m,y,b,S,N,O,M,F,D,B,k,_=a.s==o.s?1:-1,L=a.c,E=o.c;if(!(L&&L[0]&&E&&E[0]))return new t(a.s&&o.s&&(L?!E||L[0]!=E[0]:E)?L&&0==L[0]||!E?0*_:_/0:NaN);for(b=(y=new t(_)).c=[],_=u+(f=a.e-o.e)+1,c||(c=w,f=r(a.e/x)-r(o.e/x),_=_/x|0),g=0;E[g]==(L[g]||0);g++);if(E[g]>(L[g]||0)&&f--,_<0)b.push(1),p=!0;else{for(F=L.length,B=E.length,g=0,_+=2,(d=h(c/(E[0]+1)))>1&&(E=e(E,d,c),L=e(L,d,c),B=E.length,F=L.length),M=B,N=(S=L.slice(0,B)).length;N<B;S[N++]=0);k=E.slice(),k=[0].concat(k),D=E[0],E[1]>=c/2&&D++;do{if(d=0,(l=n(E,S,B,N))<0){if(O=S[0],B!=N&&(O=O*c+(S[1]||0)),(d=h(O/D))>1)for(d>=c&&(d=c-1),m=(v=e(E,d,c)).length,N=S.length;1==n(v,S,m,N);)d--,i(v,B<m?k:E,m,c),m=v.length,l=1;else 0==d&&(l=d=1),m=(v=E.slice()).length;if(m<N&&(v=[0].concat(v)),i(S,v,N,c),N=S.length,-1==l)for(;n(E,S,B,N)<1;)d++,i(S,B<N?k:E,N,c),N=S.length}else 0===l&&(d++,S=[0]);b[g++]=d,S[0]?S[N++]=L[M]||0:(S=[L[M]],N=1)}while((M++<F||null!=S[0])&&_--);p=null!=S[0],b[0]||b.splice(0,1)}if(c==w){for(g=1,_=b[0];_>=10;_/=10,g++);A(y,u+(y.e=g+f*x-1)+1,s,p)}else y.e=f,y.r=+p;return y}}(),E=function(){var e=/^(-?)0([xbo])(?=\w[\w.]*$)/i,n=/^([^.]+)\.$/,r=/^\.([^.]+)$/,i=/^-?(Infinity|NaN)$/,a=/^\s*\+(?=[\w.])|^\s+|\s+$/g;return function(o,u,s,c){var l,f=s?u:u.replace(a,"");if(i.test(f))o.s=isNaN(f)?null:f<0?-1:1;else{if(!s&&(f=f.replace(e,function(e,t,n){return l="x"==(n=n.toLowerCase())?16:"b"==n?2:8,c&&c!=l?e:t}),c&&(l=c,f=f.replace(n,"$1").replace(r,"0.$1")),u!=f))return new t(f,l);q&&_(T,"not a"+(c?" base "+c:"")+" number",u),o.s=null}o.c=o.e=null,T=0}}(),U.absoluteValue=U.abs=function(){var e=new t(this);return e.s<0&&(e.s=1),e},U.ceil=function(){return A(new t(this),this.e+1,2)},U.comparedTo=U.cmp=function(e,n){return T=1,a(this,new t(e,n))},U.decimalPlaces=U.dp=function(){var e,t,n=this.c;if(!n)return null;if(e=((t=n.length-1)-r(this.e/x))*x,t=n[t])for(;t%10==0;t/=10,e--);return e<0&&(e=0),e},U.dividedBy=U.div=function(e,n){return T=3,L(this,new t(e,n),C,R)},U.dividedToIntegerBy=U.divToInt=function(e,n){return T=4,L(this,new t(e,n),0,1)},U.equals=U.eq=function(e,n){return T=5,0===a(this,new t(e,n))},U.floor=function(){return A(new t(this),this.e+1,3)},U.greaterThan=U.gt=function(e,n){return T=6,a(this,new t(e,n))>0},U.greaterThanOrEqualTo=U.gte=function(e,n){return T=7,1===(n=a(this,new t(e,n)))||0===n},U.isFinite=function(){return!!this.c},U.isInteger=U.isInt=function(){return!!this.c&&r(this.e/x)>this.c.length-2},U.isNaN=function(){return!this.s},U.isNegative=U.isNeg=function(){return this.s<0},U.isZero=function(){return!!this.c&&0==this.c[0]},U.lessThan=U.lt=function(e,n){return T=8,a(this,new t(e,n))<0},U.lessThanOrEqualTo=U.lte=function(e,n){return T=9,-1===(n=a(this,new t(e,n)))||0===n},U.minus=U.sub=function(e,n){var i,a,o,u,s=this,c=s.s;if(T=10,e=new t(e,n),n=e.s,!c||!n)return new t(NaN);if(c!=n)return e.s=-n,s.plus(e);var l=s.e/x,f=e.e/x,g=s.c,p=e.c;if(!l||!f){if(!g||!p)return g?(e.s=-n,e):new t(p?s:NaN);if(!g[0]||!p[0])return p[0]?(e.s=-n,e):new t(g[0]?s:3==R?-0:0)}if(l=r(l),f=r(f),g=g.slice(),c=l-f){for((u=c<0)?(c=-c,o=g):(f=l,o=p),o.reverse(),n=c;n--;o.push(0));o.reverse()}else for(a=(u=(c=g.length)<(n=p.length))?c:n,c=n=0;n<a;n++)if(g[n]!=p[n]){u=g[n]<p[n];break}if(u&&(o=g,g=p,p=o,e.s=-e.s),(n=(a=p.length)-(i=g.length))>0)for(;n--;g[i++]=0);for(n=w-1;a>c;){if(g[--a]<p[a]){for(i=a;i&&!g[--i];g[i]=n);--g[i],g[a]+=w}g[a]-=p[a]}for(;0==g[0];g.splice(0,1),--f);return g[0]?k(e,g,f):(e.s=3==R?-1:1,e.c=[e.e=0],e)},U.modulo=U.mod=function(e,n){var r,i,a=this;return T=11,e=new t(e,n),!a.c||!e.s||e.c&&!e.c[0]?new t(NaN):!e.c||a.c&&!a.c[0]?new t(a):(9==G?(i=e.s,e.s=1,r=L(a,e,0,3),e.s=i,r.s*=i):r=L(a,e,0,G),a.minus(r.times(e)))},U.negated=U.neg=function(){var e=new t(this);return e.s=-e.s||null,e},U.plus=U.add=function(e,n){var i,a=this,o=a.s;if(T=12,e=new t(e,n),n=e.s,!o||!n)return new t(NaN);if(o!=n)return e.s=-n,a.minus(e);var u=a.e/x,s=e.e/x,c=a.c,l=e.c;if(!u||!s){if(!c||!l)return new t(o/0);if(!c[0]||!l[0])return l[0]?e:new t(c[0]?a:0*o)}if(u=r(u),s=r(s),c=c.slice(),o=u-s){for(o>0?(s=u,i=l):(o=-o,i=c),i.reverse();o--;i.push(0));i.reverse()}for((o=c.length)-(n=l.length)<0&&(i=l,l=c,c=i,n=o),o=0;n;)o=(c[--n]=c[n]+l[n]+o)/w|0,c[n]=w===c[n]?0:c[n]%w;return o&&(c=[o].concat(c),++s),k(e,c,s)},U.precision=U.sd=function(e){var t,n,r=this,i=r.c;if(null!=e&&e!==!!e&&1!==e&&0!==e&&(q&&_(13,"argument"+v,e),e!=!!e&&(e=null)),!i)return null;if(n=i.length-1,t=n*x+1,n=i[n]){for(;n%10==0;n/=10,t--);for(n=i[0];n>=10;n/=10,t++);}return e&&r.e+1>t&&(t=r.e+1),t},U.round=function(e,n){var r=new t(this);return(null==e||Z(e,0,M,15))&&A(r,~~e+this.e+1,null!=n&&Z(n,0,8,15,m)?0|n:R),r},U.shift=function(e){var n=this;return Z(e,-S,S,16,"argument")?n.times("1e"+f(e)):new t(n.c&&n.c[0]&&(e<-S||e>S)?n.s*(e<0?0:1/0):n)},U.squareRoot=U.sqrt=function(){var e,n,a,o,u,s=this,c=s.c,l=s.s,f=s.e,g=C+4,p=new t("0.5");if(1!==l||!c||!c[0])return new t(!l||l<0&&(!c||c[0])?NaN:c?s:1/0);if(0==(l=Math.sqrt(+s))||l==1/0?(((n=i(c)).length+f)%2==0&&(n+="0"),l=Math.sqrt(n),f=r((f+1)/2)-(f<0||f%2),a=new t(n=l==1/0?"1e"+f:(n=l.toExponential()).slice(0,n.indexOf("e")+1)+f)):a=new t(l+""),a.c[0])for((l=(f=a.e)+g)<3&&(l=0);;)if(u=a,a=p.times(u.plus(L(s,u,g,1))),i(u.c).slice(0,l)===(n=i(a.c)).slice(0,l)){if(a.e<f&&--l,"9999"!=(n=n.slice(l-3,l+1))&&(o||"4999"!=n)){+n&&(+n.slice(1)||"5"!=n.charAt(0))||(A(a,a.e+C+2,1),e=!a.times(a).eq(s));break}if(!o&&(A(u,u.e+C+2,0),u.times(u).eq(s))){a=u;break}g+=4,l+=4,o=1}return A(a,a.e+C+1,R,e)},U.times=U.mul=function(e,n){var i,a,o,u,s,c,l,f,g,p,d,h,v,m,y,b=this,S=b.c,N=(T=17,e=new t(e,n)).c;if(!(S&&N&&S[0]&&N[0]))return!b.s||!e.s||S&&!S[0]&&!N||N&&!N[0]&&!S?e.c=e.e=e.s=null:(e.s*=b.s,S&&N?(e.c=[0],e.e=0):e.c=e.e=null),e;for(a=r(b.e/x)+r(e.e/x),e.s*=b.s,(l=S.length)<(p=N.length)&&(v=S,S=N,N=v,o=l,l=p,p=o),o=l+p,v=[];o--;v.push(0));for(m=w,y=O,o=p;--o>=0;){for(i=0,d=N[o]%y,h=N[o]/y|0,u=o+(s=l);u>o;)i=((f=d*(f=S[--s]%y)+(c=h*f+(g=S[s]/y|0)*d)%y*y+v[u]+i)/m|0)+(c/y|0)+h*g,v[u--]=f%m;v[u]=i}return i?++a:v.splice(0,1),k(e,v,a)},U.toDigits=function(e,n){var r=new t(this);return e=null!=e&&Z(e,1,M,18,"precision")?0|e:null,n=null!=n&&Z(n,0,8,18,m)?0|n:R,e?A(r,e,n):r},U.toExponential=function(e,t){return F(this,null!=e&&Z(e,0,M,19)?1+~~e:null,t,19)},U.toFixed=function(e,t){return F(this,null!=e&&Z(e,0,M,20)?~~e+this.e+1:null,t,20)},U.toFormat=function(e,t){var n=F(this,null!=e&&Z(e,0,M,21)?~~e+this.e+1:null,t,21);if(this.c){var r,i=n.split("."),a=+H.groupSize,o=+H.secondaryGroupSize,u=H.groupSeparator,s=i[0],c=i[1],l=this.s<0,f=l?s.slice(1):s,g=f.length;if(o&&(r=a,a=o,o=r,g-=r),a>0&&g>0){for(r=g%a||a,s=f.substr(0,r);r<g;r+=a)s+=u+f.substr(r,a);o>0&&(s+=u+f.slice(r)),l&&(s="-"+s)}n=c?s+H.decimalSeparator+((o=+H.fractionGroupSize)?c.replace(new RegExp("\\d{"+o+"}\\B","g"),"$&"+H.fractionGroupSeparator):c):s}return n},U.toFraction=function(e){var n,r,a,o,u,s,c,l,f,g=q,p=this,d=p.c,h=new t(j),v=r=new t(j),m=c=new t(j);if(null!=e&&(q=!1,s=new t(e),q=g,(g=s.isInt())&&!s.lt(j)||(q&&_(22,"max denominator "+(g?"out of range":"not an integer"),e),e=!g&&s.c&&A(s,s.e+1,1).gte(j)?s:null)),!d)return p.toString();for(f=i(d),o=h.e=f.length-p.e-1,h.c[0]=N[(u=o%x)<0?x+u:u],e=!e||s.cmp(h)>0?o>0?h:v:s,u=V,V=1/0,s=new t(f),c.c[0]=0;l=L(s,h,0,1),1!=(a=r.plus(l.times(m))).cmp(e);)r=m,m=a,v=c.plus(l.times(a=v)),c=a,h=s.minus(l.times(a=h)),s=a;return a=L(e.minus(r),m,0,1),c=c.plus(a.times(v)),r=r.plus(a.times(m)),c.s=v.s=p.s,o*=2,n=L(v,m,o,R).minus(p).abs().cmp(L(c,r,o,R).minus(p).abs())<1?[v.toString(),m.toString()]:[c.toString(),r.toString()],V=u,n},U.toNumber=function(){return+this},U.toPower=U.pow=function(e,n){var r,i,a,o=h(e<0?-e:+e),u=this;if(null!=n&&(T=23,n=new t(n)),!Z(e,-S,S,23,"exponent")&&(!isFinite(e)||o>S&&(e/=0)||parseFloat(e)!=e&&!(e=NaN))||0==e)return r=Math.pow(+u,e),new t(n?r%n:r);for(n?e>1&&u.gt(j)&&u.isInt()&&n.gt(j)&&n.isInt()?u=u.mod(n):(a=n,n=null):W&&(r=d(W/x+2)),i=new t(j);;){if(o%2){if(!(i=i.times(u)).c)break;r?i.c.length>r&&(i.c.length=r):n&&(i=i.mod(n))}if(!(o=h(o/2)))break;u=u.times(u),r?u.c&&u.c.length>r&&(u.c.length=r):n&&(u=u.mod(n))}return n?i:(e<0&&(i=j.div(i)),a?i.mod(a):r?A(i,W,R):i)},U.toPrecision=function(e,t){return F(this,null!=e&&Z(e,1,M,24,"precision")?0|e:null,t,24)},U.toString=function(e){var t,n=this,r=n.s,a=n.e;return null===a?r?(t="Infinity",r<0&&(t="-"+t)):t="NaN":(t=i(n.c),t=null!=e&&Z(e,2,64,25,"base")?g(l(t,a),0|e,10,r):a<=$||a>=P?c(t,a):l(t,a),r<0&&n.c[0]&&(t="-"+t)),t},U.truncated=U.trunc=function(){return A(new t(this),this.e+1,1)},U.valueOf=U.toJSON=function(){var e,t=this,n=t.e;return null===n?t.toString():(e=i(t.c),e=n<=$||n>=P?c(e,n):l(e,n),t.s<0?"-"+e:e)},U.isBigNumber=!0,null!=e&&t.config(e),t}function r(e){var t=0|e;return e>0||e===t?t:t-1}function i(e){for(var t,n,r=1,i=e.length,a=e[0]+"";r<i;){for(t=e[r++]+"",n=x-t.length;n--;t="0"+t);a+=t}for(i=a.length;48===a.charCodeAt(--i););return a.slice(0,i+1||1)}function a(e,t){var n,r,i=e.c,a=t.c,o=e.s,u=t.s,s=e.e,c=t.e;if(!o||!u)return null;if(n=i&&!i[0],r=a&&!a[0],n||r)return n?r?0:-u:o;if(o!=u)return o;if(n=o<0,r=s==c,!i||!a)return r?0:!i^n?1:-1;if(!r)return s>c^n?1:-1;for(u=(s=i.length)<(c=a.length)?s:c,o=0;o<u;o++)if(i[o]!=a[o])return i[o]>a[o]^n?1:-1;return s==c?0:s>c^n?1:-1}function o(e,t,n){return(e=f(e))>=t&&e<=n}function u(e){return"[object Array]"==Object.prototype.toString.call(e)}function s(e,t,n){for(var r,i,a=[0],o=0,u=e.length;o<u;){for(i=a.length;i--;a[i]*=t);for(a[r=0]+=b.indexOf(e.charAt(o++));r<a.length;r++)a[r]>n-1&&(null==a[r+1]&&(a[r+1]=0),a[r+1]+=a[r]/n|0,a[r]%=n)}return a.reverse()}function c(e,t){return(e.length>1?e.charAt(0)+"."+e.slice(1):e)+(t<0?"e":"e+")+t}function l(e,t){var n,r;if(t<0){for(r="0.";++t;r+="0");e=r+e}else if(n=e.length,++t>n){for(r="0",t-=n;--t;r+="0");e+=r}else t<n&&(e=e.slice(0,t)+"."+e.slice(t));return e}function f(e){return(e=parseFloat(e))<0?d(e):h(e)}var g,p=/^-?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i,d=Math.ceil,h=Math.floor,v=" not a boolean or binary digit",m="rounding mode",y="number type has more than 15 significant digits",b="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_",w=1e14,x=14,S=9007199254740991,N=[1,10,100,1e3,1e4,1e5,1e6,1e7,1e8,1e9,1e10,1e11,1e12,1e13],O=1e7,M=1e9;(g=n()).default=g.BigNumber=g,void 0!==t&&t.exports?t.exports=g:(e||(e="undefined"!=typeof self?self:Function("return this")()),e.BigNumber=g)}(this)},{}],2:[function(e,t,n){"use strict";t.exports={languageTag:"en-US",delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},spaceSeparated:!1,ordinal:function(e){var t=e%10;return 1==~~(e%100/10)?"th":1===t?"st":2===t?"nd":3===t?"rd":"th"},currency:{symbol:"$",position:"prefix",code:"USD"},currencyFormat:{thousandSeparated:!0,totalLength:4,spaceSeparated:!0},formats:{fourDigits:{totalLength:4,spaceSeparated:!0},fullWithTwoDecimals:{output:"currency",thousandSeparated:!0,mantissa:2},fullWithTwoDecimalsNoCurrency:{thousandSeparated:!0,mantissa:2},fullWithNoDecimals:{output:"currency",thousandSeparated:!0,mantissa:0}}}},{}],3:[function(e,t,n){"use strict";function r(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments[2];if("string"==typeof t&&(t=L.parseFormat(t)),!A.validateFormat(t))return"ERROR: invalid format";var r=t.prefix||"",a=t.postfix||"",o=i(e,t,n);return o=M(o,r),o=F(o,a)}function i(e,t,n){switch(t.output){case"currency":return t=B(t,_.currentCurrencyDefaultFormat()),p(e,t,_);case"percent":return t=B(t,_.currentPercentageDefaultFormat()),g(e,t,_,n);case"byte":return t=B(t,_.currentByteDefaultFormat()),c(e,t,_,n);case"time":return t=B(t,_.currentTimeDefaultFormat()),f(e);case"ordinal":return t=B(t,_.currentOrdinalDefaultFormat()),l(e,t,_);case"number":default:return D({instance:e,providedFormat:t,numbro:n})}}function a(e){var t=T.decimal;return s(e._value,t.suffixes,t.scale).suffix}function o(e){var t=T.binary;return s(e._value,t.suffixes,t.scale).suffix}function u(e){var t=T.general;return s(e._value,t.suffixes,t.scale).suffix}function s(e,t,n){var r=t[0],i=Math.abs(e);if(i>=n){for(var a=1;a<t.length;++a){var o=Math.pow(n,a),u=Math.pow(n,a+1);if(i>=o&&i<u){r=t[a],e/=o;break}}r===t[0]&&(e/=Math.pow(n,t.length-1),r=t[t.length-1])}return{value:e,suffix:r}}function c(e,t,n,r){var i=t.base||"binary",a=T[i],o=s(e._value,a.suffixes,a.scale),u=o.value,c=o.suffix;return D({instance:r(u),providedFormat:t,state:n,defaults:n.currentByteDefaultFormat()})+(n.currentAbbreviations().spaced?" ":"")+c}function l(e,t,n){var r=n.currentOrdinal(),i=Object.assign({},U,t),a=D({instance:e,providedFormat:t,state:n}),o=r(e._value);return a+(i.spaceSeparated?" ":"")+o}function f(e){var t=Math.floor(e._value/60/60),n=Math.floor((e._value-60*t*60)/60),r=Math.round(e._value-60*t*60-60*n);return t+":"+(n<10?"0":"")+n+":"+(r<10?"0":"")+r}function g(e,t,n,r){var i=t.prefixSymbol,a=D({instance:r(100*e._value),providedFormat:t,state:n}),o=Object.assign({},U,t);return i?"%"+(o.spaceSeparated?" ":"")+a:a+(o.spaceSeparated?" ":"")+"%"}function p(e,t,n){var r=n.currentCurrency(),i=Object.assign({},U,t),a=void 0,o="",u=!!i.totalLength||!!i.forceAverage||i.average,s=t.currencyPosition||r.position,c=t.currencySymbol||r.symbol;i.spaceSeparated&&(o=" "),"infix"===s&&(a=o+c+o);var l=D({instance:e,providedFormat:t,state:n,decimalSeparator:a});return"prefix"===s&&(l=e._value<0&&"sign"===i.negative?"-"+o+c+l.slice(1):c+o+l),s&&"postfix"!==s||(l=l+(o=u?"":o)+c),l}function d(e){var t=e.value,n=e.forceAverage,r=e.abbreviations,i=e.spaceSeparated,a=void 0!==i&&i,o=e.totalLength,u=void 0===o?0:o,s="",c=Math.abs(t),l=-1;c>=Math.pow(10,12)&&!n||"trillion"===n?(s=r.trillion,t/=Math.pow(10,12)):c<Math.pow(10,12)&&c>=Math.pow(10,9)&&!n||"billion"===n?(s=r.billion,t/=Math.pow(10,9)):c<Math.pow(10,9)&&c>=Math.pow(10,6)&&!n||"million"===n?(s=r.million,t/=Math.pow(10,6)):(c<Math.pow(10,6)&&c>=Math.pow(10,3)&&!n||"thousand"===n)&&(s=r.thousand,t/=Math.pow(10,3));var f=a?" ":"";if(s&&(s=f+s),u){var g=t.toString().split(".")[0];l=Math.max(u-g.length,0)}return{value:t,abbreviation:s,mantissaPrecision:l}}function h(e){var t=e.value,n=e.characteristicPrecision,r=void 0===n?0:n,i=t.toExponential().split("e"),a=k(i,2),o=a[0],u=a[1],s=+o;if(!r)return{value:s,abbreviation:"e"+u};return 1<r&&(s*=Math.pow(10,r-1),u=(u=+u-(r-1))>=0?"+"+u:u),{value:s,abbreviation:"e"+u}}function v(e){for(var t="",n=0;n<e;n++)t+="0";return t}function m(e,t){var n=e.toString(),r=n.split("e"),i=k(r,2),a=i[0],o=i[1],u=a.split("."),s=k(u,2),c=s[0],l=s[1],f=void 0===l?"":l;if(+o>0)n=c+f+v(o-f.length);else{var g=".";g=+c<0?"-0"+g:"0"+g;var p=(v(-o-1)+Math.abs(c)+f).substr(0,t);p.length<t&&(p+=v(t-p.length)),n=g+p}return+o>0&&t>0&&(n+="."+v(t)),n}function y(e,t){return-1!==e.toString().indexOf("e")?m(e,t):(Math.round(+(e+"e+"+t))/Math.pow(10,t)).toFixed(t)}function b(e,t,n,r,i){if(-1===r)return e;var a=y(t,r),o=a.toString().split("."),u=k(o,2),s=u[0],c=u[1];if((void 0===c?"":c).match(/^0+$/)&&(n||i))return s;var l=a.match(/0+$/);return i&&l?a.toString().slice(0,l.index):a.toString()}function w(e,t,n,r){var i=e,a=i.toString().split("."),o=k(a,2),u=o[0],s=o[1];if(u.match(/^-?0$/)&&n)return s?u.replace("0","")+"."+s:u.replace("0","");if(u.length<r)for(var c=r-u.length,l=0;l<c;l++)i="0"+i;return i.toString()}function x(e,t){for(var n=[],r=0,i=e;i>0;i--)r===t&&(n.unshift(i),r=0),r++;return n}function S(e,t,n,r,i){var a=r.currentDelimiters(),o=a.thousands;i=i||a.decimal;var u=a.thousandsSize||3,s=e.toString(),c=s.split(".")[0],l=s.split(".")[1];return n&&(t<0&&(c=c.slice(1)),x(c.length,u).forEach(function(e,t){c=c.slice(0,e+t)+o+c.slice(e+t)}),t<0&&(c="-"+c)),s=l?c+i+l:c}function N(e,t){return e+t}function O(e,t,n){return 0===t?e:0==+e?e.replace("-",""):t>0?"+"+e:"sign"===n?e:"("+e.replace("-","")+")"}function M(e,t){return t+e}function F(e,t){return e+t}function D(e){var t=e.instance,n=e.providedFormat,r=e.state,i=void 0===r?_:r,a=e.decimalSeparator,o=e.defaults,u=void 0===o?i.currentDefaults():o,s=t._value;if(0===s&&i.hasZeroFormat())return i.getZeroFormat();if(!isFinite(s))return s.toString();var c=Object.assign({},U,u,n),l=c.totalLength,f=l?0:c.characteristic,g=c.optionalCharacteristic,p=c.forceAverage,v=!!l||!!p||c.average,m=l?-1:v&&void 0===n.mantissa?0:c.mantissa,y=!l&&(void 0===n.optionalMantissa?-1===m:c.optionalMantissa),x=c.trimMantissa,M=c.thousandSeparated,F=c.spaceSeparated,D=c.negative,B=c.forceSign,k=c.exponential,A="";if(v){var L=d({value:s,forceAverage:p,abbreviations:i.currentAbbreviations(),spaceSeparated:F,totalLength:l});s=L.value,A+=L.abbreviation,l&&(m=L.mantissaPrecision)}if(k){var E=h({value:s,characteristicPrecision:f});s=E.value,A=E.abbreviation+A}var T=b(s.toString(),s,y,m,x);return T=w(T,s,g,f),T=S(T,s,M,i,a),(v||k)&&(T=N(T,A)),(B||s<0)&&(T=O(T,s,D)),T}function B(e,t){if(!e)return t;var n=Object.keys(e);return 1===n.length&&"output"===n[0]?t:e}var k=function(){function e(e,t){var n=[],r=!0,i=!1,a=void 0;try{for(var o,u=e[Symbol.iterator]();!(r=(o=u.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){i=!0,a=e}finally{try{!r&&u.return&&u.return()}finally{if(i)throw a}}return n}return function(t,n){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return e(t,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_=e("./globalState"),A=e("./validating"),L=e("./parsing"),E=["B","KB","MB","GB","TB","PB","EB","ZB","YB"],T={general:{scale:1024,suffixes:E,marker:"bd"},binary:{scale:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"],marker:"b"},decimal:{scale:1e3,suffixes:E,marker:"d"}},U={totalLength:0,characteristic:0,forceAverage:!1,average:!1,mantissa:-1,optionalMantissa:!0,thousandSeparated:!1,spaceSeparated:!1,negative:"sign",forceSign:!1};t.exports=function(e){return{format:function(){for(var t=arguments.length,n=Array(t),i=0;i<t;i++)n[i]=arguments[i];return r.apply(void 0,n.concat([e]))},getByteUnit:function(){for(var t=arguments.length,n=Array(t),r=0;r<t;r++)n[r]=arguments[r];return u.apply(void 0,n.concat([e]))},getBinaryByteUnit:function(){for(var t=arguments.length,n=Array(t),r=0;r<t;r++)n[r]=arguments[r];return o.apply(void 0,n.concat([e]))},getDecimalByteUnit:function(){for(var t=arguments.length,n=Array(t),r=0;r<t;r++)n[r]=arguments[r];return a.apply(void 0,n.concat([e]))},formatOrDefault:B}}},{"./globalState":4,"./parsing":8,"./validating":10}],4:[function(e,t,n){"use strict";function r(e){c=e}function i(){return l[c]}var a=e("./en-US"),o=e("./validating"),u=e("./parsing"),s={},c=void 0,l={},f=null,g={};s.languages=function(){return Object.assign({},l)},s.currentLanguage=function(){return c},s.currentCurrency=function(){return i().currency},s.currentAbbreviations=function(){return i().abbreviations},s.currentDelimiters=function(){return i().delimiters},s.currentOrdinal=function(){return i().ordinal},s.currentDefaults=function(){return Object.assign({},i().defaults,g)},s.currentOrdinalDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().ordinalFormat)},s.currentByteDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().byteFormat)},s.currentPercentageDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().percentageFormat)},s.currentCurrencyDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().currencyFormat)},s.currentTimeDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().timeFormat)},s.setDefaults=function(e){e=u.parseFormat(e),o.validateFormat(e)&&(g=e)},s.getZeroFormat=function(){return f},s.setZeroFormat=function(e){return f="string"==typeof e?e:null},s.hasZeroFormat=function(){return null!==f},s.languageData=function(e){if(e){if(l[e])return l[e];throw new Error('Unknown tag "'+e+'"')}return i()},s.registerLanguage=function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];if(!o.validateLanguage(e))throw new Error("Invalid language data");l[e.languageTag]=e,t&&r(e.languageTag)},s.setLanguage=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:a.languageTag;if(!l[e]){var n=e.split("-")[0],i=Object.keys(l).find(function(e){return e.split("-")[0]===n});if(!l[i])return void r(t);r(i)}r(e)},s.registerLanguage(a),c=a.languageTag,t.exports=s},{"./en-US":2,"./parsing":8,"./validating":10}],5:[function(e,t,n){"use strict";function r(t,n){t.forEach(function(t){var r=void 0;try{r=e("../languages/"+t)}catch(e){console.error('Unable to load "'+t+'". No matching language file found.')}r&&n.registerLanguage(r)})}t.exports=function(e){return{loadLanguagesInNode:function(t){return r(t,e)}}}},{}],6:[function(e,t,n){"use strict";function r(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.add(i).toNumber(),e}function i(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.minus(i).toNumber(),e}function a(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.times(i).toNumber(),e}function o(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.dividedBy(i).toNumber(),e}function u(e,t,n){var r=t;return n.isNumbro(t)&&(r=t._value),e._value=r,e}function s(e,t,n){var r=n(e._value);return i(r,t,n),Math.abs(r._value)}var c=e("bignumber.js");t.exports=function(e){return{add:function(t,n){return r(t,n,e)},subtract:function(t,n){return i(t,n,e)},multiply:function(t,n){return a(t,n,e)},divide:function(t,n){return o(t,n,e)},set:function(t,n){return u(t,n,e)},difference:function(t,n){return s(t,n,e)}}}},{"bignumber.js":1}],7:[function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e){var t=e;return a.isNumbro(e)?t=e._value:"string"==typeof e?t=a.unformat(e):isNaN(e)&&(t=NaN),t}function a(e){return new d(i(e))}var o=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=e("./globalState"),s=e("./validating"),c=e("./loading")(a),l=e("./unformatting"),f=e("./formatting")(a),g=e("./manipulating")(a),p=e("./parsing"),d=function(){function e(t){r(this,e),this._value=t}return o(e,[{key:"clone",value:function(){return a(this._value)}},{key:"format",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return f.format(this,e)}},{key:"formatCurrency",value:function(e){return"string"==typeof e&&(e=p.parseFormat(e)),e=f.formatOrDefault(e,u.currentCurrencyDefaultFormat()),e.output="currency",f.format(this,e)}},{key:"formatTime",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return e.output="time",f.format(this,e)}},{key:"binaryByteUnits",value:function(){return f.getBinaryByteUnit(this)}},{key:"decimalByteUnits",value:function(){return f.getDecimalByteUnit(this)}},{key:"byteUnits",value:function(){return f.getByteUnit(this)}},{key:"difference",value:function(e){return g.difference(this,e)}},{key:"add",value:function(e){return g.add(this,e)}},{key:"subtract",value:function(e){return g.subtract(this,e)}},{key:"multiply",value:function(e){return g.multiply(this,e)}},{key:"divide",value:function(e){return g.divide(this,e)}},{key:"set",value:function(e){return g.set(this,i(e))}},{key:"value",value:function(){return this._value}},{key:"valueOf",value:function(){return this._value}}]),e}();a.version="2.1.0",a.isNumbro=function(e){return e instanceof d},a.language=u.currentLanguage,a.registerLanguage=u.registerLanguage,a.setLanguage=u.setLanguage,a.languages=u.languages,a.languageData=u.languageData,a.zeroFormat=u.setZeroFormat,a.defaultFormat=u.currentDefaults,a.setDefaults=u.setDefaults,a.defaultCurrencyFormat=u.currentCurrencyDefaultFormat,a.validate=s.validate,a.loadLanguagesInNode=c.loadLanguagesInNode,a.unformat=l.unformat,t.exports=a},{"./formatting":3,"./globalState":4,"./loading":5,"./manipulating":6,"./parsing":8,"./unformatting":9,"./validating":10}],8:[function(e,t,n){"use strict";function r(e,t){var n=e.match(/^{([^}]*)}/);return n?(t.prefix=n[1],e.slice(n[0].length)):e}function i(e,t){var n=e.match(/{([^}]*)}$/);return n?(t.postfix=n[1],e.slice(0,-n[0].length)):e}function a(e,t){if(-1===e.indexOf("$")){if(-1===e.indexOf("%"))return-1!==e.indexOf("bd")?(t.output="byte",void(t.base="general")):-1!==e.indexOf("b")?(t.output="byte",void(t.base="binary")):-1!==e.indexOf("d")?(t.output="byte",void(t.base="decimal")):void(-1===e.indexOf(":")?-1!==e.indexOf("o")&&(t.output="ordinal"):t.output="time");t.output="percent"}else t.output="currency"}function o(e,t){-1!==e.indexOf(",")&&(t.thousandSeparated=!0)}function u(e,t){-1!==e.indexOf(" ")&&(t.spaceSeparated=!0)}function s(e,t){var n=e.match(/[1-9]+[0-9]*/);n&&(t.totalLength=+n[0])}function c(e,t){var n=e.split(".")[0].match(/0+/);n&&(t.characteristic=n[0].length)}function l(e,t){var n=e.split(".")[1];if(n){var r=n.match(/0+/);r&&(t.mantissa=r[0].length)}}function f(e,t){-1!==e.indexOf("a")&&(t.average=!0)}function g(e,t){-1!==e.indexOf("K")?t.forceAverage="thousand":-1!==e.indexOf("M")?t.forceAverage="million":-1!==e.indexOf("B")?t.forceAverage="billion":-1!==e.indexOf("T")&&(t.forceAverage="trillion")}function p(e,t){e.match(/\[\.]/)?t.optionalMantissa=!0:e.match(/\./)&&(t.optionalMantissa=!1)}function d(e,t){if(-1!==e.indexOf(".")){var n=e.split(".")[0];t.optionalCharacteristic=-1===n.indexOf("0")}}function h(e,t){e.match(/^\+?\([^)]*\)$/)&&(t.negative="parenthesis"),e.match(/^\+?-/)&&(t.negative="sign")}function v(e,t){e.match(/^\+/)&&(t.forceSign=!0)}t.exports={parseFormat:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"string"!=typeof e?e:(e=r(e,t),e=i(e,t),a(e,t),s(e,t),c(e,t),d(e,t),f(e,t),g(e,t),l(e,t),p(e,t),o(e,t),u(e,t),h(e,t),v(e,t),t)}}},{}],9:[function(e,t,n){"use strict";function r(e){return e.replace(/[-/\\^$*+?.()|[\]{}]/g,"\\$&")}function i(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",a=arguments[3],o=arguments[4],u=arguments[5],s=arguments[6];if(!isNaN(+e))return+e;var l="",f=e.replace(/(^[^(]*)\((.*)\)([^)]*$)/,"$1$2$3");if(f!==e)return-1*i(f,t,n,a,o,u,s);for(var g=0;g<c.length;g++){var p=c[g];if((l=e.replace(p.key,""))!==e)return i(l,t,n,a,o,u,s)*p.factor}if((l=e.replace("%",""))!==e)return i(l,t,n,a,o,u,s)/100;var d=parseFloat(e);if(!isNaN(d)){var h=a(d);if(h&&"."!==h&&(l=e.replace(new RegExp(r(h)+"$"),""))!==e)return i(l,t,n,a,o,u,s);var v={};Object.keys(u).forEach(function(e){v[u[e]]=e});for(var m=Object.keys(v).sort().reverse(),y=m.length,b=0;b<y;b++){var w=m[b],x=v[w];if((l=e.replace(w,""))!==e){var S=void 0;switch(x){case"thousand":S=Math.pow(10,3);break;case"million":S=Math.pow(10,6);break;case"billion":S=Math.pow(10,9);break;case"trillion":S=Math.pow(10,12)}return i(l,t,n,a,o,u,s)*S}}}}function a(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",i=e.replace(n,"");return i=i.replace(new RegExp("([0-9])"+r(t.thousands)+"([0-9])","g"),"$1$2"),i=i.replace(t.decimal,".")}function o(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",r=arguments[3],o=arguments[4],u=arguments[5],s=arguments[6];if(""!==e)return isNaN(+e)?e===o?0:i(a(e,t,n),t,n,r,o,u,s):+e}function u(e,t){if(!(e.indexOf(":")&&":"!==t.thousands))return!1;var n=e.split(":");if(3!==n.length)return!1;var r=+n[0],i=+n[1],a=+n[2];return!isNaN(r)&&!isNaN(i)&&!isNaN(a)}function s(e){var t=e.split(":"),n=+t[0],r=+t[1];return+t[2]+60*r+3600*n}var c=[{key:"ZiB",factor:Math.pow(1024,7)},{key:"ZB",factor:Math.pow(1e3,7)},{key:"YiB",factor:Math.pow(1024,8)},{key:"YB",factor:Math.pow(1e3,8)},{key:"TiB",factor:Math.pow(1024,4)},{key:"TB",factor:Math.pow(1e3,4)},{key:"PiB",factor:Math.pow(1024,5)},{key:"PB",factor:Math.pow(1e3,5)},{key:"MiB",factor:Math.pow(1024,2)},{key:"MB",factor:Math.pow(1e3,2)},{key:"KiB",factor:Math.pow(1024,1)},{key:"KB",factor:Math.pow(1e3,1)},{key:"GiB",factor:Math.pow(1024,3)},{key:"GB",factor:Math.pow(1e3,3)},{key:"EiB",factor:Math.pow(1024,6)},{key:"EB",factor:Math.pow(1e3,6)},{key:"B",factor:1}];t.exports={unformat:function(t,n){var r=e("./globalState"),i=r.currentDelimiters(),a=r.currentCurrency().symbol,c=r.currentOrdinal(),l=r.getZeroFormat(),f=r.currentAbbreviations(),g=void 0;if("string"==typeof t)g=u(t,i)?s(t):o(t,i,a,c,l,f,n);else{if("number"!=typeof t)return;g=t}if(void 0!==g)return g}}},{"./globalState":4}],10:[function(e,t,n){"use strict";function r(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}function i(e){return!!s.unformat(e)}function a(e,t,n){var i=arguments.length>3&&void 0!==arguments[3]&&arguments[3],o=Object.keys(e).map(function(r){if(!t[r])return console.error(n+" Invalid key: "+r),!1;var i=e[r],o=t[r];if("string"==typeof o&&(o={type:o}),"format"===o.type){if(!a(i,l,"[Validate "+r+"]",!0))return!1}else if((void 0===i?"undefined":u(i))!==o.type)return console.error(n+" "+r+' type mismatched: "'+o.type+'" expected, "'+(void 0===i?"undefined":u(i))+'" provided'),!1;if(o.restrictions&&o.restrictions.length)for(var s=o.restrictions.length,c=0;c<s;c++){var f=o.restrictions[c],g=f.restriction,p=f.message;if(!g(i,e))return console.error(n+" "+r+" invalid value: "+p),!1}return o.restriction&&!o.restriction(i,e)?(console.error(n+" "+r+" invalid value: "+o.message),!1):o.validValues&&-1===o.validValues.indexOf(i)?(console.error(n+" "+r+" invalid value: must be among "+JSON.stringify(o.validValues)+', "'+i+'" provided'),!1):!(o.children&&!a(i,o.children,"[Validate "+r+"]"))});return i||o.push.apply(o,r(Object.keys(t).map(function(r){var i=t[r];if("string"==typeof i&&(i={type:i}),i.mandatory){var a=i.mandatory;if("function"==typeof a&&(a=a(e)),a&&void 0===e[r])return console.error(n+' Missing mandatory key "'+r+'"'),!1}return!0}))),o.reduce(function(e,t){return e&&t},!0)}function o(e){return a(e,l,"[Validate format]")}var u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s=e("./unformatting"),c=/^[a-z]{2,3}(-[a-zA-Z]{4})?(-([A-Z]{2}|[0-9]{3}))?$/,l={output:{type:"string",validValues:["currency","percent","byte","time","ordinal","number"]},base:{type:"string",validValues:["decimal","binary","general"],restriction:function(e,t){return"byte"===t.output},message:"`base` must be provided only when the output is `byte`",mandatory:function(e){return"byte"===e.output}},characteristic:{type:"number",restriction:function(e){return e>=0},message:"value must be positive"},prefix:"string",postfix:"string",forceAverage:{type:"string",validValues:["trillion","billion","million","thousand"]},average:"boolean",currencyPosition:{type:"string",validValues:["prefix","infix","postfix"]},currencySymbol:"string",totalLength:{type:"number",restrictions:[{restriction:function(e){return e>=0},message:"value must be positive"},{restriction:function(e,t){return!t.exponential},message:"`totalLength` is incompatible with `exponential`"}]},mantissa:{type:"number",restriction:function(e){return e>=0},message:"value must be positive"},optionalMantissa:"boolean",trimMantissa:"boolean",optionalCharacteristic:"boolean",thousandSeparated:"boolean",spaceSeparated:"boolean",abbreviations:{type:"object",children:{thousand:"string",million:"string",billion:"string",trillion:"string"}},negative:{type:"string",validValues:["sign","parenthesis"]},forceSign:"boolean",exponential:{type:"boolean"},prefixSymbol:{type:"boolean",restriction:function(e,t){return"percent"===t.output},message:"`prefixSymbol` can be provided only when the output is `percent`"}},f={languageTag:{type:"string",mandatory:!0,restriction:function(e){return e.match(c)},message:"the language tag must follow the BCP 47 specification (see https://tools.ieft.org/html/bcp47)"},delimiters:{type:"object",children:{thousands:"string",decimal:"string",thousandsSize:"number"},mandatory:!0},abbreviations:{type:"object",children:{thousand:{type:"string",mandatory:!0},million:{type:"string",mandatory:!0},billion:{type:"string",mandatory:!0},trillion:{type:"string",mandatory:!0}},mandatory:!0},spaceSeparated:"boolean",ordinal:{type:"function",mandatory:!0},currency:{type:"object",children:{symbol:"string",position:"string",code:"string"},mandatory:!0},defaults:"format",ordinalFormat:"format",byteFormat:"format",percentageFormat:"format",currencyFormat:"format",timeDefaults:"format",formats:{type:"object",children:{fourDigits:{type:"format",mandatory:!0},fullWithTwoDecimals:{type:"format",mandatory:!0},fullWithTwoDecimalsNoCurrency:{type:"format",mandatory:!0},fullWithNoDecimals:{type:"format",mandatory:!0}}}};t.exports={validate:function(e,t){var n=i(e),r=o(t);return n&&r},validateFormat:o,validateInput:i,validateLanguage:function(e){return a(e,f,"[Validate language]")}}},{"./unformatting":9}]},{},[7])(7)});
+var require;var require;!function(e){if(true)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).numbro=e()}}(function(){return function e(t,n,r){function i(o,u){if(!n[o]){if(!t[o]){var s="function"==typeof require&&require;if(!u&&s)return require(o,!0);if(a)return a(o,!0);var c=new Error("Cannot find module '"+o+"'");throw c.code="MODULE_NOT_FOUND",c}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return i(n||e)},l,l.exports,e,t,n,r)}return n[o].exports}for(var a="function"==typeof require&&require,o=0;o<r.length;o++)i(r[o]);return i}({1:[function(e,t,n){!function(e){"use strict";function n(e){function t(e,n){var r,i,a,o,u,s,c=this;if(!(c instanceof t))return q&&_(26,"constructor call without new",e),new t(e,n);if(null!=n&&Z(n,2,64,T,"base")){if(n|=0,s=e+"",10==n)return c=new t(e instanceof t?e:s),A(c,C+c.e+1,R);if((o="number"==typeof e)&&0*e!=0||!new RegExp("^-?"+(r="["+b.slice(0,n)+"]+")+"(?:\\."+r+")?$",n<37?"i":"").test(s))return E(c,s,o,n);o?(c.s=1/e<0?(s=s.slice(1),-1):1,q&&s.replace(/^0\.0*|\./,"").length>15&&_(T,y,e),o=!1):c.s=45===s.charCodeAt(0)?(s=s.slice(1),-1):1,s=g(s,10,n,c.s)}else{if(e instanceof t)return c.s=e.s,c.e=e.e,c.c=(e=e.c)?e.slice():e,void(T=0);if((o="number"==typeof e)&&0*e==0){if(c.s=1/e<0?(e=-e,-1):1,e===~~e){for(i=0,a=e;a>=10;a/=10,i++);return c.e=i,c.c=[e],void(T=0)}s=e+""}else{if(!p.test(s=e+""))return E(c,s,o);c.s=45===s.charCodeAt(0)?(s=s.slice(1),-1):1}}for((i=s.indexOf("."))>-1&&(s=s.replace(".","")),(a=s.search(/e/i))>0?(i<0&&(i=a),i+=+s.slice(a+1),s=s.substring(0,a)):i<0&&(i=s.length),a=0;48===s.charCodeAt(a);a++);for(u=s.length;48===s.charCodeAt(--u););if(s=s.slice(a,u+1))if(u=s.length,o&&q&&u>15&&(e>S||e!==h(e))&&_(T,y,c.s*e),(i=i-a-1)>V)c.c=c.e=null;else if(i<I)c.c=[c.e=0];else{if(c.e=i,c.c=[],a=(i+1)%x,i<0&&(a+=x),a<u){for(a&&c.c.push(+s.slice(0,a)),u-=x;a<u;)c.c.push(+s.slice(a,a+=x));s=s.slice(a),a=x-s.length}else a-=u;for(;a--;s+="0");c.c.push(+s)}else c.c=[c.e=0];T=0}function g(e,n,r,a){var o,u,c,f,g,p,d,h=e.indexOf("."),v=C,m=R;for(r<37&&(e=e.toLowerCase()),h>=0&&(c=W,W=0,e=e.replace(".",""),g=(d=new t(r)).pow(e.length-h),W=c,d.c=s(l(i(g.c),g.e),10,n),d.e=d.c.length),u=c=(p=s(e,r,n)).length;0==p[--c];p.pop());if(!p[0])return"0";if(h<0?--u:(g.c=p,g.e=u,g.s=a,p=(g=L(g,d,v,m,n)).c,f=g.r,u=g.e),o=u+v+1,h=p[o],c=n/2,f=f||o<0||null!=p[o+1],f=m<4?(null!=h||f)&&(0==m||m==(g.s<0?3:2)):h>c||h==c&&(4==m||f||6==m&&1&p[o-1]||m==(g.s<0?8:7)),o<1||!p[0])e=f?l("1",-v):"0";else{if(p.length=o,f)for(--n;++p[--o]>n;)p[o]=0,o||(++u,p=[1].concat(p));for(c=p.length;!p[--c];);for(h=0,e="";h<=c;e+=b.charAt(p[h++]));e=l(e,u)}return e}function F(e,n,r,a){var o,u,s,f,g;if(r=null!=r&&Z(r,0,8,a,m)?0|r:R,!e.c)return e.toString();if(o=e.c[0],s=e.e,null==n)g=i(e.c),g=19==a||24==a&&s<=$?c(g,s):l(g,s);else if(e=A(new t(e),n,r),u=e.e,g=i(e.c),f=g.length,19==a||24==a&&(n<=u||u<=$)){for(;f<n;g+="0",f++);g=c(g,u)}else if(n-=s,g=l(g,u),u+1>f){if(--n>0)for(g+=".";n--;g+="0");}else if((n+=u-f)>0)for(u+1==f&&(g+=".");n--;g+="0");return e.s<0&&o?"-"+g:g}function D(e,n){var r,i,a=0;for(u(e[0])&&(e=e[0]),r=new t(e[0]);++a<e.length;){if(!(i=new t(e[a])).s){r=i;break}n.call(r,i)&&(r=i)}return r}function B(e,t,n,r,i){return(e<t||e>n||e!=f(e))&&_(r,(i||"decimal places")+(e<t||e>n?" out of range":" not an integer"),e),!0}function k(e,t,n){for(var r=1,i=t.length;!t[--i];t.pop());for(i=t[0];i>=10;i/=10,r++);return(n=r+n*x-1)>V?e.c=e.e=null:n<I?e.c=[e.e=0]:(e.e=n,e.c=t),e}function _(e,t,n){var r=new Error(["new BigNumber","cmp","config","div","divToInt","eq","gt","gte","lt","lte","minus","mod","plus","precision","random","round","shift","times","toDigits","toExponential","toFixed","toFormat","toFraction","pow","toPrecision","toString","BigNumber"][e]+"() "+t+": "+n);throw r.name="BigNumber Error",T=0,r}function A(e,t,n,r){var i,a,o,u,s,c,l,f=e.c,g=N;if(f){e:{for(i=1,u=f[0];u>=10;u/=10,i++);if((a=t-i)<0)a+=x,o=t,l=(s=f[c=0])/g[i-o-1]%10|0;else if((c=d((a+1)/x))>=f.length){if(!r)break e;for(;f.length<=c;f.push(0));s=l=0,i=1,o=(a%=x)-x+1}else{for(s=u=f[c],i=1;u>=10;u/=10,i++);l=(o=(a%=x)-x+i)<0?0:s/g[i-o-1]%10|0}if(r=r||t<0||null!=f[c+1]||(o<0?s:s%g[i-o-1]),r=n<4?(l||r)&&(0==n||n==(e.s<0?3:2)):l>5||5==l&&(4==n||r||6==n&&(a>0?o>0?s/g[i-o]:0:f[c-1])%10&1||n==(e.s<0?8:7)),t<1||!f[0])return f.length=0,r?(t-=e.e+1,f[0]=g[(x-t%x)%x],e.e=-t||0):f[0]=e.e=0,e;if(0==a?(f.length=c,u=1,c--):(f.length=c+1,u=g[x-a],f[c]=o>0?h(s/g[i-o]%g[o])*u:0),r)for(;;){if(0==c){for(a=1,o=f[0];o>=10;o/=10,a++);for(o=f[0]+=u,u=1;o>=10;o/=10,u++);a!=u&&(e.e++,f[0]==w&&(f[0]=1));break}if(f[c]+=u,f[c]!=w)break;f[c--]=0,u=1}for(a=f.length;0===f[--a];f.pop());}e.e>V?e.c=e.e=null:e.e<I&&(e.c=[e.e=0])}return e}var L,E,T=0,U=t.prototype,j=new t(1),C=20,R=4,$=-7,P=21,I=-1e7,V=1e7,q=!0,Z=B,z=!1,G=1,W=0,H={decimalSeparator:".",groupSeparator:",",groupSize:3,secondaryGroupSize:0,fractionGroupSeparator:" ",fractionGroupSize:0};return t.another=n,t.ROUND_UP=0,t.ROUND_DOWN=1,t.ROUND_CEIL=2,t.ROUND_FLOOR=3,t.ROUND_HALF_UP=4,t.ROUND_HALF_DOWN=5,t.ROUND_HALF_EVEN=6,t.ROUND_HALF_CEIL=7,t.ROUND_HALF_FLOOR=8,t.EUCLID=9,t.config=t.set=function(){var e,t,n=0,r={},i=arguments,a=i[0],s=a&&"object"==typeof a?function(){if(a.hasOwnProperty(t))return null!=(e=a[t])}:function(){if(i.length>n)return null!=(e=i[n++])};return s(t="DECIMAL_PLACES")&&Z(e,0,M,2,t)&&(C=0|e),r[t]=C,s(t="ROUNDING_MODE")&&Z(e,0,8,2,t)&&(R=0|e),r[t]=R,s(t="EXPONENTIAL_AT")&&(u(e)?Z(e[0],-M,0,2,t)&&Z(e[1],0,M,2,t)&&($=0|e[0],P=0|e[1]):Z(e,-M,M,2,t)&&($=-(P=0|(e<0?-e:e)))),r[t]=[$,P],s(t="RANGE")&&(u(e)?Z(e[0],-M,-1,2,t)&&Z(e[1],1,M,2,t)&&(I=0|e[0],V=0|e[1]):Z(e,-M,M,2,t)&&(0|e?I=-(V=0|(e<0?-e:e)):q&&_(2,t+" cannot be zero",e))),r[t]=[I,V],s(t="ERRORS")&&(e===!!e||1===e||0===e?(T=0,Z=(q=!!e)?B:o):q&&_(2,t+v,e)),r[t]=q,s(t="CRYPTO")&&(!0===e||!1===e||1===e||0===e?e?!(e="undefined"==typeof crypto)&&crypto&&(crypto.getRandomValues||crypto.randomBytes)?z=!0:q?_(2,"crypto unavailable",e?void 0:crypto):z=!1:z=!1:q&&_(2,t+v,e)),r[t]=z,s(t="MODULO_MODE")&&Z(e,0,9,2,t)&&(G=0|e),r[t]=G,s(t="POW_PRECISION")&&Z(e,0,M,2,t)&&(W=0|e),r[t]=W,s(t="FORMAT")&&("object"==typeof e?H=e:q&&_(2,t+" not an object",e)),r[t]=H,r},t.max=function(){return D(arguments,U.lt)},t.min=function(){return D(arguments,U.gt)},t.random=function(){var e=9007199254740992*Math.random()&2097151?function(){return h(9007199254740992*Math.random())}:function(){return 8388608*(1073741824*Math.random()|0)+(8388608*Math.random()|0)};return function(n){var r,i,a,o,u,s=0,c=[],l=new t(j);if(n=null!=n&&Z(n,0,M,14)?0|n:C,o=d(n/x),z)if(crypto.getRandomValues){for(r=crypto.getRandomValues(new Uint32Array(o*=2));s<o;)(u=131072*r[s]+(r[s+1]>>>11))>=9e15?(i=crypto.getRandomValues(new Uint32Array(2)),r[s]=i[0],r[s+1]=i[1]):(c.push(u%1e14),s+=2);s=o/2}else if(crypto.randomBytes){for(r=crypto.randomBytes(o*=7);s<o;)(u=281474976710656*(31&r[s])+1099511627776*r[s+1]+4294967296*r[s+2]+16777216*r[s+3]+(r[s+4]<<16)+(r[s+5]<<8)+r[s+6])>=9e15?crypto.randomBytes(7).copy(r,s):(c.push(u%1e14),s+=7);s=o/7}else z=!1,q&&_(14,"crypto unavailable",crypto);if(!z)for(;s<o;)(u=e())<9e15&&(c[s++]=u%1e14);for(o=c[--s],n%=x,o&&n&&(u=N[x-n],c[s]=h(o/u)*u);0===c[s];c.pop(),s--);if(s<0)c=[a=0];else{for(a=-1;0===c[0];c.splice(0,1),a-=x);for(s=1,u=c[0];u>=10;u/=10,s++);s<x&&(a-=x-s)}return l.e=a,l.c=c,l}}(),L=function(){function e(e,t,n){var r,i,a,o,u=0,s=e.length,c=t%O,l=t/O|0;for(e=e.slice();s--;)u=((i=c*(a=e[s]%O)+(r=l*a+(o=e[s]/O|0)*c)%O*O+u)/n|0)+(r/O|0)+l*o,e[s]=i%n;return u&&(e=[u].concat(e)),e}function n(e,t,n,r){var i,a;if(n!=r)a=n>r?1:-1;else for(i=a=0;i<n;i++)if(e[i]!=t[i]){a=e[i]>t[i]?1:-1;break}return a}function i(e,t,n,r){for(var i=0;n--;)e[n]-=i,i=e[n]<t[n]?1:0,e[n]=i*r+e[n]-t[n];for(;!e[0]&&e.length>1;e.splice(0,1));}return function(a,o,u,s,c){var l,f,g,p,d,v,m,y,b,S,N,O,M,F,D,B,k,_=a.s==o.s?1:-1,L=a.c,E=o.c;if(!(L&&L[0]&&E&&E[0]))return new t(a.s&&o.s&&(L?!E||L[0]!=E[0]:E)?L&&0==L[0]||!E?0*_:_/0:NaN);for(b=(y=new t(_)).c=[],_=u+(f=a.e-o.e)+1,c||(c=w,f=r(a.e/x)-r(o.e/x),_=_/x|0),g=0;E[g]==(L[g]||0);g++);if(E[g]>(L[g]||0)&&f--,_<0)b.push(1),p=!0;else{for(F=L.length,B=E.length,g=0,_+=2,(d=h(c/(E[0]+1)))>1&&(E=e(E,d,c),L=e(L,d,c),B=E.length,F=L.length),M=B,N=(S=L.slice(0,B)).length;N<B;S[N++]=0);k=E.slice(),k=[0].concat(k),D=E[0],E[1]>=c/2&&D++;do{if(d=0,(l=n(E,S,B,N))<0){if(O=S[0],B!=N&&(O=O*c+(S[1]||0)),(d=h(O/D))>1)for(d>=c&&(d=c-1),m=(v=e(E,d,c)).length,N=S.length;1==n(v,S,m,N);)d--,i(v,B<m?k:E,m,c),m=v.length,l=1;else 0==d&&(l=d=1),m=(v=E.slice()).length;if(m<N&&(v=[0].concat(v)),i(S,v,N,c),N=S.length,-1==l)for(;n(E,S,B,N)<1;)d++,i(S,B<N?k:E,N,c),N=S.length}else 0===l&&(d++,S=[0]);b[g++]=d,S[0]?S[N++]=L[M]||0:(S=[L[M]],N=1)}while((M++<F||null!=S[0])&&_--);p=null!=S[0],b[0]||b.splice(0,1)}if(c==w){for(g=1,_=b[0];_>=10;_/=10,g++);A(y,u+(y.e=g+f*x-1)+1,s,p)}else y.e=f,y.r=+p;return y}}(),E=function(){var e=/^(-?)0([xbo])(?=\w[\w.]*$)/i,n=/^([^.]+)\.$/,r=/^\.([^.]+)$/,i=/^-?(Infinity|NaN)$/,a=/^\s*\+(?=[\w.])|^\s+|\s+$/g;return function(o,u,s,c){var l,f=s?u:u.replace(a,"");if(i.test(f))o.s=isNaN(f)?null:f<0?-1:1;else{if(!s&&(f=f.replace(e,function(e,t,n){return l="x"==(n=n.toLowerCase())?16:"b"==n?2:8,c&&c!=l?e:t}),c&&(l=c,f=f.replace(n,"$1").replace(r,"0.$1")),u!=f))return new t(f,l);q&&_(T,"not a"+(c?" base "+c:"")+" number",u),o.s=null}o.c=o.e=null,T=0}}(),U.absoluteValue=U.abs=function(){var e=new t(this);return e.s<0&&(e.s=1),e},U.ceil=function(){return A(new t(this),this.e+1,2)},U.comparedTo=U.cmp=function(e,n){return T=1,a(this,new t(e,n))},U.decimalPlaces=U.dp=function(){var e,t,n=this.c;if(!n)return null;if(e=((t=n.length-1)-r(this.e/x))*x,t=n[t])for(;t%10==0;t/=10,e--);return e<0&&(e=0),e},U.dividedBy=U.div=function(e,n){return T=3,L(this,new t(e,n),C,R)},U.dividedToIntegerBy=U.divToInt=function(e,n){return T=4,L(this,new t(e,n),0,1)},U.equals=U.eq=function(e,n){return T=5,0===a(this,new t(e,n))},U.floor=function(){return A(new t(this),this.e+1,3)},U.greaterThan=U.gt=function(e,n){return T=6,a(this,new t(e,n))>0},U.greaterThanOrEqualTo=U.gte=function(e,n){return T=7,1===(n=a(this,new t(e,n)))||0===n},U.isFinite=function(){return!!this.c},U.isInteger=U.isInt=function(){return!!this.c&&r(this.e/x)>this.c.length-2},U.isNaN=function(){return!this.s},U.isNegative=U.isNeg=function(){return this.s<0},U.isZero=function(){return!!this.c&&0==this.c[0]},U.lessThan=U.lt=function(e,n){return T=8,a(this,new t(e,n))<0},U.lessThanOrEqualTo=U.lte=function(e,n){return T=9,-1===(n=a(this,new t(e,n)))||0===n},U.minus=U.sub=function(e,n){var i,a,o,u,s=this,c=s.s;if(T=10,e=new t(e,n),n=e.s,!c||!n)return new t(NaN);if(c!=n)return e.s=-n,s.plus(e);var l=s.e/x,f=e.e/x,g=s.c,p=e.c;if(!l||!f){if(!g||!p)return g?(e.s=-n,e):new t(p?s:NaN);if(!g[0]||!p[0])return p[0]?(e.s=-n,e):new t(g[0]?s:3==R?-0:0)}if(l=r(l),f=r(f),g=g.slice(),c=l-f){for((u=c<0)?(c=-c,o=g):(f=l,o=p),o.reverse(),n=c;n--;o.push(0));o.reverse()}else for(a=(u=(c=g.length)<(n=p.length))?c:n,c=n=0;n<a;n++)if(g[n]!=p[n]){u=g[n]<p[n];break}if(u&&(o=g,g=p,p=o,e.s=-e.s),(n=(a=p.length)-(i=g.length))>0)for(;n--;g[i++]=0);for(n=w-1;a>c;){if(g[--a]<p[a]){for(i=a;i&&!g[--i];g[i]=n);--g[i],g[a]+=w}g[a]-=p[a]}for(;0==g[0];g.splice(0,1),--f);return g[0]?k(e,g,f):(e.s=3==R?-1:1,e.c=[e.e=0],e)},U.modulo=U.mod=function(e,n){var r,i,a=this;return T=11,e=new t(e,n),!a.c||!e.s||e.c&&!e.c[0]?new t(NaN):!e.c||a.c&&!a.c[0]?new t(a):(9==G?(i=e.s,e.s=1,r=L(a,e,0,3),e.s=i,r.s*=i):r=L(a,e,0,G),a.minus(r.times(e)))},U.negated=U.neg=function(){var e=new t(this);return e.s=-e.s||null,e},U.plus=U.add=function(e,n){var i,a=this,o=a.s;if(T=12,e=new t(e,n),n=e.s,!o||!n)return new t(NaN);if(o!=n)return e.s=-n,a.minus(e);var u=a.e/x,s=e.e/x,c=a.c,l=e.c;if(!u||!s){if(!c||!l)return new t(o/0);if(!c[0]||!l[0])return l[0]?e:new t(c[0]?a:0*o)}if(u=r(u),s=r(s),c=c.slice(),o=u-s){for(o>0?(s=u,i=l):(o=-o,i=c),i.reverse();o--;i.push(0));i.reverse()}for((o=c.length)-(n=l.length)<0&&(i=l,l=c,c=i,n=o),o=0;n;)o=(c[--n]=c[n]+l[n]+o)/w|0,c[n]=w===c[n]?0:c[n]%w;return o&&(c=[o].concat(c),++s),k(e,c,s)},U.precision=U.sd=function(e){var t,n,r=this,i=r.c;if(null!=e&&e!==!!e&&1!==e&&0!==e&&(q&&_(13,"argument"+v,e),e!=!!e&&(e=null)),!i)return null;if(n=i.length-1,t=n*x+1,n=i[n]){for(;n%10==0;n/=10,t--);for(n=i[0];n>=10;n/=10,t++);}return e&&r.e+1>t&&(t=r.e+1),t},U.round=function(e,n){var r=new t(this);return(null==e||Z(e,0,M,15))&&A(r,~~e+this.e+1,null!=n&&Z(n,0,8,15,m)?0|n:R),r},U.shift=function(e){var n=this;return Z(e,-S,S,16,"argument")?n.times("1e"+f(e)):new t(n.c&&n.c[0]&&(e<-S||e>S)?n.s*(e<0?0:1/0):n)},U.squareRoot=U.sqrt=function(){var e,n,a,o,u,s=this,c=s.c,l=s.s,f=s.e,g=C+4,p=new t("0.5");if(1!==l||!c||!c[0])return new t(!l||l<0&&(!c||c[0])?NaN:c?s:1/0);if(0==(l=Math.sqrt(+s))||l==1/0?(((n=i(c)).length+f)%2==0&&(n+="0"),l=Math.sqrt(n),f=r((f+1)/2)-(f<0||f%2),a=new t(n=l==1/0?"1e"+f:(n=l.toExponential()).slice(0,n.indexOf("e")+1)+f)):a=new t(l+""),a.c[0])for((l=(f=a.e)+g)<3&&(l=0);;)if(u=a,a=p.times(u.plus(L(s,u,g,1))),i(u.c).slice(0,l)===(n=i(a.c)).slice(0,l)){if(a.e<f&&--l,"9999"!=(n=n.slice(l-3,l+1))&&(o||"4999"!=n)){+n&&(+n.slice(1)||"5"!=n.charAt(0))||(A(a,a.e+C+2,1),e=!a.times(a).eq(s));break}if(!o&&(A(u,u.e+C+2,0),u.times(u).eq(s))){a=u;break}g+=4,l+=4,o=1}return A(a,a.e+C+1,R,e)},U.times=U.mul=function(e,n){var i,a,o,u,s,c,l,f,g,p,d,h,v,m,y,b=this,S=b.c,N=(T=17,e=new t(e,n)).c;if(!(S&&N&&S[0]&&N[0]))return!b.s||!e.s||S&&!S[0]&&!N||N&&!N[0]&&!S?e.c=e.e=e.s=null:(e.s*=b.s,S&&N?(e.c=[0],e.e=0):e.c=e.e=null),e;for(a=r(b.e/x)+r(e.e/x),e.s*=b.s,(l=S.length)<(p=N.length)&&(v=S,S=N,N=v,o=l,l=p,p=o),o=l+p,v=[];o--;v.push(0));for(m=w,y=O,o=p;--o>=0;){for(i=0,d=N[o]%y,h=N[o]/y|0,u=o+(s=l);u>o;)i=((f=d*(f=S[--s]%y)+(c=h*f+(g=S[s]/y|0)*d)%y*y+v[u]+i)/m|0)+(c/y|0)+h*g,v[u--]=f%m;v[u]=i}return i?++a:v.splice(0,1),k(e,v,a)},U.toDigits=function(e,n){var r=new t(this);return e=null!=e&&Z(e,1,M,18,"precision")?0|e:null,n=null!=n&&Z(n,0,8,18,m)?0|n:R,e?A(r,e,n):r},U.toExponential=function(e,t){return F(this,null!=e&&Z(e,0,M,19)?1+~~e:null,t,19)},U.toFixed=function(e,t){return F(this,null!=e&&Z(e,0,M,20)?~~e+this.e+1:null,t,20)},U.toFormat=function(e,t){var n=F(this,null!=e&&Z(e,0,M,21)?~~e+this.e+1:null,t,21);if(this.c){var r,i=n.split("."),a=+H.groupSize,o=+H.secondaryGroupSize,u=H.groupSeparator,s=i[0],c=i[1],l=this.s<0,f=l?s.slice(1):s,g=f.length;if(o&&(r=a,a=o,o=r,g-=r),a>0&&g>0){for(r=g%a||a,s=f.substr(0,r);r<g;r+=a)s+=u+f.substr(r,a);o>0&&(s+=u+f.slice(r)),l&&(s="-"+s)}n=c?s+H.decimalSeparator+((o=+H.fractionGroupSize)?c.replace(new RegExp("\\d{"+o+"}\\B","g"),"$&"+H.fractionGroupSeparator):c):s}return n},U.toFraction=function(e){var n,r,a,o,u,s,c,l,f,g=q,p=this,d=p.c,h=new t(j),v=r=new t(j),m=c=new t(j);if(null!=e&&(q=!1,s=new t(e),q=g,(g=s.isInt())&&!s.lt(j)||(q&&_(22,"max denominator "+(g?"out of range":"not an integer"),e),e=!g&&s.c&&A(s,s.e+1,1).gte(j)?s:null)),!d)return p.toString();for(f=i(d),o=h.e=f.length-p.e-1,h.c[0]=N[(u=o%x)<0?x+u:u],e=!e||s.cmp(h)>0?o>0?h:v:s,u=V,V=1/0,s=new t(f),c.c[0]=0;l=L(s,h,0,1),1!=(a=r.plus(l.times(m))).cmp(e);)r=m,m=a,v=c.plus(l.times(a=v)),c=a,h=s.minus(l.times(a=h)),s=a;return a=L(e.minus(r),m,0,1),c=c.plus(a.times(v)),r=r.plus(a.times(m)),c.s=v.s=p.s,o*=2,n=L(v,m,o,R).minus(p).abs().cmp(L(c,r,o,R).minus(p).abs())<1?[v.toString(),m.toString()]:[c.toString(),r.toString()],V=u,n},U.toNumber=function(){return+this},U.toPower=U.pow=function(e,n){var r,i,a,o=h(e<0?-e:+e),u=this;if(null!=n&&(T=23,n=new t(n)),!Z(e,-S,S,23,"exponent")&&(!isFinite(e)||o>S&&(e/=0)||parseFloat(e)!=e&&!(e=NaN))||0==e)return r=Math.pow(+u,e),new t(n?r%n:r);for(n?e>1&&u.gt(j)&&u.isInt()&&n.gt(j)&&n.isInt()?u=u.mod(n):(a=n,n=null):W&&(r=d(W/x+2)),i=new t(j);;){if(o%2){if(!(i=i.times(u)).c)break;r?i.c.length>r&&(i.c.length=r):n&&(i=i.mod(n))}if(!(o=h(o/2)))break;u=u.times(u),r?u.c&&u.c.length>r&&(u.c.length=r):n&&(u=u.mod(n))}return n?i:(e<0&&(i=j.div(i)),a?i.mod(a):r?A(i,W,R):i)},U.toPrecision=function(e,t){return F(this,null!=e&&Z(e,1,M,24,"precision")?0|e:null,t,24)},U.toString=function(e){var t,n=this,r=n.s,a=n.e;return null===a?r?(t="Infinity",r<0&&(t="-"+t)):t="NaN":(t=i(n.c),t=null!=e&&Z(e,2,64,25,"base")?g(l(t,a),0|e,10,r):a<=$||a>=P?c(t,a):l(t,a),r<0&&n.c[0]&&(t="-"+t)),t},U.truncated=U.trunc=function(){return A(new t(this),this.e+1,1)},U.valueOf=U.toJSON=function(){var e,t=this,n=t.e;return null===n?t.toString():(e=i(t.c),e=n<=$||n>=P?c(e,n):l(e,n),t.s<0?"-"+e:e)},U.isBigNumber=!0,null!=e&&t.config(e),t}function r(e){var t=0|e;return e>0||e===t?t:t-1}function i(e){for(var t,n,r=1,i=e.length,a=e[0]+"";r<i;){for(t=e[r++]+"",n=x-t.length;n--;t="0"+t);a+=t}for(i=a.length;48===a.charCodeAt(--i););return a.slice(0,i+1||1)}function a(e,t){var n,r,i=e.c,a=t.c,o=e.s,u=t.s,s=e.e,c=t.e;if(!o||!u)return null;if(n=i&&!i[0],r=a&&!a[0],n||r)return n?r?0:-u:o;if(o!=u)return o;if(n=o<0,r=s==c,!i||!a)return r?0:!i^n?1:-1;if(!r)return s>c^n?1:-1;for(u=(s=i.length)<(c=a.length)?s:c,o=0;o<u;o++)if(i[o]!=a[o])return i[o]>a[o]^n?1:-1;return s==c?0:s>c^n?1:-1}function o(e,t,n){return(e=f(e))>=t&&e<=n}function u(e){return"[object Array]"==Object.prototype.toString.call(e)}function s(e,t,n){for(var r,i,a=[0],o=0,u=e.length;o<u;){for(i=a.length;i--;a[i]*=t);for(a[r=0]+=b.indexOf(e.charAt(o++));r<a.length;r++)a[r]>n-1&&(null==a[r+1]&&(a[r+1]=0),a[r+1]+=a[r]/n|0,a[r]%=n)}return a.reverse()}function c(e,t){return(e.length>1?e.charAt(0)+"."+e.slice(1):e)+(t<0?"e":"e+")+t}function l(e,t){var n,r;if(t<0){for(r="0.";++t;r+="0");e=r+e}else if(n=e.length,++t>n){for(r="0",t-=n;--t;r+="0");e+=r}else t<n&&(e=e.slice(0,t)+"."+e.slice(t));return e}function f(e){return(e=parseFloat(e))<0?d(e):h(e)}var g,p=/^-?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i,d=Math.ceil,h=Math.floor,v=" not a boolean or binary digit",m="rounding mode",y="number type has more than 15 significant digits",b="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_",w=1e14,x=14,S=9007199254740991,N=[1,10,100,1e3,1e4,1e5,1e6,1e7,1e8,1e9,1e10,1e11,1e12,1e13],O=1e7,M=1e9;(g=n()).default=g.BigNumber=g,void 0!==t&&t.exports?t.exports=g:(e||(e="undefined"!=typeof self?self:Function("return this")()),e.BigNumber=g)}(this)},{}],2:[function(e,t,n){"use strict";t.exports={languageTag:"en-US",delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},spaceSeparated:!1,ordinal:function(e){var t=e%10;return 1==~~(e%100/10)?"th":1===t?"st":2===t?"nd":3===t?"rd":"th"},currency:{symbol:"$",position:"prefix",code:"USD"},currencyFormat:{thousandSeparated:!0,totalLength:4,spaceSeparated:!0},formats:{fourDigits:{totalLength:4,spaceSeparated:!0},fullWithTwoDecimals:{output:"currency",thousandSeparated:!0,mantissa:2},fullWithTwoDecimalsNoCurrency:{thousandSeparated:!0,mantissa:2},fullWithNoDecimals:{output:"currency",thousandSeparated:!0,mantissa:0}}}},{}],3:[function(e,t,n){"use strict";function r(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments[2];if("string"==typeof t&&(t=L.parseFormat(t)),!A.validateFormat(t))return"ERROR: invalid format";var r=t.prefix||"",a=t.postfix||"",o=i(e,t,n);return o=M(o,r),o=F(o,a)}function i(e,t,n){switch(t.output){case"currency":return t=B(t,_.currentCurrencyDefaultFormat()),p(e,t,_);case"percent":return t=B(t,_.currentPercentageDefaultFormat()),g(e,t,_,n);case"byte":return t=B(t,_.currentByteDefaultFormat()),c(e,t,_,n);case"time":return t=B(t,_.currentTimeDefaultFormat()),f(e);case"ordinal":return t=B(t,_.currentOrdinalDefaultFormat()),l(e,t,_);case"number":default:return D({instance:e,providedFormat:t,numbro:n})}}function a(e){var t=T.decimal;return s(e._value,t.suffixes,t.scale).suffix}function o(e){var t=T.binary;return s(e._value,t.suffixes,t.scale).suffix}function u(e){var t=T.general;return s(e._value,t.suffixes,t.scale).suffix}function s(e,t,n){var r=t[0],i=Math.abs(e);if(i>=n){for(var a=1;a<t.length;++a){var o=Math.pow(n,a),u=Math.pow(n,a+1);if(i>=o&&i<u){r=t[a],e/=o;break}}r===t[0]&&(e/=Math.pow(n,t.length-1),r=t[t.length-1])}return{value:e,suffix:r}}function c(e,t,n,r){var i=t.base||"binary",a=T[i],o=s(e._value,a.suffixes,a.scale),u=o.value,c=o.suffix;return D({instance:r(u),providedFormat:t,state:n,defaults:n.currentByteDefaultFormat()})+(n.currentAbbreviations().spaced?" ":"")+c}function l(e,t,n){var r=n.currentOrdinal(),i=Object.assign({},U,t),a=D({instance:e,providedFormat:t,state:n}),o=r(e._value);return a+(i.spaceSeparated?" ":"")+o}function f(e){var t=Math.floor(e._value/60/60),n=Math.floor((e._value-60*t*60)/60),r=Math.round(e._value-60*t*60-60*n);return t+":"+(n<10?"0":"")+n+":"+(r<10?"0":"")+r}function g(e,t,n,r){var i=t.prefixSymbol,a=D({instance:r(100*e._value),providedFormat:t,state:n}),o=Object.assign({},U,t);return i?"%"+(o.spaceSeparated?" ":"")+a:a+(o.spaceSeparated?" ":"")+"%"}function p(e,t,n){var r=n.currentCurrency(),i=Object.assign({},U,t),a=void 0,o="",u=!!i.totalLength||!!i.forceAverage||i.average,s=t.currencyPosition||r.position,c=t.currencySymbol||r.symbol;i.spaceSeparated&&(o=" "),"infix"===s&&(a=o+c+o);var l=D({instance:e,providedFormat:t,state:n,decimalSeparator:a});return"prefix"===s&&(l=e._value<0&&"sign"===i.negative?"-"+o+c+l.slice(1):c+o+l),s&&"postfix"!==s||(l=l+(o=u?"":o)+c),l}function d(e){var t=e.value,n=e.forceAverage,r=e.abbreviations,i=e.spaceSeparated,a=void 0!==i&&i,o=e.totalLength,u=void 0===o?0:o,s="",c=Math.abs(t),l=-1;c>=Math.pow(10,12)&&!n||"trillion"===n?(s=r.trillion,t/=Math.pow(10,12)):c<Math.pow(10,12)&&c>=Math.pow(10,9)&&!n||"billion"===n?(s=r.billion,t/=Math.pow(10,9)):c<Math.pow(10,9)&&c>=Math.pow(10,6)&&!n||"million"===n?(s=r.million,t/=Math.pow(10,6)):(c<Math.pow(10,6)&&c>=Math.pow(10,3)&&!n||"thousand"===n)&&(s=r.thousand,t/=Math.pow(10,3));var f=a?" ":"";if(s&&(s=f+s),u){var g=t.toString().split(".")[0];l=Math.max(u-g.length,0)}return{value:t,abbreviation:s,mantissaPrecision:l}}function h(e){var t=e.value,n=e.characteristicPrecision,r=void 0===n?0:n,i=t.toExponential().split("e"),a=k(i,2),o=a[0],u=a[1],s=+o;if(!r)return{value:s,abbreviation:"e"+u};return 1<r&&(s*=Math.pow(10,r-1),u=(u=+u-(r-1))>=0?"+"+u:u),{value:s,abbreviation:"e"+u}}function v(e){for(var t="",n=0;n<e;n++)t+="0";return t}function m(e,t){var n=e.toString(),r=n.split("e"),i=k(r,2),a=i[0],o=i[1],u=a.split("."),s=k(u,2),c=s[0],l=s[1],f=void 0===l?"":l;if(+o>0)n=c+f+v(o-f.length);else{var g=".";g=+c<0?"-0"+g:"0"+g;var p=(v(-o-1)+Math.abs(c)+f).substr(0,t);p.length<t&&(p+=v(t-p.length)),n=g+p}return+o>0&&t>0&&(n+="."+v(t)),n}function y(e,t){return-1!==e.toString().indexOf("e")?m(e,t):(Math.round(+(e+"e+"+t))/Math.pow(10,t)).toFixed(t)}function b(e,t,n,r,i){if(-1===r)return e;var a=y(t,r),o=a.toString().split("."),u=k(o,2),s=u[0],c=u[1],l=void 0===c?"":c;if(l.match(/^0+$/)&&(n||i))return s;var f=l.match(/0+$/);return i&&f?s+"."+l.toString().slice(0,f.index):a.toString()}function w(e,t,n,r){var i=e,a=i.toString().split("."),o=k(a,2),u=o[0],s=o[1];if(u.match(/^-?0$/)&&n)return s?u.replace("0","")+"."+s:u.replace("0","");if(u.length<r)for(var c=r-u.length,l=0;l<c;l++)i="0"+i;return i.toString()}function x(e,t){for(var n=[],r=0,i=e;i>0;i--)r===t&&(n.unshift(i),r=0),r++;return n}function S(e,t,n,r,i){var a=r.currentDelimiters(),o=a.thousands;i=i||a.decimal;var u=a.thousandsSize||3,s=e.toString(),c=s.split(".")[0],l=s.split(".")[1];return n&&(t<0&&(c=c.slice(1)),x(c.length,u).forEach(function(e,t){c=c.slice(0,e+t)+o+c.slice(e+t)}),t<0&&(c="-"+c)),s=l?c+i+l:c}function N(e,t){return e+t}function O(e,t,n){return 0===t?e:0==+e?e.replace("-",""):t>0?"+"+e:"sign"===n?e:"("+e.replace("-","")+")"}function M(e,t){return t+e}function F(e,t){return e+t}function D(e){var t=e.instance,n=e.providedFormat,r=e.state,i=void 0===r?_:r,a=e.decimalSeparator,o=e.defaults,u=void 0===o?i.currentDefaults():o,s=t._value;if(0===s&&i.hasZeroFormat())return i.getZeroFormat();if(!isFinite(s))return s.toString();var c=Object.assign({},U,u,n),l=c.totalLength,f=l?0:c.characteristic,g=c.optionalCharacteristic,p=c.forceAverage,v=!!l||!!p||c.average,m=l?-1:v&&void 0===n.mantissa?0:c.mantissa,y=!l&&(void 0===n.optionalMantissa?-1===m:c.optionalMantissa),x=c.trimMantissa,M=c.thousandSeparated,F=c.spaceSeparated,D=c.negative,B=c.forceSign,k=c.exponential,A="";if(v){var L=d({value:s,forceAverage:p,abbreviations:i.currentAbbreviations(),spaceSeparated:F,totalLength:l});s=L.value,A+=L.abbreviation,l&&(m=L.mantissaPrecision)}if(k){var E=h({value:s,characteristicPrecision:f});s=E.value,A=E.abbreviation+A}var T=b(s.toString(),s,y,m,x);return T=w(T,s,g,f),T=S(T,s,M,i,a),(v||k)&&(T=N(T,A)),(B||s<0)&&(T=O(T,s,D)),T}function B(e,t){if(!e)return t;var n=Object.keys(e);return 1===n.length&&"output"===n[0]?t:e}var k=function(){function e(e,t){var n=[],r=!0,i=!1,a=void 0;try{for(var o,u=e[Symbol.iterator]();!(r=(o=u.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){i=!0,a=e}finally{try{!r&&u.return&&u.return()}finally{if(i)throw a}}return n}return function(t,n){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return e(t,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_=e("./globalState"),A=e("./validating"),L=e("./parsing"),E=["B","KB","MB","GB","TB","PB","EB","ZB","YB"],T={general:{scale:1024,suffixes:E,marker:"bd"},binary:{scale:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"],marker:"b"},decimal:{scale:1e3,suffixes:E,marker:"d"}},U={totalLength:0,characteristic:0,forceAverage:!1,average:!1,mantissa:-1,optionalMantissa:!0,thousandSeparated:!1,spaceSeparated:!1,negative:"sign",forceSign:!1};t.exports=function(e){return{format:function(){for(var t=arguments.length,n=Array(t),i=0;i<t;i++)n[i]=arguments[i];return r.apply(void 0,n.concat([e]))},getByteUnit:function(){for(var t=arguments.length,n=Array(t),r=0;r<t;r++)n[r]=arguments[r];return u.apply(void 0,n.concat([e]))},getBinaryByteUnit:function(){for(var t=arguments.length,n=Array(t),r=0;r<t;r++)n[r]=arguments[r];return o.apply(void 0,n.concat([e]))},getDecimalByteUnit:function(){for(var t=arguments.length,n=Array(t),r=0;r<t;r++)n[r]=arguments[r];return a.apply(void 0,n.concat([e]))},formatOrDefault:B}}},{"./globalState":4,"./parsing":8,"./validating":10}],4:[function(e,t,n){"use strict";function r(e){c=e}function i(){return l[c]}var a=e("./en-US"),o=e("./validating"),u=e("./parsing"),s={},c=void 0,l={},f=null,g={};s.languages=function(){return Object.assign({},l)},s.currentLanguage=function(){return c},s.currentCurrency=function(){return i().currency},s.currentAbbreviations=function(){return i().abbreviations},s.currentDelimiters=function(){return i().delimiters},s.currentOrdinal=function(){return i().ordinal},s.currentDefaults=function(){return Object.assign({},i().defaults,g)},s.currentOrdinalDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().ordinalFormat)},s.currentByteDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().byteFormat)},s.currentPercentageDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().percentageFormat)},s.currentCurrencyDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().currencyFormat)},s.currentTimeDefaultFormat=function(){return Object.assign({},s.currentDefaults(),i().timeFormat)},s.setDefaults=function(e){e=u.parseFormat(e),o.validateFormat(e)&&(g=e)},s.getZeroFormat=function(){return f},s.setZeroFormat=function(e){return f="string"==typeof e?e:null},s.hasZeroFormat=function(){return null!==f},s.languageData=function(e){if(e){if(l[e])return l[e];throw new Error('Unknown tag "'+e+'"')}return i()},s.registerLanguage=function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];if(!o.validateLanguage(e))throw new Error("Invalid language data");l[e.languageTag]=e,t&&r(e.languageTag)},s.setLanguage=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:a.languageTag;if(!l[e]){var n=e.split("-")[0],i=Object.keys(l).find(function(e){return e.split("-")[0]===n});return l[i]?void r(i):void r(t)}r(e)},s.registerLanguage(a),c=a.languageTag,t.exports=s},{"./en-US":2,"./parsing":8,"./validating":10}],5:[function(e,t,n){"use strict";function r(t,n){t.forEach(function(t){var r=void 0;try{r=e("../languages/"+t)}catch(e){console.error('Unable to load "'+t+'". No matching language file found.')}r&&n.registerLanguage(r)})}t.exports=function(e){return{loadLanguagesInNode:function(t){return r(t,e)}}}},{}],6:[function(e,t,n){"use strict";function r(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.add(i).toNumber(),e}function i(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.minus(i).toNumber(),e}function a(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.times(i).toNumber(),e}function o(e,t,n){var r=new c(e._value),i=t;return n.isNumbro(t)&&(i=t._value),i=new c(i),e._value=r.dividedBy(i).toNumber(),e}function u(e,t,n){var r=t;return n.isNumbro(t)&&(r=t._value),e._value=r,e}function s(e,t,n){var r=n(e._value);return i(r,t,n),Math.abs(r._value)}var c=e("bignumber.js");t.exports=function(e){return{add:function(t,n){return r(t,n,e)},subtract:function(t,n){return i(t,n,e)},multiply:function(t,n){return a(t,n,e)},divide:function(t,n){return o(t,n,e)},set:function(t,n){return u(t,n,e)},difference:function(t,n){return s(t,n,e)}}}},{"bignumber.js":1}],7:[function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e){var t=e;return a.isNumbro(e)?t=e._value:"string"==typeof e?t=a.unformat(e):isNaN(e)&&(t=NaN),t}function a(e){return new d(i(e))}var o=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=e("./globalState"),s=e("./validating"),c=e("./loading")(a),l=e("./unformatting"),f=e("./formatting")(a),g=e("./manipulating")(a),p=e("./parsing"),d=function(){function e(t){r(this,e),this._value=t}return o(e,[{key:"clone",value:function(){return a(this._value)}},{key:"format",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return f.format(this,e)}},{key:"formatCurrency",value:function(e){return"string"==typeof e&&(e=p.parseFormat(e)),e=f.formatOrDefault(e,u.currentCurrencyDefaultFormat()),e.output="currency",f.format(this,e)}},{key:"formatTime",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return e.output="time",f.format(this,e)}},{key:"binaryByteUnits",value:function(){return f.getBinaryByteUnit(this)}},{key:"decimalByteUnits",value:function(){return f.getDecimalByteUnit(this)}},{key:"byteUnits",value:function(){return f.getByteUnit(this)}},{key:"difference",value:function(e){return g.difference(this,e)}},{key:"add",value:function(e){return g.add(this,e)}},{key:"subtract",value:function(e){return g.subtract(this,e)}},{key:"multiply",value:function(e){return g.multiply(this,e)}},{key:"divide",value:function(e){return g.divide(this,e)}},{key:"set",value:function(e){return g.set(this,i(e))}},{key:"value",value:function(){return this._value}},{key:"valueOf",value:function(){return this._value}}]),e}();a.version="2.1.1",a.isNumbro=function(e){return e instanceof d},a.language=u.currentLanguage,a.registerLanguage=u.registerLanguage,a.setLanguage=u.setLanguage,a.languages=u.languages,a.languageData=u.languageData,a.zeroFormat=u.setZeroFormat,a.defaultFormat=u.currentDefaults,a.setDefaults=u.setDefaults,a.defaultCurrencyFormat=u.currentCurrencyDefaultFormat,a.validate=s.validate,a.loadLanguagesInNode=c.loadLanguagesInNode,a.unformat=l.unformat,t.exports=a},{"./formatting":3,"./globalState":4,"./loading":5,"./manipulating":6,"./parsing":8,"./unformatting":9,"./validating":10}],8:[function(e,t,n){"use strict";function r(e,t){var n=e.match(/^{([^}]*)}/);return n?(t.prefix=n[1],e.slice(n[0].length)):e}function i(e,t){var n=e.match(/{([^}]*)}$/);return n?(t.postfix=n[1],e.slice(0,-n[0].length)):e}function a(e,t){if(-1===e.indexOf("$")){if(-1===e.indexOf("%"))return-1!==e.indexOf("bd")?(t.output="byte",void(t.base="general")):-1!==e.indexOf("b")?(t.output="byte",void(t.base="binary")):-1!==e.indexOf("d")?(t.output="byte",void(t.base="decimal")):void(-1===e.indexOf(":")?-1!==e.indexOf("o")&&(t.output="ordinal"):t.output="time");t.output="percent"}else t.output="currency"}function o(e,t){-1!==e.indexOf(",")&&(t.thousandSeparated=!0)}function u(e,t){-1!==e.indexOf(" ")&&(t.spaceSeparated=!0)}function s(e,t){var n=e.match(/[1-9]+[0-9]*/);n&&(t.totalLength=+n[0])}function c(e,t){var n=e.split(".")[0].match(/0+/);n&&(t.characteristic=n[0].length)}function l(e,t){var n=e.split(".")[1];if(n){var r=n.match(/0+/);r&&(t.mantissa=r[0].length)}}function f(e,t){-1!==e.indexOf("a")&&(t.average=!0)}function g(e,t){-1!==e.indexOf("K")?t.forceAverage="thousand":-1!==e.indexOf("M")?t.forceAverage="million":-1!==e.indexOf("B")?t.forceAverage="billion":-1!==e.indexOf("T")&&(t.forceAverage="trillion")}function p(e,t){e.match(/\[\.]/)?t.optionalMantissa=!0:e.match(/\./)&&(t.optionalMantissa=!1)}function d(e,t){if(-1!==e.indexOf(".")){var n=e.split(".")[0];t.optionalCharacteristic=-1===n.indexOf("0")}}function h(e,t){e.match(/^\+?\([^)]*\)$/)&&(t.negative="parenthesis"),e.match(/^\+?-/)&&(t.negative="sign")}function v(e,t){e.match(/^\+/)&&(t.forceSign=!0)}t.exports={parseFormat:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"string"!=typeof e?e:(e=r(e,t),e=i(e,t),a(e,t),s(e,t),c(e,t),d(e,t),f(e,t),g(e,t),l(e,t),p(e,t),o(e,t),u(e,t),h(e,t),v(e,t),t)}}},{}],9:[function(e,t,n){"use strict";function r(e){return e.replace(/[-/\\^$*+?.()|[\]{}]/g,"\\$&")}function i(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",a=arguments[3],o=arguments[4],u=arguments[5],s=arguments[6];if(!isNaN(+e))return+e;var l="",f=e.replace(/(^[^(]*)\((.*)\)([^)]*$)/,"$1$2$3");if(f!==e)return-1*i(f,t,n,a,o,u,s);for(var g=0;g<c.length;g++){var p=c[g];if((l=e.replace(p.key,""))!==e)return i(l,t,n,a,o,u,s)*p.factor}if((l=e.replace("%",""))!==e)return i(l,t,n,a,o,u,s)/100;var d=parseFloat(e);if(!isNaN(d)){var h=a(d);if(h&&"."!==h&&(l=e.replace(new RegExp(r(h)+"$"),""))!==e)return i(l,t,n,a,o,u,s);var v={};Object.keys(u).forEach(function(e){v[u[e]]=e});for(var m=Object.keys(v).sort().reverse(),y=m.length,b=0;b<y;b++){var w=m[b],x=v[w];if((l=e.replace(w,""))!==e){var S=void 0;switch(x){case"thousand":S=Math.pow(10,3);break;case"million":S=Math.pow(10,6);break;case"billion":S=Math.pow(10,9);break;case"trillion":S=Math.pow(10,12)}return i(l,t,n,a,o,u,s)*S}}}}function a(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",i=e.replace(n,"");return i=i.replace(new RegExp("([0-9])"+r(t.thousands)+"([0-9])","g"),"$1$2"),i=i.replace(t.decimal,".")}function o(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",r=arguments[3],o=arguments[4],u=arguments[5],s=arguments[6];if(""!==e)return isNaN(+e)?e===o?0:i(a(e,t,n),t,n,r,o,u,s):+e}function u(e,t){if(!(e.indexOf(":")&&":"!==t.thousands))return!1;var n=e.split(":");if(3!==n.length)return!1;var r=+n[0],i=+n[1],a=+n[2];return!isNaN(r)&&!isNaN(i)&&!isNaN(a)}function s(e){var t=e.split(":"),n=+t[0],r=+t[1];return+t[2]+60*r+3600*n}var c=[{key:"ZiB",factor:Math.pow(1024,7)},{key:"ZB",factor:Math.pow(1e3,7)},{key:"YiB",factor:Math.pow(1024,8)},{key:"YB",factor:Math.pow(1e3,8)},{key:"TiB",factor:Math.pow(1024,4)},{key:"TB",factor:Math.pow(1e3,4)},{key:"PiB",factor:Math.pow(1024,5)},{key:"PB",factor:Math.pow(1e3,5)},{key:"MiB",factor:Math.pow(1024,2)},{key:"MB",factor:Math.pow(1e3,2)},{key:"KiB",factor:Math.pow(1024,1)},{key:"KB",factor:Math.pow(1e3,1)},{key:"GiB",factor:Math.pow(1024,3)},{key:"GB",factor:Math.pow(1e3,3)},{key:"EiB",factor:Math.pow(1024,6)},{key:"EB",factor:Math.pow(1e3,6)},{key:"B",factor:1}];t.exports={unformat:function(t,n){var r=e("./globalState"),i=r.currentDelimiters(),a=r.currentCurrency().symbol,c=r.currentOrdinal(),l=r.getZeroFormat(),f=r.currentAbbreviations(),g=void 0;if("string"==typeof t)g=u(t,i)?s(t):o(t,i,a,c,l,f,n);else{if("number"!=typeof t)return;g=t}if(void 0!==g)return g}}},{"./globalState":4}],10:[function(e,t,n){"use strict";function r(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}function i(e){return!!s.unformat(e)}function a(e,t,n){var i=arguments.length>3&&void 0!==arguments[3]&&arguments[3],o=Object.keys(e).map(function(r){if(!t[r])return console.error(n+" Invalid key: "+r),!1;var i=e[r],o=t[r];if("string"==typeof o&&(o={type:o}),"format"===o.type){if(!a(i,l,"[Validate "+r+"]",!0))return!1}else if((void 0===i?"undefined":u(i))!==o.type)return console.error(n+" "+r+' type mismatched: "'+o.type+'" expected, "'+(void 0===i?"undefined":u(i))+'" provided'),!1;if(o.restrictions&&o.restrictions.length)for(var s=o.restrictions.length,c=0;c<s;c++){var f=o.restrictions[c],g=f.restriction,p=f.message;if(!g(i,e))return console.error(n+" "+r+" invalid value: "+p),!1}return o.restriction&&!o.restriction(i,e)?(console.error(n+" "+r+" invalid value: "+o.message),!1):o.validValues&&-1===o.validValues.indexOf(i)?(console.error(n+" "+r+" invalid value: must be among "+JSON.stringify(o.validValues)+', "'+i+'" provided'),!1):!(o.children&&!a(i,o.children,"[Validate "+r+"]"))});return i||o.push.apply(o,r(Object.keys(t).map(function(r){var i=t[r];if("string"==typeof i&&(i={type:i}),i.mandatory){var a=i.mandatory;if("function"==typeof a&&(a=a(e)),a&&void 0===e[r])return console.error(n+' Missing mandatory key "'+r+'"'),!1}return!0}))),o.reduce(function(e,t){return e&&t},!0)}function o(e){return a(e,l,"[Validate format]")}var u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s=e("./unformatting"),c=/^[a-z]{2,3}(-[a-zA-Z]{4})?(-([A-Z]{2}|[0-9]{3}))?$/,l={output:{type:"string",validValues:["currency","percent","byte","time","ordinal","number"]},base:{type:"string",validValues:["decimal","binary","general"],restriction:function(e,t){return"byte"===t.output},message:"`base` must be provided only when the output is `byte`",mandatory:function(e){return"byte"===e.output}},characteristic:{type:"number",restriction:function(e){return e>=0},message:"value must be positive"},prefix:"string",postfix:"string",forceAverage:{type:"string",validValues:["trillion","billion","million","thousand"]},average:"boolean",currencyPosition:{type:"string",validValues:["prefix","infix","postfix"]},currencySymbol:"string",totalLength:{type:"number",restrictions:[{restriction:function(e){return e>=0},message:"value must be positive"},{restriction:function(e,t){return!t.exponential},message:"`totalLength` is incompatible with `exponential`"}]},mantissa:{type:"number",restriction:function(e){return e>=0},message:"value must be positive"},optionalMantissa:"boolean",trimMantissa:"boolean",optionalCharacteristic:"boolean",thousandSeparated:"boolean",spaceSeparated:"boolean",abbreviations:{type:"object",children:{thousand:"string",million:"string",billion:"string",trillion:"string"}},negative:{type:"string",validValues:["sign","parenthesis"]},forceSign:"boolean",exponential:{type:"boolean"},prefixSymbol:{type:"boolean",restriction:function(e,t){return"percent"===t.output},message:"`prefixSymbol` can be provided only when the output is `percent`"}},f={languageTag:{type:"string",mandatory:!0,restriction:function(e){return e.match(c)},message:"the language tag must follow the BCP 47 specification (see https://tools.ieft.org/html/bcp47)"},delimiters:{type:"object",children:{thousands:"string",decimal:"string",thousandsSize:"number"},mandatory:!0},abbreviations:{type:"object",children:{thousand:{type:"string",mandatory:!0},million:{type:"string",mandatory:!0},billion:{type:"string",mandatory:!0},trillion:{type:"string",mandatory:!0}},mandatory:!0},spaceSeparated:"boolean",ordinal:{type:"function",mandatory:!0},currency:{type:"object",children:{symbol:"string",position:"string",code:"string"},mandatory:!0},defaults:"format",ordinalFormat:"format",byteFormat:"format",percentageFormat:"format",currencyFormat:"format",timeDefaults:"format",formats:{type:"object",children:{fourDigits:{type:"format",mandatory:!0},fullWithTwoDecimals:{type:"format",mandatory:!0},fullWithTwoDecimalsNoCurrency:{type:"format",mandatory:!0},fullWithNoDecimals:{type:"format",mandatory:!0}}}};t.exports={validate:function(e,t){var n=i(e),r=o(t);return n&&r},validateFormat:o,validateInput:i,validateLanguage:function(e){return a(e,f,"[Validate language]")}}},{"./unformatting":9}]},{},[7])(7)});
 //# sourceMappingURL=numbro.min.js.map
 
 
@@ -50533,7 +50577,7 @@ exports.handleMouseEvent = handleMouseEvent;
 
 var _event = __webpack_require__(12);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * MouseDown handler.
@@ -51461,7 +51505,6 @@ DefaultSettings.prototype = {
   /**
    * Allows to specify the number of fixed (or *frozen*) rows at the bottom of the table.
    *
-   * @pro
    * @type {Number}
    * @default 0
    *
@@ -53514,7 +53557,7 @@ var _array = __webpack_require__(0);
 
 var _dictionariesManager = __webpack_require__(84);
 
-var _phraseFormatters = __webpack_require__(551);
+var _phraseFormatters = __webpack_require__(553);
 
 var _mixed = __webpack_require__(8);
 
@@ -53710,7 +53753,7 @@ var _highlight = __webpack_require__(462);
 
 var _highlight2 = _interopRequireDefault(_highlight);
 
-var _selection = __webpack_require__(560);
+var _selection = __webpack_require__(562);
 
 var _selection2 = _interopRequireDefault(_selection);
 
@@ -53738,7 +53781,7 @@ exports.CUSTOM_SELECTION = exports.HEADER_TYPE = exports.FILL_TYPE = exports.CEL
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _types = __webpack_require__(553);
+var _types = __webpack_require__(555);
 
 var _array = __webpack_require__(0);
 
@@ -54314,7 +54357,7 @@ exports.default = SamplesGenerator;
 exports.__esModule = true;
 exports.default = mergeSort;
 
-var _linkedList = __webpack_require__(572);
+var _linkedList = __webpack_require__(574);
 
 var _linkedList2 = _interopRequireDefault(_linkedList);
 
@@ -55349,6 +55392,162 @@ function applySpanProperties(TD, mergedCellInfo, row, col) {
 
 
 exports.__esModule = true;
+exports.HEADER_SPAN_CLASS = exports.DESC_SORT_STATE = exports.ASC_SORT_STATE = undefined;
+exports.areValidSortStates = areValidSortStates;
+exports.getNextSortOrder = getNextSortOrder;
+exports.getFullSortConfiguration = getFullSortConfiguration;
+exports.warnIfPluginsHaveConflict = warnIfPluginsHaveConflict;
+exports.warnAboutNotValidatedConfig = warnAboutNotValidatedConfig;
+exports.getHeaderSpanElement = getHeaderSpanElement;
+exports.isFirstLevelColumnHeader = isFirstLevelColumnHeader;
+
+var _mixed = __webpack_require__(8);
+
+var _object = __webpack_require__(1);
+
+var _console = __webpack_require__(20);
+
+var ASC_SORT_STATE = exports.ASC_SORT_STATE = 'asc';
+var DESC_SORT_STATE = exports.DESC_SORT_STATE = 'desc';
+var HEADER_SPAN_CLASS = exports.HEADER_SPAN_CLASS = 'colHeader';
+
+/**
+ * Get if column state is valid.
+ *
+ * @param {Number} columnState Particular column state.
+ * @returns {Boolean}
+ */
+function isValidColumnState(columnState) {
+  if ((0, _mixed.isUndefined)(columnState)) {
+    return false;
+  }
+
+  var column = columnState.column,
+      sortOrder = columnState.sortOrder;
+
+
+  return Number.isInteger(column) && [ASC_SORT_STATE, DESC_SORT_STATE].includes(sortOrder);
+}
+
+/**
+ * Get if all sorted columns states are valid.
+ *
+ * @param {Array} sortStates
+ * @returns {Boolean}
+ */
+function areValidSortStates(sortStates) {
+  if (Array.isArray(sortStates) === false || sortStates.every(function (columnState) {
+    return (0, _object.isObject)(columnState);
+  }) === false) {
+    return false;
+  }
+
+  var sortedColumns = sortStates.map(function (_ref) {
+    var column = _ref.column;
+    return column;
+  });
+  var indexOccursOnlyOnce = new Set(sortedColumns).size === sortedColumns.length;
+
+  return indexOccursOnlyOnce && sortStates.every(isValidColumnState);
+}
+
+/**
+ * Get next sort order for particular column. The order sequence looks as follows: 'asc' -> 'desc' -> undefined -> 'asc'
+ *
+ * @param {String|undefined} sortOrder sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+ * @returns {String|undefined} Next sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+ */
+function getNextSortOrder(sortOrder) {
+  if (sortOrder === DESC_SORT_STATE) {
+    return;
+  } else if (sortOrder === ASC_SORT_STATE) {
+    return DESC_SORT_STATE;
+  }
+
+  return ASC_SORT_STATE;
+}
+
+/**
+ * Get multiple sorted column configs from sort configs with different data types.
+ *
+ * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
+ * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
+ * sort order (`asc` for ascending, `desc` for descending).
+ * @returns {Array}
+ */
+function getFullSortConfiguration(sortConfig) {
+  if ((0, _mixed.isUndefined)(sortConfig)) {
+    return [];
+  }
+
+  if (Array.isArray(sortConfig)) {
+    return sortConfig;
+  }
+
+  return [sortConfig];
+}
+
+/**
+ * Warn users about problems when using `multiColumnSorting` and `columnSorting` plugins simultaneously.
+ *
+ * @param {undefined|Boolean|Object} columnSortingSettings
+ */
+function warnIfPluginsHaveConflict(columnSortingSettings) {
+  if (columnSortingSettings) {
+    (0, _console.warn)('Plugins `columnSorting` and `multiColumnSorting` should not be enabled simultaneously.');
+  }
+}
+
+/**
+ * Warn users about problems with validating sort config.
+ */
+function warnAboutNotValidatedConfig() {
+  (0, _console.warn)('Sort configuration failed to validate properly.');
+}
+
+/**
+ * Get `span` DOM element inside `th` DOM element.
+ *
+ * @param {Element} TH th HTML element.
+ * @returns {Element | null}
+ */
+function getHeaderSpanElement(TH) {
+  var headerSpanElement = TH.querySelector('.' + HEADER_SPAN_CLASS);
+
+  return headerSpanElement;
+}
+
+/**
+ *
+ * Get if handled header is first level column header.
+ *
+ * @param {Number} column Visual column index.
+ * @param {Element} TH th HTML element.
+ * @returns {Boolean}
+ */
+function isFirstLevelColumnHeader(column, TH) {
+  if (column < 0 || !TH.parentNode) {
+    return false;
+  }
+
+  var TRs = TH.parentNode.parentNode.childNodes;
+  var headerLevel = Array.from(TRs).indexOf(TH.parentNode) - TRs.length;
+
+  if (headerLevel !== -1) {
+    return false;
+  }
+
+  return true;
+}
+
+/***/ }),
+/* 472 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
 exports.CONDITION_NAME = undefined;
 exports.condition = condition;
 
@@ -55373,7 +55572,7 @@ function condition(dataRow) {
 });
 
 /***/ }),
-/* 472 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55412,7 +55611,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 473 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55431,9 +55630,9 @@ var C = _interopRequireWildcard(_constants);
 
 var _conditionRegisterer = __webpack_require__(11);
 
-var _after = __webpack_require__(474);
+var _after = __webpack_require__(475);
 
-var _before = __webpack_require__(475);
+var _before = __webpack_require__(476);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -55470,7 +55669,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 474 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55520,7 +55719,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 475 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55570,7 +55769,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 476 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55609,7 +55808,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 477 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55640,7 +55839,7 @@ function operationResult(conditions, value) {
 (0, _logicalOperationRegisterer.registerOperation)(OPERATION_ID, SHORT_NAME_FOR_COMPONENT, operationResult);
 
 /***/ }),
-/* 478 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55675,7 +55874,7 @@ function operationResult(conditions, value) {
 (0, _logicalOperationRegisterer.registerOperation)(OPERATION_ID, SHORT_NAME_FOR_COMPONENT, operationResult);
 
 /***/ }),
-/* 479 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56059,7 +56258,7 @@ var ConditionCollection = function () {
 exports.default = ConditionCollection;
 
 /***/ }),
-/* 480 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56187,7 +56386,7 @@ var DataFilter = function () {
 exports.default = DataFilter;
 
 /***/ }),
-/* 481 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56291,162 +56490,6 @@ var BaseCell = function () {
 }();
 
 exports.default = BaseCell;
-
-/***/ }),
-/* 482 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.HEADER_SPAN_CLASS = exports.DESC_SORT_STATE = exports.ASC_SORT_STATE = undefined;
-exports.areValidSortStates = areValidSortStates;
-exports.getNextSortOrder = getNextSortOrder;
-exports.getFullSortConfiguration = getFullSortConfiguration;
-exports.warnIfPluginsHaveConflict = warnIfPluginsHaveConflict;
-exports.warnAboutNotValidatedConfig = warnAboutNotValidatedConfig;
-exports.getHeaderSpanElement = getHeaderSpanElement;
-exports.isFirstLevelColumnHeader = isFirstLevelColumnHeader;
-
-var _mixed = __webpack_require__(8);
-
-var _object = __webpack_require__(1);
-
-var _console = __webpack_require__(20);
-
-var ASC_SORT_STATE = exports.ASC_SORT_STATE = 'asc';
-var DESC_SORT_STATE = exports.DESC_SORT_STATE = 'desc';
-var HEADER_SPAN_CLASS = exports.HEADER_SPAN_CLASS = 'colHeader';
-
-/**
- * Get if column state is valid.
- *
- * @param {Number} columnState Particular column state.
- * @returns {Boolean}
- */
-function isValidColumnState(columnState) {
-  if ((0, _mixed.isUndefined)(columnState)) {
-    return false;
-  }
-
-  var column = columnState.column,
-      sortOrder = columnState.sortOrder;
-
-
-  return Number.isInteger(column) && [ASC_SORT_STATE, DESC_SORT_STATE].includes(sortOrder);
-}
-
-/**
- * Get if all sorted columns states are valid.
- *
- * @param {Array} sortStates
- * @returns {Boolean}
- */
-function areValidSortStates(sortStates) {
-  if (Array.isArray(sortStates) === false || sortStates.every(function (columnState) {
-    return (0, _object.isObject)(columnState);
-  }) === false) {
-    return false;
-  }
-
-  var sortedColumns = sortStates.map(function (_ref) {
-    var column = _ref.column;
-    return column;
-  });
-  var indexOccursOnlyOnce = new Set(sortedColumns).size === sortedColumns.length;
-
-  return indexOccursOnlyOnce && sortStates.every(isValidColumnState);
-}
-
-/**
- * Get next sort order for particular column. The order sequence looks as follows: 'asc' -> 'desc' -> undefined -> 'asc'
- *
- * @param {String|undefined} sortOrder sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
- * @returns {String|undefined} Next sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
- */
-function getNextSortOrder(sortOrder) {
-  if (sortOrder === DESC_SORT_STATE) {
-    return;
-  } else if (sortOrder === ASC_SORT_STATE) {
-    return DESC_SORT_STATE;
-  }
-
-  return ASC_SORT_STATE;
-}
-
-/**
- * Get multiple sorted column configs from sort configs with different data types.
- *
- * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
- * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
- * sort order (`asc` for ascending, `desc` for descending).
- * @returns {Array}
- */
-function getFullSortConfiguration(sortConfig) {
-  if ((0, _mixed.isUndefined)(sortConfig)) {
-    return [];
-  }
-
-  if (Array.isArray(sortConfig)) {
-    return sortConfig;
-  }
-
-  return [sortConfig];
-}
-
-/**
- * Warn users about problems when using `multiColumnSorting` and `columnSorting` plugins simultaneously.
- *
- * @param {undefined|Boolean|Object} columnSortingSettings
- */
-function warnIfPluginsHaveConflict(columnSortingSettings) {
-  if (columnSortingSettings) {
-    (0, _console.warn)('Plugins `columnSorting` and `multiColumnSorting` should not be enabled simultaneously.');
-  }
-}
-
-/**
- * Warn users about problems with validating sort config.
- */
-function warnAboutNotValidatedConfig() {
-  (0, _console.warn)('Sort configuration failed to validate properly.');
-}
-
-/**
- * Get `span` DOM element inside `th` DOM element.
- *
- * @param {Element} TH th HTML element.
- * @returns {Element | null}
- */
-function getHeaderSpanElement(TH) {
-  var headerSpanElement = TH.querySelector('.' + HEADER_SPAN_CLASS);
-
-  return headerSpanElement;
-}
-
-/**
- *
- * Get if handled header is first level column header.
- *
- * @param {Number} column Visual column index.
- * @param {Element} TH th HTML element.
- * @returns {Boolean}
- */
-function isFirstLevelColumnHeader(column, TH) {
-  if (column < 0 || !TH.parentNode) {
-    return false;
-  }
-
-  var TRs = TH.parentNode.parentNode.childNodes;
-  var headerLevel = Array.from(TRs).indexOf(TH.parentNode) - TRs.length;
-
-  if (headerLevel !== -1) {
-    return false;
-  }
-
-  return true;
-}
 
 /***/ }),
 /* 483 */
@@ -56748,17 +56791,9 @@ var _handsontable = __webpack_require__(503);
 
 var _handsontable2 = _interopRequireDefault(_handsontable);
 
-var _index = __webpack_require__(642);
+var _index = __webpack_require__(645);
 
 var plugins = _interopRequireWildcard(_index);
-
-var _bottom = __webpack_require__(731);
-
-var _bottom2 = _interopRequireDefault(_bottom);
-
-var _bottomLeftCorner = __webpack_require__(732);
-
-var _bottomLeftCorner2 = _interopRequireDefault(_bottomLeftCorner);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -56766,7 +56801,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* eslint-enable no-unused-vars */
 
-_handsontable2.default.baseVersion = '6.0.1';
+_handsontable2.default.baseVersion = '6.1.1';
 
 /* eslint-disable no-unused-vars */
 exports.default = _handsontable2.default;
@@ -57298,11 +57333,11 @@ var _core = __webpack_require__(158);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _jquery = __webpack_require__(563);
+var _jquery = __webpack_require__(565);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -57370,7 +57405,7 @@ var _event = __webpack_require__(12);
 
 var domEventHelpers = _interopRequireWildcard(_event);
 
-var _index = __webpack_require__(564);
+var _index = __webpack_require__(566);
 
 var plugins = _interopRequireWildcard(_index);
 
@@ -57409,11 +57444,11 @@ Handsontable.DefaultSettings = _defaultSettings2.default;
 Handsontable.EventManager = _eventManager2.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
-Handsontable.buildDate = '02/10/2018 13:01:10';
+Handsontable.buildDate = '23/10/2018 12:28:31';
 Handsontable.packageName = 'handsontable-pro';
-Handsontable.version = '6.0.1';
+Handsontable.version = '6.1.1';
 
-var baseVersion = '6.0.1';
+var baseVersion = '6.1.1';
 
 if (baseVersion) {
   Handsontable.baseVersion = baseVersion;
@@ -58774,6 +58809,518 @@ exports.default = TopLeftCornerOverlay;
 
 exports.__esModule = true;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _element = __webpack_require__(2);
+
+var _base = __webpack_require__(33);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * @class BottomOverlay
+ */
+var BottomOverlay = function (_Overlay) {
+  _inherits(BottomOverlay, _Overlay);
+
+  /**
+   * @param {Walkontable} wotInstance
+   */
+  function BottomOverlay(wotInstance) {
+    _classCallCheck(this, BottomOverlay);
+
+    var _this = _possibleConstructorReturn(this, (BottomOverlay.__proto__ || Object.getPrototypeOf(BottomOverlay)).call(this, wotInstance));
+
+    _this.clone = _this.makeClone(_base2.default.CLONE_BOTTOM);
+    return _this;
+  }
+
+  /**
+   *
+   */
+
+
+  _createClass(BottomOverlay, [{
+    key: 'repositionOverlay',
+    value: function repositionOverlay() {
+      var scrollbarWidth = (0, _element.getScrollbarWidth)();
+      var cloneRoot = this.clone.wtTable.holder.parentNode;
+
+      if (this.wot.wtTable.holder.clientHeight === this.wot.wtTable.holder.offsetHeight) {
+        scrollbarWidth = 0;
+      }
+
+      cloneRoot.style.top = '';
+      cloneRoot.style.bottom = scrollbarWidth + 'px';
+    }
+
+    /**
+     * Checks if overlay should be fully rendered
+     *
+     * @returns {Boolean}
+     */
+
+  }, {
+    key: 'shouldBeRendered',
+    value: function shouldBeRendered() {
+      /* eslint-disable no-unneeded-ternary */
+      return this.wot.getSetting('fixedRowsBottom') ? true : false;
+    }
+
+    /**
+     * Updates the top overlay position
+     */
+
+  }, {
+    key: 'resetFixedPosition',
+    value: function resetFixedPosition() {
+      if (!this.needFullRender || !this.wot.wtTable.holder.parentNode) {
+        // removed from DOM
+        return;
+      }
+
+      var overlayRoot = this.clone.wtTable.holder.parentNode;
+      var headerPosition = 0;
+      overlayRoot.style.top = '';
+
+      if (this.wot.wtOverlays.leftOverlay.trimmingContainer === window) {
+        var box = this.wot.wtTable.hider.getBoundingClientRect();
+        var bottom = Math.ceil(box.bottom);
+        var finalLeft = void 0;
+        var finalBottom = void 0;
+        var bodyHeight = document.body.offsetHeight;
+
+        finalLeft = this.wot.wtTable.hider.style.left;
+        finalLeft = finalLeft === '' ? 0 : finalLeft;
+
+        if (bottom > bodyHeight) {
+          finalBottom = bottom - bodyHeight;
+        } else {
+          finalBottom = 0;
+        }
+        headerPosition = finalBottom;
+        finalBottom += 'px';
+
+        overlayRoot.style.top = '';
+        overlayRoot.style.left = finalLeft;
+        overlayRoot.style.bottom = finalBottom;
+      } else {
+        headerPosition = this.getScrollPosition();
+        (0, _element.resetCssTransform)(overlayRoot);
+        this.repositionOverlay();
+      }
+      this.adjustHeaderBordersPosition(headerPosition);
+    }
+
+    /**
+     * Sets the main overlay's vertical scroll position
+     *
+     * @param {Number} pos
+     */
+
+  }, {
+    key: 'setScrollPosition',
+    value: function setScrollPosition(pos) {
+      if (this.mainTableScrollableElement === window) {
+        window.scrollTo((0, _element.getWindowScrollLeft)(), pos);
+      } else {
+        this.mainTableScrollableElement.scrollTop = pos;
+      }
+    }
+
+    /**
+     * Triggers onScroll hook callback
+     */
+
+  }, {
+    key: 'onScroll',
+    value: function onScroll() {
+      this.wot.getSetting('onScrollVertically');
+    }
+
+    /**
+     * Calculates total sum cells height
+     *
+     * @param {Number} from Row index which calculates started from
+     * @param {Number} to Row index where calculation is finished
+     * @returns {Number} Height sum
+     */
+
+  }, {
+    key: 'sumCellSizes',
+    value: function sumCellSizes(from, to) {
+      var row = from;
+      var sum = 0;
+      var defaultRowHeight = this.wot.wtSettings.settings.defaultRowHeight;
+
+      while (row < to) {
+        var height = this.wot.wtTable.getRowHeight(row);
+
+        sum += height === void 0 ? defaultRowHeight : height;
+        row += 1;
+      }
+
+      return sum;
+    }
+
+    /**
+     * Adjust overlay root element, childs and master table element sizes (width, height).
+     *
+     * @param {Boolean} [force=false]
+     */
+
+  }, {
+    key: 'adjustElementsSize',
+    value: function adjustElementsSize() {
+      var force = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      this.updateTrimmingContainer();
+
+      if (this.needFullRender || force) {
+        this.adjustRootElementSize();
+        this.adjustRootChildrenSize();
+
+        if (!force) {
+          this.areElementSizesAdjusted = true;
+        }
+      }
+    }
+
+    /**
+     * Adjust overlay root element size (width and height).
+     */
+
+  }, {
+    key: 'adjustRootElementSize',
+    value: function adjustRootElementSize() {
+      var masterHolder = this.wot.wtTable.holder;
+      var scrollbarWidth = masterHolder.clientWidth === masterHolder.offsetWidth ? 0 : (0, _element.getScrollbarWidth)();
+      var overlayRoot = this.clone.wtTable.holder.parentNode;
+      var overlayRootStyle = overlayRoot.style;
+
+      if (this.trimmingContainer === window) {
+        overlayRootStyle.width = '';
+      } else {
+        overlayRootStyle.width = this.wot.wtViewport.getWorkspaceWidth() - scrollbarWidth + 'px';
+      }
+
+      this.clone.wtTable.holder.style.width = overlayRootStyle.width;
+
+      var tableHeight = (0, _element.outerHeight)(this.clone.wtTable.TABLE);
+      overlayRootStyle.height = (tableHeight === 0 ? tableHeight : tableHeight) + 'px';
+    }
+
+    /**
+     * Adjust overlay root childs size
+     */
+
+  }, {
+    key: 'adjustRootChildrenSize',
+    value: function adjustRootChildrenSize() {
+      var scrollbarWidth = (0, _element.getScrollbarWidth)();
+
+      this.clone.wtTable.hider.style.width = this.hider.style.width;
+      this.clone.wtTable.holder.style.width = this.clone.wtTable.holder.parentNode.style.width;
+
+      if (scrollbarWidth === 0) {
+        scrollbarWidth = 30;
+      }
+      this.clone.wtTable.holder.style.height = parseInt(this.clone.wtTable.holder.parentNode.style.height, 10) + scrollbarWidth + 'px';
+    }
+
+    /**
+     * Adjust the overlay dimensions and position
+     */
+
+  }, {
+    key: 'applyToDOM',
+    value: function applyToDOM() {
+      var total = this.wot.getSetting('totalRows');
+
+      if (!this.areElementSizesAdjusted) {
+        this.adjustElementsSize();
+      }
+      if (typeof this.wot.wtViewport.rowsRenderCalculator.startPosition === 'number') {
+        this.spreader.style.top = this.wot.wtViewport.rowsRenderCalculator.startPosition + 'px';
+      } else if (total === 0) {
+        // can happen if there are 0 rows
+        this.spreader.style.top = '0';
+      } else {
+        throw new Error('Incorrect value of the rowsRenderCalculator');
+      }
+      this.spreader.style.bottom = '';
+
+      if (this.needFullRender) {
+        this.syncOverlayOffset();
+      }
+    }
+
+    /**
+     * Synchronize calculated left position to an element
+     */
+
+  }, {
+    key: 'syncOverlayOffset',
+    value: function syncOverlayOffset() {
+      if (typeof this.wot.wtViewport.columnsRenderCalculator.startPosition === 'number') {
+        this.clone.wtTable.spreader.style.left = this.wot.wtViewport.columnsRenderCalculator.startPosition + 'px';
+      } else {
+        this.clone.wtTable.spreader.style.left = '';
+      }
+    }
+
+    /**
+     * Scrolls vertically to a row
+     *
+     * @param sourceRow {Number} Row index which you want to scroll to
+     * @param [bottomEdge=false] {Boolean} if `true`, scrolls according to the bottom edge (top edge is by default)
+     */
+
+  }, {
+    key: 'scrollTo',
+    value: function scrollTo(sourceRow, bottomEdge) {
+      var newY = this.getTableParentOffset();
+      var sourceInstance = this.wot.cloneSource ? this.wot.cloneSource : this.wot;
+      var mainHolder = sourceInstance.wtTable.holder;
+      var scrollbarCompensation = 0;
+
+      if (bottomEdge && mainHolder.offsetHeight !== mainHolder.clientHeight) {
+        scrollbarCompensation = (0, _element.getScrollbarWidth)();
+      }
+
+      if (bottomEdge) {
+        newY += this.sumCellSizes(0, sourceRow + 1);
+        newY -= this.wot.wtViewport.getViewportHeight();
+        // Fix 1 pixel offset when cell is selected
+        newY += 1;
+      } else {
+        newY += this.sumCellSizes(this.wot.getSetting('fixedRowsBottom'), sourceRow);
+      }
+      newY += scrollbarCompensation;
+
+      this.setScrollPosition(newY);
+    }
+
+    /**
+     * Gets table parent top position
+     *
+     * @returns {Number}
+     */
+
+  }, {
+    key: 'getTableParentOffset',
+    value: function getTableParentOffset() {
+      if (this.mainTableScrollableElement === window) {
+        return this.wot.wtTable.holderOffset.top;
+      }
+
+      return 0;
+    }
+
+    /**
+     * Gets the main overlay's vertical scroll position
+     *
+     * @returns {Number} Main table's vertical scroll position
+     */
+
+  }, {
+    key: 'getScrollPosition',
+    value: function getScrollPosition() {
+      return (0, _element.getScrollTop)(this.mainTableScrollableElement);
+    }
+
+    /**
+     * Adds css classes to hide the header border's header (cell-selection border hiding issue)
+     *
+     * @param {Number} position Header Y position if trimming container is window or scroll top if not
+     */
+
+  }, {
+    key: 'adjustHeaderBordersPosition',
+    value: function adjustHeaderBordersPosition(position) {
+      if (this.wot.getSetting('fixedRowsBottom') === 0 && this.wot.getSetting('columnHeaders').length > 0) {
+        var masterParent = this.wot.wtTable.holder.parentNode;
+        var previousState = (0, _element.hasClass)(masterParent, 'innerBorderTop');
+
+        if (position) {
+          (0, _element.addClass)(masterParent, 'innerBorderTop');
+        } else {
+          (0, _element.removeClass)(masterParent, 'innerBorderTop');
+        }
+        if (!previousState && position || previousState && !position) {
+          this.wot.wtOverlays.adjustElementsSize();
+        }
+      }
+      // nasty workaround for double border in the header, TODO: find a pure-css solution
+      if (this.wot.getSetting('rowHeaders').length === 0) {
+        var secondHeaderCell = this.clone.wtTable.THEAD.querySelector('th:nth-of-type(2)');
+
+        if (secondHeaderCell) {
+          secondHeaderCell.style['border-left-width'] = 0;
+        }
+      }
+    }
+  }]);
+
+  return BottomOverlay;
+}(_base2.default);
+
+_base2.default.registerOverlay(_base2.default.CLONE_BOTTOM, BottomOverlay);
+
+exports.default = BottomOverlay;
+
+/***/ }),
+/* 513 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _element = __webpack_require__(2);
+
+var _base = __webpack_require__(33);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * @class TopLeftCornerOverlay
+ */
+var BottomLeftCornerOverlay = function (_Overlay) {
+  _inherits(BottomLeftCornerOverlay, _Overlay);
+
+  /**
+   * @param {Walkontable} wotInstance
+   */
+  function BottomLeftCornerOverlay(wotInstance) {
+    _classCallCheck(this, BottomLeftCornerOverlay);
+
+    var _this = _possibleConstructorReturn(this, (BottomLeftCornerOverlay.__proto__ || Object.getPrototypeOf(BottomLeftCornerOverlay)).call(this, wotInstance));
+
+    _this.clone = _this.makeClone(_base2.default.CLONE_BOTTOM_LEFT_CORNER);
+    return _this;
+  }
+
+  /**
+   * Checks if overlay should be fully rendered
+   *
+   * @returns {Boolean}
+   */
+
+
+  _createClass(BottomLeftCornerOverlay, [{
+    key: 'shouldBeRendered',
+    value: function shouldBeRendered() {
+      /* eslint-disable no-unneeded-ternary */
+      return this.wot.getSetting('fixedRowsBottom') && (this.wot.getSetting('fixedColumnsLeft') || this.wot.getSetting('rowHeaders').length) ? true : false;
+    }
+
+    /**
+     * Reposition the overlay.
+     */
+
+  }, {
+    key: 'repositionOverlay',
+    value: function repositionOverlay() {
+      var scrollbarWidth = (0, _element.getScrollbarWidth)();
+      var cloneRoot = this.clone.wtTable.holder.parentNode;
+
+      if (this.wot.wtTable.holder.clientHeight === this.wot.wtTable.holder.offsetHeight) {
+        scrollbarWidth = 0;
+      }
+
+      cloneRoot.style.top = '';
+      cloneRoot.style.bottom = scrollbarWidth + 'px';
+    }
+
+    /**
+     * Updates the corner overlay position
+     */
+
+  }, {
+    key: 'resetFixedPosition',
+    value: function resetFixedPosition() {
+      this.updateTrimmingContainer();
+
+      if (!this.wot.wtTable.holder.parentNode) {
+        // removed from DOM
+        return;
+      }
+      var overlayRoot = this.clone.wtTable.holder.parentNode;
+      var tableHeight = (0, _element.outerHeight)(this.clone.wtTable.TABLE);
+      var tableWidth = (0, _element.outerWidth)(this.clone.wtTable.TABLE);
+
+      overlayRoot.style.top = '';
+
+      if (this.trimmingContainer === window) {
+        var box = this.wot.wtTable.hider.getBoundingClientRect();
+        var bottom = Math.ceil(box.bottom);
+        var left = Math.ceil(box.left);
+        var finalLeft = void 0;
+        var finalBottom = void 0;
+        var bodyHeight = document.body.offsetHeight;
+
+        if (left < 0) {
+          finalLeft = -left;
+        } else {
+          finalLeft = 0;
+        }
+
+        if (bottom > bodyHeight) {
+          finalBottom = bottom - bodyHeight;
+        } else {
+          finalBottom = 0;
+        }
+        finalBottom += 'px';
+        finalLeft += 'px';
+
+        overlayRoot.style.top = '';
+        overlayRoot.style.left = finalLeft;
+        overlayRoot.style.bottom = finalBottom;
+      } else {
+        (0, _element.resetCssTransform)(overlayRoot);
+        this.repositionOverlay();
+      }
+      overlayRoot.style.height = (tableHeight === 0 ? tableHeight : tableHeight) + 'px';
+      overlayRoot.style.width = (tableWidth === 0 ? tableWidth : tableWidth) + 'px';
+    }
+  }]);
+
+  return BottomLeftCornerOverlay;
+}(_base2.default);
+
+_base2.default.registerOverlay(_base2.default.CLONE_BOTTOM_LEFT_CORNER, BottomLeftCornerOverlay);
+
+exports.default = BottomLeftCornerOverlay;
+
+/***/ }),
+/* 514 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -59110,7 +59657,7 @@ var Selection = function () {
 exports.default = Selection;
 
 /***/ }),
-/* 513 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59293,7 +59840,7 @@ if (true) {
 }
 
 /***/ }),
-/* 514 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59375,7 +59922,7 @@ var CheckboxEditor = function (_BaseEditor) {
 exports.default = CheckboxEditor;
 
 /***/ }),
-/* 515 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59391,17 +59938,17 @@ var _moment = __webpack_require__(23);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _pikaday = __webpack_require__(516);
+var _pikaday = __webpack_require__(518);
 
 var _pikaday2 = _interopRequireDefault(_pikaday);
 
-__webpack_require__(519);
+__webpack_require__(521);
 
 var _element = __webpack_require__(2);
 
 var _object = __webpack_require__(1);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -59710,7 +60257,7 @@ var DateEditor = function (_TextEditor) {
 exports.default = DateEditor;
 
 /***/ }),
-/* 516 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -59727,7 +60274,7 @@ exports.default = DateEditor;
     if (true) {
         // CommonJS module
         // Load moment.js as an optional dependency
-        try { moment = __webpack_require__(517); } catch (e) {}
+        try { moment = __webpack_require__(519); } catch (e) {}
         module.exports = factory(moment);
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -60909,7 +61456,7 @@ exports.default = DateEditor;
 
 
 /***/ }),
-/* 517 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
@@ -62747,7 +63294,7 @@ exports.default = DateEditor;
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(518)("./" + name);
+                __webpack_require__(520)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -65422,7 +65969,7 @@ exports.default = DateEditor;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(200)(module)))
 
 /***/ }),
-/* 518 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -65687,16 +66234,16 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 518;
+webpackContext.id = 520;
 
 /***/ }),
-/* 519 */
+/* 521 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 520 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65765,7 +66312,7 @@ _pluginHooks2.default.getSingleton().add('beforeValidate', function (value, row,
 exports.default = DropdownEditor;
 
 /***/ }),
-/* 521 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65805,7 +66352,7 @@ var NumericEditor = function (_TextEditor) {
 exports.default = NumericEditor;
 
 /***/ }),
-/* 522 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65869,7 +66416,7 @@ var PasswordEditor = function (_TextEditor) {
 exports.default = PasswordEditor;
 
 /***/ }),
-/* 523 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66140,7 +66687,7 @@ SelectEditor.prototype.getEditedCell = function () {
 exports.default = SelectEditor;
 
 /***/ }),
-/* 524 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66188,7 +66735,7 @@ function cellDecorator(instance, TD, row, col, prop, value, cellProperties) {
 exports.default = cellDecorator;
 
 /***/ }),
-/* 525 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66198,11 +66745,11 @@ exports.__esModule = true;
 
 var _element = __webpack_require__(2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _index = __webpack_require__(15);
 
@@ -66272,7 +66819,7 @@ function autocompleteRenderer(instance, TD, row, col, prop, value, cellPropertie
 exports.default = autocompleteRenderer;
 
 /***/ }),
-/* 526 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66284,7 +66831,7 @@ var _element = __webpack_require__(2);
 
 var _string = __webpack_require__(32);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -66644,7 +67191,7 @@ function isCheckboxInput(element) {
 exports.default = checkboxRenderer;
 
 /***/ }),
-/* 527 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66680,7 +67227,7 @@ function htmlRenderer(instance, TD, row, col, prop, value) {
 exports.default = htmlRenderer;
 
 /***/ }),
-/* 528 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66752,7 +67299,7 @@ function numericRenderer(instance, TD, row, col, prop, value, cellProperties) {
 exports.default = numericRenderer;
 
 /***/ }),
-/* 529 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66798,7 +67345,7 @@ function passwordRenderer(instance, TD, row, col, prop, value, cellProperties) {
 exports.default = passwordRenderer;
 
 /***/ }),
-/* 530 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66860,7 +67407,7 @@ function textRenderer(instance, TD, row, col, prop, value, cellProperties) {
 exports.default = textRenderer;
 
 /***/ }),
-/* 531 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66924,7 +67471,7 @@ function process(value, callback) {
 }
 
 /***/ }),
-/* 532 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67016,7 +67563,7 @@ function correctFormat(value, dateFormat) {
 }
 
 /***/ }),
-/* 533 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67048,7 +67595,7 @@ function numericValidator(value, callback) {
 }
 
 /***/ }),
-/* 534 */
+/* 536 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67128,7 +67675,7 @@ function timeValidator(value, callback) {
 }
 
 /***/ }),
-/* 535 */
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67151,7 +67698,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 536 */
+/* 538 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67171,7 +67718,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 537 */
+/* 539 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67195,7 +67742,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 538 */
+/* 540 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67219,7 +67766,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 539 */
+/* 541 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67240,7 +67787,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 540 */
+/* 542 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67264,7 +67811,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 541 */
+/* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67285,7 +67832,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 542 */
+/* 544 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67305,7 +67852,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 543 */
+/* 545 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67329,7 +67876,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 544 */
+/* 546 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67351,13 +67898,13 @@ var _object = __webpack_require__(1);
 
 var _array = __webpack_require__(0);
 
-var _interval = __webpack_require__(545);
+var _interval = __webpack_require__(547);
 
 var _interval2 = _interopRequireDefault(_interval);
 
 var _number = __webpack_require__(4);
 
-var _multiMap = __webpack_require__(546);
+var _multiMap = __webpack_require__(548);
 
 var _multiMap2 = _interopRequireDefault(_multiMap);
 
@@ -68239,7 +68786,7 @@ DataMap.prototype.destroy = function () {
 exports.default = DataMap;
 
 /***/ }),
-/* 545 */
+/* 547 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68398,7 +68945,7 @@ function parseDelay(delay) {
 }
 
 /***/ }),
-/* 546 */
+/* 548 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68457,7 +69004,7 @@ function MultiMap() {
 exports.default = MultiMap;
 
 /***/ }),
-/* 547 */
+/* 549 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68465,7 +69012,7 @@ exports.default = MultiMap;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _unicode = __webpack_require__(18);
 
@@ -68473,7 +69020,7 @@ var _event = __webpack_require__(12);
 
 var _editors = __webpack_require__(19);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -68926,7 +69473,7 @@ EditorManager.getInstance = function (hotInstance, hotSettings, selection, datam
 exports.default = EditorManager;
 
 /***/ }),
-/* 548 */
+/* 550 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68938,13 +69485,13 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _element = __webpack_require__(2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
 var _event = __webpack_require__(12);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _src2 = _interopRequireDefault(_src);
 
@@ -69659,7 +70206,7 @@ TableView.prototype.destroy = function () {
 exports.default = TableView;
 
 /***/ }),
-/* 549 */
+/* 551 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69924,7 +70471,7 @@ var DataSource = function () {
 exports.default = DataSource;
 
 /***/ }),
-/* 550 */
+/* 552 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69956,7 +70503,7 @@ var dictionary = (_dictionary = {
 exports.default = dictionary;
 
 /***/ }),
-/* 551 */
+/* 553 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69971,7 +70518,7 @@ var _staticRegister2 = __webpack_require__(49);
 
 var _staticRegister3 = _interopRequireDefault(_staticRegister2);
 
-var _pluralize = __webpack_require__(552);
+var _pluralize = __webpack_require__(554);
 
 var _pluralize2 = _interopRequireDefault(_pluralize);
 
@@ -70009,7 +70556,7 @@ exports.getPhraseFormatters = getAll;
 register('pluralize', _pluralize2.default);
 
 /***/ }),
-/* 552 */
+/* 554 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70036,7 +70583,7 @@ function pluralize(phrasePropositions, pluralForm) {
 }
 
 /***/ }),
-/* 553 */
+/* 555 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70049,27 +70596,27 @@ var _staticRegister2 = __webpack_require__(49);
 
 var _staticRegister3 = _interopRequireDefault(_staticRegister2);
 
-var _activeHeader = __webpack_require__(554);
+var _activeHeader = __webpack_require__(556);
 
 var _activeHeader2 = _interopRequireDefault(_activeHeader);
 
-var _area = __webpack_require__(555);
+var _area = __webpack_require__(557);
 
 var _area2 = _interopRequireDefault(_area);
 
-var _cell = __webpack_require__(556);
+var _cell = __webpack_require__(558);
 
 var _cell2 = _interopRequireDefault(_cell);
 
-var _customSelection = __webpack_require__(557);
+var _customSelection = __webpack_require__(559);
 
 var _customSelection2 = _interopRequireDefault(_customSelection);
 
-var _fill = __webpack_require__(558);
+var _fill = __webpack_require__(560);
 
 var _fill2 = _interopRequireDefault(_fill);
 
-var _header = __webpack_require__(559);
+var _header = __webpack_require__(561);
 
 var _header2 = _interopRequireDefault(_header);
 
@@ -70094,7 +70641,7 @@ function createHighlight(highlightType, options) {
 exports.createHighlight = createHighlight;
 
 /***/ }),
-/* 554 */
+/* 556 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70102,7 +70649,7 @@ exports.createHighlight = createHighlight;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * @return {Selection}
@@ -70120,7 +70667,7 @@ function createHighlight(_ref) {
 exports.default = createHighlight;
 
 /***/ }),
-/* 555 */
+/* 557 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70128,7 +70675,7 @@ exports.default = createHighlight;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * Creates the new instance of Selection responsible for highlighting area of the selected multiple cells.
@@ -70156,7 +70703,7 @@ function createHighlight(_ref) {
 exports.default = createHighlight;
 
 /***/ }),
-/* 556 */
+/* 558 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70164,7 +70711,7 @@ exports.default = createHighlight;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * Creates the new instance of Selection responsible for highlighting currently selected cell. This type of selection
@@ -70190,7 +70737,7 @@ function createHighlight(_ref) {
 exports.default = createHighlight;
 
 /***/ }),
-/* 557 */
+/* 559 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70198,7 +70745,7 @@ exports.default = createHighlight;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * Creates the new instance of Selection responsible for highlighting currently selected cell. This type of selection
@@ -70218,7 +70765,7 @@ function createHighlight(_ref) {
 exports.default = createHighlight;
 
 /***/ }),
-/* 558 */
+/* 560 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70226,7 +70773,7 @@ exports.default = createHighlight;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * Creates the new instance of Selection, responsible for highlighting cells which are covered by fill handle
@@ -70249,7 +70796,7 @@ function createHighlight() {
 exports.default = createHighlight;
 
 /***/ }),
-/* 559 */
+/* 561 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70257,7 +70804,7 @@ exports.default = createHighlight;
 
 exports.__esModule = true;
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 /**
  * Creates the new instance of Selection, responsible for highlighting row and column headers. This type of selection
@@ -70283,7 +70830,7 @@ function createHighlight(_ref) {
 exports.default = createHighlight;
 
 /***/ }),
-/* 560 */
+/* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70301,11 +70848,11 @@ var _highlight = __webpack_require__(462);
 
 var _highlight2 = _interopRequireDefault(_highlight);
 
-var _range = __webpack_require__(561);
+var _range = __webpack_require__(563);
 
 var _range2 = _interopRequireDefault(_range);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _keyStateObserver = __webpack_require__(85);
 
@@ -70319,7 +70866,7 @@ var _localHooks = __webpack_require__(21);
 
 var _localHooks2 = _interopRequireDefault(_localHooks);
 
-var _transformation = __webpack_require__(562);
+var _transformation = __webpack_require__(564);
 
 var _transformation2 = _interopRequireDefault(_transformation);
 
@@ -71029,7 +71576,7 @@ var Selection = function () {
 exports.default = Selection;
 
 /***/ }),
-/* 561 */
+/* 563 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71039,7 +71586,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -71207,7 +71754,7 @@ var SelectionRange = function () {
 exports.default = SelectionRange;
 
 /***/ }),
-/* 562 */
+/* 564 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71217,7 +71764,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _object = __webpack_require__(1);
 
@@ -71384,7 +71931,7 @@ var Transformation = function () {
 exports.default = Transformation;
 
 /***/ }),
-/* 563 */
+/* 565 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71444,7 +71991,7 @@ function jQueryWrapper(Handsontable) {
 }
 
 /***/ }),
-/* 564 */
+/* 566 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71453,87 +72000,87 @@ function jQueryWrapper(Handsontable) {
 exports.__esModule = true;
 exports.Base = exports.UndoRedo = exports.TouchScroll = exports.Search = exports.PersistentState = exports.ObserveChanges = exports.MultipleSelectionHandles = exports.MergeCells = exports.ManualRowResize = exports.ManualRowMove = exports.ManualColumnResize = exports.ManualColumnMove = exports.ManualColumnFreeze = exports.DragToScroll = exports.CustomBorders = exports.CopyPaste = exports.ContextMenu = exports.Comments = exports.ColumnSorting = exports.AutoRowSize = exports.AutoFill = exports.AutoColumnSize = undefined;
 
-var _persistentState = __webpack_require__(565);
+var _persistentState = __webpack_require__(567);
 
 var _persistentState2 = _interopRequireDefault(_persistentState);
 
-var _autoColumnSize = __webpack_require__(567);
+var _autoColumnSize = __webpack_require__(569);
 
 var _autoColumnSize2 = _interopRequireDefault(_autoColumnSize);
 
-var _autofill = __webpack_require__(568);
+var _autofill = __webpack_require__(570);
 
 var _autofill2 = _interopRequireDefault(_autofill);
 
-var _autoRowSize = __webpack_require__(570);
+var _autoRowSize = __webpack_require__(572);
 
 var _autoRowSize2 = _interopRequireDefault(_autoRowSize);
 
-var _columnSorting = __webpack_require__(571);
+var _columnSorting = __webpack_require__(573);
 
 var _columnSorting2 = _interopRequireDefault(_columnSorting);
 
-var _comments = __webpack_require__(579);
+var _comments = __webpack_require__(581);
 
 var _comments2 = _interopRequireDefault(_comments);
 
-var _contextMenu = __webpack_require__(583);
+var _contextMenu = __webpack_require__(585);
 
 var _contextMenu2 = _interopRequireDefault(_contextMenu);
 
-var _copyPaste = __webpack_require__(597);
+var _copyPaste = __webpack_require__(599);
 
 var _copyPaste2 = _interopRequireDefault(_copyPaste);
 
-var _customBorders = __webpack_require__(604);
+var _customBorders = __webpack_require__(607);
 
 var _customBorders2 = _interopRequireDefault(_customBorders);
 
-var _dragToScroll = __webpack_require__(611);
+var _dragToScroll = __webpack_require__(614);
 
 var _dragToScroll2 = _interopRequireDefault(_dragToScroll);
 
-var _manualColumnFreeze = __webpack_require__(612);
+var _manualColumnFreeze = __webpack_require__(615);
 
 var _manualColumnFreeze2 = _interopRequireDefault(_manualColumnFreeze);
 
-var _manualColumnMove = __webpack_require__(616);
+var _manualColumnMove = __webpack_require__(619);
 
 var _manualColumnMove2 = _interopRequireDefault(_manualColumnMove);
 
-var _manualColumnResize = __webpack_require__(621);
+var _manualColumnResize = __webpack_require__(624);
 
 var _manualColumnResize2 = _interopRequireDefault(_manualColumnResize);
 
-var _manualRowMove = __webpack_require__(622);
+var _manualRowMove = __webpack_require__(625);
 
 var _manualRowMove2 = _interopRequireDefault(_manualRowMove);
 
-var _manualRowResize = __webpack_require__(627);
+var _manualRowResize = __webpack_require__(630);
 
 var _manualRowResize2 = _interopRequireDefault(_manualRowResize);
 
-var _mergeCells = __webpack_require__(628);
+var _mergeCells = __webpack_require__(631);
 
 var _mergeCells2 = _interopRequireDefault(_mergeCells);
 
-var _multipleSelectionHandles = __webpack_require__(634);
+var _multipleSelectionHandles = __webpack_require__(637);
 
 var _multipleSelectionHandles2 = _interopRequireDefault(_multipleSelectionHandles);
 
-var _observeChanges = __webpack_require__(635);
+var _observeChanges = __webpack_require__(638);
 
 var _observeChanges2 = _interopRequireDefault(_observeChanges);
 
-var _search = __webpack_require__(639);
+var _search = __webpack_require__(642);
 
 var _search2 = _interopRequireDefault(_search);
 
-var _touchScroll = __webpack_require__(640);
+var _touchScroll = __webpack_require__(643);
 
 var _touchScroll2 = _interopRequireDefault(_touchScroll);
 
-var _undoRedo = __webpack_require__(641);
+var _undoRedo = __webpack_require__(644);
 
 var _undoRedo2 = _interopRequireDefault(_undoRedo);
 
@@ -71567,7 +72114,7 @@ exports.UndoRedo = _undoRedo2.default;
 exports.Base = _base2.default;
 
 /***/ }),
-/* 565 */
+/* 567 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71585,7 +72132,7 @@ var _base2 = _interopRequireDefault(_base);
 
 var _plugins = __webpack_require__(5);
 
-var _storage = __webpack_require__(566);
+var _storage = __webpack_require__(568);
 
 var _storage2 = _interopRequireDefault(_storage);
 
@@ -71770,7 +72317,7 @@ var PersistentState = function (_BasePlugin) {
 exports.default = PersistentState;
 
 /***/ }),
-/* 566 */
+/* 568 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71921,7 +72468,7 @@ var Storage = function () {
 exports.default = Storage;
 
 /***/ }),
-/* 567 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71961,7 +72508,7 @@ var _samplesGenerator2 = _interopRequireDefault(_samplesGenerator);
 
 var _string = __webpack_require__(32);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72628,7 +73175,7 @@ var AutoColumnSize = function (_BasePlugin) {
 exports.default = AutoColumnSize;
 
 /***/ }),
-/* 568 */
+/* 570 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72650,15 +73197,15 @@ var _pluginHooks2 = _interopRequireDefault(_pluginHooks);
 
 var _element = __webpack_require__(2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
 var _plugins = __webpack_require__(5);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
-var _utils = __webpack_require__(569);
+var _utils = __webpack_require__(571);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73313,7 +73860,7 @@ var Autofill = function (_BasePlugin) {
 exports.default = Autofill;
 
 /***/ }),
-/* 569 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73329,7 +73876,7 @@ var _object = __webpack_require__(1);
 
 var _mixed = __webpack_require__(8);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var DIRECTIONS = exports.DIRECTIONS = {
   horizontal: 'horizontal',
@@ -73465,7 +74012,7 @@ function getMappedFillHandleSetting(fillHandle) {
 }
 
 /***/ }),
-/* 570 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74128,7 +74675,7 @@ var AutoRowSize = function (_BasePlugin) {
 exports.default = AutoRowSize;
 
 /***/ }),
-/* 571 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74168,13 +74715,13 @@ var _keyStateObserver = __webpack_require__(85);
 
 var _comparatorEngine = __webpack_require__(87);
 
-var _columnStatesManager = __webpack_require__(576);
+var _columnStatesManager = __webpack_require__(578);
 
 var _utils = __webpack_require__(465);
 
-var _domHelper = __webpack_require__(577);
+var _domHelper = __webpack_require__(579);
 
-var _rowsMapper = __webpack_require__(578);
+var _rowsMapper = __webpack_require__(580);
 
 var _rowsMapper2 = _interopRequireDefault(_rowsMapper);
 
@@ -75193,7 +75740,7 @@ var ColumnSorting = function (_BasePlugin) {
 exports.default = ColumnSorting;
 
 /***/ }),
-/* 572 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75502,7 +76049,7 @@ exports.NodeStructure = NodeStructure;
 exports.default = LinkedList;
 
 /***/ }),
-/* 573 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75584,7 +76131,7 @@ function dateSort(sortOrder, columnMeta) {
 }
 
 /***/ }),
-/* 574 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75665,7 +76212,7 @@ function defaultSort(sortOrder, columnMeta) {
 }
 
 /***/ }),
-/* 575 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75726,7 +76273,7 @@ function numericSort(sortOrder, columnMeta) {
 }
 
 /***/ }),
-/* 576 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76001,7 +76548,7 @@ var ColumnStatesManager = exports.ColumnStatesManager = function () {
 }();
 
 /***/ }),
-/* 577 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76106,7 +76653,7 @@ var DomHelper = exports.DomHelper = function () {
 }();
 
 /***/ }),
-/* 578 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76184,7 +76731,7 @@ var RowsMapper = function () {
 exports.default = RowsMapper;
 
 /***/ }),
-/* 579 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76200,11 +76747,11 @@ var _element = __webpack_require__(2);
 
 var _object = __webpack_require__(1);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _plugins = __webpack_require__(5);
 
@@ -76212,13 +76759,13 @@ var _base = __webpack_require__(6);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _commentEditor = __webpack_require__(580);
+var _commentEditor = __webpack_require__(582);
 
 var _commentEditor2 = _interopRequireDefault(_commentEditor);
 
 var _utils = __webpack_require__(24);
 
-var _displaySwitch = __webpack_require__(581);
+var _displaySwitch = __webpack_require__(583);
 
 var _displaySwitch2 = _interopRequireDefault(_displaySwitch);
 
@@ -76226,7 +76773,7 @@ var _constants = __webpack_require__(3);
 
 var C = _interopRequireWildcard(_constants);
 
-__webpack_require__(582);
+__webpack_require__(584);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -77165,7 +77712,7 @@ var Comments = function (_BasePlugin) {
 exports.default = Comments;
 
 /***/ }),
-/* 580 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77422,7 +77969,7 @@ var CommentEditor = function () {
 exports.default = CommentEditor;
 
 /***/ }),
-/* 581 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77565,13 +78112,13 @@ var DisplaySwitch = function () {
 exports.default = DisplaySwitch;
 
 /***/ }),
-/* 582 */
+/* 584 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 583 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77597,7 +78144,7 @@ var _commandExecutor2 = __webpack_require__(466);
 
 var _commandExecutor3 = _interopRequireDefault(_commandExecutor2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -77617,7 +78164,7 @@ var _element = __webpack_require__(2);
 
 var _predefinedItems = __webpack_require__(43);
 
-__webpack_require__(596);
+__webpack_require__(598);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78026,7 +78573,7 @@ ContextMenu.SEPARATOR = {
 exports.default = ContextMenu;
 
 /***/ }),
-/* 584 */
+/* 586 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78346,7 +78893,7 @@ function alignmentItem() {
 }
 
 /***/ }),
-/* 585 */
+/* 587 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78403,7 +78950,7 @@ function clearColumnItem() {
 }
 
 /***/ }),
-/* 586 */
+/* 588 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78465,7 +79012,7 @@ function columnLeftItem() {
 }
 
 /***/ }),
-/* 587 */
+/* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78527,7 +79074,7 @@ function columnRightItem() {
 }
 
 /***/ }),
-/* 588 */
+/* 590 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78589,7 +79136,7 @@ function readOnlyItem() {
 }
 
 /***/ }),
-/* 589 */
+/* 591 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78623,7 +79170,7 @@ function redoItem() {
 }
 
 /***/ }),
-/* 590 */
+/* 592 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78691,7 +79238,7 @@ function removeColumnItem() {
 }
 
 /***/ }),
-/* 591 */
+/* 593 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78759,7 +79306,7 @@ function removeRowItem() {
 }
 
 /***/ }),
-/* 592 */
+/* 594 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78806,7 +79353,7 @@ function rowAboveItem() {
 }
 
 /***/ }),
-/* 593 */
+/* 595 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78853,7 +79400,7 @@ function rowBelowItem() {
 }
 
 /***/ }),
-/* 594 */
+/* 596 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78887,7 +79434,7 @@ function undoItem() {
 }
 
 /***/ }),
-/* 595 */
+/* 597 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79037,19 +79584,21 @@ var Cursor = function () {
 exports.default = Cursor;
 
 /***/ }),
-/* 596 */
+/* 598 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 597 */
+/* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 exports.__esModule = true;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -79069,31 +79618,31 @@ var _SheetClip = __webpack_require__(455);
 
 var _SheetClip2 = _interopRequireDefault(_SheetClip);
 
-var _src = __webpack_require__(9);
-
-var _element = __webpack_require__(2);
-
 var _array = __webpack_require__(0);
 
 var _number = __webpack_require__(4);
 
+var _element = __webpack_require__(2);
+
 var _plugins = __webpack_require__(5);
 
-var _copy = __webpack_require__(598);
+var _copy = __webpack_require__(600);
 
 var _copy2 = _interopRequireDefault(_copy);
 
-var _cut = __webpack_require__(599);
+var _cut = __webpack_require__(601);
 
 var _cut2 = _interopRequireDefault(_cut);
 
-var _pasteEvent = __webpack_require__(600);
+var _pasteEvent = __webpack_require__(602);
 
 var _pasteEvent2 = _interopRequireDefault(_pasteEvent);
 
-var _focusableElement = __webpack_require__(602);
+var _focusableElement = __webpack_require__(604);
 
-__webpack_require__(603);
+var _utils = __webpack_require__(605);
+
+__webpack_require__(606);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -79235,8 +79784,14 @@ var CopyPaste = function (_BasePlugin) {
       this.addHook('afterContextMenuDefaultOptions', function (options) {
         return _this2.onAfterContextMenuDefaultOptions(options);
       });
+      this.addHook('afterOnCellMouseUp', function () {
+        return _this2.onAfterOnCellMouseUp();
+      });
       this.addHook('afterSelectionEnd', function () {
         return _this2.onAfterSelectionEnd();
+      });
+      this.addHook('beforeKeyDown', function () {
+        return _this2.onBeforeKeyDown();
       });
 
       this.focusableElement = (0, _focusableElement.createElement)();
@@ -79260,6 +79815,7 @@ var CopyPaste = function (_BasePlugin) {
     value: function updatePlugin() {
       this.disablePlugin();
       this.enablePlugin();
+      this.getOrCreateFocusableElement();
 
       _get(CopyPaste.prototype.__proto__ || Object.getPrototypeOf(CopyPaste.prototype), 'updatePlugin', this).call(this);
     }
@@ -79279,40 +79835,33 @@ var CopyPaste = function (_BasePlugin) {
     }
 
     /**
-     * Prepares copyable text from the cells selection in the invisible textarea.
+     * Copies the selected cell into the clipboard.
      */
 
   }, {
-    key: 'setCopyableText',
-    value: function setCopyableText() {
-      var selRange = this.hot.getSelectedRangeLast();
+    key: 'copy',
+    value: function copy() {
+      var priv = privatePool.get(this);
+      priv.isTriggeredByCopy = true;
 
-      if (!selRange) {
-        return;
-      }
-      var topLeft = selRange.getTopLeftCorner();
-      var bottomRight = selRange.getBottomRightCorner();
-      var startRow = topLeft.row;
-      var startCol = topLeft.col;
-      var endRow = bottomRight.row;
-      var endCol = bottomRight.col;
-      var finalEndRow = Math.min(endRow, startRow + this.rowsLimit - 1);
-      var finalEndCol = Math.min(endCol, startCol + this.columnsLimit - 1);
+      this.getOrCreateFocusableElement();
+      this.focusableElement.focus();
+      document.execCommand('copy');
+    }
 
-      this.copyableRanges.length = 0;
+    /**
+     * Cuts the selected cell into the clipboard.
+     */
 
-      this.copyableRanges.push({
-        startRow: startRow,
-        startCol: startCol,
-        endRow: finalEndRow,
-        endCol: finalEndCol
-      });
+  }, {
+    key: 'cut',
+    value: function cut() {
+      var priv = privatePool.get(this);
+      priv.isTriggeredByCut = true;
 
-      this.copyableRanges = this.hot.runHooks('modifyCopyableRange', this.copyableRanges);
-
-      if (endRow !== finalEndRow || endCol !== finalEndCol) {
-        this.hot.runHooks('afterCopyLimit', endRow - startRow + 1, endCol - startCol + 1, this.rowsLimit, this.columnsLimit);
-      }
+      this.getOrCreateFocusableElement();
+      this.focusableElement.focus();
+      document.execCommand('cut');
     }
 
     /**
@@ -79402,34 +79951,6 @@ var CopyPaste = function (_BasePlugin) {
     }
 
     /**
-     * Copies the selected cell into the clipboard.
-     */
-
-  }, {
-    key: 'copy',
-    value: function copy() {
-      var priv = privatePool.get(this);
-
-      priv.isTriggeredByCopy = true;
-      this.focusableElement.focus();
-      document.execCommand('copy');
-    }
-
-    /**
-     * Cuts the selected cell into the clipboard.
-     */
-
-  }, {
-    key: 'cut',
-    value: function cut() {
-      var priv = privatePool.get(this);
-
-      priv.isTriggeredByCut = true;
-      this.focusableElement.focus();
-      document.execCommand('cut');
-    }
-
-    /**
      * Simulates the paste action.
      *
      * @param {String} [value] Value to paste.
@@ -79438,12 +79959,141 @@ var CopyPaste = function (_BasePlugin) {
   }, {
     key: 'paste',
     value: function paste() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var pastableText = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var pastableHtml = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : pastableText;
+
+      if (!pastableText && !pastableHtml) {
+        return;
+      }
 
       var pasteData = new _pasteEvent2.default();
 
-      pasteData.clipboardData.setData('text/plain', value);
+      if (pastableText) {
+        pasteData.clipboardData.setData('text/plain', pastableText);
+      }
+      if (pastableHtml) {
+        pasteData.clipboardData.setData('text/html', pastableHtml);
+      }
+
+      this.getOrCreateFocusableElement();
       this.onPaste(pasteData);
+    }
+
+    /**
+     * Prepares copyable text from the cells selection in the invisible textarea.
+     */
+
+  }, {
+    key: 'setCopyableText',
+    value: function setCopyableText() {
+      var selRange = this.hot.getSelectedRangeLast();
+
+      if (!selRange) {
+        return;
+      }
+
+      var topLeft = selRange.getTopLeftCorner();
+      var bottomRight = selRange.getBottomRightCorner();
+      var startRow = topLeft.row;
+      var startCol = topLeft.col;
+      var endRow = bottomRight.row;
+      var endCol = bottomRight.col;
+      var finalEndRow = Math.min(endRow, startRow + this.rowsLimit - 1);
+      var finalEndCol = Math.min(endCol, startCol + this.columnsLimit - 1);
+
+      this.copyableRanges.length = 0;
+
+      this.copyableRanges.push({
+        startRow: startRow,
+        startCol: startCol,
+        endRow: finalEndRow,
+        endCol: finalEndCol
+      });
+
+      this.copyableRanges = this.hot.runHooks('modifyCopyableRange', this.copyableRanges);
+
+      if (endRow !== finalEndRow || endCol !== finalEndCol) {
+        this.hot.runHooks('afterCopyLimit', endRow - startRow + 1, endCol - startCol + 1, this.rowsLimit, this.columnsLimit);
+      }
+    }
+
+    /**
+     * Force focus on editable element.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'getOrCreateFocusableElement',
+    value: function getOrCreateFocusableElement() {
+      var editor = this.hot.getActiveEditor();
+      var editableElement = editor ? editor.TEXTAREA : void 0;
+
+      if (editableElement) {
+        this.focusableElement.setFocusableElement(editableElement);
+      } else {
+        this.focusableElement.useSecondaryElement();
+      }
+    }
+
+    /**
+     * Verifies if editor exists and is open.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'isEditorOpened',
+    value: function isEditorOpened() {
+      var editor = this.hot.getActiveEditor();
+
+      return editor && editor.isOpened();
+    }
+
+    /**
+     * Prepares new values to populate them into datasource.
+     *
+     * @private
+     * @param {Array} inputArray
+     * @param {Array} selection
+     * @returns {Array} Range coordinates after populate data
+     */
+
+  }, {
+    key: 'populateValues',
+    value: function populateValues(inputArray) {
+      var selection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.hot.getSelectedLast();
+
+      if (!inputArray.length) {
+        return;
+      }
+
+      var newValuesMaxRow = inputArray.length - 1;
+      var newValuesMaxColumn = inputArray[0].length - 1;
+
+      var startRow = Math.min(selection[0], selection[2]);
+      var endRow = Math.max(selection[0], selection[2], newValuesMaxRow + startRow);
+      var startColumn = Math.min(selection[1], selection[3]);
+      var endColumn = Math.max(selection[1], selection[3], newValuesMaxColumn + startColumn);
+      var newValues = [];
+
+      for (var row = startRow, valuesRow = 0; row <= endRow; row += 1) {
+        var newRow = [];
+
+        for (var column = startColumn, valuesColumn = 0; column <= endColumn; column += 1) {
+          newRow.push(inputArray[valuesRow][valuesColumn]);
+
+          valuesColumn = valuesColumn === newValuesMaxColumn ? 0 : valuesColumn += 1;
+        }
+
+        newValues.push(newRow);
+
+        valuesRow = valuesRow === newValuesMaxRow ? 0 : valuesRow += 1;
+      }
+
+      this.hot.populateFromArray(startRow, startColumn, newValues, void 0, void 0, 'CopyPaste.paste', this.pasteMode);
+
+      return [startRow, startColumn, endRow, endColumn];
     }
 
     /**
@@ -79458,13 +80108,7 @@ var CopyPaste = function (_BasePlugin) {
     value: function onCopy(event) {
       var priv = privatePool.get(this);
 
-      if (!this.hot.isListening() && !priv.isTriggeredByCopy) {
-        return;
-      }
-
-      var editor = this.hot.getActiveEditor();
-
-      if (editor && editor.isOpened()) {
+      if (!this.hot.isListening() && !priv.isTriggeredByCopy || this.isEditorOpened()) {
         return;
       }
 
@@ -79473,15 +80117,17 @@ var CopyPaste = function (_BasePlugin) {
 
       var rangedData = this.getRangedData(this.copyableRanges);
       var allowCopying = !!this.hot.runHooks('beforeCopy', rangedData, this.copyableRanges);
-      var value = '';
 
       if (allowCopying) {
-        value = _SheetClip2.default.stringify(rangedData);
+        var textPlain = _SheetClip2.default.stringify(rangedData);
 
         if (event && event.clipboardData) {
-          event.clipboardData.setData('text/plain', value);
+          var textHTML = (0, _utils.arrayToTable)(rangedData);
+
+          event.clipboardData.setData('text/plain', textPlain);
+          event.clipboardData.setData('text/html', textHTML);
         } else if (typeof ClipboardEvent === 'undefined') {
-          window.clipboardData.setData('Text', value);
+          window.clipboardData.setData('Text', textPlain);
         }
 
         this.hot.runHooks('afterCopy', rangedData, this.copyableRanges);
@@ -79502,13 +80148,7 @@ var CopyPaste = function (_BasePlugin) {
     value: function onCut(event) {
       var priv = privatePool.get(this);
 
-      if (!this.hot.isListening() && !priv.isTriggeredByCut) {
-        return;
-      }
-
-      var editor = this.hot.getActiveEditor();
-
-      if (editor && editor.isOpened()) {
+      if (!this.hot.isListening() && !priv.isTriggeredByCut || this.isEditorOpened()) {
         return;
       }
 
@@ -79517,15 +80157,17 @@ var CopyPaste = function (_BasePlugin) {
 
       var rangedData = this.getRangedData(this.copyableRanges);
       var allowCuttingOut = !!this.hot.runHooks('beforeCut', rangedData, this.copyableRanges);
-      var value = void 0;
 
       if (allowCuttingOut) {
-        value = _SheetClip2.default.stringify(rangedData);
+        var textPlain = _SheetClip2.default.stringify(rangedData);
 
         if (event && event.clipboardData) {
-          event.clipboardData.setData('text/plain', value);
+          var textHTML = (0, _utils.arrayToTable)(rangedData);
+
+          event.clipboardData.setData('text/plain', textPlain);
+          event.clipboardData.setData('text/html', textHTML);
         } else if (typeof ClipboardEvent === 'undefined') {
-          window.clipboardData.setData('Text', value);
+          window.clipboardData.setData('Text', textPlain);
         }
 
         this.hot.emptySelectedCells();
@@ -79545,15 +80187,7 @@ var CopyPaste = function (_BasePlugin) {
   }, {
     key: 'onPaste',
     value: function onPaste(event) {
-      var _this5 = this;
-
-      if (!this.hot.isListening()) {
-        return;
-      }
-
-      var editor = this.hot.getActiveEditor();
-
-      if (editor && editor.isOpened()) {
+      if (!this.hot.isListening() || this.isEditorOpened()) {
         return;
       }
 
@@ -79564,60 +80198,36 @@ var CopyPaste = function (_BasePlugin) {
       var pastedData = void 0;
 
       if (event && typeof event.clipboardData !== 'undefined') {
-        pastedData = event.clipboardData.getData('text/plain');
+        var textHTML = event.clipboardData.getData('text/html');
+
+        if (textHTML && /(<table)|(<TABLE)/.test(textHTML)) {
+          pastedData = (0, _utils.tableToArray)(textHTML);
+        } else {
+          pastedData = event.clipboardData.getData('text/plain');
+        }
       } else if (typeof ClipboardEvent === 'undefined' && typeof window.clipboardData !== 'undefined') {
         pastedData = window.clipboardData.getData('Text');
       }
 
-      var inputArray = _SheetClip2.default.parse(pastedData);
+      var inputArray = typeof pastedData !== 'string' ? pastedData : _SheetClip2.default.parse(pastedData);
 
       if (inputArray.length === 0) {
         return;
       }
 
-      var allowPasting = !!this.hot.runHooks('beforePaste', inputArray, this.copyableRanges);
-
-      if (!allowPasting) {
+      if (this.hot.runHooks('beforePaste', inputArray, this.copyableRanges) === false) {
         return;
       }
 
-      var selected = this.hot.getSelectedLast();
-      var coordsFrom = new _src.CellCoords(selected[0], selected[1]);
-      var coordsTo = new _src.CellCoords(selected[2], selected[3]);
-      var cellRange = new _src.CellRange(coordsFrom, coordsFrom, coordsTo);
-      var topLeftCorner = cellRange.getTopLeftCorner();
-      var bottomRightCorner = cellRange.getBottomRightCorner();
-      var areaStart = topLeftCorner;
-      var areaEnd = new _src.CellCoords(Math.max(bottomRightCorner.row, inputArray.length - 1 + topLeftCorner.row), Math.max(bottomRightCorner.col, inputArray[0].length - 1 + topLeftCorner.col));
+      var _populateValues = this.populateValues(inputArray),
+          _populateValues2 = _slicedToArray(_populateValues, 4),
+          startRow = _populateValues2[0],
+          startColumn = _populateValues2[1],
+          endRow = _populateValues2[2],
+          endColumn = _populateValues2[3];
 
-      var isSelRowAreaCoverInputValue = coordsTo.row - coordsFrom.row >= inputArray.length - 1;
-      var isSelColAreaCoverInputValue = coordsTo.col - coordsFrom.col >= inputArray[0].length - 1;
+      this.hot.selectCell(startRow, startColumn, Math.min(this.hot.countRows() - 1, endRow), Math.min(this.hot.countCols() - 1, endColumn));
 
-      this.hot.addHookOnce('afterChange', function (changes) {
-        var changesLength = changes ? changes.length : 0;
-
-        if (changesLength) {
-          var offset = { row: 0, col: 0 };
-          var highestColumnIndex = -1;
-
-          (0, _array.arrayEach)(changes, function (change, index) {
-            var nextChange = changesLength > index + 1 ? changes[index + 1] : null;
-
-            if (nextChange) {
-              if (!isSelRowAreaCoverInputValue) {
-                offset.row += Math.max(nextChange[0] - change[0] - 1, 0);
-              }
-              if (!isSelColAreaCoverInputValue && change[1] > highestColumnIndex) {
-                highestColumnIndex = change[1];
-                offset.col += Math.max(nextChange[1] - change[1] - 1, 0);
-              }
-            }
-          });
-          _this5.hot.selectCell(areaStart.row, areaStart.col, areaEnd.row + offset.row, areaEnd.col + offset.col);
-        }
-      });
-
-      this.hot.populateFromArray(areaStart.row, areaStart.col, inputArray, areaEnd.row, areaEnd.col, 'CopyPaste.paste', this.pasteMode);
       this.hot.runHooks('afterPaste', inputArray, this.copyableRanges);
     }
 
@@ -79637,7 +80247,24 @@ var CopyPaste = function (_BasePlugin) {
     }
 
     /**
-     * We have to keep focus on textarea element, to make possible use of the browser tools (copy, cut, paste).
+     * Force focus on focusableElement.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'onAfterOnCellMouseUp',
+    value: function onAfterOnCellMouseUp() {
+      if (!this.hot.isListening() || this.isEditorOpened()) {
+        return;
+      }
+
+      this.getOrCreateFocusableElement();
+      this.focusableElement.focus();
+    }
+
+    /**
+     * Force focus on focusableElement after end of the selection.
      *
      * @private
      */
@@ -79648,25 +80275,40 @@ var CopyPaste = function (_BasePlugin) {
       var _privatePool$get = privatePool.get(this),
           isFragmentSelectionEnabled = _privatePool$get.isFragmentSelectionEnabled;
 
-      var editor = this.hot.getActiveEditor();
-
-      if (editor && editor.isOpened()) {
+      if (this.isEditorOpened()) {
         return;
       }
 
-      var editableElement = editor ? editor.TEXTAREA : void 0;
-
-      if (editableElement) {
-        this.focusableElement.setFocusableElement(editableElement);
-      } else {
-        this.focusableElement.useSecondaryElement();
-      }
+      this.getOrCreateFocusableElement();
 
       if (isFragmentSelectionEnabled && this.focusableElement.getFocusableElement() !== document.activeElement && (0, _element.getSelectionText)()) {
         return;
       }
 
       this.setCopyableText();
+      this.focusableElement.focus();
+    }
+
+    /**
+     * `beforeKeyDown` listener to force focus of focusableElement.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'onBeforeKeyDown',
+    value: function onBeforeKeyDown() {
+      if (!this.hot.isListening() || this.isEditorOpened()) {
+        return;
+      }
+      var activeElement = document.activeElement;
+      var activeEditor = this.hot.getActiveEditor();
+
+      if (!activeEditor || activeElement !== this.focusableElement.getFocusableElement() && activeElement !== activeEditor.select) {
+        return;
+      }
+
+      this.getOrCreateFocusableElement();
       this.focusableElement.focus();
     }
 
@@ -79694,7 +80336,7 @@ var CopyPaste = function (_BasePlugin) {
 exports.default = CopyPaste;
 
 /***/ }),
-/* 598 */
+/* 600 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79733,7 +80375,7 @@ function copyItem(copyPastePlugin) {
 }
 
 /***/ }),
-/* 599 */
+/* 601 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79772,7 +80414,7 @@ function cutItem(copyPastePlugin) {
 }
 
 /***/ }),
-/* 600 */
+/* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79780,7 +80422,7 @@ function cutItem(copyPastePlugin) {
 
 exports.__esModule = true;
 
-var _clipboardData = __webpack_require__(601);
+var _clipboardData = __webpack_require__(603);
 
 var _clipboardData2 = _interopRequireDefault(_clipboardData);
 
@@ -79797,7 +80439,7 @@ var PasteEvent = function PasteEvent() {
 exports.default = PasteEvent;
 
 /***/ }),
-/* 601 */
+/* 603 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79834,7 +80476,7 @@ var ClipboardData = function () {
 exports.default = ClipboardData;
 
 /***/ }),
-/* 602 */
+/* 604 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79845,7 +80487,7 @@ exports.destroyElement = exports.deactivateElement = exports.createElement = und
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -80058,13 +80700,115 @@ exports.deactivateElement = deactivateElement;
 exports.destroyElement = destroyElement;
 
 /***/ }),
-/* 603 */
+/* 605 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.arrayToTable = arrayToTable;
+exports.tableToArray = tableToArray;
+/**
+ * Converts javascript array into HTMLTable.
+ *
+ * @param {Array} input Input array which will be converted to HTMLTable
+ */
+function arrayToTable(input) {
+  var inputLen = input.length;
+  var result = ['<table>'];
+
+  var tempElement = document.createElement('div');
+  document.documentElement.appendChild(tempElement);
+
+  for (var row = 0; row < inputLen; row += 1) {
+    var rowData = input[row];
+    var columnsLen = rowData.length;
+    var columnsResult = [];
+
+    if (row === 0) {
+      result.push('<tbody>');
+    }
+
+    for (var column = 0; column < columnsLen; column += 1) {
+      tempElement.innerText = '' + (rowData[column] || '');
+
+      columnsResult.push('<td>' + tempElement.innerHTML + '</td>');
+    }
+
+    result.push.apply(result, ['<tr>'].concat(columnsResult, ['</tr>']));
+
+    if (row + 1 === inputLen) {
+      result.push('</tbody>');
+    }
+  }
+
+  document.documentElement.removeChild(tempElement);
+
+  result.push('</table>');
+
+  return result.join('');
+}
+
+/**
+ * Helper to verify if DOM element is an HTMLTable element.
+ *
+ * @param {Element} element Node element to verify if it's an HTMLTable.
+ */
+function isHTMLTable(element) {
+  return (element && element.nodeName || '').toLowerCase() === 'table';
+}
+
+/**
+ * Converts HTMLTable or string into array.
+ *
+ * @param {Element|String} element Node element or string, which should contain `<table>...</table>`.
+ */
+function tableToArray(element) {
+  var result = [];
+  var checkElement = element;
+
+  if (typeof checkElement === 'string') {
+    var tempElem = document.createElement('div');
+    tempElem.innerHTML = checkElement.replace(/\n/g, '');
+    checkElement = tempElem.querySelector('table');
+  }
+
+  if (checkElement && isHTMLTable(checkElement)) {
+    var rows = checkElement.rows;
+    var rowsLen = rows && rows.length;
+    var tempArray = [];
+
+    for (var row = 0; row < rowsLen; row += 1) {
+      var cells = rows[row].cells;
+      var cellsLen = cells.length;
+      var newRow = [];
+
+      for (var column = 0; column < cellsLen; column += 1) {
+        var cell = cells[column];
+        cell.innerHTML = cell.innerHTML.trim().replace(/<br(.|)>(\n?)/, '\n');
+        var cellText = cell.innerText;
+
+        newRow.push(cellText);
+      }
+
+      tempArray.push(newRow);
+    }
+
+    result.push.apply(result, tempArray);
+  }
+
+  return result;
+}
+
+/***/ }),
+/* 606 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 604 */
+/* 607 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80090,13 +80834,13 @@ var _number = __webpack_require__(4);
 
 var _array = __webpack_require__(0);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _constants = __webpack_require__(3);
 
 var C = _interopRequireWildcard(_constants);
 
-var _contextMenuItem = __webpack_require__(605);
+var _contextMenuItem = __webpack_require__(608);
 
 var _utils = __webpack_require__(56);
 
@@ -80967,7 +81711,7 @@ var CustomBorders = function (_BasePlugin) {
 exports.default = CustomBorders;
 
 /***/ }),
-/* 605 */
+/* 608 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80976,23 +81720,23 @@ exports.default = CustomBorders;
 exports.__esModule = true;
 exports.top = exports.right = exports.noBorders = exports.left = exports.bottom = undefined;
 
-var _bottom = __webpack_require__(606);
+var _bottom = __webpack_require__(609);
 
 var _bottom2 = _interopRequireDefault(_bottom);
 
-var _left = __webpack_require__(607);
+var _left = __webpack_require__(610);
 
 var _left2 = _interopRequireDefault(_left);
 
-var _noBorders = __webpack_require__(608);
+var _noBorders = __webpack_require__(611);
 
 var _noBorders2 = _interopRequireDefault(_noBorders);
 
-var _right = __webpack_require__(609);
+var _right = __webpack_require__(612);
 
 var _right2 = _interopRequireDefault(_right);
 
-var _top = __webpack_require__(610);
+var _top = __webpack_require__(613);
 
 var _top2 = _interopRequireDefault(_top);
 
@@ -81005,7 +81749,7 @@ exports.right = _right2.default;
 exports.top = _top2.default;
 
 /***/ }),
-/* 606 */
+/* 609 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81041,7 +81785,7 @@ function bottom(customBordersPlugin) {
 }
 
 /***/ }),
-/* 607 */
+/* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81078,7 +81822,7 @@ function left(customBordersPlugin) {
 }
 
 /***/ }),
-/* 608 */
+/* 611 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81111,7 +81855,7 @@ function noBorders(customBordersPlugin) {
 }
 
 /***/ }),
-/* 609 */
+/* 612 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81147,7 +81891,7 @@ function right(customBordersPlugin) {
 }
 
 /***/ }),
-/* 610 */
+/* 613 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81184,7 +81928,7 @@ function top(customBordersPlugin) {
 }
 
 /***/ }),
-/* 611 */
+/* 614 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81200,7 +81944,7 @@ var _base = __webpack_require__(6);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -81493,7 +82237,7 @@ var DragToScroll = function (_BasePlugin) {
 exports.default = DragToScroll;
 
 /***/ }),
-/* 612 */
+/* 615 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81513,15 +82257,15 @@ var _plugins = __webpack_require__(5);
 
 var _array = __webpack_require__(0);
 
-var _freezeColumn = __webpack_require__(613);
+var _freezeColumn = __webpack_require__(616);
 
 var _freezeColumn2 = _interopRequireDefault(_freezeColumn);
 
-var _unfreezeColumn = __webpack_require__(614);
+var _unfreezeColumn = __webpack_require__(617);
 
 var _unfreezeColumn2 = _interopRequireDefault(_unfreezeColumn);
 
-__webpack_require__(615);
+__webpack_require__(618);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -81838,7 +82582,7 @@ var ManualColumnFreeze = function (_BasePlugin) {
 exports.default = ManualColumnFreeze;
 
 /***/ }),
-/* 613 */
+/* 616 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81889,7 +82633,7 @@ function freezeColumnItem(manualColumnFreezePlugin) {
 }
 
 /***/ }),
-/* 614 */
+/* 617 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81940,13 +82684,13 @@ function unfreezeColumnItem(manualColumnFreezePlugin) {
 }
 
 /***/ }),
-/* 615 */
+/* 618 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 616 */
+/* 619 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81972,25 +82716,25 @@ var _element = __webpack_require__(2);
 
 var _number = __webpack_require__(4);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
 var _plugins = __webpack_require__(5);
 
-var _columnsMapper = __webpack_require__(617);
+var _columnsMapper = __webpack_require__(620);
 
 var _columnsMapper2 = _interopRequireDefault(_columnsMapper);
 
-var _backlight = __webpack_require__(618);
+var _backlight = __webpack_require__(621);
 
 var _backlight2 = _interopRequireDefault(_backlight);
 
-var _guideline = __webpack_require__(619);
+var _guideline = __webpack_require__(622);
 
 var _guideline2 = _interopRequireDefault(_guideline);
 
-__webpack_require__(620);
+__webpack_require__(623);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -82859,7 +83603,7 @@ var ManualColumnMove = function (_BasePlugin) {
 exports.default = ManualColumnMove;
 
 /***/ }),
-/* 617 */
+/* 620 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82966,7 +83710,7 @@ var ColumnsMapper = function () {
 exports.default = ColumnsMapper;
 
 /***/ }),
-/* 618 */
+/* 621 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83027,7 +83771,7 @@ var BacklightUI = function (_BaseUI) {
 exports.default = BacklightUI;
 
 /***/ }),
-/* 619 */
+/* 622 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83088,13 +83832,13 @@ var GuidelineUI = function (_BaseUI) {
 exports.default = GuidelineUI;
 
 /***/ }),
-/* 620 */
+/* 623 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 621 */
+/* 624 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83112,7 +83856,7 @@ var _base2 = _interopRequireDefault(_base);
 
 var _element = __webpack_require__(2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -83777,7 +84521,7 @@ var ManualColumnResize = function (_BasePlugin) {
 exports.default = ManualColumnResize;
 
 /***/ }),
-/* 622 */
+/* 625 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83803,25 +84547,25 @@ var _element = __webpack_require__(2);
 
 var _number = __webpack_require__(4);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
 var _plugins = __webpack_require__(5);
 
-var _rowsMapper = __webpack_require__(623);
+var _rowsMapper = __webpack_require__(626);
 
 var _rowsMapper2 = _interopRequireDefault(_rowsMapper);
 
-var _backlight = __webpack_require__(624);
+var _backlight = __webpack_require__(627);
 
 var _backlight2 = _interopRequireDefault(_backlight);
 
-var _guideline = __webpack_require__(625);
+var _guideline = __webpack_require__(628);
 
 var _guideline2 = _interopRequireDefault(_guideline);
 
-__webpack_require__(626);
+__webpack_require__(629);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84718,7 +85462,7 @@ var ManualRowMove = function (_BasePlugin) {
 exports.default = ManualRowMove;
 
 /***/ }),
-/* 623 */
+/* 626 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84825,7 +85569,7 @@ var RowsMapper = function () {
 exports.default = RowsMapper;
 
 /***/ }),
-/* 624 */
+/* 627 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84886,7 +85630,7 @@ var BacklightUI = function (_BaseUI) {
 exports.default = BacklightUI;
 
 /***/ }),
-/* 625 */
+/* 628 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84947,13 +85691,13 @@ var GuidelineUI = function (_BaseUI) {
 exports.default = GuidelineUI;
 
 /***/ }),
-/* 626 */
+/* 629 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 627 */
+/* 630 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84971,7 +85715,7 @@ var _base2 = _interopRequireDefault(_base);
 
 var _element = __webpack_require__(2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -85562,7 +86306,7 @@ var ManualRowResize = function (_BasePlugin) {
 exports.default = ManualRowResize;
 
 /***/ }),
-/* 628 */
+/* 631 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85588,9 +86332,9 @@ var _plugins = __webpack_require__(5);
 
 var _event = __webpack_require__(12);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
-var _cellsCollection = __webpack_require__(629);
+var _cellsCollection = __webpack_require__(632);
 
 var _cellsCollection2 = _interopRequireDefault(_cellsCollection);
 
@@ -85598,15 +86342,15 @@ var _cellCoords = __webpack_require__(163);
 
 var _cellCoords2 = _interopRequireDefault(_cellCoords);
 
-var _autofill = __webpack_require__(630);
+var _autofill = __webpack_require__(633);
 
 var _autofill2 = _interopRequireDefault(_autofill);
 
-var _selection = __webpack_require__(631);
+var _selection = __webpack_require__(634);
 
 var _selection2 = _interopRequireDefault(_selection);
 
-var _toggleMerge = __webpack_require__(632);
+var _toggleMerge = __webpack_require__(635);
 
 var _toggleMerge2 = _interopRequireDefault(_toggleMerge);
 
@@ -85620,7 +86364,7 @@ var _number = __webpack_require__(4);
 
 var _utils = __webpack_require__(470);
 
-__webpack_require__(633);
+__webpack_require__(636);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86805,7 +87549,7 @@ var MergeCells = function (_BasePlugin) {
 exports.default = MergeCells;
 
 /***/ }),
-/* 629 */
+/* 632 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86821,7 +87565,7 @@ var _cellCoords = __webpack_require__(163);
 
 var _cellCoords2 = _interopRequireDefault(_cellCoords);
 
-var _index = __webpack_require__(9);
+var _index = __webpack_require__(10);
 
 var _number = __webpack_require__(4);
 
@@ -87191,7 +87935,7 @@ var MergedCellsCollection = function () {
 exports.default = MergedCellsCollection;
 
 /***/ }),
-/* 630 */
+/* 633 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87205,7 +87949,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _object = __webpack_require__(1);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 var _array = __webpack_require__(0);
 
@@ -87698,7 +88442,7 @@ var AutofillCalculations = function () {
 exports.default = AutofillCalculations;
 
 /***/ }),
-/* 631 */
+/* 634 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87710,7 +88454,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -87931,7 +88675,7 @@ var SelectionCalculations = function () {
 exports.default = SelectionCalculations;
 
 /***/ }),
-/* 632 */
+/* 635 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87993,13 +88737,13 @@ function toggleMergeItem(plugin) {
 }
 
 /***/ }),
-/* 633 */
+/* 636 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 634 */
+/* 637 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88019,13 +88763,13 @@ var _base = __webpack_require__(6);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
 var _plugins = __webpack_require__(5);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88414,7 +89158,7 @@ var MultipleSelectionHandles = function (_BasePlugin) {
 exports.default = MultipleSelectionHandles;
 
 /***/ }),
-/* 635 */
+/* 638 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88430,7 +89174,7 @@ var _base = __webpack_require__(6);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _dataObserver = __webpack_require__(636);
+var _dataObserver = __webpack_require__(639);
 
 var _dataObserver2 = _interopRequireDefault(_dataObserver);
 
@@ -88697,7 +89441,7 @@ exports.default = ObserveChanges;
 (0, _plugins.registerPlugin)('observeChanges', ObserveChanges);
 
 /***/ }),
-/* 636 */
+/* 639 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88707,7 +89451,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jsonPatchDuplex = __webpack_require__(637);
+var _jsonPatchDuplex = __webpack_require__(640);
 
 var _jsonPatchDuplex2 = _interopRequireDefault(_jsonPatchDuplex);
 
@@ -88717,7 +89461,7 @@ var _localHooks2 = _interopRequireDefault(_localHooks);
 
 var _object = __webpack_require__(1);
 
-var _utils = __webpack_require__(638);
+var _utils = __webpack_require__(641);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88841,7 +89585,7 @@ var DataObserver = function () {
 exports.default = DataObserver;
 
 /***/ }),
-/* 637 */
+/* 640 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89446,7 +90190,7 @@ if (true) {
 }
 
 /***/ }),
-/* 638 */
+/* 641 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89538,7 +90282,7 @@ function parsePath(path) {
 }
 
 /***/ }),
-/* 639 */
+/* 642 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89926,7 +90670,7 @@ var Search = function (_BasePlugin) {
 exports.default = Search;
 
 /***/ }),
-/* 640 */
+/* 643 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90188,7 +90932,7 @@ var TouchScroll = function (_BasePlugin) {
 exports.default = TouchScroll;
 
 /***/ }),
-/* 641 */
+/* 644 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90265,7 +91009,8 @@ function UndoRedo(instance) {
 
     var originalData = plugin.instance.getSourceDataArray();
     var rowIndex = (originalData.length + index) % originalData.length;
-    var removedData = (0, _object.deepClone)(originalData.slice(rowIndex, rowIndex + amount));
+    var physicalRowIndex = instance.toPhysicalRow(rowIndex);
+    var removedData = (0, _object.deepClone)(originalData.slice(physicalRowIndex, physicalRowIndex + amount));
 
     plugin.done(new UndoRedo.RemoveRowAction(rowIndex, removedData));
   });
@@ -90970,96 +91715,97 @@ hook.register('afterRedo');
 exports.default = UndoRedo;
 
 /***/ }),
-/* 642 */
+/* 645 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 exports.__esModule = true;
-exports.TrimRows = exports.NestedRows = exports.NestedHeaders = exports.MultiColumnSorting = exports.HiddenRows = exports.HiddenColumns = exports.HeaderTooltips = exports.GanttChart = exports.Formulas = exports.Filters = exports.ExportFile = exports.DropdownMenu = exports.ColumnSummary = exports.CollapsibleColumns = exports.BindRowsWithHeaders = undefined;
+exports.TrimRows = exports.NestedRows = exports.NestedHeaders = exports.HiddenRows = exports.HiddenColumns = exports.HeaderTooltips = exports.GanttChart = exports.Formulas = exports.Filters = exports.MultiColumnSorting = exports.ExportFile = exports.DropdownMenu = exports.ColumnSummary = exports.CollapsibleColumns = exports.BindRowsWithHeaders = undefined;
 
-var _bindRowsWithHeaders = __webpack_require__(643);
+var _bindRowsWithHeaders = __webpack_require__(646);
 
 var _bindRowsWithHeaders2 = _interopRequireDefault(_bindRowsWithHeaders);
 
-var _collapsibleColumns = __webpack_require__(648);
+var _collapsibleColumns = __webpack_require__(651);
 
 var _collapsibleColumns2 = _interopRequireDefault(_collapsibleColumns);
 
-var _columnSummary = __webpack_require__(649);
+var _columnSummary = __webpack_require__(652);
 
 var _columnSummary2 = _interopRequireDefault(_columnSummary);
 
-var _dropdownMenu = __webpack_require__(651);
+var _dropdownMenu = __webpack_require__(654);
 
 var _dropdownMenu2 = _interopRequireDefault(_dropdownMenu);
 
-var _exportFile = __webpack_require__(653);
+var _exportFile = __webpack_require__(656);
 
 var _exportFile2 = _interopRequireDefault(_exportFile);
 
-var _filters = __webpack_require__(658);
-
-var _filters2 = _interopRequireDefault(_filters);
-
-var _formulas = __webpack_require__(687);
-
-var _formulas2 = _interopRequireDefault(_formulas);
-
-var _ganttChart = __webpack_require__(700);
-
-var _ganttChart2 = _interopRequireDefault(_ganttChart);
-
-var _headerTooltips = __webpack_require__(704);
-
-var _headerTooltips2 = _interopRequireDefault(_headerTooltips);
-
-var _multiColumnSorting = __webpack_require__(705);
+var _multiColumnSorting = __webpack_require__(661);
 
 var _multiColumnSorting2 = _interopRequireDefault(_multiColumnSorting);
 
-var _nestedHeaders = __webpack_require__(713);
+var _filters = __webpack_require__(669);
+
+var _filters2 = _interopRequireDefault(_filters);
+
+var _formulas = __webpack_require__(698);
+
+var _formulas2 = _interopRequireDefault(_formulas);
+
+var _ganttChart = __webpack_require__(711);
+
+var _ganttChart2 = _interopRequireDefault(_ganttChart);
+
+var _headerTooltips = __webpack_require__(715);
+
+var _headerTooltips2 = _interopRequireDefault(_headerTooltips);
+
+var _nestedHeaders = __webpack_require__(716);
 
 var _nestedHeaders2 = _interopRequireDefault(_nestedHeaders);
 
-var _nestedRows = __webpack_require__(716);
+var _nestedRows = __webpack_require__(719);
 
 var _nestedRows2 = _interopRequireDefault(_nestedRows);
 
-var _hiddenColumns = __webpack_require__(721);
+var _hiddenColumns = __webpack_require__(724);
 
 var _hiddenColumns2 = _interopRequireDefault(_hiddenColumns);
 
-var _hiddenRows = __webpack_require__(725);
+var _hiddenRows = __webpack_require__(728);
 
 var _hiddenRows2 = _interopRequireDefault(_hiddenRows);
 
-var _trimRows = __webpack_require__(729);
+var _trimRows = __webpack_require__(732);
 
 var _trimRows2 = _interopRequireDefault(_trimRows);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// MultiColumnSorting must be initialized before Filters. Bug releated with "wrong listeners order" attached to 'modifyRow' and 'unmodifyRow' hooks.
 exports.BindRowsWithHeaders = _bindRowsWithHeaders2.default;
 exports.CollapsibleColumns = _collapsibleColumns2.default;
 exports.ColumnSummary = _columnSummary2.default;
 exports.DropdownMenu = _dropdownMenu2.default;
 exports.ExportFile = _exportFile2.default;
+exports.MultiColumnSorting = _multiColumnSorting2.default;
 exports.Filters = _filters2.default;
 exports.Formulas = _formulas2.default;
 exports.GanttChart = _ganttChart2.default;
 exports.HeaderTooltips = _headerTooltips2.default;
 exports.HiddenColumns = _hiddenColumns2.default;
 exports.HiddenRows = _hiddenRows2.default;
-exports.MultiColumnSorting = _multiColumnSorting2.default;
 exports.NestedHeaders = _nestedHeaders2.default;
 exports.NestedRows = _nestedRows2.default;
 exports.TrimRows = _trimRows2.default;
 // HiddenColumns must be initialized after NestedHeaders. Bug releated with wrong listeners order attached to 'modifyColWidth' hook.
 
 /***/ }),
-/* 643 */
+/* 646 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91079,7 +91825,7 @@ var _number = __webpack_require__(4);
 
 var _plugins = __webpack_require__(5);
 
-var _bindStrategy = __webpack_require__(644);
+var _bindStrategy = __webpack_require__(647);
 
 var _bindStrategy2 = _interopRequireDefault(_bindStrategy);
 
@@ -91313,7 +92059,7 @@ var BindRowsWithHeaders = function (_BasePlugin) {
 exports.default = BindRowsWithHeaders;
 
 /***/ }),
-/* 644 */
+/* 647 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91327,7 +92073,7 @@ var _number = __webpack_require__(4);
 
 var _string = __webpack_require__(32);
 
-var _bindStrategies = __webpack_require__(645);
+var _bindStrategies = __webpack_require__(648);
 
 var strategies = _interopRequireWildcard(_bindStrategies);
 
@@ -91469,7 +92215,7 @@ var BindStrategy = function () {
 exports.default = BindStrategy;
 
 /***/ }),
-/* 645 */
+/* 648 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91478,11 +92224,11 @@ exports.default = BindStrategy;
 exports.__esModule = true;
 exports.Strict = exports.Loose = undefined;
 
-var _loose = __webpack_require__(646);
+var _loose = __webpack_require__(649);
 
 var _loose2 = _interopRequireDefault(_loose);
 
-var _strict = __webpack_require__(647);
+var _strict = __webpack_require__(650);
 
 var _strict2 = _interopRequireDefault(_strict);
 
@@ -91492,7 +92238,7 @@ exports.Loose = _loose2.default;
 exports.Strict = _strict2.default;
 
 /***/ }),
-/* 646 */
+/* 649 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91578,7 +92324,7 @@ var LooseBindStrategy = function () {
 exports.default = LooseBindStrategy;
 
 /***/ }),
-/* 647 */
+/* 650 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91664,7 +92410,7 @@ var StrictBindStrategy = function () {
 exports.default = StrictBindStrategy;
 
 /***/ }),
-/* 648 */
+/* 651 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91686,7 +92432,7 @@ var _console = __webpack_require__(20);
 
 var _element = __webpack_require__(2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -92323,7 +93069,7 @@ var CollapsibleColumns = function (_BasePlugin) {
 exports.default = CollapsibleColumns;
 
 /***/ }),
-/* 649 */
+/* 652 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92343,7 +93089,7 @@ var _object = __webpack_require__(1);
 
 var _plugins = __webpack_require__(5);
 
-var _endpoints5 = __webpack_require__(650);
+var _endpoints5 = __webpack_require__(653);
 
 var _endpoints6 = _interopRequireDefault(_endpoints5);
 
@@ -92862,7 +93608,7 @@ var ColumnSummary = function (_BasePlugin) {
 exports.default = ColumnSummary;
 
 /***/ }),
-/* 650 */
+/* 653 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93534,7 +94280,7 @@ var Endpoints = function () {
 exports.default = Endpoints;
 
 /***/ }),
-/* 651 */
+/* 654 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93556,7 +94302,7 @@ var _commandExecutor2 = __webpack_require__(466);
 
 var _commandExecutor3 = _interopRequireDefault(_commandExecutor2);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -93580,7 +94326,7 @@ var _event = __webpack_require__(12);
 
 var _predefinedItems = __webpack_require__(43);
 
-__webpack_require__(652);
+__webpack_require__(655);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -94066,13 +94812,13 @@ DropdownMenu.SEPARATOR = {
 exports.default = DropdownMenu;
 
 /***/ }),
-/* 652 */
+/* 655 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 653 */
+/* 656 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94088,11 +94834,11 @@ var _base2 = _interopRequireDefault(_base);
 
 var _plugins = __webpack_require__(5);
 
-var _dataProvider = __webpack_require__(654);
+var _dataProvider = __webpack_require__(657);
 
 var _dataProvider2 = _interopRequireDefault(_dataProvider);
 
-var _typeFactory = __webpack_require__(655);
+var _typeFactory = __webpack_require__(658);
 
 var _typeFactory2 = _interopRequireDefault(_typeFactory);
 
@@ -94297,7 +95043,7 @@ var ExportFile = function (_BasePlugin) {
 exports.default = ExportFile;
 
 /***/ }),
-/* 654 */
+/* 657 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94518,7 +95264,7 @@ var DataProvider = function () {
 exports.default = DataProvider;
 
 /***/ }),
-/* 655 */
+/* 658 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94528,7 +95274,7 @@ exports.__esModule = true;
 exports.EXPORT_TYPES = exports.TYPE_PDF = exports.TYPE_EXCEL = exports.TYPE_CSV = undefined;
 exports.default = typeFactory;
 
-var _csv = __webpack_require__(656);
+var _csv = __webpack_require__(659);
 
 var _csv2 = _interopRequireDefault(_csv);
 
@@ -94551,7 +95297,7 @@ function typeFactory(type, dataProvider, options) {
 }
 
 /***/ }),
-/* 656 */
+/* 659 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94565,7 +95311,7 @@ var _array = __webpack_require__(0);
 
 var _mixed = __webpack_require__(8);
 
-var _base = __webpack_require__(657);
+var _base = __webpack_require__(660);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -94690,7 +95436,7 @@ var Csv = function (_BaseType) {
 exports.default = Csv;
 
 /***/ }),
-/* 657 */
+/* 660 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94786,7 +95532,1775 @@ var BaseType = function () {
 exports.default = BaseType;
 
 /***/ }),
-/* 658 */
+/* 661 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _element = __webpack_require__(2);
+
+var _mixed = __webpack_require__(8);
+
+var _object = __webpack_require__(1);
+
+var _array = __webpack_require__(0);
+
+var _number = __webpack_require__(4);
+
+var _base = __webpack_require__(6);
+
+var _base2 = _interopRequireDefault(_base);
+
+var _plugins = __webpack_require__(5);
+
+var _mergeSort = __webpack_require__(464);
+
+var _mergeSort2 = _interopRequireDefault(_mergeSort);
+
+var _pluginHooks = __webpack_require__(17);
+
+var _pluginHooks2 = _interopRequireDefault(_pluginHooks);
+
+var _keyStateObserver = __webpack_require__(85);
+
+var _comparatorEngine = __webpack_require__(88);
+
+var _columnStatesManager = __webpack_require__(665);
+
+var _utils = __webpack_require__(471);
+
+var _domHelper = __webpack_require__(666);
+
+var _rowsMapper = __webpack_require__(667);
+
+var _rowsMapper2 = _interopRequireDefault(_rowsMapper);
+
+__webpack_require__(668);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_pluginHooks2.default.getSingleton().register('beforeColumnSort');
+_pluginHooks2.default.getSingleton().register('afterColumnSort');
+
+var APPEND_COLUMN_CONFIG_STRATEGY = 'append';
+var REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
+
+/**
+ * @plugin MultiColumnSorting
+ * @pro
+ *
+ * @description
+ * This plugin sorts the view by columns (but does not sort the data source!). To enable the plugin, set the
+ * {@link Options#multiColumnSorting} property to the correct value (see the examples below).
+ *
+ * @example
+ * ```js
+ * // as boolean
+ * multiColumnSorting: true
+ *
+ * // as an object with initial sort config (sort ascending for column at index 1 and then sort descending for column at index 0)
+ * multiColumnSorting: {
+ *   initialConfig: [{
+ *     column: 1,
+ *     sortOrder: 'asc'
+ *   }, {
+ *     column: 0,
+ *     sortOrder: 'desc'
+ *   }]
+ * }
+ *
+ * // as an object which define specific sorting options for all columns
+ * multiColumnSorting: {
+ *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table (by default)
+ *   indicator: true, // true = shows indicator for all columns (by default), false = don't show indicator for columns
+ *   headerAction: true, // true = allow to click on the headers to sort (by default), false = turn off possibility to click on the headers to sort
+ *   compareFunctionFactory: function(sortOrder, columnMeta) {
+ *     return function(value, nextValue) {
+ *       // Some value comparisons which will return -1, 0 or 1...
+ *     }
+ *   }
+ * }
+ *
+ * // as an object passed to the `column` property, allows specifying a custom options for the desired column.
+ * // please take a look at documentation of `column` property: https://docs.handsontable.com/pro/Options.html#columns
+ * columns: [{
+ *   multiColumnSorting: {
+ *     indicator: false, // disable indicator for the first column,
+ *     sortEmptyCells: true,
+ *     headerAction: false, // clicks on the first column won't sort
+ *     compareFunctionFactory: function(sortOrder, columnMeta) {
+ *       return function(value, nextValue) {
+ *         return 0; // Custom compare function for the first column (don't sort)
+ *       }
+ *     }
+ *   }
+ * }]```
+ *
+ * @dependencies ObserveChanges moment
+ */
+
+var MultiColumnSorting = function (_BasePlugin) {
+  _inherits(MultiColumnSorting, _BasePlugin);
+
+  function MultiColumnSorting(hotInstance) {
+    _classCallCheck(this, MultiColumnSorting);
+
+    /**
+     * Instance of column state manager.
+     *
+     * @private
+     * @type {ColumnStatesManager}
+     */
+    var _this2 = _possibleConstructorReturn(this, (MultiColumnSorting.__proto__ || Object.getPrototypeOf(MultiColumnSorting)).call(this, hotInstance));
+
+    _this2.columnStatesManager = new _columnStatesManager.ColumnStatesManager();
+    /**
+     * Instance of DOM helper.
+     *
+     * @private
+     * @type {DomHelper}
+     */
+    _this2.domHelper = new _domHelper.DomHelper(_this2.columnStatesManager);
+    /**
+     * Object containing visual row indexes mapped to data source indexes.
+     *
+     * @private
+     * @type {RowsMapper}
+     */
+    _this2.rowsMapper = new _rowsMapper2.default(_this2);
+    /**
+     * It blocks the plugin translation, this flag is checked inside `onModifyRow` callback.
+     *
+     * @private
+     * @type {Boolean}
+     */
+    _this2.blockPluginTranslation = true;
+    /**
+     * Cached column properties from plugin like i.e. `indicator`, `headerAction`.
+     *
+     * @private
+     * @type {Map<number, Object>}
+     */
+    _this2.columnMetaCache = new Map();
+    return _this2;
+  }
+
+  /**
+   * Checks if the plugin is enabled in the Handsontable settings. This method is executed in {@link Hooks#beforeInit}
+   * hook and if it returns `true` than the {@link MultiColumnSorting#enablePlugin} method is called.
+   *
+   * @returns {Boolean}
+   */
+
+
+  _createClass(MultiColumnSorting, [{
+    key: 'isEnabled',
+    value: function isEnabled() {
+      return !!this.hot.getSettings().multiColumnSorting;
+    }
+
+    /**
+     * Enables the plugin functionality for this Handsontable instance.
+     */
+
+  }, {
+    key: 'enablePlugin',
+    value: function enablePlugin() {
+      var _this3 = this;
+
+      if (this.enabled) {
+        return;
+      }
+
+      (0, _utils.warnIfPluginsHaveConflict)(this.hot.getSettings().columnSorting);
+
+      if ((0, _mixed.isUndefined)(this.hot.getSettings().observeChanges)) {
+        this.enableObserveChangesPlugin();
+      }
+
+      this.addHook('afterTrimRow', function () {
+        return _this3.sortByPresetSortStates();
+      });
+      this.addHook('afterUntrimRow', function () {
+        return _this3.sortByPresetSortStates();
+      });
+      this.addHook('modifyRow', function (row, source) {
+        return _this3.onModifyRow(row, source);
+      });
+      this.addHook('unmodifyRow', function (row, source) {
+        return _this3.onUnmodifyRow(row, source);
+      });
+      this.addHook('afterGetColHeader', function (column, TH) {
+        return _this3.onAfterGetColHeader(column, TH);
+      });
+      this.addHook('beforeOnCellMouseDown', function (event, coords, TD, controller) {
+        return _this3.onBeforeOnCellMouseDown(event, coords, TD, controller);
+      });
+      this.addHook('afterOnCellMouseDown', function (event, target) {
+        return _this3.onAfterOnCellMouseDown(event, target);
+      });
+      this.addHook('afterCreateRow', function (index, amount) {
+        return _this3.onAfterCreateRow(index, amount);
+      });
+      this.addHook('afterRemoveRow', function (index, amount) {
+        return _this3.onAfterRemoveRow(index, amount);
+      });
+      this.addHook('afterInit', function () {
+        return _this3.loadOrSortBySettings();
+      });
+      this.addHook('afterLoadData', function (initialLoad) {
+        return _this3.onAfterLoadData(initialLoad);
+      });
+      this.addHook('afterCreateCol', function () {
+        return _this3.onAfterCreateCol();
+      });
+      this.addHook('afterRemoveCol', function () {
+        return _this3.onAfterRemoveCol();
+      });
+
+      // TODO: Workaround? It should be refactored / described.
+      if (this.hot.view) {
+        this.loadOrSortBySettings();
+      }
+
+      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'enablePlugin', this).call(this);
+    }
+
+    /**
+     * Disables the plugin functionality for this Handsontable instance.
+     */
+
+  }, {
+    key: 'disablePlugin',
+    value: function disablePlugin() {
+      var _this4 = this;
+
+      var clearColHeader = function clearColHeader(column, TH) {
+        var headerSpanElement = (0, _utils.getHeaderSpanElement)(TH);
+
+        if ((0, _utils.isFirstLevelColumnHeader)(column, TH) === false || headerSpanElement === null) {
+          return;
+        }
+
+        (0, _element.removeClass)(headerSpanElement, _this4.domHelper.getRemovedClasses(headerSpanElement));
+      };
+
+      // Changing header width and removing indicator.
+      this.hot.addHook('afterGetColHeader', clearColHeader);
+      this.hot.addHookOnce('afterRender', function () {
+        _this4.hot.removeHook('afterGetColHeader', clearColHeader);
+      });
+
+      this.rowsMapper.clearMap();
+
+      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'disablePlugin', this).call(this);
+    }
+
+    /**
+     * Sorts the table by chosen columns and orders.
+     *
+     * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
+     * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
+     * sort order (`asc` for ascending, `desc` for descending).
+     *
+     * **Note**: Please keep in mind that every call of `sort` function set an entirely new sort order. Previous sort configs aren't preserved.
+     *
+     * @example
+     * ```js
+     * // sort ascending first visual column
+     * hot.getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
+     *
+     * // sort first two visual column in the defined sequence
+     * hot.getPlugin('multiColumnSorting').sort([{
+     *   column: 1, sortOrder: 'asc'
+     * }, {
+     *   column: 0, sortOrder: 'desc'
+     * }]);
+     * ```
+     *
+     * @fires Hooks#beforeColumnSort
+     * @fires Hooks#afterColumnSort
+     */
+
+  }, {
+    key: 'sort',
+    value: function sort(sortConfig) {
+      var _this5 = this;
+
+      var currentSortConfig = this.getSortConfig();
+
+      // We always pass to hook configs defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
+      var destinationSortConfigs = (0, _utils.getFullSortConfiguration)(sortConfig);
+
+      var sortPossible = this.areValidSortConfigs(destinationSortConfigs);
+      var allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs, sortPossible);
+
+      if (sortPossible === false) {
+        (0, _utils.warnAboutNotValidatedConfig)();
+      }
+
+      if (allowSort === false) {
+        return;
+      }
+
+      if (sortPossible) {
+        var translateColumnToPhysical = function translateColumnToPhysical(_ref) {
+          var visualColumn = _ref.column,
+              restOfProperties = _objectWithoutProperties(_ref, ['column']);
+
+          return Object.assign({ column: _this5.hot.toPhysicalColumn(visualColumn) }, restOfProperties);
+        };
+        var internalSortStates = (0, _array.arrayMap)(destinationSortConfigs, function (columnSortConfig) {
+          return translateColumnToPhysical(columnSortConfig);
+        });
+
+        this.columnStatesManager.setSortStates(internalSortStates);
+        this.sortByPresetSortStates();
+        this.saveAllSortSettings();
+
+        this.hot.render();
+        this.hot.view.wt.draw(true); // TODO: Workaround? One test won't pass after removal. It should be refactored / described.
+      }
+
+      this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig(), sortPossible);
+    }
+
+    /**
+     * Clear the sort performed on the table.
+     */
+
+  }, {
+    key: 'clearSort',
+    value: function clearSort() {
+      this.sort([]);
+    }
+
+    /**
+     * Checks if the table is sorted (any column have to be sorted).
+     *
+     * @returns {Boolean}
+     */
+
+  }, {
+    key: 'isSorted',
+    value: function isSorted() {
+      return this.enabled && !this.columnStatesManager.isListOfSortedColumnsEmpty();
+    }
+
+    /**
+     * Get sort configuration for particular column or for all sorted columns. Objects contain `column` and `sortOrder` properties.
+     *
+     * **Note**: Please keep in mind that returned objects expose **visual** column index under the `column` key. They are handled by the `sort` function.
+     *
+     * @param {Number} [column] Visual column index.
+     * @returns {undefined|Object|Array}
+     */
+
+  }, {
+    key: 'getSortConfig',
+    value: function getSortConfig(column) {
+      var _this6 = this;
+
+      var translateColumnToVisual = function translateColumnToVisual(_ref2) {
+        var physicalColumn = _ref2.column,
+            restOfProperties = _objectWithoutProperties(_ref2, ['column']);
+
+        return Object.assign({ column: _this6.hot.toVisualColumn(physicalColumn) }, restOfProperties);
+      };
+
+      if ((0, _mixed.isDefined)(column)) {
+        var physicalColumn = this.hot.toPhysicalColumn(column);
+        var columnSortState = this.columnStatesManager.getColumnSortState(physicalColumn);
+
+        if ((0, _mixed.isDefined)(columnSortState)) {
+          return translateColumnToVisual(columnSortState);
+        }
+
+        return;
+      }
+
+      var sortStates = this.columnStatesManager.getSortStates();
+
+      return (0, _array.arrayMap)(sortStates, function (columnState) {
+        return translateColumnToVisual(columnState);
+      });
+    }
+
+    /**
+     * @description
+     * Warn: Useful mainly for providing server side sort implementation (see in the example below). It doesn't sort the data set. It just sets sort configuration for all sorted columns.
+     *
+     * @example
+     * ```js
+     * beforeColumnSort: function(currentSortConfig, destinationSortConfigs) {
+     *   const columnSortPlugin = this.getPlugin('multiColumnSorting');
+     *
+     *   columnSortPlugin.setSortConfig(destinationSortConfigs);
+     *
+     *   // const newData = ... // Calculated data set, ie. from an AJAX call.
+     *
+     *   // this.loadData(newData); // Load new data set.
+     *
+     *   return false; // The blockade for the default sort action.
+     * }```
+     *
+     * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
+     * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
+     * sort order (`asc` for ascending, `desc` for descending).
+     */
+
+  }, {
+    key: 'setSortConfig',
+    value: function setSortConfig(sortConfig) {
+      var _this7 = this;
+
+      var destinationSortConfigs = (0, _utils.getFullSortConfiguration)(sortConfig);
+
+      if (this.areValidSortConfigs(destinationSortConfigs)) {
+        var translateColumnToPhysical = function translateColumnToPhysical(_ref3) {
+          var visualColumn = _ref3.column,
+              restOfProperties = _objectWithoutProperties(_ref3, ['column']);
+
+          return Object.assign({ column: _this7.hot.toPhysicalColumn(visualColumn) }, restOfProperties);
+        };
+        var internalSortStates = (0, _array.arrayMap)(destinationSortConfigs, function (columnSortConfig) {
+          return translateColumnToPhysical(columnSortConfig);
+        });
+
+        this.columnStatesManager.setSortStates(internalSortStates);
+      } else {
+        (0, _utils.warnAboutNotValidatedConfig)();
+      }
+    }
+
+    /**
+     * Get if sort configs are valid.
+     *
+     * @private
+     * @param {Array} sortConfigs Sort configuration for all sorted columns. Objects contain `column` and `sortOrder` properties.
+     * @returns {Boolean}
+     */
+
+  }, {
+    key: 'areValidSortConfigs',
+    value: function areValidSortConfigs(sortConfigs) {
+      if (Array.isArray(sortConfigs) === false) {
+        return false;
+      }
+
+      var sortedColumns = sortConfigs.map(function (_ref4) {
+        var column = _ref4.column;
+        return column;
+      });
+      var numberOfColumns = this.hot.countCols();
+      var onlyExistingVisualIndexes = sortedColumns.every(function (visualColumn) {
+        return visualColumn <= numberOfColumns && visualColumn >= 0;
+      });
+
+      return (0, _utils.areValidSortStates)(sortConfigs) && onlyExistingVisualIndexes; // We don't translate visual indexes to physical indexes.
+    }
+
+    /**
+     * Saves all sorting settings. Saving works only when {@link Options#persistentState} option is enabled.
+     *
+     * @private
+     * @fires Hooks#persistentStateSave
+     */
+
+  }, {
+    key: 'saveAllSortSettings',
+    value: function saveAllSortSettings() {
+      var allSortSettings = this.columnStatesManager.getAllColumnsProperties();
+
+      allSortSettings.initialConfig = this.columnStatesManager.getSortStates();
+
+      this.hot.runHooks('persistentStateSave', 'multiColumnSorting', allSortSettings);
+    }
+
+    /**
+     * Get all saved sorting settings. Loading works only when {@link Options#persistentState} option is enabled.
+     *
+     * @private
+     * @returns {Object} Previously saved sort settings.
+     *
+     * @fires Hooks#persistentStateLoad
+     */
+
+  }, {
+    key: 'getAllSavedSortSettings',
+    value: function getAllSavedSortSettings() {
+      var _this8 = this;
+
+      var storedAllSortSettings = {};
+
+      this.hot.runHooks('persistentStateLoad', 'multiColumnSorting', storedAllSortSettings);
+
+      var allSortSettings = storedAllSortSettings.value;
+      var translateColumnToVisual = function translateColumnToVisual(_ref5) {
+        var physicalColumn = _ref5.column,
+            restOfProperties = _objectWithoutProperties(_ref5, ['column']);
+
+        return Object.assign({ column: _this8.hot.toVisualColumn(physicalColumn) }, restOfProperties);
+      };
+
+      if ((0, _mixed.isDefined)(allSortSettings) && Array.isArray(allSortSettings.initialConfig)) {
+        allSortSettings.initialConfig = (0, _array.arrayMap)(allSortSettings.initialConfig, translateColumnToVisual);
+      }
+
+      return allSortSettings;
+    }
+
+    /**
+     * Get next sort configuration for particular column. Object contain `column` and `sortOrder` properties.
+     *
+     * **Note**: Please keep in mind that returned object expose **visual** column index under the `column` key.
+     *
+     * @private
+     * @param {Number} column Visual column index.
+     * @returns {undefined|Object}
+     */
+
+  }, {
+    key: 'getColumnNextConfig',
+    value: function getColumnNextConfig(column) {
+      var physicalColumn = this.hot.toPhysicalColumn(column);
+
+      if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
+        var columnSortConfig = this.getSortConfig(column);
+        var sortOrder = (0, _utils.getNextSortOrder)(columnSortConfig.sortOrder);
+
+        if ((0, _mixed.isDefined)(sortOrder)) {
+          columnSortConfig.sortOrder = sortOrder;
+
+          return columnSortConfig;
+        }
+
+        return;
+      }
+
+      var nrOfColumns = this.hot.countCols();
+
+      if (Number.isInteger(column) && column >= 0 && column < nrOfColumns) {
+        return {
+          column: column,
+          sortOrder: (0, _utils.getNextSortOrder)()
+        };
+      }
+    }
+
+    /**
+     * Get sort configuration with "next order" for particular column.
+     *
+     * @private
+     * @param {Number} columnToChange Visual column index of column which order will be changed.
+     * @param {String} strategyId ID of strategy. Possible values: 'append' and 'replace'. The first one
+     * change order of particular column and change it's position in the sort queue to the last one. The second one
+     * just change order of particular column.
+     *
+     * **Note**: Please keep in mind that returned objects expose **visual** column index under the `column` key.
+     *
+     * @returns {Array}
+     */
+
+  }, {
+    key: 'getNextSortConfig',
+    value: function getNextSortConfig(columnToChange) {
+      var strategyId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : APPEND_COLUMN_CONFIG_STRATEGY;
+
+      var physicalColumn = this.hot.toPhysicalColumn(columnToChange);
+      var indexOfColumnToChange = this.columnStatesManager.getIndexOfColumnInSortQueue(physicalColumn);
+      var isColumnSorted = this.columnStatesManager.isColumnSorted(physicalColumn);
+      var currentSortConfig = this.getSortConfig();
+      var nextColumnConfig = this.getColumnNextConfig(columnToChange);
+
+      if (isColumnSorted) {
+        if ((0, _mixed.isUndefined)(nextColumnConfig)) {
+          return [].concat(_toConsumableArray(currentSortConfig.slice(0, indexOfColumnToChange)), _toConsumableArray(currentSortConfig.slice(indexOfColumnToChange + 1)));
+        }
+
+        if (strategyId === APPEND_COLUMN_CONFIG_STRATEGY) {
+          return [].concat(_toConsumableArray(currentSortConfig.slice(0, indexOfColumnToChange)), _toConsumableArray(currentSortConfig.slice(indexOfColumnToChange + 1)), [nextColumnConfig]);
+        } else if (strategyId === REPLACE_COLUMN_CONFIG_STRATEGY) {
+          return [].concat(_toConsumableArray(currentSortConfig.slice(0, indexOfColumnToChange)), [nextColumnConfig], _toConsumableArray(currentSortConfig.slice(indexOfColumnToChange + 1)));
+        }
+      }
+
+      if ((0, _mixed.isDefined)(nextColumnConfig)) {
+        return currentSortConfig.concat(nextColumnConfig);
+      }
+
+      return currentSortConfig;
+    }
+
+    /**
+     * Saves to cache part of plugins related properties, properly merged from cascade settings.
+     *
+     * @private
+     * @param {Number} column Visual column index.
+     * @returns {Object}
+     */
+    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. Using this function we don't count
+    // merged properties few times.
+
+  }, {
+    key: 'setMergedPluginSettings',
+    value: function setMergedPluginSettings(column) {
+      var physicalColumnIndex = this.hot.toPhysicalColumn(column);
+      var pluginMainSettings = this.hot.getSettings().multiColumnSorting;
+      var storedColumnProperties = this.columnStatesManager.getAllColumnsProperties();
+      var cellMeta = this.hot.getCellMeta(0, column);
+      var columnMeta = Object.getPrototypeOf(cellMeta);
+      var columnMetaHasPluginSettings = Object.hasOwnProperty.call(columnMeta, 'multiColumnSorting');
+      var pluginColumnConfig = columnMetaHasPluginSettings ? columnMeta.multiColumnSorting : {};
+
+      this.columnMetaCache.set(physicalColumnIndex, Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig));
+    }
+
+    /**
+     * Get copy of settings for first cell in the column.
+     *
+     * @private
+     * @param {Number} column Visual column index.
+     * @returns {Object}
+     */
+    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. Instead of getting properties from
+    // column meta we call this function.
+
+  }, {
+    key: 'getFirstCellSettings',
+    value: function getFirstCellSettings(column) {
+      var _this9 = this;
+
+      // TODO: Remove test named: "should not break the dataset when inserted new row" (#142).
+      var actualBlockTranslationFlag = this.blockPluginTranslation;
+
+      this.blockPluginTranslation = true;
+
+      if (this.columnMetaCache.size === 0) {
+        var numberOfColumns = this.hot.countCols();
+
+        (0, _number.rangeEach)(numberOfColumns, function (visualColumnIndex) {
+          return _this9.setMergedPluginSettings(visualColumnIndex);
+        });
+      }
+
+      var cellMeta = this.hot.getCellMeta(0, column);
+
+      this.blockPluginTranslation = actualBlockTranslationFlag;
+
+      var cellMetaCopy = Object.create(cellMeta);
+      cellMetaCopy.multiColumnSorting = this.columnMetaCache.get(this.hot.toPhysicalColumn(column));
+
+      return cellMetaCopy;
+    }
+
+    /**
+     * Get number of rows which should be sorted.
+     *
+     * @private
+     * @param {Number} numberOfRows Total number of displayed rows.
+     * @returns {Number}
+     */
+
+  }, {
+    key: 'getNumberOfRowsToSort',
+    value: function getNumberOfRowsToSort(numberOfRows) {
+      var settings = this.hot.getSettings();
+
+      // `maxRows` option doesn't take into account `minSpareRows` option in this case.
+      if (settings.maxRows <= numberOfRows) {
+        return settings.maxRows;
+      }
+
+      return numberOfRows - settings.minSpareRows;
+    }
+
+    /**
+     * Performs the sorting using a stable sort function basing on internal state of sorting.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'sortByPresetSortStates',
+    value: function sortByPresetSortStates() {
+      var _this10 = this;
+
+      if (this.columnStatesManager.isListOfSortedColumnsEmpty()) {
+        this.rowsMapper.clearMap();
+
+        return;
+      }
+
+      var indexesWithData = [];
+      var sortedColumnsList = this.columnStatesManager.getSortedColumns();
+      var numberOfRows = this.hot.countRows();
+
+      // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` callback - we check the `blockPluginTranslation`
+      // flag inside it (we just want to get data not already modified by `multiColumnSorting` plugin translation).
+      this.blockPluginTranslation = true;
+
+      var getDataForSortedColumns = function getDataForSortedColumns(visualRowIndex) {
+        return (0, _array.arrayMap)(sortedColumnsList, function (physicalColumn) {
+          return _this10.hot.getDataAtCell(visualRowIndex, _this10.hot.toVisualColumn(physicalColumn));
+        });
+      };
+
+      for (var visualRowIndex = 0; visualRowIndex < this.getNumberOfRowsToSort(numberOfRows); visualRowIndex += 1) {
+        indexesWithData.push([visualRowIndex].concat(getDataForSortedColumns(visualRowIndex)));
+      }
+
+      (0, _mergeSort2.default)(indexesWithData, (0, _comparatorEngine.mainSortComparator)((0, _array.arrayMap)(sortedColumnsList, function (physicalColumn) {
+        return _this10.columnStatesManager.getSortOrderOfColumn(physicalColumn);
+      }), (0, _array.arrayMap)(sortedColumnsList, function (physicalColumn) {
+        return _this10.getFirstCellSettings(_this10.hot.toVisualColumn(physicalColumn));
+      })));
+
+      // Append spareRows
+      for (var _visualRowIndex = indexesWithData.length; _visualRowIndex < numberOfRows; _visualRowIndex += 1) {
+        indexesWithData.push([_visualRowIndex].concat(getDataForSortedColumns(_visualRowIndex)));
+      }
+
+      // The blockade of the indices translation is released.
+      this.blockPluginTranslation = false;
+
+      // Save all indexes to arrayMapper, a completely new sequence is set by the plugin
+      this.rowsMapper._arrayMap = (0, _array.arrayMap)(indexesWithData, function (indexWithData) {
+        return indexWithData[0];
+      });
+    }
+
+    /**
+     * Load saved settings or sort by predefined plugin configuration.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'loadOrSortBySettings',
+    value: function loadOrSortBySettings() {
+      this.columnMetaCache.clear();
+
+      var storedAllSortSettings = this.getAllSavedSortSettings();
+
+      if ((0, _object.isObject)(storedAllSortSettings)) {
+        this.sortBySettings(storedAllSortSettings);
+      } else {
+        var allSortSettings = this.hot.getSettings().multiColumnSorting;
+
+        this.sortBySettings(allSortSettings);
+      }
+    }
+
+    /**
+     * Sort the table by provided configuration.
+     *
+     * @private
+     * @param {Object} allSortSettings All sort config settings. Object may contain `initialConfig`, `indicator`,
+     * `sortEmptyCells`, `headerAction` and `compareFunctionFactory` properties.
+     */
+
+  }, {
+    key: 'sortBySettings',
+    value: function sortBySettings(allSortSettings) {
+      if ((0, _object.isObject)(allSortSettings)) {
+        this.columnStatesManager.updateAllColumnsProperties(allSortSettings);
+
+        var initialConfig = allSortSettings.initialConfig;
+
+        if (Array.isArray(initialConfig) || (0, _object.isObject)(initialConfig)) {
+          this.sort(initialConfig);
+        }
+      } else {
+        // Extra render for headers. Their width may change.
+        this.hot.render();
+      }
+    }
+
+    /**
+     * Enables the ObserveChanges plugin.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'enableObserveChangesPlugin',
+    value: function enableObserveChangesPlugin() {
+      var _this = this;
+
+      this.hot._registerTimeout(setTimeout(function () {
+        _this.hot.updateSettings({
+          observeChanges: true
+        });
+      }, 0));
+    }
+
+    /**
+     * Callback for `modifyRow` hook. Translates visual row index to the sorted row index.
+     *
+     * @private
+     * @param {Number} row Visual row index.
+     * @returns {Number} Physical row index.
+     */
+
+  }, {
+    key: 'onModifyRow',
+    value: function onModifyRow(row, source) {
+      if (this.blockPluginTranslation === false && source !== this.pluginName) {
+        var rowInMapper = this.rowsMapper.getValueByIndex(row);
+        row = rowInMapper === null ? row : rowInMapper;
+      }
+
+      return row;
+    }
+
+    /**
+     * Callback for `unmodifyRow` hook. Translates sorted row index to visual row index.
+     *
+     * @private
+     * @param {Number} row Physical row index.
+     * @returns {Number} Visual row index.
+     */
+
+  }, {
+    key: 'onUnmodifyRow',
+    value: function onUnmodifyRow(row, source) {
+      if (this.blockPluginTranslation === false && source !== this.pluginName) {
+        row = this.rowsMapper.getIndexByValue(row);
+      }
+
+      return row;
+    }
+
+    /**
+     * Callback for the `onAfterGetColHeader` hook. Adds column sorting CSS classes.
+     *
+     * @private
+     * @param {Number} column Visual column index.
+     * @param {Element} TH TH HTML element.
+     */
+
+  }, {
+    key: 'onAfterGetColHeader',
+    value: function onAfterGetColHeader(column, TH) {
+      var headerSpanElement = (0, _utils.getHeaderSpanElement)(TH);
+
+      if ((0, _utils.isFirstLevelColumnHeader)(column, TH) === false || headerSpanElement === null) {
+        return;
+      }
+
+      var physicalColumn = this.hot.toPhysicalColumn(column);
+      var pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
+      var showSortIndicator = pluginSettingsForColumn.indicator;
+      var headerActionEnabled = pluginSettingsForColumn.headerAction;
+
+      (0, _element.removeClass)(headerSpanElement, this.domHelper.getRemovedClasses(headerSpanElement));
+      (0, _element.addClass)(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
+    }
+
+    /**
+     * Overwriting base plugin's `onUpdateSettings` method. Please keep in mind that `onAfterUpdateSettings` isn't called
+     * for `updateSettings` in specific situations.
+     *
+     * @private
+     * @param {Object} newSettings New settings object.
+     */
+
+  }, {
+    key: 'onUpdateSettings',
+    value: function onUpdateSettings(newSettings) {
+      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'onUpdateSettings', this).call(this);
+
+      (0, _utils.warnIfPluginsHaveConflict)(newSettings.columnSorting);
+
+      this.columnMetaCache.clear();
+
+      if ((0, _mixed.isDefined)(newSettings.multiColumnSorting)) {
+        this.sortBySettings(newSettings.multiColumnSorting);
+      }
+    }
+
+    /**
+     * Callback for the `afterLoadData` hook.
+     *
+     * @private
+     * @param {Boolean} initialLoad flag that determines whether the data has been loaded during the initialization.
+     */
+
+  }, {
+    key: 'onAfterLoadData',
+    value: function onAfterLoadData(initialLoad) {
+      this.rowsMapper.clearMap();
+
+      if (initialLoad === true) {
+        // TODO: Workaround? It should be refactored / described.
+        if (this.hot.view) {
+          this.loadOrSortBySettings();
+        }
+      }
+    }
+
+    /**
+     * Callback for the `afterCreateRow` hook.
+     *
+     * @private
+     * @param {Number} index Visual index of the created row.
+     * @param {Number} amount Amount of created rows.
+     */
+
+  }, {
+    key: 'onAfterCreateRow',
+    value: function onAfterCreateRow(index, amount) {
+      this.rowsMapper.shiftItems(index, amount);
+    }
+
+    /**
+     * Callback for the `afterRemoveRow` hook.
+     *
+     * @private
+     * @param {Number} removedRows Visual indexes of the removed row.
+     * @param {Number} amount  Amount of removed rows.
+     */
+
+  }, {
+    key: 'onAfterRemoveRow',
+    value: function onAfterRemoveRow(removedRows, amount) {
+      this.rowsMapper.unshiftItems(removedRows, amount);
+    }
+
+    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. We clear the cache after action which reorganize sequence of columns.
+    // TODO: Remove test named: "should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)".
+    /**
+     * Callback for the `afterCreateCol` hook.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'onAfterCreateCol',
+    value: function onAfterCreateCol() {
+      this.columnMetaCache.clear();
+    }
+
+    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. We clear the cache after action which reorganize sequence of columns.
+    // TODO: Remove test named: "should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)".
+    /**
+     * Callback for the `afterRemoveCol` hook.
+     *
+     * @private
+     */
+
+  }, {
+    key: 'onAfterRemoveCol',
+    value: function onAfterRemoveCol() {
+      this.columnMetaCache.clear();
+    }
+
+    /**
+     * Indicates if clickable header was clicked.
+     *
+     * @private
+     * @param {MouseEvent} event The `mousedown` event.
+     * @param {Number} column Visual column index.
+     * @returns {Boolean}
+     */
+
+  }, {
+    key: 'wasClickableHeaderClicked',
+    value: function wasClickableHeaderClicked(event, column) {
+      var pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
+      var headerActionEnabled = pluginSettingsForColumn.headerAction;
+
+      return headerActionEnabled && event.realTarget.nodeName === 'SPAN';
+    }
+
+    /**
+     * Changes the behavior of selection / dragging.
+     *
+     * @private
+     * @param {MouseEvent} event The `mousedown` event.
+     * @param {CellCoords} coords Visual coordinates.
+     * @param {HTMLElement} TD
+     * @param {Object} blockCalculations
+     */
+
+  }, {
+    key: 'onBeforeOnCellMouseDown',
+    value: function onBeforeOnCellMouseDown(event, coords, TD, blockCalculations) {
+      // Click below the level of column headers
+      if (coords.row >= 0 || coords.col < 0) {
+        return;
+      }
+
+      if (this.wasClickableHeaderClicked(event, coords.col) && (0, _keyStateObserver.isPressedCtrlKey)()) {
+        blockCalculations.column = true;
+      }
+    }
+
+    /**
+     * Callback for the `onAfterOnCellMouseDown` hook.
+     *
+     * @private
+     * @param {Event} event Event which are provided by hook.
+     * @param {CellCoords} coords Visual coords of the selected cell.
+     */
+
+  }, {
+    key: 'onAfterOnCellMouseDown',
+    value: function onAfterOnCellMouseDown(event, coords) {
+      // Click below the level of column headers
+      if (coords.row >= 0 || coords.col < 0) {
+        return;
+      }
+
+      if (this.wasClickableHeaderClicked(event, coords.col)) {
+        if ((0, _keyStateObserver.isPressedCtrlKey)()) {
+          this.hot.deselectCell();
+          this.hot.selectColumns(coords.col);
+
+          this.sort(this.getNextSortConfig(coords.col, APPEND_COLUMN_CONFIG_STRATEGY));
+        } else {
+          this.sort(this.getColumnNextConfig(coords.col));
+        }
+      }
+    }
+
+    /**
+     * Destroys the plugin instance.
+     */
+
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.rowsMapper.destroy();
+      this.domHelper.destroy();
+      this.columnStatesManager.destroy();
+
+      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'destroy', this).call(this);
+    }
+  }]);
+
+  return MultiColumnSorting;
+}(_base2.default);
+
+(0, _plugins.registerPlugin)('multiColumnSorting', MultiColumnSorting);
+
+exports.default = MultiColumnSorting;
+
+/***/ }),
+/* 662 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = dateSort;
+
+var _moment = __webpack_require__(23);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _mixed = __webpack_require__(8);
+
+var _comparatorEngine = __webpack_require__(88);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Date sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
+ *
+ * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
+ * @param {Object} columnMeta Column meta object.
+ * @returns {Function} The compare function.
+ */
+function dateSort(sortOrder, columnMeta) {
+  return function (value, nextValue) {
+    var sortEmptyCells = columnMeta.multiColumnSorting.sortEmptyCells;
+
+
+    if (value === nextValue) {
+      return _comparatorEngine.DO_NOT_SWAP;
+    }
+
+    if ((0, _mixed.isEmpty)(value)) {
+      if ((0, _mixed.isEmpty)(nextValue)) {
+        return _comparatorEngine.DO_NOT_SWAP;
+      }
+
+      // Just fist value is empty and `sortEmptyCells` option was set
+      if (sortEmptyCells) {
+        return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+      }
+
+      return _comparatorEngine.FIRST_AFTER_SECOND;
+    }
+
+    if ((0, _mixed.isEmpty)(nextValue)) {
+      // Just second value is empty and `sortEmptyCells` option was set
+      if (sortEmptyCells) {
+        return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+      }
+
+      return _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    var dateFormat = columnMeta.dateFormat;
+    var firstDate = (0, _moment2.default)(value, dateFormat);
+    var nextDate = (0, _moment2.default)(nextValue, dateFormat);
+
+    if (!firstDate.isValid()) {
+      return _comparatorEngine.FIRST_AFTER_SECOND;
+    }
+
+    if (!nextDate.isValid()) {
+      return _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    if (nextDate.isAfter(firstDate)) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+    }
+
+    if (nextDate.isBefore(firstDate)) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    return _comparatorEngine.DO_NOT_SWAP;
+  };
+}
+
+/***/ }),
+/* 663 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = defaultSort;
+
+var _mixed = __webpack_require__(8);
+
+var _comparatorEngine = __webpack_require__(88);
+
+/**
+ * Default sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
+ *
+ * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
+ * @param {Object} columnMeta Column meta object.
+ * @returns {Function} The compare function.
+ */
+function defaultSort(sortOrder, columnMeta) {
+  return function (value, nextValue) {
+    var sortEmptyCells = columnMeta.multiColumnSorting.sortEmptyCells;
+
+
+    if (typeof value === 'string') {
+      value = value.toLowerCase();
+    }
+
+    if (typeof nextValue === 'string') {
+      nextValue = nextValue.toLowerCase();
+    }
+
+    if (value === nextValue) {
+      return _comparatorEngine.DO_NOT_SWAP;
+    }
+
+    if ((0, _mixed.isEmpty)(value)) {
+      if ((0, _mixed.isEmpty)(nextValue)) {
+        return _comparatorEngine.DO_NOT_SWAP;
+      }
+
+      // Just fist value is empty and `sortEmptyCells` option was set
+      if (sortEmptyCells) {
+        return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+      }
+
+      return _comparatorEngine.FIRST_AFTER_SECOND;
+    }
+
+    if ((0, _mixed.isEmpty)(nextValue)) {
+      // Just second value is empty and `sortEmptyCells` option was set
+      if (sortEmptyCells) {
+        return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+      }
+
+      return _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    if (isNaN(value) && !isNaN(nextValue)) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+    } else if (!isNaN(value) && isNaN(nextValue)) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+    } else if (!(isNaN(value) || isNaN(nextValue))) {
+      value = parseFloat(value);
+      nextValue = parseFloat(nextValue);
+    }
+
+    if (value < nextValue) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+    }
+
+    if (value > nextValue) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    return _comparatorEngine.DO_NOT_SWAP;
+  };
+}
+
+/***/ }),
+/* 664 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = numericSort;
+
+var _mixed = __webpack_require__(8);
+
+var _comparatorEngine = __webpack_require__(88);
+
+/**
+ * Numeric sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
+ *
+ * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
+ * @param {Object} columnMeta Column meta object.
+ * @returns {Function} The compare function.
+ */
+function numericSort(sortOrder, columnMeta) {
+  return function (value, nextValue) {
+    var parsedFirstValue = parseFloat(value);
+    var parsedSecondValue = parseFloat(nextValue);
+    var sortEmptyCells = columnMeta.multiColumnSorting.sortEmptyCells;
+
+    // Watch out when changing this part of code! Check below returns 0 (as expected) when comparing empty string, null, undefined
+
+    if (parsedFirstValue === parsedSecondValue || isNaN(parsedFirstValue) && isNaN(parsedSecondValue)) {
+      return _comparatorEngine.DO_NOT_SWAP;
+    }
+
+    if (sortEmptyCells) {
+      if ((0, _mixed.isEmpty)(value)) {
+        return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+      }
+
+      if ((0, _mixed.isEmpty)(nextValue)) {
+        return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+      }
+    }
+
+    if (isNaN(parsedFirstValue)) {
+      return _comparatorEngine.FIRST_AFTER_SECOND;
+    }
+
+    if (isNaN(parsedSecondValue)) {
+      return _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    if (parsedFirstValue < parsedSecondValue) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
+    } else if (parsedFirstValue > parsedSecondValue) {
+      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
+    }
+
+    return _comparatorEngine.DO_NOT_SWAP;
+  };
+}
+
+/***/ }),
+/* 665 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ColumnStatesManager = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _object = __webpack_require__(1);
+
+var _array = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'headerAction', 'compareFunctionFactory'];
+
+var SORT_EMPTY_CELLS_DEFAULT = false;
+var SHOW_SORT_INDICATOR_DEFAULT = true;
+var HEADER_ACTION_DEFAULT = true;
+
+/**
+ * Store and manages states of sorted columns.
+ *
+ * @class ColumnStatesManager
+ * @plugin MultiColumnSorting
+ */
+// eslint-disable-next-line import/prefer-default-export
+
+var ColumnStatesManager = exports.ColumnStatesManager = function () {
+  function ColumnStatesManager() {
+    _classCallCheck(this, ColumnStatesManager);
+
+    /**
+     * Queue of sort states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
+     *
+     * @type {Array}
+     */
+    this.sortedColumnsStates = [];
+    /**
+     * Determines whether we should sort empty cells.
+     *
+     * @type {Boolean}
+     */
+    this.sortEmptyCells = SORT_EMPTY_CELLS_DEFAULT;
+    /**
+     * Determines whether indicator should be visible (for sorted columns).
+     *
+     * @type {Boolean}
+     */
+    this.indicator = SHOW_SORT_INDICATOR_DEFAULT;
+    /**
+     * Determines whether click on the header perform sorting.
+     *
+     * @type {Boolean}
+     */
+    this.headerAction = HEADER_ACTION_DEFAULT;
+    /**
+     * Determines compare function factory. Method get as parameters `sortOder` and `columnMeta` and return compare function.
+     */
+    this.compareFunctionFactory = void 0;
+  }
+
+  /**
+   * Update column properties which affect the sorting result.
+   *
+   * **Note**: All column properties can be overwritten by [columns](https://docs.handsontable.com/pro/Options.html#columns) option.
+   *
+   * @param {Object} allSortSettings Column sorting plugin's configuration object.
+   */
+
+
+  _createClass(ColumnStatesManager, [{
+    key: 'updateAllColumnsProperties',
+    value: function updateAllColumnsProperties(allSortSettings) {
+      var _this = this;
+
+      if (!(0, _object.isObject)(allSortSettings)) {
+        return;
+      }
+
+      (0, _object.objectEach)(allSortSettings, function (newValue, propertyName) {
+        if (inheritedColumnProperties.includes(propertyName)) {
+          _this[propertyName] = newValue;
+        }
+      });
+    }
+
+    /**
+     * Get all column properties which affect the sorting result.
+     *
+     * @returns {Object}
+     */
+
+  }, {
+    key: 'getAllColumnsProperties',
+    value: function getAllColumnsProperties() {
+      var columnProperties = {
+        sortEmptyCells: this.sortEmptyCells,
+        indicator: this.indicator,
+        headerAction: this.headerAction
+      };
+
+      if (typeof this.compareFunctionFactory !== 'undefined') {
+        columnProperties.compareFunctionFactory = this.compareFunctionFactory;
+      }
+
+      return columnProperties;
+    }
+
+    /**
+     * Get index of first sorted column.
+     *
+     * @returns {Number|undefined}
+     */
+
+  }, {
+    key: 'getFirstSortedColumn',
+    value: function getFirstSortedColumn() {
+      var firstSortedColumn = void 0;
+
+      if (this.getNumberOfSortedColumns() > 0) {
+        firstSortedColumn = this.sortedColumnsStates[0].column;
+      }
+
+      return firstSortedColumn;
+    }
+
+    /**
+     * Get sort order of column.
+     *
+     * @param {Number} searchedColumn Physical column index.
+     * @returns {String|undefined} Sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
+     */
+
+  }, {
+    key: 'getSortOrderOfColumn',
+    value: function getSortOrderOfColumn(searchedColumn) {
+      var searchedState = this.sortedColumnsStates.find(function (_ref) {
+        var column = _ref.column;
+        return searchedColumn === column;
+      });
+      var sortOrder = void 0;
+
+      if ((0, _object.isObject)(searchedState)) {
+        sortOrder = searchedState.sortOrder;
+      }
+
+      return sortOrder;
+    }
+
+    /**
+     * Get list of sorted columns.
+     *
+     * @returns {Array}
+     */
+
+  }, {
+    key: 'getSortedColumns',
+    value: function getSortedColumns() {
+      return (0, _array.arrayMap)(this.sortedColumnsStates, function (_ref2) {
+        var column = _ref2.column;
+        return column;
+      });
+    }
+
+    /**
+     * Get order of particular column in the states queue.
+     *
+     * @param {Number} column Physical column index.
+     * @returns {Number}
+     */
+
+  }, {
+    key: 'getIndexOfColumnInSortQueue',
+    value: function getIndexOfColumnInSortQueue(column) {
+      return this.getSortedColumns().indexOf(column);
+    }
+
+    /**
+     * Get number of sorted columns.
+     *
+     * @returns {Number}
+     */
+
+  }, {
+    key: 'getNumberOfSortedColumns',
+    value: function getNumberOfSortedColumns() {
+      return this.sortedColumnsStates.length;
+    }
+
+    /**
+     * Get if list of sorted columns is empty.
+     *
+     * @returns {Boolean}
+     */
+
+  }, {
+    key: 'isListOfSortedColumnsEmpty',
+    value: function isListOfSortedColumnsEmpty() {
+      return this.getNumberOfSortedColumns() === 0;
+    }
+
+    /**
+     * Get if particular column is sorted.
+     *
+     * @param {Number} column Physical column index.
+     * @returns {Boolean}
+     */
+
+  }, {
+    key: 'isColumnSorted',
+    value: function isColumnSorted(column) {
+      return this.getSortedColumns().includes(column);
+    }
+
+    /**
+     * Get states for all sorted columns.
+     *
+     * @returns {Array}
+     */
+
+  }, {
+    key: 'getSortStates',
+    value: function getSortStates() {
+      return (0, _object.deepClone)(this.sortedColumnsStates);
+    }
+
+    /**
+     * Get sort state for particular column. Object contains `column` and `sortOrder` properties.
+     *
+     * **Note**: Please keep in mind that returned objects expose **physical** column index under the `column` key.
+     *
+     * @param {Number} column Physical column index.
+     * @returns {Object|undefined}
+     */
+
+  }, {
+    key: 'getColumnSortState',
+    value: function getColumnSortState(column) {
+      if (this.isColumnSorted(column)) {
+        return (0, _object.deepClone)(this.sortedColumnsStates[this.getIndexOfColumnInSortQueue(column)]);
+      }
+    }
+
+    /**
+     * Set all sorted columns states.
+     *
+     * @param {Array} sortStates
+     */
+
+  }, {
+    key: 'setSortStates',
+    value: function setSortStates(sortStates) {
+      this.sortedColumnsStates = sortStates;
+    }
+
+    /**
+     * Destroy the state manager.
+     */
+
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.sortedColumnsStates.length = 0;
+      this.sortedColumnsStates = null;
+    }
+  }]);
+
+  return ColumnStatesManager;
+}();
+
+/***/ }),
+/* 666 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.DomHelper = exports.HEADER_ACTION_CLASS = exports.HEADER_SORT_CLASS = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* eslint-disable import/prefer-default-export */
+
+var _utils = __webpack_require__(471);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var HEADER_CLASS_ASC_SORT = 'ascending';
+var HEADER_CLASS_DESC_SORT = 'descending';
+var HEADER_CLASS_INDICATOR_DISABLED = 'indicatorDisabled';
+var COLUMN_ORDER_PREFIX = 'sort';
+
+var HEADER_SORT_CLASS = exports.HEADER_SORT_CLASS = 'columnSorting';
+var HEADER_ACTION_CLASS = exports.HEADER_ACTION_CLASS = 'sortAction';
+
+var orderToCssClass = new Map([[_utils.ASC_SORT_STATE, HEADER_CLASS_ASC_SORT], [_utils.DESC_SORT_STATE, HEADER_CLASS_DESC_SORT]]);
+
+/**
+ * Helper for the column sorting plugin. Manages the added and removed classes to DOM elements basing on state of sorting.
+ *
+ * @class DomHelper
+ * @plugin MultiColumnSorting
+ */
+
+var DomHelper = exports.DomHelper = function () {
+  function DomHelper(columnStatesManager) {
+    _classCallCheck(this, DomHelper);
+
+    /**
+     * Instance of column states manager.
+     *
+     * @private
+     */
+    this.columnStatesManager = columnStatesManager;
+  }
+
+  /**
+   * Get CSS classes which should be added to particular column header.
+   *
+   * @param {Number} column Physical column index.
+   * @param {Boolean} showSortIndicator Indicates if indicator should be shown for the particular column.
+   * @param {Boolean} headerAction Indicates if header click to sort should be possible.
+   * @returns {Array} Array of CSS classes.
+   */
+
+
+  _createClass(DomHelper, [{
+    key: 'getAddedClasses',
+    value: function getAddedClasses(column, showSortIndicator, headerAction) {
+      var cssClasses = [HEADER_SORT_CLASS];
+
+      if (headerAction) {
+        cssClasses.push(HEADER_ACTION_CLASS);
+      }
+
+      if (showSortIndicator === false) {
+        cssClasses.push(HEADER_CLASS_INDICATOR_DISABLED);
+      } else if (this.columnStatesManager.isColumnSorted(column)) {
+        var columnOrder = this.columnStatesManager.getSortOrderOfColumn(column);
+
+        cssClasses.push(orderToCssClass.get(columnOrder));
+
+        if (this.columnStatesManager.getNumberOfSortedColumns() > 1) {
+          cssClasses.push(COLUMN_ORDER_PREFIX + '-' + (this.columnStatesManager.getIndexOfColumnInSortQueue(column) + 1));
+        }
+      }
+
+      return cssClasses;
+    }
+
+    /**
+     * Get CSS classes which should be removed from column header.
+     *
+     * @param {HTMLElement} htmlElement
+     * @returns {Array} Array of CSS classes.
+     */
+
+  }, {
+    key: 'getRemovedClasses',
+    value: function getRemovedClasses(htmlElement) {
+      var cssClasses = htmlElement.className.split(' ');
+      var sortSequenceRegExp = new RegExp('^' + COLUMN_ORDER_PREFIX + '-[0-9]{1,2}$');
+      var someCssClassesToRemove = cssClasses.filter(function (cssClass) {
+        return sortSequenceRegExp.test(cssClass);
+      });
+
+      return Array.from(orderToCssClass.values()).concat(someCssClassesToRemove, HEADER_ACTION_CLASS, HEADER_CLASS_INDICATOR_DISABLED, HEADER_SORT_CLASS);
+    }
+
+    /**
+     * Destroy the helper.
+     */
+
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.columnStatesManager = null;
+    }
+  }]);
+
+  return DomHelper;
+}();
+
+/***/ }),
+/* 667 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _arrayMapper = __webpack_require__(51);
+
+var _arrayMapper2 = _interopRequireDefault(_arrayMapper);
+
+var _object = __webpack_require__(1);
+
+var _number = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * @class RowsMapper
+ * @plugin MultiColumnSorting
+ */
+var RowsMapper = function () {
+  function RowsMapper(multiColumnSorting) {
+    _classCallCheck(this, RowsMapper);
+
+    /**
+     * Instance of MultiColumnSorting plugin.
+     *
+     * @type {MultiColumnSorting}
+     */
+    this.multiColumnSorting = multiColumnSorting;
+  }
+
+  /**
+   * Reset current map array and create new one.
+   *
+   * @param {Number} [length] Custom generated map length.
+   */
+
+
+  _createClass(RowsMapper, [{
+    key: 'createMap',
+    value: function createMap(length) {
+      var _this = this;
+
+      var originLength = length === void 0 ? this._arrayMap.length : length;
+
+      this._arrayMap.length = 0;
+
+      (0, _number.rangeEach)(originLength - 1, function (itemIndex) {
+        _this._arrayMap[itemIndex] = itemIndex;
+      });
+    }
+
+    /**
+     * Destroy class.
+     */
+
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this._arrayMap = null;
+    }
+  }]);
+
+  return RowsMapper;
+}();
+
+(0, _object.mixin)(RowsMapper, _arrayMapper2.default);
+
+exports.default = RowsMapper;
+
+/***/ }),
+/* 668 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 669 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94814,7 +97328,7 @@ var _console = __webpack_require__(20);
 
 var _number = __webpack_require__(4);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -94828,31 +97342,31 @@ var _constants = __webpack_require__(3);
 
 var constants = _interopRequireWildcard(_constants);
 
-var _condition = __webpack_require__(659);
+var _condition = __webpack_require__(670);
 
 var _condition2 = _interopRequireDefault(_condition);
 
-var _operators = __webpack_require__(679);
+var _operators = __webpack_require__(690);
 
 var _operators2 = _interopRequireDefault(_operators);
 
-var _value = __webpack_require__(681);
+var _value = __webpack_require__(692);
 
 var _value2 = _interopRequireDefault(_value);
 
-var _actionBar = __webpack_require__(684);
+var _actionBar = __webpack_require__(695);
 
 var _actionBar2 = _interopRequireDefault(_actionBar);
 
-var _conditionCollection = __webpack_require__(479);
+var _conditionCollection = __webpack_require__(480);
 
 var _conditionCollection2 = _interopRequireDefault(_conditionCollection);
 
-var _dataFilter = __webpack_require__(480);
+var _dataFilter = __webpack_require__(481);
 
 var _dataFilter2 = _interopRequireDefault(_dataFilter);
 
-var _conditionUpdateObserver = __webpack_require__(685);
+var _conditionUpdateObserver = __webpack_require__(696);
 
 var _conditionUpdateObserver2 = _interopRequireDefault(_conditionUpdateObserver);
 
@@ -94860,7 +97374,7 @@ var _utils = __webpack_require__(66);
 
 var _constants2 = __webpack_require__(164);
 
-__webpack_require__(686);
+__webpack_require__(697);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -95908,7 +98422,7 @@ var Filters = function (_BasePlugin) {
 exports.default = Filters;
 
 /***/ }),
-/* 659 */
+/* 670 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95934,7 +98448,7 @@ var _constants = __webpack_require__(3);
 
 var C = _interopRequireWildcard(_constants);
 
-var _base = __webpack_require__(88);
+var _base = __webpack_require__(89);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -95946,7 +98460,7 @@ var _input = __webpack_require__(166);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _select = __webpack_require__(678);
+var _select = __webpack_require__(689);
 
 var _select2 = _interopRequireDefault(_select);
 
@@ -96271,7 +98785,7 @@ var ConditionComponent = function (_BaseComponent) {
 exports.default = ConditionComponent;
 
 /***/ }),
-/* 660 */
+/* 671 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96326,7 +98840,7 @@ var stateSaver = (_stateSaver = {}, _defineProperty(_stateSaver, PROP_PREFIX, {}
 exports.default = stateSaver;
 
 /***/ }),
-/* 661 */
+/* 672 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96357,7 +98871,7 @@ function condition() {
 });
 
 /***/ }),
-/* 662 */
+/* 673 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96373,7 +98887,7 @@ var C = _interopRequireWildcard(_constants);
 
 var _conditionRegisterer = __webpack_require__(11);
 
-var _empty = __webpack_require__(471);
+var _empty = __webpack_require__(472);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -96390,7 +98904,7 @@ function condition(dataRow, inputValues) {
 });
 
 /***/ }),
-/* 663 */
+/* 674 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96406,7 +98920,7 @@ var C = _interopRequireWildcard(_constants);
 
 var _conditionRegisterer = __webpack_require__(11);
 
-var _equal = __webpack_require__(472);
+var _equal = __webpack_require__(473);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -96423,7 +98937,7 @@ function condition(dataRow, inputValues) {
 });
 
 /***/ }),
-/* 664 */
+/* 675 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96466,7 +98980,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 665 */
+/* 676 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96509,7 +99023,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 666 */
+/* 677 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96552,7 +99066,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 667 */
+/* 678 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96595,7 +99109,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 668 */
+/* 679 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96611,7 +99125,7 @@ var C = _interopRequireWildcard(_constants);
 
 var _conditionRegisterer = __webpack_require__(11);
 
-var _between = __webpack_require__(473);
+var _between = __webpack_require__(474);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -96628,7 +99142,7 @@ function condition(dataRow, inputValues) {
 });
 
 /***/ }),
-/* 669 */
+/* 680 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96667,7 +99181,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 670 */
+/* 681 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96706,7 +99220,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 671 */
+/* 682 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96722,7 +99236,7 @@ var C = _interopRequireWildcard(_constants);
 
 var _conditionRegisterer = __webpack_require__(11);
 
-var _contains = __webpack_require__(476);
+var _contains = __webpack_require__(477);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -96739,7 +99253,7 @@ function condition(dataRow, inputValues) {
 });
 
 /***/ }),
-/* 672 */
+/* 683 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96781,7 +99295,7 @@ function condition(dataRow) {
 });
 
 /***/ }),
-/* 673 */
+/* 684 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96823,7 +99337,7 @@ function condition(dataRow) {
 });
 
 /***/ }),
-/* 674 */
+/* 685 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96865,7 +99379,7 @@ function condition(dataRow) {
 });
 
 /***/ }),
-/* 675 */
+/* 686 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96905,7 +99419,7 @@ function condition(dataRow, _ref) {
 });
 
 /***/ }),
-/* 676 */
+/* 687 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96928,7 +99442,7 @@ function condition() {
 });
 
 /***/ }),
-/* 677 */
+/* 688 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96951,7 +99465,7 @@ function condition() {
 });
 
 /***/ }),
-/* 678 */
+/* 689 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97256,7 +99770,7 @@ var SelectUI = function (_BaseUI) {
 exports.default = SelectUI;
 
 /***/ }),
-/* 679 */
+/* 690 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97274,7 +99788,7 @@ var _array = __webpack_require__(0);
 
 var _templateLiteralTag = __webpack_require__(26);
 
-var _base = __webpack_require__(88);
+var _base = __webpack_require__(89);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -97282,11 +99796,11 @@ var _logicalOperationRegisterer = __webpack_require__(67);
 
 var _conjunction = __webpack_require__(165);
 
-var _disjunction = __webpack_require__(477);
+var _disjunction = __webpack_require__(478);
 
-var _disjunctionWithExtraCondition = __webpack_require__(478);
+var _disjunctionWithExtraCondition = __webpack_require__(479);
 
-var _radioInput = __webpack_require__(680);
+var _radioInput = __webpack_require__(691);
 
 var _radioInput2 = _interopRequireDefault(_radioInput);
 
@@ -97505,7 +100019,7 @@ var OperatorsComponent = function (_BaseComponent) {
 exports.default = OperatorsComponent;
 
 /***/ }),
-/* 680 */
+/* 691 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97647,7 +100161,7 @@ var RadioInputUI = function (_BaseUI) {
 exports.default = RadioInputUI;
 
 /***/ }),
-/* 681 */
+/* 692 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97675,11 +100189,11 @@ var C = _interopRequireWildcard(_constants);
 
 var _utils = __webpack_require__(66);
 
-var _base = __webpack_require__(88);
+var _base = __webpack_require__(89);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _multipleSelect = __webpack_require__(682);
+var _multipleSelect = __webpack_require__(693);
 
 var _multipleSelect2 = _interopRequireDefault(_multipleSelect);
 
@@ -97941,7 +100455,7 @@ var ValueComponent = function (_BaseComponent) {
 exports.default = ValueComponent;
 
 /***/ }),
-/* 682 */
+/* 693 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97977,7 +100491,7 @@ var _input = __webpack_require__(166);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _link = __webpack_require__(683);
+var _link = __webpack_require__(694);
 
 var _link2 = _interopRequireDefault(_link);
 
@@ -98180,7 +100694,10 @@ var MultipleSelectUI = function (_BaseUI) {
           },
           autoWrapCol: true,
           height: 110,
-          stretchH: 'last',
+          // Workaround for #151.
+          colWidths: function colWidths() {
+            return _this3.itemsBox.container.scrollWidth - (0, _element.getScrollbarWidth)();
+          },
           copyPaste: false,
           disableVisualSelection: 'area',
           fillHandle: false,
@@ -98392,7 +100909,7 @@ function itemsToValue(availableItems) {
 }
 
 /***/ }),
-/* 683 */
+/* 694 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98483,7 +101000,7 @@ var LinkUI = function (_BaseUI) {
 exports.default = LinkUI;
 
 /***/ }),
-/* 684 */
+/* 695 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98501,7 +101018,7 @@ var _constants = __webpack_require__(3);
 
 var C = _interopRequireWildcard(_constants);
 
-var _base = __webpack_require__(88);
+var _base = __webpack_require__(89);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -98657,7 +101174,7 @@ var ActionBarComponent = function (_BaseComponent) {
 exports.default = ActionBarComponent;
 
 /***/ }),
-/* 685 */
+/* 696 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98677,11 +101194,11 @@ var _localHooks = __webpack_require__(21);
 
 var _localHooks2 = _interopRequireDefault(_localHooks);
 
-var _conditionCollection = __webpack_require__(479);
+var _conditionCollection = __webpack_require__(480);
 
 var _conditionCollection2 = _interopRequireDefault(_conditionCollection);
 
-var _dataFilter = __webpack_require__(480);
+var _dataFilter = __webpack_require__(481);
 
 var _dataFilter2 = _interopRequireDefault(_dataFilter);
 
@@ -98941,13 +101458,13 @@ var ConditionUpdateObserver = function () {
 exports.default = ConditionUpdateObserver;
 
 /***/ }),
-/* 686 */
+/* 697 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 687 */
+/* 698 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98969,7 +101486,7 @@ var _array = __webpack_require__(0);
 
 var _object = __webpack_require__(1);
 
-var _eventManager = __webpack_require__(10);
+var _eventManager = __webpack_require__(9);
 
 var _eventManager2 = _interopRequireDefault(_eventManager);
 
@@ -98977,15 +101494,15 @@ var _plugins = __webpack_require__(5);
 
 var _utils = __webpack_require__(44);
 
-var _sheet = __webpack_require__(688);
+var _sheet = __webpack_require__(699);
 
 var _sheet2 = _interopRequireDefault(_sheet);
 
-var _dataProvider = __webpack_require__(697);
+var _dataProvider = __webpack_require__(708);
 
 var _dataProvider2 = _interopRequireDefault(_dataProvider);
 
-var _undoRedoSnapshot = __webpack_require__(698);
+var _undoRedoSnapshot = __webpack_require__(709);
 
 var _undoRedoSnapshot2 = _interopRequireDefault(_undoRedoSnapshot);
 
@@ -99557,7 +102074,7 @@ var Formulas = function (_BasePlugin) {
 exports.default = Formulas;
 
 /***/ }),
-/* 688 */
+/* 699 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99583,17 +102100,17 @@ var _value = __webpack_require__(45);
 
 var _value2 = _interopRequireDefault(_value);
 
-var _reference = __webpack_require__(689);
+var _reference = __webpack_require__(700);
 
 var _reference2 = _interopRequireDefault(_reference);
 
 var _utils = __webpack_require__(44);
 
-var _matrix = __webpack_require__(690);
+var _matrix = __webpack_require__(701);
 
 var _matrix2 = _interopRequireDefault(_matrix);
 
-var _alterManager = __webpack_require__(691);
+var _alterManager = __webpack_require__(702);
 
 var _alterManager2 = _interopRequireDefault(_alterManager);
 
@@ -100018,7 +102535,7 @@ var Sheet = function () {
 exports.default = Sheet;
 
 /***/ }),
-/* 689 */
+/* 700 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100030,7 +102547,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _hotFormulaParser = __webpack_require__(69);
 
-var _base = __webpack_require__(481);
+var _base = __webpack_require__(482);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -100077,7 +102594,7 @@ var CellReference = function (_BaseCell) {
 exports.default = CellReference;
 
 /***/ }),
-/* 690 */
+/* 701 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100333,7 +102850,7 @@ var Matrix = function () {
 exports.default = Matrix;
 
 /***/ }),
-/* 691 */
+/* 702 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100351,23 +102868,23 @@ var _localHooks = __webpack_require__(21);
 
 var _localHooks2 = _interopRequireDefault(_localHooks);
 
-var _columnSorting = __webpack_require__(692);
+var _columnSorting = __webpack_require__(703);
 
 var columnSorting = _interopRequireWildcard(_columnSorting);
 
-var _insertColumn = __webpack_require__(693);
+var _insertColumn = __webpack_require__(704);
 
 var insertColumn = _interopRequireWildcard(_insertColumn);
 
-var _insertRow = __webpack_require__(694);
+var _insertRow = __webpack_require__(705);
 
 var insertRow = _interopRequireWildcard(_insertRow);
 
-var _removeColumn = __webpack_require__(695);
+var _removeColumn = __webpack_require__(706);
 
 var removeColumn = _interopRequireWildcard(_removeColumn);
 
-var _removeRow = __webpack_require__(696);
+var _removeRow = __webpack_require__(707);
 
 var removeRow = _interopRequireWildcard(_removeRow);
 
@@ -100507,7 +103024,7 @@ function registerOperation(name, descriptor) {
 }
 
 /***/ }),
-/* 692 */
+/* 703 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100591,7 +103108,7 @@ function operate() {
 }
 
 /***/ }),
-/* 693 */
+/* 704 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100696,7 +103213,7 @@ function customTranslateModifier(cell, axis, delta, startFromIndex) {
 }
 
 /***/ }),
-/* 694 */
+/* 705 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100801,7 +103318,7 @@ function customTranslateModifier(cell, axis, delta, startFromIndex) {
 }
 
 /***/ }),
-/* 695 */
+/* 706 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100958,7 +103475,7 @@ function customTranslateModifier(cell, axis, delta, startFromIndex) {
 }
 
 /***/ }),
-/* 696 */
+/* 707 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101115,7 +103632,7 @@ function customTranslateModifier(cell, axis, delta, startFromIndex) {
 }
 
 /***/ }),
-/* 697 */
+/* 708 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101407,7 +103924,7 @@ var DataProvider = function () {
 exports.default = DataProvider;
 
 /***/ }),
-/* 698 */
+/* 709 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101419,7 +103936,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _array = __webpack_require__(0);
 
-var _stack = __webpack_require__(699);
+var _stack = __webpack_require__(710);
 
 var _stack2 = _interopRequireDefault(_stack);
 
@@ -101542,7 +104059,7 @@ var UndoRedoSnapshot = function () {
 exports.default = UndoRedoSnapshot;
 
 /***/ }),
-/* 699 */
+/* 710 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101642,7 +104159,7 @@ var Stack = function () {
 exports.default = Stack;
 
 /***/ }),
-/* 700 */
+/* 711 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101670,15 +104187,15 @@ var _plugins = __webpack_require__(5);
 
 var _utils = __webpack_require__(167);
 
-var _dateCalculator = __webpack_require__(701);
+var _dateCalculator = __webpack_require__(712);
 
 var _dateCalculator2 = _interopRequireDefault(_dateCalculator);
 
-var _ganttChartDataFeed = __webpack_require__(702);
+var _ganttChartDataFeed = __webpack_require__(713);
 
 var _ganttChartDataFeed2 = _interopRequireDefault(_ganttChartDataFeed);
 
-__webpack_require__(703);
+__webpack_require__(714);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -102148,7 +104665,8 @@ var GanttChart = function (_BasePlugin) {
         hiddenColumns: this.hot.getSettings().hiddenColumns ? this.hot.getSettings().hiddenColumns : true,
         nestedHeaders: [this.monthHeadersArray.slice(), this.weekHeadersArray.slice()],
         collapsibleColumns: this.hot.getSettings().collapsibleColumns ? this.hot.getSettings().collapsibleColumns : true,
-        columnSorting: false
+        columnSorting: false,
+        copyPaste: false
       };
 
       this.internalUpdateSettings = true;
@@ -102657,7 +105175,7 @@ var GanttChart = function (_BasePlugin) {
 exports.default = GanttChart;
 
 /***/ }),
-/* 701 */
+/* 712 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103425,7 +105943,7 @@ var DateCalculator = function () {
 exports.default = DateCalculator;
 
 /***/ }),
-/* 702 */
+/* 713 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103856,13 +106374,13 @@ var GanttChartDataFeed = function () {
 exports.default = GanttChartDataFeed;
 
 /***/ }),
-/* 703 */
+/* 714 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 704 */
+/* 715 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -104089,1775 +106607,7 @@ var HeaderTooltips = function (_BasePlugin) {
 exports.default = HeaderTooltips;
 
 /***/ }),
-/* 705 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _element = __webpack_require__(2);
-
-var _mixed = __webpack_require__(8);
-
-var _object = __webpack_require__(1);
-
-var _array = __webpack_require__(0);
-
-var _number = __webpack_require__(4);
-
-var _base = __webpack_require__(6);
-
-var _base2 = _interopRequireDefault(_base);
-
-var _plugins = __webpack_require__(5);
-
-var _mergeSort = __webpack_require__(464);
-
-var _mergeSort2 = _interopRequireDefault(_mergeSort);
-
-var _pluginHooks = __webpack_require__(17);
-
-var _pluginHooks2 = _interopRequireDefault(_pluginHooks);
-
-var _keyStateObserver = __webpack_require__(85);
-
-var _comparatorEngine = __webpack_require__(89);
-
-var _columnStatesManager = __webpack_require__(709);
-
-var _utils = __webpack_require__(482);
-
-var _domHelper = __webpack_require__(710);
-
-var _rowsMapper = __webpack_require__(711);
-
-var _rowsMapper2 = _interopRequireDefault(_rowsMapper);
-
-__webpack_require__(712);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-_pluginHooks2.default.getSingleton().register('beforeColumnSort');
-_pluginHooks2.default.getSingleton().register('afterColumnSort');
-
-var APPEND_COLUMN_CONFIG_STRATEGY = 'append';
-var REPLACE_COLUMN_CONFIG_STRATEGY = 'replace';
-
-/**
- * @plugin MultiColumnSorting
- * @pro
- *
- * @description
- * This plugin sorts the view by columns (but does not sort the data source!). To enable the plugin, set the
- * {@link Options#multiColumnSorting} property to the correct value (see the examples below).
- *
- * @example
- * ```js
- * // as boolean
- * multiColumnSorting: true
- *
- * // as an object with initial sort config (sort ascending for column at index 1 and then sort descending for column at index 0)
- * multiColumnSorting: {
- *   initialConfig: [{
- *     column: 1,
- *     sortOrder: 'asc'
- *   }, {
- *     column: 0,
- *     sortOrder: 'desc'
- *   }]
- * }
- *
- * // as an object which define specific sorting options for all columns
- * multiColumnSorting: {
- *   sortEmptyCells: true, // true = the table sorts empty cells, false = the table moves all empty cells to the end of the table (by default)
- *   indicator: true, // true = shows indicator for all columns (by default), false = don't show indicator for columns
- *   headerAction: true, // true = allow to click on the headers to sort (by default), false = turn off possibility to click on the headers to sort
- *   compareFunctionFactory: function(sortOrder, columnMeta) {
- *     return function(value, nextValue) {
- *       // Some value comparisons which will return -1, 0 or 1...
- *     }
- *   }
- * }
- *
- * // as an object passed to the `column` property, allows specifying a custom options for the desired column.
- * // please take a look at documentation of `column` property: https://docs.handsontable.com/pro/Options.html#columns
- * columns: [{
- *   multiColumnSorting: {
- *     indicator: false, // disable indicator for the first column,
- *     sortEmptyCells: true,
- *     headerAction: false, // clicks on the first column won't sort
- *     compareFunctionFactory: function(sortOrder, columnMeta) {
- *       return function(value, nextValue) {
- *         return 0; // Custom compare function for the first column (don't sort)
- *       }
- *     }
- *   }
- * }]```
- *
- * @dependencies ObserveChanges moment
- */
-
-var MultiColumnSorting = function (_BasePlugin) {
-  _inherits(MultiColumnSorting, _BasePlugin);
-
-  function MultiColumnSorting(hotInstance) {
-    _classCallCheck(this, MultiColumnSorting);
-
-    /**
-     * Instance of column state manager.
-     *
-     * @private
-     * @type {ColumnStatesManager}
-     */
-    var _this2 = _possibleConstructorReturn(this, (MultiColumnSorting.__proto__ || Object.getPrototypeOf(MultiColumnSorting)).call(this, hotInstance));
-
-    _this2.columnStatesManager = new _columnStatesManager.ColumnStatesManager();
-    /**
-     * Instance of DOM helper.
-     *
-     * @private
-     * @type {DomHelper}
-     */
-    _this2.domHelper = new _domHelper.DomHelper(_this2.columnStatesManager);
-    /**
-     * Object containing visual row indexes mapped to data source indexes.
-     *
-     * @private
-     * @type {RowsMapper}
-     */
-    _this2.rowsMapper = new _rowsMapper2.default(_this2);
-    /**
-     * It blocks the plugin translation, this flag is checked inside `onModifyRow` callback.
-     *
-     * @private
-     * @type {Boolean}
-     */
-    _this2.blockPluginTranslation = true;
-    /**
-     * Cached column properties from plugin like i.e. `indicator`, `headerAction`.
-     *
-     * @private
-     * @type {Map<number, Object>}
-     */
-    _this2.columnMetaCache = new Map();
-    return _this2;
-  }
-
-  /**
-   * Checks if the plugin is enabled in the Handsontable settings. This method is executed in {@link Hooks#beforeInit}
-   * hook and if it returns `true` than the {@link MultiColumnSorting#enablePlugin} method is called.
-   *
-   * @returns {Boolean}
-   */
-
-
-  _createClass(MultiColumnSorting, [{
-    key: 'isEnabled',
-    value: function isEnabled() {
-      return !!this.hot.getSettings().multiColumnSorting;
-    }
-
-    /**
-     * Enables the plugin functionality for this Handsontable instance.
-     */
-
-  }, {
-    key: 'enablePlugin',
-    value: function enablePlugin() {
-      var _this3 = this;
-
-      if (this.enabled) {
-        return;
-      }
-
-      (0, _utils.warnIfPluginsHaveConflict)(this.hot.getSettings().columnSorting);
-
-      if ((0, _mixed.isUndefined)(this.hot.getSettings().observeChanges)) {
-        this.enableObserveChangesPlugin();
-      }
-
-      this.addHook('afterTrimRow', function () {
-        return _this3.sortByPresetSortStates();
-      });
-      this.addHook('afterUntrimRow', function () {
-        return _this3.sortByPresetSortStates();
-      });
-      this.addHook('modifyRow', function (row, source) {
-        return _this3.onModifyRow(row, source);
-      });
-      this.addHook('unmodifyRow', function (row, source) {
-        return _this3.onUnmodifyRow(row, source);
-      });
-      this.addHook('afterGetColHeader', function (column, TH) {
-        return _this3.onAfterGetColHeader(column, TH);
-      });
-      this.addHook('beforeOnCellMouseDown', function (event, coords, TD, controller) {
-        return _this3.onBeforeOnCellMouseDown(event, coords, TD, controller);
-      });
-      this.addHook('afterOnCellMouseDown', function (event, target) {
-        return _this3.onAfterOnCellMouseDown(event, target);
-      });
-      this.addHook('afterCreateRow', function (index, amount) {
-        return _this3.onAfterCreateRow(index, amount);
-      });
-      this.addHook('afterRemoveRow', function (index, amount) {
-        return _this3.onAfterRemoveRow(index, amount);
-      });
-      this.addHook('afterInit', function () {
-        return _this3.loadOrSortBySettings();
-      });
-      this.addHook('afterLoadData', function (initialLoad) {
-        return _this3.onAfterLoadData(initialLoad);
-      });
-      this.addHook('afterCreateCol', function () {
-        return _this3.onAfterCreateCol();
-      });
-      this.addHook('afterRemoveCol', function () {
-        return _this3.onAfterRemoveCol();
-      });
-
-      // TODO: Workaround? It should be refactored / described.
-      if (this.hot.view) {
-        this.loadOrSortBySettings();
-      }
-
-      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'enablePlugin', this).call(this);
-    }
-
-    /**
-     * Disables the plugin functionality for this Handsontable instance.
-     */
-
-  }, {
-    key: 'disablePlugin',
-    value: function disablePlugin() {
-      var _this4 = this;
-
-      var clearColHeader = function clearColHeader(column, TH) {
-        var headerSpanElement = (0, _utils.getHeaderSpanElement)(TH);
-
-        if ((0, _utils.isFirstLevelColumnHeader)(column, TH) === false || headerSpanElement === null) {
-          return;
-        }
-
-        (0, _element.removeClass)(headerSpanElement, _this4.domHelper.getRemovedClasses(headerSpanElement));
-      };
-
-      // Changing header width and removing indicator.
-      this.hot.addHook('afterGetColHeader', clearColHeader);
-      this.hot.addHookOnce('afterRender', function () {
-        _this4.hot.removeHook('afterGetColHeader', clearColHeader);
-      });
-
-      this.rowsMapper.clearMap();
-
-      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'disablePlugin', this).call(this);
-    }
-
-    /**
-     * Sorts the table by chosen columns and orders.
-     *
-     * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
-     * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
-     * sort order (`asc` for ascending, `desc` for descending).
-     *
-     * **Note**: Please keep in mind that every call of `sort` function set an entirely new sort order. Previous sort configs aren't preserved.
-     *
-     * @example
-     * ```js
-     * // sort ascending first visual column
-     * hot.getPlugin('multiColumnSorting').sort({ column: 0, sortOrder: 'asc' });
-     *
-     * // sort first two visual column in the defined sequence
-     * hot.getPlugin('multiColumnSorting').sort([{
-     *   column: 1, sortOrder: 'asc'
-     * }, {
-     *   column: 0, sortOrder: 'desc'
-     * }]);
-     * ```
-     *
-     * @fires Hooks#beforeColumnSort
-     * @fires Hooks#afterColumnSort
-     */
-
-  }, {
-    key: 'sort',
-    value: function sort(sortConfig) {
-      var _this5 = this;
-
-      var currentSortConfig = this.getSortConfig();
-
-      // We always pass to hook configs defined as an array to `beforeColumnSort` and `afterColumnSort` hooks.
-      var destinationSortConfigs = (0, _utils.getFullSortConfiguration)(sortConfig);
-
-      var sortPossible = this.areValidSortConfigs(destinationSortConfigs);
-      var allowSort = this.hot.runHooks('beforeColumnSort', currentSortConfig, destinationSortConfigs, sortPossible);
-
-      if (sortPossible === false) {
-        (0, _utils.warnAboutNotValidatedConfig)();
-      }
-
-      if (allowSort === false) {
-        return;
-      }
-
-      if (sortPossible) {
-        var translateColumnToPhysical = function translateColumnToPhysical(_ref) {
-          var visualColumn = _ref.column,
-              restOfProperties = _objectWithoutProperties(_ref, ['column']);
-
-          return Object.assign({ column: _this5.hot.toPhysicalColumn(visualColumn) }, restOfProperties);
-        };
-        var internalSortStates = (0, _array.arrayMap)(destinationSortConfigs, function (columnSortConfig) {
-          return translateColumnToPhysical(columnSortConfig);
-        });
-
-        this.columnStatesManager.setSortStates(internalSortStates);
-        this.sortByPresetSortStates();
-        this.saveAllSortSettings();
-
-        this.hot.render();
-        this.hot.view.wt.draw(true); // TODO: Workaround? One test won't pass after removal. It should be refactored / described.
-      }
-
-      this.hot.runHooks('afterColumnSort', currentSortConfig, this.getSortConfig(), sortPossible);
-    }
-
-    /**
-     * Clear the sort performed on the table.
-     */
-
-  }, {
-    key: 'clearSort',
-    value: function clearSort() {
-      this.sort([]);
-    }
-
-    /**
-     * Checks if the table is sorted (any column have to be sorted).
-     *
-     * @returns {Boolean}
-     */
-
-  }, {
-    key: 'isSorted',
-    value: function isSorted() {
-      return this.enabled && !this.columnStatesManager.isListOfSortedColumnsEmpty();
-    }
-
-    /**
-     * Get sort configuration for particular column or for all sorted columns. Objects contain `column` and `sortOrder` properties.
-     *
-     * **Note**: Please keep in mind that returned objects expose **visual** column index under the `column` key. They are handled by the `sort` function.
-     *
-     * @param {Number} [column] Visual column index.
-     * @returns {undefined|Object|Array}
-     */
-
-  }, {
-    key: 'getSortConfig',
-    value: function getSortConfig(column) {
-      var _this6 = this;
-
-      var translateColumnToVisual = function translateColumnToVisual(_ref2) {
-        var physicalColumn = _ref2.column,
-            restOfProperties = _objectWithoutProperties(_ref2, ['column']);
-
-        return Object.assign({ column: _this6.hot.toVisualColumn(physicalColumn) }, restOfProperties);
-      };
-
-      if ((0, _mixed.isDefined)(column)) {
-        var physicalColumn = this.hot.toPhysicalColumn(column);
-        var columnSortState = this.columnStatesManager.getColumnSortState(physicalColumn);
-
-        if ((0, _mixed.isDefined)(columnSortState)) {
-          return translateColumnToVisual(columnSortState);
-        }
-
-        return;
-      }
-
-      var sortStates = this.columnStatesManager.getSortStates();
-
-      return (0, _array.arrayMap)(sortStates, function (columnState) {
-        return translateColumnToVisual(columnState);
-      });
-    }
-
-    /**
-     * @description
-     * Warn: Useful mainly for providing server side sort implementation (see in the example below). It doesn't sort the data set. It just sets sort configuration for all sorted columns.
-     *
-     * @example
-     * ```js
-     * beforeColumnSort: function(currentSortConfig, destinationSortConfigs) {
-     *   const columnSortPlugin = this.getPlugin('multiColumnSorting');
-     *
-     *   columnSortPlugin.setSortConfig(destinationSortConfigs);
-     *
-     *   // const newData = ... // Calculated data set, ie. from an AJAX call.
-     *
-     *   // this.loadData(newData); // Load new data set.
-     *
-     *   return false; // The blockade for the default sort action.
-     * }```
-     *
-     * @param {undefined|Object|Array} sortConfig Single column sort configuration or full sort configuration (for all sorted columns).
-     * The configuration object contains `column` and `sortOrder` properties. First of them contains visual column index, the second one contains
-     * sort order (`asc` for ascending, `desc` for descending).
-     */
-
-  }, {
-    key: 'setSortConfig',
-    value: function setSortConfig(sortConfig) {
-      var _this7 = this;
-
-      var destinationSortConfigs = (0, _utils.getFullSortConfiguration)(sortConfig);
-
-      if (this.areValidSortConfigs(destinationSortConfigs)) {
-        var translateColumnToPhysical = function translateColumnToPhysical(_ref3) {
-          var visualColumn = _ref3.column,
-              restOfProperties = _objectWithoutProperties(_ref3, ['column']);
-
-          return Object.assign({ column: _this7.hot.toPhysicalColumn(visualColumn) }, restOfProperties);
-        };
-        var internalSortStates = (0, _array.arrayMap)(destinationSortConfigs, function (columnSortConfig) {
-          return translateColumnToPhysical(columnSortConfig);
-        });
-
-        this.columnStatesManager.setSortStates(internalSortStates);
-      } else {
-        (0, _utils.warnAboutNotValidatedConfig)();
-      }
-    }
-
-    /**
-     * Get if sort configs are valid.
-     *
-     * @private
-     * @param {Array} sortConfigs Sort configuration for all sorted columns. Objects contain `column` and `sortOrder` properties.
-     * @returns {Boolean}
-     */
-
-  }, {
-    key: 'areValidSortConfigs',
-    value: function areValidSortConfigs(sortConfigs) {
-      if (Array.isArray(sortConfigs) === false) {
-        return false;
-      }
-
-      var sortedColumns = sortConfigs.map(function (_ref4) {
-        var column = _ref4.column;
-        return column;
-      });
-      var numberOfColumns = this.hot.countCols();
-      var onlyExistingVisualIndexes = sortedColumns.every(function (visualColumn) {
-        return visualColumn <= numberOfColumns && visualColumn >= 0;
-      });
-
-      return (0, _utils.areValidSortStates)(sortConfigs) && onlyExistingVisualIndexes; // We don't translate visual indexes to physical indexes.
-    }
-
-    /**
-     * Saves all sorting settings. Saving works only when {@link Options#persistentState} option is enabled.
-     *
-     * @private
-     * @fires Hooks#persistentStateSave
-     */
-
-  }, {
-    key: 'saveAllSortSettings',
-    value: function saveAllSortSettings() {
-      var allSortSettings = this.columnStatesManager.getAllColumnsProperties();
-
-      allSortSettings.initialConfig = this.columnStatesManager.getSortStates();
-
-      this.hot.runHooks('persistentStateSave', 'multiColumnSorting', allSortSettings);
-    }
-
-    /**
-     * Get all saved sorting settings. Loading works only when {@link Options#persistentState} option is enabled.
-     *
-     * @private
-     * @returns {Object} Previously saved sort settings.
-     *
-     * @fires Hooks#persistentStateLoad
-     */
-
-  }, {
-    key: 'getAllSavedSortSettings',
-    value: function getAllSavedSortSettings() {
-      var _this8 = this;
-
-      var storedAllSortSettings = {};
-
-      this.hot.runHooks('persistentStateLoad', 'multiColumnSorting', storedAllSortSettings);
-
-      var allSortSettings = storedAllSortSettings.value;
-      var translateColumnToVisual = function translateColumnToVisual(_ref5) {
-        var physicalColumn = _ref5.column,
-            restOfProperties = _objectWithoutProperties(_ref5, ['column']);
-
-        return Object.assign({ column: _this8.hot.toVisualColumn(physicalColumn) }, restOfProperties);
-      };
-
-      if ((0, _mixed.isDefined)(allSortSettings) && Array.isArray(allSortSettings.initialConfig)) {
-        allSortSettings.initialConfig = (0, _array.arrayMap)(allSortSettings.initialConfig, translateColumnToVisual);
-      }
-
-      return allSortSettings;
-    }
-
-    /**
-     * Get next sort configuration for particular column. Object contain `column` and `sortOrder` properties.
-     *
-     * **Note**: Please keep in mind that returned object expose **visual** column index under the `column` key.
-     *
-     * @private
-     * @param {Number} column Visual column index.
-     * @returns {undefined|Object}
-     */
-
-  }, {
-    key: 'getColumnNextConfig',
-    value: function getColumnNextConfig(column) {
-      var physicalColumn = this.hot.toPhysicalColumn(column);
-
-      if (this.columnStatesManager.isColumnSorted(physicalColumn)) {
-        var columnSortConfig = this.getSortConfig(column);
-        var sortOrder = (0, _utils.getNextSortOrder)(columnSortConfig.sortOrder);
-
-        if ((0, _mixed.isDefined)(sortOrder)) {
-          columnSortConfig.sortOrder = sortOrder;
-
-          return columnSortConfig;
-        }
-
-        return;
-      }
-
-      var nrOfColumns = this.hot.countCols();
-
-      if (Number.isInteger(column) && column >= 0 && column < nrOfColumns) {
-        return {
-          column: column,
-          sortOrder: (0, _utils.getNextSortOrder)()
-        };
-      }
-    }
-
-    /**
-     * Get sort configuration with "next order" for particular column.
-     *
-     * @private
-     * @param {Number} columnToChange Visual column index of column which order will be changed.
-     * @param {String} strategyId ID of strategy. Possible values: 'append' and 'replace'. The first one
-     * change order of particular column and change it's position in the sort queue to the last one. The second one
-     * just change order of particular column.
-     *
-     * **Note**: Please keep in mind that returned objects expose **visual** column index under the `column` key.
-     *
-     * @returns {Array}
-     */
-
-  }, {
-    key: 'getNextSortConfig',
-    value: function getNextSortConfig(columnToChange) {
-      var strategyId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : APPEND_COLUMN_CONFIG_STRATEGY;
-
-      var physicalColumn = this.hot.toPhysicalColumn(columnToChange);
-      var indexOfColumnToChange = this.columnStatesManager.getIndexOfColumnInSortQueue(physicalColumn);
-      var isColumnSorted = this.columnStatesManager.isColumnSorted(physicalColumn);
-      var currentSortConfig = this.getSortConfig();
-      var nextColumnConfig = this.getColumnNextConfig(columnToChange);
-
-      if (isColumnSorted) {
-        if ((0, _mixed.isUndefined)(nextColumnConfig)) {
-          return [].concat(_toConsumableArray(currentSortConfig.slice(0, indexOfColumnToChange)), _toConsumableArray(currentSortConfig.slice(indexOfColumnToChange + 1)));
-        }
-
-        if (strategyId === APPEND_COLUMN_CONFIG_STRATEGY) {
-          return [].concat(_toConsumableArray(currentSortConfig.slice(0, indexOfColumnToChange)), _toConsumableArray(currentSortConfig.slice(indexOfColumnToChange + 1)), [nextColumnConfig]);
-        } else if (strategyId === REPLACE_COLUMN_CONFIG_STRATEGY) {
-          return [].concat(_toConsumableArray(currentSortConfig.slice(0, indexOfColumnToChange)), [nextColumnConfig], _toConsumableArray(currentSortConfig.slice(indexOfColumnToChange + 1)));
-        }
-      }
-
-      if ((0, _mixed.isDefined)(nextColumnConfig)) {
-        return currentSortConfig.concat(nextColumnConfig);
-      }
-
-      return currentSortConfig;
-    }
-
-    /**
-     * Saves to cache part of plugins related properties, properly merged from cascade settings.
-     *
-     * @private
-     * @param {Number} column Visual column index.
-     * @returns {Object}
-     */
-    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. Using this function we don't count
-    // merged properties few times.
-
-  }, {
-    key: 'setMergedPluginSettings',
-    value: function setMergedPluginSettings(column) {
-      var physicalColumnIndex = this.hot.toPhysicalColumn(column);
-      var pluginMainSettings = this.hot.getSettings().multiColumnSorting;
-      var storedColumnProperties = this.columnStatesManager.getAllColumnsProperties();
-      var cellMeta = this.hot.getCellMeta(0, column);
-      var columnMeta = Object.getPrototypeOf(cellMeta);
-      var columnMetaHasPluginSettings = Object.hasOwnProperty.call(columnMeta, 'multiColumnSorting');
-      var pluginColumnConfig = columnMetaHasPluginSettings ? columnMeta.multiColumnSorting : {};
-
-      this.columnMetaCache.set(physicalColumnIndex, Object.assign(storedColumnProperties, pluginMainSettings, pluginColumnConfig));
-    }
-
-    /**
-     * Get copy of settings for first cell in the column.
-     *
-     * @private
-     * @param {Number} column Visual column index.
-     * @returns {Object}
-     */
-    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. Instead of getting properties from
-    // column meta we call this function.
-
-  }, {
-    key: 'getFirstCellSettings',
-    value: function getFirstCellSettings(column) {
-      var _this9 = this;
-
-      // TODO: Remove test named: "should not break the dataset when inserted new row" (#142).
-      var actualBlockTranslationFlag = this.blockPluginTranslation;
-
-      this.blockPluginTranslation = true;
-
-      if (this.columnMetaCache.size === 0) {
-        var numberOfColumns = this.hot.countCols();
-
-        (0, _number.rangeEach)(numberOfColumns, function (visualColumnIndex) {
-          return _this9.setMergedPluginSettings(visualColumnIndex);
-        });
-      }
-
-      var cellMeta = this.hot.getCellMeta(0, column);
-
-      this.blockPluginTranslation = actualBlockTranslationFlag;
-
-      var cellMetaCopy = Object.create(cellMeta);
-      cellMetaCopy.multiColumnSorting = this.columnMetaCache.get(this.hot.toPhysicalColumn(column));
-
-      return cellMetaCopy;
-    }
-
-    /**
-     * Get number of rows which should be sorted.
-     *
-     * @private
-     * @param {Number} numberOfRows Total number of displayed rows.
-     * @returns {Number}
-     */
-
-  }, {
-    key: 'getNumberOfRowsToSort',
-    value: function getNumberOfRowsToSort(numberOfRows) {
-      var settings = this.hot.getSettings();
-
-      // `maxRows` option doesn't take into account `minSpareRows` option in this case.
-      if (settings.maxRows <= numberOfRows) {
-        return settings.maxRows;
-      }
-
-      return numberOfRows - settings.minSpareRows;
-    }
-
-    /**
-     * Performs the sorting using a stable sort function basing on internal state of sorting.
-     *
-     * @private
-     */
-
-  }, {
-    key: 'sortByPresetSortStates',
-    value: function sortByPresetSortStates() {
-      var _this10 = this;
-
-      if (this.columnStatesManager.isListOfSortedColumnsEmpty()) {
-        this.rowsMapper.clearMap();
-
-        return;
-      }
-
-      var indexesWithData = [];
-      var sortedColumnsList = this.columnStatesManager.getSortedColumns();
-      var numberOfRows = this.hot.countRows();
-
-      // Function `getDataAtCell` won't call the indices translation inside `onModifyRow` callback - we check the `blockPluginTranslation`
-      // flag inside it (we just want to get data not already modified by `multiColumnSorting` plugin translation).
-      this.blockPluginTranslation = true;
-
-      var getDataForSortedColumns = function getDataForSortedColumns(visualRowIndex) {
-        return (0, _array.arrayMap)(sortedColumnsList, function (physicalColumn) {
-          return _this10.hot.getDataAtCell(visualRowIndex, _this10.hot.toVisualColumn(physicalColumn));
-        });
-      };
-
-      for (var visualRowIndex = 0; visualRowIndex < this.getNumberOfRowsToSort(numberOfRows); visualRowIndex += 1) {
-        indexesWithData.push([visualRowIndex].concat(getDataForSortedColumns(visualRowIndex)));
-      }
-
-      (0, _mergeSort2.default)(indexesWithData, (0, _comparatorEngine.mainSortComparator)((0, _array.arrayMap)(sortedColumnsList, function (physicalColumn) {
-        return _this10.columnStatesManager.getSortOrderOfColumn(physicalColumn);
-      }), (0, _array.arrayMap)(sortedColumnsList, function (physicalColumn) {
-        return _this10.getFirstCellSettings(_this10.hot.toVisualColumn(physicalColumn));
-      })));
-
-      // Append spareRows
-      for (var _visualRowIndex = indexesWithData.length; _visualRowIndex < numberOfRows; _visualRowIndex += 1) {
-        indexesWithData.push([_visualRowIndex].concat(getDataForSortedColumns(_visualRowIndex)));
-      }
-
-      // The blockade of the indices translation is released.
-      this.blockPluginTranslation = false;
-
-      // Save all indexes to arrayMapper, a completely new sequence is set by the plugin
-      this.rowsMapper._arrayMap = (0, _array.arrayMap)(indexesWithData, function (indexWithData) {
-        return indexWithData[0];
-      });
-    }
-
-    /**
-     * Load saved settings or sort by predefined plugin configuration.
-     *
-     * @private
-     */
-
-  }, {
-    key: 'loadOrSortBySettings',
-    value: function loadOrSortBySettings() {
-      this.columnMetaCache.clear();
-
-      var storedAllSortSettings = this.getAllSavedSortSettings();
-
-      if ((0, _object.isObject)(storedAllSortSettings)) {
-        this.sortBySettings(storedAllSortSettings);
-      } else {
-        var allSortSettings = this.hot.getSettings().multiColumnSorting;
-
-        this.sortBySettings(allSortSettings);
-      }
-    }
-
-    /**
-     * Sort the table by provided configuration.
-     *
-     * @private
-     * @param {Object} allSortSettings All sort config settings. Object may contain `initialConfig`, `indicator`,
-     * `sortEmptyCells`, `headerAction` and `compareFunctionFactory` properties.
-     */
-
-  }, {
-    key: 'sortBySettings',
-    value: function sortBySettings(allSortSettings) {
-      if ((0, _object.isObject)(allSortSettings)) {
-        this.columnStatesManager.updateAllColumnsProperties(allSortSettings);
-
-        var initialConfig = allSortSettings.initialConfig;
-
-        if (Array.isArray(initialConfig) || (0, _object.isObject)(initialConfig)) {
-          this.sort(initialConfig);
-        }
-      } else {
-        // Extra render for headers. Their width may change.
-        this.hot.render();
-      }
-    }
-
-    /**
-     * Enables the ObserveChanges plugin.
-     *
-     * @private
-     */
-
-  }, {
-    key: 'enableObserveChangesPlugin',
-    value: function enableObserveChangesPlugin() {
-      var _this = this;
-
-      this.hot._registerTimeout(setTimeout(function () {
-        _this.hot.updateSettings({
-          observeChanges: true
-        });
-      }, 0));
-    }
-
-    /**
-     * Callback for `modifyRow` hook. Translates visual row index to the sorted row index.
-     *
-     * @private
-     * @param {Number} row Visual row index.
-     * @returns {Number} Physical row index.
-     */
-
-  }, {
-    key: 'onModifyRow',
-    value: function onModifyRow(row, source) {
-      if (this.blockPluginTranslation === false && source !== this.pluginName) {
-        var rowInMapper = this.rowsMapper.getValueByIndex(row);
-        row = rowInMapper === null ? row : rowInMapper;
-      }
-
-      return row;
-    }
-
-    /**
-     * Callback for `unmodifyRow` hook. Translates sorted row index to visual row index.
-     *
-     * @private
-     * @param {Number} row Physical row index.
-     * @returns {Number} Visual row index.
-     */
-
-  }, {
-    key: 'onUnmodifyRow',
-    value: function onUnmodifyRow(row, source) {
-      if (this.blockPluginTranslation === false && source !== this.pluginName) {
-        row = this.rowsMapper.getIndexByValue(row);
-      }
-
-      return row;
-    }
-
-    /**
-     * Callback for the `onAfterGetColHeader` hook. Adds column sorting CSS classes.
-     *
-     * @private
-     * @param {Number} column Visual column index.
-     * @param {Element} TH TH HTML element.
-     */
-
-  }, {
-    key: 'onAfterGetColHeader',
-    value: function onAfterGetColHeader(column, TH) {
-      var headerSpanElement = (0, _utils.getHeaderSpanElement)(TH);
-
-      if ((0, _utils.isFirstLevelColumnHeader)(column, TH) === false || headerSpanElement === null) {
-        return;
-      }
-
-      var physicalColumn = this.hot.toPhysicalColumn(column);
-      var pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
-      var showSortIndicator = pluginSettingsForColumn.indicator;
-      var headerActionEnabled = pluginSettingsForColumn.headerAction;
-
-      (0, _element.removeClass)(headerSpanElement, this.domHelper.getRemovedClasses(headerSpanElement));
-      (0, _element.addClass)(headerSpanElement, this.domHelper.getAddedClasses(physicalColumn, showSortIndicator, headerActionEnabled));
-    }
-
-    /**
-     * Overwriting base plugin's `onUpdateSettings` method. Please keep in mind that `onAfterUpdateSettings` isn't called
-     * for `updateSettings` in specific situations.
-     *
-     * @private
-     * @param {Object} newSettings New settings object.
-     */
-
-  }, {
-    key: 'onUpdateSettings',
-    value: function onUpdateSettings(newSettings) {
-      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'onUpdateSettings', this).call(this);
-
-      (0, _utils.warnIfPluginsHaveConflict)(newSettings.columnSorting);
-
-      this.columnMetaCache.clear();
-
-      if ((0, _mixed.isDefined)(newSettings.multiColumnSorting)) {
-        this.sortBySettings(newSettings.multiColumnSorting);
-      }
-    }
-
-    /**
-     * Callback for the `afterLoadData` hook.
-     *
-     * @private
-     * @param {Boolean} initialLoad flag that determines whether the data has been loaded during the initialization.
-     */
-
-  }, {
-    key: 'onAfterLoadData',
-    value: function onAfterLoadData(initialLoad) {
-      this.rowsMapper.clearMap();
-
-      if (initialLoad === true) {
-        // TODO: Workaround? It should be refactored / described.
-        if (this.hot.view) {
-          this.loadOrSortBySettings();
-        }
-      }
-    }
-
-    /**
-     * Callback for the `afterCreateRow` hook.
-     *
-     * @private
-     * @param {Number} index Visual index of the created row.
-     * @param {Number} amount Amount of created rows.
-     */
-
-  }, {
-    key: 'onAfterCreateRow',
-    value: function onAfterCreateRow(index, amount) {
-      this.rowsMapper.shiftItems(index, amount);
-    }
-
-    /**
-     * Callback for the `afterRemoveRow` hook.
-     *
-     * @private
-     * @param {Number} removedRows Visual indexes of the removed row.
-     * @param {Number} amount  Amount of removed rows.
-     */
-
-  }, {
-    key: 'onAfterRemoveRow',
-    value: function onAfterRemoveRow(removedRows, amount) {
-      this.rowsMapper.unshiftItems(removedRows, amount);
-    }
-
-    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. We clear the cache after action which reorganize sequence of columns.
-    // TODO: Remove test named: "should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)".
-    /**
-     * Callback for the `afterCreateCol` hook.
-     *
-     * @private
-     */
-
-  }, {
-    key: 'onAfterCreateCol',
-    value: function onAfterCreateCol() {
-      this.columnMetaCache.clear();
-    }
-
-    // TODO: Workaround. Inheriting of non-primitive cell meta values doesn't work. We clear the cache after action which reorganize sequence of columns.
-    // TODO: Remove test named: "should add new columns properly when the `columnSorting` plugin is enabled (inheriting of non-primitive cell meta values)".
-    /**
-     * Callback for the `afterRemoveCol` hook.
-     *
-     * @private
-     */
-
-  }, {
-    key: 'onAfterRemoveCol',
-    value: function onAfterRemoveCol() {
-      this.columnMetaCache.clear();
-    }
-
-    /**
-     * Indicates if clickable header was clicked.
-     *
-     * @private
-     * @param {MouseEvent} event The `mousedown` event.
-     * @param {Number} column Visual column index.
-     * @returns {Boolean}
-     */
-
-  }, {
-    key: 'wasClickableHeaderClicked',
-    value: function wasClickableHeaderClicked(event, column) {
-      var pluginSettingsForColumn = this.getFirstCellSettings(column).multiColumnSorting;
-      var headerActionEnabled = pluginSettingsForColumn.headerAction;
-
-      return headerActionEnabled && event.realTarget.nodeName === 'SPAN';
-    }
-
-    /**
-     * Changes the behavior of selection / dragging.
-     *
-     * @private
-     * @param {MouseEvent} event The `mousedown` event.
-     * @param {CellCoords} coords Visual coordinates.
-     * @param {HTMLElement} TD
-     * @param {Object} blockCalculations
-     */
-
-  }, {
-    key: 'onBeforeOnCellMouseDown',
-    value: function onBeforeOnCellMouseDown(event, coords, TD, blockCalculations) {
-      // Click below the level of column headers
-      if (coords.row >= 0 || coords.col < 0) {
-        return;
-      }
-
-      if (this.wasClickableHeaderClicked(event, coords.col) && (0, _keyStateObserver.isPressedCtrlKey)()) {
-        blockCalculations.column = true;
-      }
-    }
-
-    /**
-     * Callback for the `onAfterOnCellMouseDown` hook.
-     *
-     * @private
-     * @param {Event} event Event which are provided by hook.
-     * @param {CellCoords} coords Visual coords of the selected cell.
-     */
-
-  }, {
-    key: 'onAfterOnCellMouseDown',
-    value: function onAfterOnCellMouseDown(event, coords) {
-      // Click below the level of column headers
-      if (coords.row >= 0 || coords.col < 0) {
-        return;
-      }
-
-      if (this.wasClickableHeaderClicked(event, coords.col)) {
-        if ((0, _keyStateObserver.isPressedCtrlKey)()) {
-          this.hot.deselectCell();
-          this.hot.selectColumns(coords.col);
-
-          this.sort(this.getNextSortConfig(coords.col, APPEND_COLUMN_CONFIG_STRATEGY));
-        } else {
-          this.sort(this.getColumnNextConfig(coords.col));
-        }
-      }
-    }
-
-    /**
-     * Destroys the plugin instance.
-     */
-
-  }, {
-    key: 'destroy',
-    value: function destroy() {
-      this.rowsMapper.destroy();
-      this.domHelper.destroy();
-      this.columnStatesManager.destroy();
-
-      _get(MultiColumnSorting.prototype.__proto__ || Object.getPrototypeOf(MultiColumnSorting.prototype), 'destroy', this).call(this);
-    }
-  }]);
-
-  return MultiColumnSorting;
-}(_base2.default);
-
-(0, _plugins.registerPlugin)('multiColumnSorting', MultiColumnSorting);
-
-exports.default = MultiColumnSorting;
-
-/***/ }),
-/* 706 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = dateSort;
-
-var _moment = __webpack_require__(23);
-
-var _moment2 = _interopRequireDefault(_moment);
-
-var _mixed = __webpack_require__(8);
-
-var _comparatorEngine = __webpack_require__(89);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Date sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
- *
- * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
- * @param {Object} columnMeta Column meta object.
- * @returns {Function} The compare function.
- */
-function dateSort(sortOrder, columnMeta) {
-  return function (value, nextValue) {
-    var sortEmptyCells = columnMeta.multiColumnSorting.sortEmptyCells;
-
-
-    if (value === nextValue) {
-      return _comparatorEngine.DO_NOT_SWAP;
-    }
-
-    if ((0, _mixed.isEmpty)(value)) {
-      if ((0, _mixed.isEmpty)(nextValue)) {
-        return _comparatorEngine.DO_NOT_SWAP;
-      }
-
-      // Just fist value is empty and `sortEmptyCells` option was set
-      if (sortEmptyCells) {
-        return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-      }
-
-      return _comparatorEngine.FIRST_AFTER_SECOND;
-    }
-
-    if ((0, _mixed.isEmpty)(nextValue)) {
-      // Just second value is empty and `sortEmptyCells` option was set
-      if (sortEmptyCells) {
-        return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-      }
-
-      return _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    var dateFormat = columnMeta.dateFormat;
-    var firstDate = (0, _moment2.default)(value, dateFormat);
-    var nextDate = (0, _moment2.default)(nextValue, dateFormat);
-
-    if (!firstDate.isValid()) {
-      return _comparatorEngine.FIRST_AFTER_SECOND;
-    }
-
-    if (!nextDate.isValid()) {
-      return _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    if (nextDate.isAfter(firstDate)) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-    }
-
-    if (nextDate.isBefore(firstDate)) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    return _comparatorEngine.DO_NOT_SWAP;
-  };
-}
-
-/***/ }),
-/* 707 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = defaultSort;
-
-var _mixed = __webpack_require__(8);
-
-var _comparatorEngine = __webpack_require__(89);
-
-/**
- * Default sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
- *
- * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
- * @param {Object} columnMeta Column meta object.
- * @returns {Function} The compare function.
- */
-function defaultSort(sortOrder, columnMeta) {
-  return function (value, nextValue) {
-    var sortEmptyCells = columnMeta.multiColumnSorting.sortEmptyCells;
-
-
-    if (typeof value === 'string') {
-      value = value.toLowerCase();
-    }
-
-    if (typeof nextValue === 'string') {
-      nextValue = nextValue.toLowerCase();
-    }
-
-    if (value === nextValue) {
-      return _comparatorEngine.DO_NOT_SWAP;
-    }
-
-    if ((0, _mixed.isEmpty)(value)) {
-      if ((0, _mixed.isEmpty)(nextValue)) {
-        return _comparatorEngine.DO_NOT_SWAP;
-      }
-
-      // Just fist value is empty and `sortEmptyCells` option was set
-      if (sortEmptyCells) {
-        return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-      }
-
-      return _comparatorEngine.FIRST_AFTER_SECOND;
-    }
-
-    if ((0, _mixed.isEmpty)(nextValue)) {
-      // Just second value is empty and `sortEmptyCells` option was set
-      if (sortEmptyCells) {
-        return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-      }
-
-      return _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    if (isNaN(value) && !isNaN(nextValue)) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-    } else if (!isNaN(value) && isNaN(nextValue)) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-    } else if (!(isNaN(value) || isNaN(nextValue))) {
-      value = parseFloat(value);
-      nextValue = parseFloat(nextValue);
-    }
-
-    if (value < nextValue) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-    }
-
-    if (value > nextValue) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    return _comparatorEngine.DO_NOT_SWAP;
-  };
-}
-
-/***/ }),
-/* 708 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = numericSort;
-
-var _mixed = __webpack_require__(8);
-
-var _comparatorEngine = __webpack_require__(89);
-
-/**
- * Numeric sorting compare function factory. Method get as parameters `sortOrder` and `columnMeta` and return compare function.
- *
- * @param {String} sortOrder Sort order (`asc` for ascending, `desc` for descending).
- * @param {Object} columnMeta Column meta object.
- * @returns {Function} The compare function.
- */
-function numericSort(sortOrder, columnMeta) {
-  return function (value, nextValue) {
-    var parsedFirstValue = parseFloat(value);
-    var parsedSecondValue = parseFloat(nextValue);
-    var sortEmptyCells = columnMeta.multiColumnSorting.sortEmptyCells;
-
-    // Watch out when changing this part of code! Check below returns 0 (as expected) when comparing empty string, null, undefined
-
-    if (parsedFirstValue === parsedSecondValue || isNaN(parsedFirstValue) && isNaN(parsedSecondValue)) {
-      return _comparatorEngine.DO_NOT_SWAP;
-    }
-
-    if (sortEmptyCells) {
-      if ((0, _mixed.isEmpty)(value)) {
-        return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-      }
-
-      if ((0, _mixed.isEmpty)(nextValue)) {
-        return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-      }
-    }
-
-    if (isNaN(parsedFirstValue)) {
-      return _comparatorEngine.FIRST_AFTER_SECOND;
-    }
-
-    if (isNaN(parsedSecondValue)) {
-      return _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    if (parsedFirstValue < parsedSecondValue) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_BEFORE_SECOND : _comparatorEngine.FIRST_AFTER_SECOND;
-    } else if (parsedFirstValue > parsedSecondValue) {
-      return sortOrder === 'asc' ? _comparatorEngine.FIRST_AFTER_SECOND : _comparatorEngine.FIRST_BEFORE_SECOND;
-    }
-
-    return _comparatorEngine.DO_NOT_SWAP;
-  };
-}
-
-/***/ }),
-/* 709 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.ColumnStatesManager = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _object = __webpack_require__(1);
-
-var _array = __webpack_require__(0);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var inheritedColumnProperties = ['sortEmptyCells', 'indicator', 'headerAction', 'compareFunctionFactory'];
-
-var SORT_EMPTY_CELLS_DEFAULT = false;
-var SHOW_SORT_INDICATOR_DEFAULT = true;
-var HEADER_ACTION_DEFAULT = true;
-
-/**
- * Store and manages states of sorted columns.
- *
- * @class ColumnStatesManager
- * @plugin MultiColumnSorting
- */
-// eslint-disable-next-line import/prefer-default-export
-
-var ColumnStatesManager = exports.ColumnStatesManager = function () {
-  function ColumnStatesManager() {
-    _classCallCheck(this, ColumnStatesManager);
-
-    /**
-     * Queue of sort states containing sorted columns and their orders (Array of objects containing `column` and `sortOrder` properties).
-     *
-     * @type {Array}
-     */
-    this.sortedColumnsStates = [];
-    /**
-     * Determines whether we should sort empty cells.
-     *
-     * @type {Boolean}
-     */
-    this.sortEmptyCells = SORT_EMPTY_CELLS_DEFAULT;
-    /**
-     * Determines whether indicator should be visible (for sorted columns).
-     *
-     * @type {Boolean}
-     */
-    this.indicator = SHOW_SORT_INDICATOR_DEFAULT;
-    /**
-     * Determines whether click on the header perform sorting.
-     *
-     * @type {Boolean}
-     */
-    this.headerAction = HEADER_ACTION_DEFAULT;
-    /**
-     * Determines compare function factory. Method get as parameters `sortOder` and `columnMeta` and return compare function.
-     */
-    this.compareFunctionFactory = void 0;
-  }
-
-  /**
-   * Update column properties which affect the sorting result.
-   *
-   * **Note**: All column properties can be overwritten by [columns](https://docs.handsontable.com/pro/Options.html#columns) option.
-   *
-   * @param {Object} allSortSettings Column sorting plugin's configuration object.
-   */
-
-
-  _createClass(ColumnStatesManager, [{
-    key: 'updateAllColumnsProperties',
-    value: function updateAllColumnsProperties(allSortSettings) {
-      var _this = this;
-
-      if (!(0, _object.isObject)(allSortSettings)) {
-        return;
-      }
-
-      (0, _object.objectEach)(allSortSettings, function (newValue, propertyName) {
-        if (inheritedColumnProperties.includes(propertyName)) {
-          _this[propertyName] = newValue;
-        }
-      });
-    }
-
-    /**
-     * Get all column properties which affect the sorting result.
-     *
-     * @returns {Object}
-     */
-
-  }, {
-    key: 'getAllColumnsProperties',
-    value: function getAllColumnsProperties() {
-      var columnProperties = {
-        sortEmptyCells: this.sortEmptyCells,
-        indicator: this.indicator,
-        headerAction: this.headerAction
-      };
-
-      if (typeof this.compareFunctionFactory !== 'undefined') {
-        columnProperties.compareFunctionFactory = this.compareFunctionFactory;
-      }
-
-      return columnProperties;
-    }
-
-    /**
-     * Get index of first sorted column.
-     *
-     * @returns {Number|undefined}
-     */
-
-  }, {
-    key: 'getFirstSortedColumn',
-    value: function getFirstSortedColumn() {
-      var firstSortedColumn = void 0;
-
-      if (this.getNumberOfSortedColumns() > 0) {
-        firstSortedColumn = this.sortedColumnsStates[0].column;
-      }
-
-      return firstSortedColumn;
-    }
-
-    /**
-     * Get sort order of column.
-     *
-     * @param {Number} searchedColumn Physical column index.
-     * @returns {String|undefined} Sort order (`asc` for ascending, `desc` for descending and undefined for not sorted).
-     */
-
-  }, {
-    key: 'getSortOrderOfColumn',
-    value: function getSortOrderOfColumn(searchedColumn) {
-      var searchedState = this.sortedColumnsStates.find(function (_ref) {
-        var column = _ref.column;
-        return searchedColumn === column;
-      });
-      var sortOrder = void 0;
-
-      if ((0, _object.isObject)(searchedState)) {
-        sortOrder = searchedState.sortOrder;
-      }
-
-      return sortOrder;
-    }
-
-    /**
-     * Get list of sorted columns.
-     *
-     * @returns {Array}
-     */
-
-  }, {
-    key: 'getSortedColumns',
-    value: function getSortedColumns() {
-      return (0, _array.arrayMap)(this.sortedColumnsStates, function (_ref2) {
-        var column = _ref2.column;
-        return column;
-      });
-    }
-
-    /**
-     * Get order of particular column in the states queue.
-     *
-     * @param {Number} column Physical column index.
-     * @returns {Number}
-     */
-
-  }, {
-    key: 'getIndexOfColumnInSortQueue',
-    value: function getIndexOfColumnInSortQueue(column) {
-      return this.getSortedColumns().indexOf(column);
-    }
-
-    /**
-     * Get number of sorted columns.
-     *
-     * @returns {Number}
-     */
-
-  }, {
-    key: 'getNumberOfSortedColumns',
-    value: function getNumberOfSortedColumns() {
-      return this.sortedColumnsStates.length;
-    }
-
-    /**
-     * Get if list of sorted columns is empty.
-     *
-     * @returns {Boolean}
-     */
-
-  }, {
-    key: 'isListOfSortedColumnsEmpty',
-    value: function isListOfSortedColumnsEmpty() {
-      return this.getNumberOfSortedColumns() === 0;
-    }
-
-    /**
-     * Get if particular column is sorted.
-     *
-     * @param {Number} column Physical column index.
-     * @returns {Boolean}
-     */
-
-  }, {
-    key: 'isColumnSorted',
-    value: function isColumnSorted(column) {
-      return this.getSortedColumns().includes(column);
-    }
-
-    /**
-     * Get states for all sorted columns.
-     *
-     * @returns {Array}
-     */
-
-  }, {
-    key: 'getSortStates',
-    value: function getSortStates() {
-      return (0, _object.deepClone)(this.sortedColumnsStates);
-    }
-
-    /**
-     * Get sort state for particular column. Object contains `column` and `sortOrder` properties.
-     *
-     * **Note**: Please keep in mind that returned objects expose **physical** column index under the `column` key.
-     *
-     * @param {Number} column Physical column index.
-     * @returns {Object|undefined}
-     */
-
-  }, {
-    key: 'getColumnSortState',
-    value: function getColumnSortState(column) {
-      if (this.isColumnSorted(column)) {
-        return (0, _object.deepClone)(this.sortedColumnsStates[this.getIndexOfColumnInSortQueue(column)]);
-      }
-    }
-
-    /**
-     * Set all sorted columns states.
-     *
-     * @param {Array} sortStates
-     */
-
-  }, {
-    key: 'setSortStates',
-    value: function setSortStates(sortStates) {
-      this.sortedColumnsStates = sortStates;
-    }
-
-    /**
-     * Destroy the state manager.
-     */
-
-  }, {
-    key: 'destroy',
-    value: function destroy() {
-      this.sortedColumnsStates.length = 0;
-      this.sortedColumnsStates = null;
-    }
-  }]);
-
-  return ColumnStatesManager;
-}();
-
-/***/ }),
-/* 710 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.DomHelper = exports.HEADER_ACTION_CLASS = exports.HEADER_SORT_CLASS = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* eslint-disable import/prefer-default-export */
-
-var _utils = __webpack_require__(482);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HEADER_CLASS_ASC_SORT = 'ascending';
-var HEADER_CLASS_DESC_SORT = 'descending';
-var HEADER_CLASS_INDICATOR_DISABLED = 'indicatorDisabled';
-var COLUMN_ORDER_PREFIX = 'sort';
-
-var HEADER_SORT_CLASS = exports.HEADER_SORT_CLASS = 'columnSorting';
-var HEADER_ACTION_CLASS = exports.HEADER_ACTION_CLASS = 'sortAction';
-
-var orderToCssClass = new Map([[_utils.ASC_SORT_STATE, HEADER_CLASS_ASC_SORT], [_utils.DESC_SORT_STATE, HEADER_CLASS_DESC_SORT]]);
-
-/**
- * Helper for the column sorting plugin. Manages the added and removed classes to DOM elements basing on state of sorting.
- *
- * @class DomHelper
- * @plugin MultiColumnSorting
- */
-
-var DomHelper = exports.DomHelper = function () {
-  function DomHelper(columnStatesManager) {
-    _classCallCheck(this, DomHelper);
-
-    /**
-     * Instance of column states manager.
-     *
-     * @private
-     */
-    this.columnStatesManager = columnStatesManager;
-  }
-
-  /**
-   * Get CSS classes which should be added to particular column header.
-   *
-   * @param {Number} column Physical column index.
-   * @param {Boolean} showSortIndicator Indicates if indicator should be shown for the particular column.
-   * @param {Boolean} headerAction Indicates if header click to sort should be possible.
-   * @returns {Array} Array of CSS classes.
-   */
-
-
-  _createClass(DomHelper, [{
-    key: 'getAddedClasses',
-    value: function getAddedClasses(column, showSortIndicator, headerAction) {
-      var cssClasses = [HEADER_SORT_CLASS];
-
-      if (headerAction) {
-        cssClasses.push(HEADER_ACTION_CLASS);
-      }
-
-      if (showSortIndicator === false) {
-        cssClasses.push(HEADER_CLASS_INDICATOR_DISABLED);
-      } else if (this.columnStatesManager.isColumnSorted(column)) {
-        var columnOrder = this.columnStatesManager.getSortOrderOfColumn(column);
-
-        cssClasses.push(orderToCssClass.get(columnOrder));
-
-        if (this.columnStatesManager.getNumberOfSortedColumns() > 1) {
-          cssClasses.push(COLUMN_ORDER_PREFIX + '-' + (this.columnStatesManager.getIndexOfColumnInSortQueue(column) + 1));
-        }
-      }
-
-      return cssClasses;
-    }
-
-    /**
-     * Get CSS classes which should be removed from column header.
-     *
-     * @param {HTMLElement} htmlElement
-     * @returns {Array} Array of CSS classes.
-     */
-
-  }, {
-    key: 'getRemovedClasses',
-    value: function getRemovedClasses(htmlElement) {
-      var cssClasses = htmlElement.className.split(' ');
-      var sortSequenceRegExp = new RegExp('^' + COLUMN_ORDER_PREFIX + '-[0-9]{1,2}$');
-      var someCssClassesToRemove = cssClasses.filter(function (cssClass) {
-        return sortSequenceRegExp.test(cssClass);
-      });
-
-      return Array.from(orderToCssClass.values()).concat(someCssClassesToRemove, HEADER_ACTION_CLASS, HEADER_CLASS_INDICATOR_DISABLED, HEADER_SORT_CLASS);
-    }
-
-    /**
-     * Destroy the helper.
-     */
-
-  }, {
-    key: 'destroy',
-    value: function destroy() {
-      this.columnStatesManager = null;
-    }
-  }]);
-
-  return DomHelper;
-}();
-
-/***/ }),
-/* 711 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _arrayMapper = __webpack_require__(51);
-
-var _arrayMapper2 = _interopRequireDefault(_arrayMapper);
-
-var _object = __webpack_require__(1);
-
-var _number = __webpack_require__(4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * @class RowsMapper
- * @plugin MultiColumnSorting
- */
-var RowsMapper = function () {
-  function RowsMapper(multiColumnSorting) {
-    _classCallCheck(this, RowsMapper);
-
-    /**
-     * Instance of MultiColumnSorting plugin.
-     *
-     * @type {MultiColumnSorting}
-     */
-    this.multiColumnSorting = multiColumnSorting;
-  }
-
-  /**
-   * Reset current map array and create new one.
-   *
-   * @param {Number} [length] Custom generated map length.
-   */
-
-
-  _createClass(RowsMapper, [{
-    key: 'createMap',
-    value: function createMap(length) {
-      var _this = this;
-
-      var originLength = length === void 0 ? this._arrayMap.length : length;
-
-      this._arrayMap.length = 0;
-
-      (0, _number.rangeEach)(originLength - 1, function (itemIndex) {
-        _this._arrayMap[itemIndex] = itemIndex;
-      });
-    }
-
-    /**
-     * Destroy class.
-     */
-
-  }, {
-    key: 'destroy',
-    value: function destroy() {
-      this._arrayMap = null;
-    }
-  }]);
-
-  return RowsMapper;
-}();
-
-(0, _object.mixin)(RowsMapper, _arrayMapper2.default);
-
-exports.default = RowsMapper;
-
-/***/ }),
-/* 712 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 713 */
+/* 716 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -105890,13 +106640,13 @@ var _base = __webpack_require__(6);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
-var _ghostTable = __webpack_require__(714);
+var _ghostTable = __webpack_require__(717);
 
 var _ghostTable2 = _interopRequireDefault(_ghostTable);
 
-__webpack_require__(715);
+__webpack_require__(718);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -106685,7 +107435,7 @@ var NestedHeaders = function (_BasePlugin) {
 exports.default = NestedHeaders;
 
 /***/ }),
-/* 714 */
+/* 717 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106836,13 +107586,13 @@ var GhostTable = function () {
 exports.default = GhostTable;
 
 /***/ }),
-/* 715 */
+/* 718 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 716 */
+/* 719 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106864,13 +107614,13 @@ var _number = __webpack_require__(4);
 
 var _array = __webpack_require__(0);
 
-var _src = __webpack_require__(9);
+var _src = __webpack_require__(10);
 
-var _dataManager = __webpack_require__(717);
+var _dataManager = __webpack_require__(720);
 
 var _dataManager2 = _interopRequireDefault(_dataManager);
 
-var _collapsing = __webpack_require__(718);
+var _collapsing = __webpack_require__(721);
 
 var _collapsing2 = _interopRequireDefault(_collapsing);
 
@@ -106878,11 +107628,11 @@ var _headers = __webpack_require__(483);
 
 var _headers2 = _interopRequireDefault(_headers);
 
-var _contextMenu = __webpack_require__(719);
+var _contextMenu = __webpack_require__(722);
 
 var _contextMenu2 = _interopRequireDefault(_contextMenu);
 
-__webpack_require__(720);
+__webpack_require__(723);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -107582,7 +108332,7 @@ var NestedRows = function (_BasePlugin) {
 exports.default = NestedRows;
 
 /***/ }),
-/* 717 */
+/* 720 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -108366,7 +109116,7 @@ var DataManager = function () {
 exports.default = DataManager;
 
 /***/ }),
-/* 718 */
+/* 721 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -108958,7 +109708,7 @@ var CollapsingUI = function (_BaseUI) {
 exports.default = CollapsingUI;
 
 /***/ }),
-/* 719 */
+/* 722 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -109118,13 +109868,13 @@ var ContextMenuUI = function (_BaseUI) {
 exports.default = ContextMenuUI;
 
 /***/ }),
-/* 720 */
+/* 723 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 721 */
+/* 724 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -109152,15 +109902,15 @@ var _plugins = __webpack_require__(5);
 
 var _predefinedItems = __webpack_require__(43);
 
-var _hideColumn = __webpack_require__(722);
+var _hideColumn = __webpack_require__(725);
 
 var _hideColumn2 = _interopRequireDefault(_hideColumn);
 
-var _showColumn = __webpack_require__(723);
+var _showColumn = __webpack_require__(726);
 
 var _showColumn2 = _interopRequireDefault(_showColumn);
 
-__webpack_require__(724);
+__webpack_require__(727);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -109886,7 +110636,7 @@ function hiddenRenderer(hotInstance, td) {
 exports.default = HiddenColumns;
 
 /***/ }),
-/* 722 */
+/* 725 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -109949,7 +110699,7 @@ function hideColumnItem(hiddenColumnsPlugin) {
 }
 
 /***/ }),
-/* 723 */
+/* 726 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110089,13 +110839,13 @@ function showColumnItem(hiddenColumnsPlugin) {
 }
 
 /***/ }),
-/* 724 */
+/* 727 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 725 */
+/* 728 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110121,15 +110871,15 @@ var _array = __webpack_require__(0);
 
 var _plugins = __webpack_require__(5);
 
-var _hideRow = __webpack_require__(726);
+var _hideRow = __webpack_require__(729);
 
 var _hideRow2 = _interopRequireDefault(_hideRow);
 
-var _showRow = __webpack_require__(727);
+var _showRow = __webpack_require__(730);
 
 var _showRow2 = _interopRequireDefault(_showRow);
 
-__webpack_require__(728);
+__webpack_require__(731);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -110855,7 +111605,7 @@ var HiddenRows = function (_BasePlugin) {
 exports.default = HiddenRows;
 
 /***/ }),
-/* 726 */
+/* 729 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110918,7 +111668,7 @@ function hideRowItem(hiddenRowsPlugin) {
 }
 
 /***/ }),
-/* 727 */
+/* 730 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -111061,13 +111811,13 @@ function showRowItem(hiddenRowsPlugin) {
 }
 
 /***/ }),
-/* 728 */
+/* 731 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 729 */
+/* 732 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -111089,7 +111839,7 @@ var _number = __webpack_require__(4);
 
 var _plugins = __webpack_require__(5);
 
-var _rowsMapper = __webpack_require__(730);
+var _rowsMapper = __webpack_require__(733);
 
 var _rowsMapper2 = _interopRequireDefault(_rowsMapper);
 
@@ -111513,7 +112263,7 @@ var TrimRows = function (_BasePlugin) {
 exports.default = TrimRows;
 
 /***/ }),
-/* 730 */
+/* 733 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -111595,518 +112345,6 @@ var RowsMapper = function () {
 (0, _object.mixin)(RowsMapper, _arrayMapper2.default);
 
 exports.default = RowsMapper;
-
-/***/ }),
-/* 731 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _element = __webpack_require__(2);
-
-var _base = __webpack_require__(33);
-
-var _base2 = _interopRequireDefault(_base);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * @class BottomOverlay
- */
-var BottomOverlay = function (_Overlay) {
-  _inherits(BottomOverlay, _Overlay);
-
-  /**
-   * @param {Walkontable} wotInstance
-   */
-  function BottomOverlay(wotInstance) {
-    _classCallCheck(this, BottomOverlay);
-
-    var _this = _possibleConstructorReturn(this, (BottomOverlay.__proto__ || Object.getPrototypeOf(BottomOverlay)).call(this, wotInstance));
-
-    _this.clone = _this.makeClone(_base2.default.CLONE_BOTTOM);
-    return _this;
-  }
-
-  /**
-   *
-   */
-
-
-  _createClass(BottomOverlay, [{
-    key: 'repositionOverlay',
-    value: function repositionOverlay() {
-      var scrollbarWidth = (0, _element.getScrollbarWidth)();
-      var cloneRoot = this.clone.wtTable.holder.parentNode;
-
-      if (this.wot.wtTable.holder.clientHeight === this.wot.wtTable.holder.offsetHeight) {
-        scrollbarWidth = 0;
-      }
-
-      cloneRoot.style.top = '';
-      cloneRoot.style.bottom = scrollbarWidth + 'px';
-    }
-
-    /**
-     * Checks if overlay should be fully rendered
-     *
-     * @returns {Boolean}
-     */
-
-  }, {
-    key: 'shouldBeRendered',
-    value: function shouldBeRendered() {
-      /* eslint-disable no-unneeded-ternary */
-      return this.wot.getSetting('fixedRowsBottom') ? true : false;
-    }
-
-    /**
-     * Updates the top overlay position
-     */
-
-  }, {
-    key: 'resetFixedPosition',
-    value: function resetFixedPosition() {
-      if (!this.needFullRender || !this.wot.wtTable.holder.parentNode) {
-        // removed from DOM
-        return;
-      }
-
-      var overlayRoot = this.clone.wtTable.holder.parentNode;
-      var headerPosition = 0;
-      overlayRoot.style.top = '';
-
-      if (this.wot.wtOverlays.leftOverlay.trimmingContainer === window) {
-        var box = this.wot.wtTable.hider.getBoundingClientRect();
-        var bottom = Math.ceil(box.bottom);
-        var finalLeft = void 0;
-        var finalBottom = void 0;
-        var bodyHeight = document.body.offsetHeight;
-
-        finalLeft = this.wot.wtTable.hider.style.left;
-        finalLeft = finalLeft === '' ? 0 : finalLeft;
-
-        if (bottom > bodyHeight) {
-          finalBottom = bottom - bodyHeight;
-        } else {
-          finalBottom = 0;
-        }
-        headerPosition = finalBottom;
-        finalBottom += 'px';
-
-        overlayRoot.style.top = '';
-        overlayRoot.style.left = finalLeft;
-        overlayRoot.style.bottom = finalBottom;
-      } else {
-        headerPosition = this.getScrollPosition();
-        (0, _element.resetCssTransform)(overlayRoot);
-        this.repositionOverlay();
-      }
-      this.adjustHeaderBordersPosition(headerPosition);
-    }
-
-    /**
-     * Sets the main overlay's vertical scroll position
-     *
-     * @param {Number} pos
-     */
-
-  }, {
-    key: 'setScrollPosition',
-    value: function setScrollPosition(pos) {
-      if (this.mainTableScrollableElement === window) {
-        window.scrollTo((0, _element.getWindowScrollLeft)(), pos);
-      } else {
-        this.mainTableScrollableElement.scrollTop = pos;
-      }
-    }
-
-    /**
-     * Triggers onScroll hook callback
-     */
-
-  }, {
-    key: 'onScroll',
-    value: function onScroll() {
-      this.wot.getSetting('onScrollVertically');
-    }
-
-    /**
-     * Calculates total sum cells height
-     *
-     * @param {Number} from Row index which calculates started from
-     * @param {Number} to Row index where calculation is finished
-     * @returns {Number} Height sum
-     */
-
-  }, {
-    key: 'sumCellSizes',
-    value: function sumCellSizes(from, to) {
-      var row = from;
-      var sum = 0;
-      var defaultRowHeight = this.wot.wtSettings.settings.defaultRowHeight;
-
-      while (row < to) {
-        var height = this.wot.wtTable.getRowHeight(row);
-
-        sum += height === void 0 ? defaultRowHeight : height;
-        row += 1;
-      }
-
-      return sum;
-    }
-
-    /**
-     * Adjust overlay root element, childs and master table element sizes (width, height).
-     *
-     * @param {Boolean} [force=false]
-     */
-
-  }, {
-    key: 'adjustElementsSize',
-    value: function adjustElementsSize() {
-      var force = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      this.updateTrimmingContainer();
-
-      if (this.needFullRender || force) {
-        this.adjustRootElementSize();
-        this.adjustRootChildrenSize();
-
-        if (!force) {
-          this.areElementSizesAdjusted = true;
-        }
-      }
-    }
-
-    /**
-     * Adjust overlay root element size (width and height).
-     */
-
-  }, {
-    key: 'adjustRootElementSize',
-    value: function adjustRootElementSize() {
-      var masterHolder = this.wot.wtTable.holder;
-      var scrollbarWidth = masterHolder.clientWidth === masterHolder.offsetWidth ? 0 : (0, _element.getScrollbarWidth)();
-      var overlayRoot = this.clone.wtTable.holder.parentNode;
-      var overlayRootStyle = overlayRoot.style;
-
-      if (this.trimmingContainer === window) {
-        overlayRootStyle.width = '';
-      } else {
-        overlayRootStyle.width = this.wot.wtViewport.getWorkspaceWidth() - scrollbarWidth + 'px';
-      }
-
-      this.clone.wtTable.holder.style.width = overlayRootStyle.width;
-
-      var tableHeight = (0, _element.outerHeight)(this.clone.wtTable.TABLE);
-      overlayRootStyle.height = (tableHeight === 0 ? tableHeight : tableHeight) + 'px';
-    }
-
-    /**
-     * Adjust overlay root childs size
-     */
-
-  }, {
-    key: 'adjustRootChildrenSize',
-    value: function adjustRootChildrenSize() {
-      var scrollbarWidth = (0, _element.getScrollbarWidth)();
-
-      this.clone.wtTable.hider.style.width = this.hider.style.width;
-      this.clone.wtTable.holder.style.width = this.clone.wtTable.holder.parentNode.style.width;
-
-      if (scrollbarWidth === 0) {
-        scrollbarWidth = 30;
-      }
-      this.clone.wtTable.holder.style.height = parseInt(this.clone.wtTable.holder.parentNode.style.height, 10) + scrollbarWidth + 'px';
-    }
-
-    /**
-     * Adjust the overlay dimensions and position
-     */
-
-  }, {
-    key: 'applyToDOM',
-    value: function applyToDOM() {
-      var total = this.wot.getSetting('totalRows');
-
-      if (!this.areElementSizesAdjusted) {
-        this.adjustElementsSize();
-      }
-      if (typeof this.wot.wtViewport.rowsRenderCalculator.startPosition === 'number') {
-        this.spreader.style.top = this.wot.wtViewport.rowsRenderCalculator.startPosition + 'px';
-      } else if (total === 0) {
-        // can happen if there are 0 rows
-        this.spreader.style.top = '0';
-      } else {
-        throw new Error('Incorrect value of the rowsRenderCalculator');
-      }
-      this.spreader.style.bottom = '';
-
-      if (this.needFullRender) {
-        this.syncOverlayOffset();
-      }
-    }
-
-    /**
-     * Synchronize calculated left position to an element
-     */
-
-  }, {
-    key: 'syncOverlayOffset',
-    value: function syncOverlayOffset() {
-      if (typeof this.wot.wtViewport.columnsRenderCalculator.startPosition === 'number') {
-        this.clone.wtTable.spreader.style.left = this.wot.wtViewport.columnsRenderCalculator.startPosition + 'px';
-      } else {
-        this.clone.wtTable.spreader.style.left = '';
-      }
-    }
-
-    /**
-     * Scrolls vertically to a row
-     *
-     * @param sourceRow {Number} Row index which you want to scroll to
-     * @param [bottomEdge=false] {Boolean} if `true`, scrolls according to the bottom edge (top edge is by default)
-     */
-
-  }, {
-    key: 'scrollTo',
-    value: function scrollTo(sourceRow, bottomEdge) {
-      var newY = this.getTableParentOffset();
-      var sourceInstance = this.wot.cloneSource ? this.wot.cloneSource : this.wot;
-      var mainHolder = sourceInstance.wtTable.holder;
-      var scrollbarCompensation = 0;
-
-      if (bottomEdge && mainHolder.offsetHeight !== mainHolder.clientHeight) {
-        scrollbarCompensation = (0, _element.getScrollbarWidth)();
-      }
-
-      if (bottomEdge) {
-        newY += this.sumCellSizes(0, sourceRow + 1);
-        newY -= this.wot.wtViewport.getViewportHeight();
-        // Fix 1 pixel offset when cell is selected
-        newY += 1;
-      } else {
-        newY += this.sumCellSizes(this.wot.getSetting('fixedRowsBottom'), sourceRow);
-      }
-      newY += scrollbarCompensation;
-
-      this.setScrollPosition(newY);
-    }
-
-    /**
-     * Gets table parent top position
-     *
-     * @returns {Number}
-     */
-
-  }, {
-    key: 'getTableParentOffset',
-    value: function getTableParentOffset() {
-      if (this.mainTableScrollableElement === window) {
-        return this.wot.wtTable.holderOffset.top;
-      }
-
-      return 0;
-    }
-
-    /**
-     * Gets the main overlay's vertical scroll position
-     *
-     * @returns {Number} Main table's vertical scroll position
-     */
-
-  }, {
-    key: 'getScrollPosition',
-    value: function getScrollPosition() {
-      return (0, _element.getScrollTop)(this.mainTableScrollableElement);
-    }
-
-    /**
-     * Adds css classes to hide the header border's header (cell-selection border hiding issue)
-     *
-     * @param {Number} position Header Y position if trimming container is window or scroll top if not
-     */
-
-  }, {
-    key: 'adjustHeaderBordersPosition',
-    value: function adjustHeaderBordersPosition(position) {
-      if (this.wot.getSetting('fixedRowsBottom') === 0 && this.wot.getSetting('columnHeaders').length > 0) {
-        var masterParent = this.wot.wtTable.holder.parentNode;
-        var previousState = (0, _element.hasClass)(masterParent, 'innerBorderTop');
-
-        if (position) {
-          (0, _element.addClass)(masterParent, 'innerBorderTop');
-        } else {
-          (0, _element.removeClass)(masterParent, 'innerBorderTop');
-        }
-        if (!previousState && position || previousState && !position) {
-          this.wot.wtOverlays.adjustElementsSize();
-        }
-      }
-      // nasty workaround for double border in the header, TODO: find a pure-css solution
-      if (this.wot.getSetting('rowHeaders').length === 0) {
-        var secondHeaderCell = this.clone.wtTable.THEAD.querySelector('th:nth-of-type(2)');
-
-        if (secondHeaderCell) {
-          secondHeaderCell.style['border-left-width'] = 0;
-        }
-      }
-    }
-  }]);
-
-  return BottomOverlay;
-}(_base2.default);
-
-_base2.default.registerOverlay(_base2.default.CLONE_BOTTOM, BottomOverlay);
-
-exports.default = BottomOverlay;
-
-/***/ }),
-/* 732 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _element = __webpack_require__(2);
-
-var _base = __webpack_require__(33);
-
-var _base2 = _interopRequireDefault(_base);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * @class TopLeftCornerOverlay
- */
-var BottomLeftCornerOverlay = function (_Overlay) {
-  _inherits(BottomLeftCornerOverlay, _Overlay);
-
-  /**
-   * @param {Walkontable} wotInstance
-   */
-  function BottomLeftCornerOverlay(wotInstance) {
-    _classCallCheck(this, BottomLeftCornerOverlay);
-
-    var _this = _possibleConstructorReturn(this, (BottomLeftCornerOverlay.__proto__ || Object.getPrototypeOf(BottomLeftCornerOverlay)).call(this, wotInstance));
-
-    _this.clone = _this.makeClone(_base2.default.CLONE_BOTTOM_LEFT_CORNER);
-    return _this;
-  }
-
-  /**
-   * Checks if overlay should be fully rendered
-   *
-   * @returns {Boolean}
-   */
-
-
-  _createClass(BottomLeftCornerOverlay, [{
-    key: 'shouldBeRendered',
-    value: function shouldBeRendered() {
-      /* eslint-disable no-unneeded-ternary */
-      return this.wot.getSetting('fixedRowsBottom') && (this.wot.getSetting('fixedColumnsLeft') || this.wot.getSetting('rowHeaders').length) ? true : false;
-    }
-
-    /**
-     * Reposition the overlay.
-     */
-
-  }, {
-    key: 'repositionOverlay',
-    value: function repositionOverlay() {
-      var scrollbarWidth = (0, _element.getScrollbarWidth)();
-      var cloneRoot = this.clone.wtTable.holder.parentNode;
-
-      if (this.wot.wtTable.holder.clientHeight === this.wot.wtTable.holder.offsetHeight) {
-        scrollbarWidth = 0;
-      }
-
-      cloneRoot.style.top = '';
-      cloneRoot.style.bottom = scrollbarWidth + 'px';
-    }
-
-    /**
-     * Updates the corner overlay position
-     */
-
-  }, {
-    key: 'resetFixedPosition',
-    value: function resetFixedPosition() {
-      this.updateTrimmingContainer();
-
-      if (!this.wot.wtTable.holder.parentNode) {
-        // removed from DOM
-        return;
-      }
-      var overlayRoot = this.clone.wtTable.holder.parentNode;
-      var tableHeight = (0, _element.outerHeight)(this.clone.wtTable.TABLE);
-      var tableWidth = (0, _element.outerWidth)(this.clone.wtTable.TABLE);
-
-      overlayRoot.style.top = '';
-
-      if (this.trimmingContainer === window) {
-        var box = this.wot.wtTable.hider.getBoundingClientRect();
-        var bottom = Math.ceil(box.bottom);
-        var left = Math.ceil(box.left);
-        var finalLeft = void 0;
-        var finalBottom = void 0;
-        var bodyHeight = document.body.offsetHeight;
-
-        if (left < 0) {
-          finalLeft = -left;
-        } else {
-          finalLeft = 0;
-        }
-
-        if (bottom > bodyHeight) {
-          finalBottom = bottom - bodyHeight;
-        } else {
-          finalBottom = 0;
-        }
-        finalBottom += 'px';
-        finalLeft += 'px';
-
-        overlayRoot.style.top = '';
-        overlayRoot.style.left = finalLeft;
-        overlayRoot.style.bottom = finalBottom;
-      } else {
-        (0, _element.resetCssTransform)(overlayRoot);
-        this.repositionOverlay();
-      }
-      overlayRoot.style.height = (tableHeight === 0 ? tableHeight : tableHeight) + 'px';
-      overlayRoot.style.width = (tableWidth === 0 ? tableWidth : tableWidth) + 'px';
-    }
-  }]);
-
-  return BottomLeftCornerOverlay;
-}(_base2.default);
-
-_base2.default.registerOverlay(_base2.default.CLONE_BOTTOM_LEFT_CORNER, BottomLeftCornerOverlay);
-
-exports.default = BottomLeftCornerOverlay;
 
 /***/ })
 /******/ ])["default"];
