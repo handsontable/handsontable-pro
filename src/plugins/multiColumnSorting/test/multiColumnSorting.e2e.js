@@ -1030,7 +1030,7 @@ describe('MultiColumnSorting', () => {
   });
 
   describe('data type: time', () => {
-    it('should properly rewrite time into correct format after sort', async () => {
+    it('should properly rewrite time into correct format after sort', async() => {
       handsontable({
         data: [
           ['0:00:01 am'],
