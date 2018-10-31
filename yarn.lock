@@ -2632,9 +2632,9 @@ handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^3.1.4"
 
-handsontable@handsontable/handsontable#feature/issue-4676:
+"handsontable@github:handsontable/handsontable#develop":
   version "6.1.1"
-  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/c04f77465800654a9f45bb6570c9969ce148f046"
+  resolved "https://codeload.github.com/handsontable/handsontable/tar.gz/9f13cf7276c8a869ea92a8da12e484b220aa7220"
   dependencies:
     moment "2.20.1"
     numbro "^2.0.6"
@@ -6153,10 +6153,6 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
-
-yarn@^1.5.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.12.1.tgz#afa478c9234ee55e8f4cdcfb994acfa54b69c95b"
 
 yauzl@2.4.1:
   version "2.4.1"

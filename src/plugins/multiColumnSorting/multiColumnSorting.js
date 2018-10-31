@@ -248,7 +248,7 @@ class MultiColumnSorting extends ColumnSorting {
    * @param {CellCoords} coords Visual coords of the selected cell.
    */
   onAfterOnCellMouseDown(event, coords) {
-    if (wasHeaderClickedProperly(coords.row, coords.col, event.button) === false) {
+    if (wasHeaderClickedProperly(coords.row, coords.col, event) === false) {
       return;
     }
 
