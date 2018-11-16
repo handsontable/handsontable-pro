@@ -316,6 +316,38 @@ describe('TrimRows', () => {
         'A10	B10	C10	D10	E10	F10	G10	H10	I10	J10'
       );
     });
+
+    it('should create map and therefore new rows before past data', async() => {
+      const hot = handsontable({
+        data: [['', '']],
+        colHeaders: true,
+        columns: [
+          {
+            type: 'date',
+            dateFormat: 'MM/DD/YYYY',
+            correctFormat: true,
+            defaultDate: '01/01/1900'
+          },
+          {
+            type: 'time',
+            timeFormat: 'h:mm:ss a',
+            correctFormat: true
+          },
+        ],
+        trimRows: true,
+      });
+
+      const dateData = '2/5/2018\n2/11/2018\n2/11/2018\n2/11/2018\n2/5/2018\n22/11/2018\n2/5/2018\n2/5/2018\n22/5/2018';
+      const plugin = hot.getPlugin('CopyPaste');
+
+      selectCell(0, 0);
+
+      plugin.paste(dateData);
+
+      await sleep(200);
+
+      expect(hot.getData().length).toEqual(9);
+    });
   });
 
   describe('navigation', () => {

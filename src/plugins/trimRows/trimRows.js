@@ -103,6 +103,7 @@ class TrimRows extends BasePlugin {
     this.addHook('afterCreateRow', (index, amount) => this.onAfterCreateRow(index, amount));
     this.addHook('beforeRemoveRow', (index, amount) => this.onBeforeRemoveRow(index, amount));
     this.addHook('afterRemoveRow', () => this.onAfterRemoveRow());
+    this.addHook('beforePaste', data => this.onBeforePaste(data));
     this.addHook('afterLoadData', firstRun => this.onAfterLoadData(firstRun));
 
     super.enablePlugin();
@@ -294,6 +295,16 @@ class TrimRows extends BasePlugin {
    */
   onAfterRemoveRow() {
     this.rowsMapper.unshiftItems(this.removedRows);
+  }
+
+  /**
+   * `beforePaste` hook callback.
+   *
+   * @private
+   * @param {Array} data An array of arrays which contains data to paste.
+   */
+  onBeforePaste(data) {
+    this.rowsMapper.createMap(data.length);
   }
 
   /**
