@@ -20,8 +20,8 @@
  * RELIABILITY AND PERFORMANCE WILL MEET YOUR REQUIREMENTS OR THAT THE OPERATION OF THE SOFTWARE WILL BE
  * UNINTERRUPTED OR ERROR FREE.
  * 
- * Version: 6.2.0
- * Release date: 14/11/2018 (built at 06/12/2018 13:54:03)
+ * Version: 6.2.1
+ * Release date: 12/12/2018 (built at 06/12/2018 14:25:26)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -3160,7 +3160,7 @@ function _injectProductInfo(key, element) {
 
   if (trial || schemaValidity) {
     if (schemaValidity) {
-      var releaseTime = Math.floor((0, _moment.default)("14/11/2018", 'DD/MM/YYYY').toDate().getTime() / 8.64e7);
+      var releaseTime = Math.floor((0, _moment.default)("12/12/2018", 'DD/MM/YYYY').toDate().getTime() / 8.64e7);
 
       var keyGenTime = _extractTime(key);
 
@@ -39541,9 +39541,9 @@ Handsontable.DefaultSettings = _defaultSettings.default;
 Handsontable.EventManager = _eventManager.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
-Handsontable.buildDate = "06/12/2018 13:54:03";
+Handsontable.buildDate = "06/12/2018 14:25:26";
 Handsontable.packageName = "handsontable-pro";
-Handsontable.version = "6.2.0";
+Handsontable.version = "6.2.1";
 var baseVersion = "handsontable/handsontable#release/6.2.1";
 
 if (baseVersion) {
