@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import '@babel/polyfill/lib/noConflict';
 import Handsontable from 'handsontable';
 
 /* eslint-disable no-unused-vars */
