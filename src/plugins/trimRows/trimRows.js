@@ -170,13 +170,8 @@ class TrimRows extends BasePlugin {
    * @fires Hooks#afterUntrimRow
    */
   untrimRows(rows) {
-    arrayEach(rows, (row) => {
-      const physicalRow = parseInt(row, 10);
-
-      if (this.isTrimmed(physicalRow)) {
-        this.trimmedRows.splice(this.trimmedRows.indexOf(physicalRow), 1);
-      }
-    });
+    const parsedRows = rows.map(row => parseInt(row, 10));
+    this.trimmedRows = this.trimmedRows.filter(row => parsedRows.indexOf(row) === -1);
 
     this.hot.runHooks('skipLengthCache', 100);
     this.rowsMapper.createMap(this.hot.countSourceRows());
