@@ -1,3 +1,7 @@
+:warning: **Handsontable Pro is now Handsontable.** Since version `6.2.3` the Handsontable Pro package is deprecated. For version `7.0.0` use [handsontable](https://github.com/handsontable/handsontable) instead of [handsontable-pro](https://github.com/handsontable/handsontable-pro) to stay up to date with future releases.
+
+-------
+
 <div align="center">
   <a href="//handsontable.com" target="_blank"><img src="https://raw.githubusercontent.com/handsontable/static-files/master/Images/Logo/Handsontable/handsontable-logo-300-74-new-pro.png" alt="Handsontable Pro logo" /></a>
 </div>
