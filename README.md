@@ -1,4 +1,4 @@
-:warning: **Handsontable Pro is now Handsontable.** Since version 6.2.3 the Handsontable Pro package is deprecated. For version `7.0.0` use [handsontable](https://github.com/handsontable/handsontable) instead of [handsontable-pro](https://github.com/handsontable/handsontable-pro) to stay up to date with future releases.
+:warning: **Handsontable Pro is now Handsontable.** Since version `6.2.3` the Handsontable Pro package is deprecated. For version `7.0.0` use [handsontable](https://github.com/handsontable/handsontable) instead of [handsontable-pro](https://github.com/handsontable/handsontable-pro) to stay up to date with future releases.
 
 -------
 
